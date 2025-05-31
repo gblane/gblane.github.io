@@ -1,9 +1,11 @@
-print("hello")
+print("running MC ...")
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 from pyscript import display
+
+
 
 n = int(10)
 
@@ -22,22 +24,22 @@ x = np.hstack((0, np.cumsum(dx)))
 y = np.hstack((0, np.cumsum(dy)))
 z = np.hstack((0, np.cumsum(dz)))
 
-# print(x)
 
-# 1. Create a Figure
+
 fig = plt.figure(figsize=(8, 6))
 
-# 2. Add 3D Axes
-ax = fig.add_subplot(111, projection='3d')
+# ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111)
 
-# 4. Plot the Data (Line Plot)
-ax.plot(x, y, z, label='Photon Path')
+# ax.plot(x, y, z, label='Photon Path')
+ax.plot(x, y, label='Photon Path')
 
-# 5. Customize
 ax.set_title("tinyMC")
 ax.set_xlabel("X Position")
 ax.set_ylabel("Y Position")
-ax.set_zlabel("Z Position")
-ax.legend() # Show the label
+# ax.set_zlabel("Z Position")
+ax.legend() 
 
 display(fig, target="plot")
+
+print("done")
