@@ -3,6 +3,7 @@ print("hello")
 import numpy as np
 import matplotlib.pyplot as plt
 
+from pyscript import display
 
 n = int(10)
 
@@ -38,3 +39,5 @@ ax.set_xlabel("X Position")
 ax.set_ylabel("Y Position")
 ax.set_zlabel("Z Position")
 ax.legend() # Show the label
+
+display(fig, target="plot")
