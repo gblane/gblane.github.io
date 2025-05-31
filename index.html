@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>tmp</title>
+    <title>tinyMC</title>
 
-    <!-- Recommended meta tags -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="author" content="Giles Blaney, PhD">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PyScript CSS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.1/core.css">
@@ -14,14 +14,14 @@
     <script type="module" src="https://pyscript.net/releases/2025.2.1/core.js"></script>
 </head>
 <body>
-    <input type="number" id="number-input" placeholder="Enter a number">
+    <input type="number" id="number-input" placeholder="Enter number of steps to run">
     <button id="calculate-button">Calculate</button>
     <div id="output"></div>
     
-    The script should be here ...
+    The terminal should be here ...
     <script type="py" src="./main.py" config="./pyscript.json" terminal></script>
     <!-- <script type="py" src="./main.py" terminal></script> -->
-    and the plot here ...
+    and the plots here ...
     <div id="plot"></div>
 </body>
 </html>

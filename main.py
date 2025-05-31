@@ -17,7 +17,7 @@ def tinyMC():
     print("running MC ...")
     
     output_element = document.getElementById("output")
-    output_element.innerText = f"will run {n} steps"
+    output_element.innerText = f"{n} steps will be run"
     
     r1 = np.random.rand(n)
     r2 = np.random.rand(n)
