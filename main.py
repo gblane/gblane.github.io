@@ -43,8 +43,8 @@ def tinyMC():
     # ax = fig.add_subplot(111, projection='3d')
     ax = fig.add_subplot(111)
     
-    # ax.plot(x, y, z, label='Photon Path')
-    ax.plot(x, y, label='Photon Path')
+    # ax.plot(x, y, z, label='Path')
+    ax.plot(x, y, label='Path')
     
     ax.set_title("tinyMC")
     ax.set_xlabel("X Position")
