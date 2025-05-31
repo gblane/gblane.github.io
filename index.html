@@ -9,21 +9,21 @@
 
     <!-- PyScript CSS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.1/core.css">
-
-    <!-- This script tag bootstraps PyScript -->
+    <!-- Bootstrap PyScript -->
     <script type="module" src="https://pyscript.net/releases/2025.2.1/core.js"></script>
 </head>
 <body>
-    Wait until terminal reports ready
-
+    <div id="input"></div>
+    <p> Enter number of steps to run </p>
     <input type="number" id="number-input" placeholder="Enter number of steps to run">
     <button id="calculate-button">Calculate</button>
+
     <div id="output"></div>
-    
-    The terminal should be here ...
+    <p> Wait until terminal reports ready </p>
     <script type="py" src="./main.py" config="./pyscript.json" terminal></script>
     <!-- <script type="py" src="./main.py" terminal></script> -->
-    and the plots here ...
+
     <div id="plot"></div>
+    <p> Plots will appear here </p>
 </body>
 </html>

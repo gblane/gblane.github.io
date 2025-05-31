@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 from pyscript import display, document, when
 
+# Giles Blaney, PhD Summer 2025
+
 print("ready")
 
 # The @when decorator links the "click" event on the element with the ID "calculate-button"
