@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short versus Long Source-Detector Distances · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part I · Preferentially Deep Measurements</div>
+                <h1 class="fw-bold mb-3">Short versus Long Source-Detector Distances</h1>
+                <hr class="mb-4">
+
+                <h1 id="short-versus-long-source-detector-distances">Short versus Long
+Source-Detector Distances</h1>
+<p><span id="ch:shortLong" data-label="ch:shortLong"></span></p>
+<h2 id="ch:shortLong:sec:senPro">Sensitivity Profiles</h2>
+<p>One of the most basic methods for probing deeper in a diffuse medium
+with NIRS is to use longer ρ.
+This is based on the idea that longer ρs are sensitive to deeper
+parts of the medium. If we focus on measurement of Δμ<sub>a</sub>, we can produce 𝒮
+maps as those shown in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>. The
+methods for doing this are shown in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. Essentially 𝒮
+may be interpreted using the following expression: <span
+class="math display">\[\acrshort{sen}_i\left(\acrshort{r}_j\right)=
+    \frac{\left[\acrshort{dmua}_{,apparent}\right]_i}
+    {\acrshort{dmua}_{,actual}\left(\acrshort{r}_j\right)}
+    \label{equ:sen_dmua}\]</span> which, shows the 𝒮
+of measurement <span class="math inline">\(i\)</span> which measures an
+apparent absorption change of <span
+class="math inline">\(\left[\acrshort{dmua}_{,apparent}\right]_i\)</span>
+when there is an actual absorption change of <span
+class="math inline">\(\acrshort{dmua}_{,actual}\)</span> at position
+<span class="math inline">\(\vec{r}_j\)</span>. 𝒮
+has the property that when it is spatially summed over the who medium
+the result is one,<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> meaning the measurement would
+measure the actual Δμ<sub>a</sub> if the change occurred
+everywhere.</p>
+<p>We may go one step further when considering these 𝒮
+maps by considering the size of the Δμ<sub>a</sub> perturbation both in
+terms of volume and amplitude and the instrumental noise. By doing so
+the 𝒮 maps can be converted to
+SNR maps. Methods for doing
+this are explained in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Appendix <a href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. Using the SNR
+maps, one may choose to create Boolean maps showing where the SNR
+is greater than one. These are the maps shown in this chapter to
+represent where within a medium a given measurement can measure a given
+absorption change considering instrumental noise.</p>
+<p>The specific parameters used to simulate a semi-infinite homogeneous
+medium were a μ<sub>a</sub> of 0.01  mm, μ′<sub>s</sub>
+of 1.2  mm and <em>n</em> of 1.4. The perturbation was
+considered to be a Δμ<sub>a</sub> of 0.003  mm and size
+10 × 10 × 2 mm. Instrumental parameters included a <em>f</em><sub>mod</sub>
+of 140.625 MHz, <em>I</em> noise of 0.4 %, and φ
+noise of 0.06°. These parameter values are used in various of our 𝒮
+maps and simulations both in this chapter and subsequent chapters.</p>
+<h3 id="single-distance-sensitivity">Single-Distance Sensitivity</h3>
+<figure id="fig:MDsetSDsen">
+<div class="center">
+<img src="figures/MDsetSDsen_edited.png" class="img-fluid" alt="MDsetSDsen_edited">
+</div>
+<figcaption>Regions where the Signal-to-Noise Ratio (SNR) is <span
+class="math inline">\(\geq\)</span>1 for Single-Distance (SD) measurements at the seven
+different of 11 mm, 16 mm, 21 mm, 25 mm, 30 mm, 35 mm, &amp; 40 mm.
+[Top] SD Intensity (<em>I</em>).
+[Bottom] SD phase (φ).<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">1.1</a>.<br />
+Note 2: Simulation methods in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<p>SD measurements obtain changes
+in either the <em>I</em> or φ
+between a single source and single detector. These changes can then be
+converted to apparent Δμ<sub>a</sub> using the DPF
+method as shown in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
+<p>Figure <a href="#fig:MDsetSDsen" data-reference-type="ref"
+data-reference="fig:MDsetSDsen">1.1</a> shows maps of where the SNR
+is greater than or equal to 1 from the 𝒮 and parameters in
+Section <a href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">1.1</a>. These maps show the
+profiles for both SD<em>I</em> and SDφ
+with ρs of 11 mm, 16 mm, 21 mm,
+25 mm, 30 mm, 35 mm, &amp; 40 mm. This choice of distances was chosen to
+be the same as the ones for the probe used in <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
+class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>. This
+probe is shown in Figure <a href="#fig:MDprobe"
+data-reference-type="ref" data-reference="fig:MDprobe">1.3</a>.</p>
+<p>In general, these maps confirm that the typical statements that
+longer ρs and time-resolved
+measurements such as φ probe deeper. One
+practical limitation should be mentioned in that, at longer ρ,
+noise is expected to increase; however this ρ
+dependent noise was not considered in these maps to make visualization
+easier. For this reason there is a point of diminishing returns at
+longer ρ which the maps do not
+express.</p>
+<h3 id="single-slope-sensitivity">Single-Slope Sensitivity</h3>
+<figure id="fig:MDsetSSsen">
+<div class="center">
+<img src="figures/MDsetSSsen_edited.png" class="img-fluid" alt="MDsetSSsen_edited">
+</div>
+<figcaption>Regions where the Signal-to-Noise Ratio (SNR) is <span
+class="math inline">\(\geq\)</span> 1 or <span
+class="math inline">\(\leq\)</span> −1 for Single-Slope (SS) measurements at the five
+different source-detector distance (ρ) pairs of 11 mm, &amp;
+21 mm, 16 mm, &amp; 25 mm, 21 mm, &amp; 30 mm, 25 mm, &amp; 35 mm, and
+30 mm, &amp; 40 mm. [Top] SS Intensity (<em>I</em>).
+[Bottom] SS phase (φ).<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">1.1</a>.<br />
+Note 2: Simulation methods in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<p>Now moving to SS measurements, we consider
+either <em>I</em> or φ
+measured at more than one ρ to produce one measurement
+of Δμ<sub>a</sub>. SS
+measures the changes in the slope of either ln(ρ²<em>I</em>) or φ
+versus ρ. These changes are then
+converted to Δμ<sub>a</sub> using the DSF
+method described in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
+<p>Figure <a href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">1.2</a> shows regions where the absolute
+SNR is greater than or equal
+to 1 for SS data-types. Again the probe
+from <span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span> and
+Figure <a href="#fig:MDprobe" data-reference-type="ref"
+data-reference="fig:MDprobe">1.3</a> was considered and slopes were
+created from SD pairs whose ρs
+differed by approximately 10 mm. 𝒮 for SS
+becomes more complex compared to SD since significant portions
+of the map become negative. The reason for this is the subtraction used
+to calculate slopes. The physical meaning of negative 𝒮
+is the possibility of measuring the opposite sign Δμ<sub>a</sub>
+than the actual. This should be considered an artifact. To visualize
+this Figure <a href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">1.2</a> shows two maps for each of the
+two data-types SS <em>I</em> and
+SS φ.
+The SNR less than or equal to
+negative 1 map corresponds to the negative 𝒮
+region.</p>
+<p>Overall SS measurements are considered
+a slight improvement over SD since they effectively
+subtract measurements from short ρ from the signal. However,
+as seen in the maps this can induce artifacts by creating a significant
+negative 𝒮 region. However, if the
+Δμ<sub>a</sub> within the medium is
+layered, then SS has a significant advantage
+over SD since the negative and
+positive superficial 𝒮 regions mostly cancel
+(Figure <a href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">[fig:DSsenSDSSDSsenCurve]</a>)
+leaving a signal representative of the deep region.</p>
+<h2 id="multi-distance-measurement-on-the-human-brain">Multi-Distance
+Measurement on the Human Brain</h2>
+<p>Motivated by the expected 𝒮 profiles shown in
+Figures <a href="#fig:MDsetSDsen" data-reference-type="ref"
+data-reference="fig:MDsetSDsen">1.1</a>&amp;<a href="#fig:MDsetSSsen"
+data-reference-type="ref" data-reference="fig:MDsetSSsen">1.2</a>
+measurements of cerebral hemodynamics were conducted using many ρs in
+<span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
+class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>. The
+detailed physiological interpretation of those results will be discussed
+in Part <a href="#prt:cereHemo" data-reference-type="ref"
+data-reference="prt:cereHemo">[prt:cereHemo]</a>. Here we will discuss
+how these works demonstrate the difference between long and short ρ.</p>
+<h3 id="ch:shortLong:sec:MDmeth">Methods Used in Multi-Distance
+Work</h3>
+<h4 id="ch:shortLong:sec:MDmethExpPara">Summary of Experimental
+Parameters</h4>
+<figure id="fig:MDprobe">
+<div class="center">
+<img src="figures/RE_Slope_Probe.png" class="img-fluid" alt="RE_Slope_Probe">
+</div>
+<figcaption>Bottom view of a Multi-Distance (MD) optical probe with fiber
+bundles shown emerging from the top of the drawing. The detector is
+labeled <code>A</code> and the sources labeled
+<code>1</code> to <code>7</code>. The full MD set is shown including
+sources <code>1</code> to <code>7</code> with source-detector distance (ρ) of
+11 mm, 16 mm, 21 mm, 25 mm, 30 mm, 35 mm, &amp; 40 mm. An example Single-Slope (SS) set
+using sources <code>4</code> &amp;  and an example Single-Distance (SD) set
+with set source <code>6</code> is also shown.<br />
+Note 1: This can be found as Figure 1(b) in <span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.<br />
+Note 2: This probe was utilized in <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
+class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span></figcaption>
+</figure>
+<p>Data were collected from 6 healthy human subjects, 3 females and 3
+males in <span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.
+Experiments were repeated 10 times on each subject, except Subject 2 for
+whom measurements were repeated 5 times. <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> presented only
+1 of these measurement sessions and excluded 1 male subject, while <span
+class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>
+presented all data. FD NIRS
+data was collected using an Imagent with a <em>f</em><sub>mod</sub>
+of 140.625 MHz and λs of 690 nm, &amp; 830 nm. 2
+optical probes were used (only 1 presented in <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span>), each
+featuring one detector fiber bundle and seven pairs of source bundles,
+with ρs of 11 mm, 16 mm, 21 mm,
+25 mm, 30 mm, 35 mm, &amp; 40 mm (Figure <a href="#fig:MDprobe"
+data-reference-type="ref" data-reference="fig:MDprobe">1.3</a>). The 2
+optical probes were placed on the right and left sides of the subject’s
+forehead.<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a> During the experiment ABP
+oscillations were induced at 0.1 Hz using either thigh cuff inflation
+(Figures <a href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>,<a href="#fig:PHTfig2"
+data-reference-type="ref"
+data-reference="fig:PHTfig2">[fig:PHTfig2]</a>,&amp;<a
+href="#fig:JBPfig1" data-reference-type="ref"
+data-reference="fig:JBPfig1">[fig:JBPfig1]</a>) or paced breathing
+(Figure <a href="#fig:PHTfig2" data-reference-type="ref"
+data-reference="fig:PHTfig2">[fig:PHTfig2]</a>). The duration of these
+oscillations were 3 min in either case. These oscillations will be
+discussed in more detail in Part <a href="#prt:cereHemo"
+data-reference-type="ref"
+data-reference="prt:cereHemo">[prt:cereHemo]</a>. The full experiment
+lasted 15 min.</p>
+<h4 id="analysis-overview">Analysis Overview</h4>
+<p>The baseline μ<sub>a</sub> and μ′<sub>s</sub>
+were measured using calibrated MD measurements and the linear
+slopes method in Appendix <a href="#app:absOptPropMeas"
+data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. Then using
+these absolute properties the methods in Appendix <a
+href="#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a> were used to retrieve
+temporal traces of Δμ<sub>a</sub> which where converted to
+ΔO and ΔD
+using the methods in Appendix <a href="#app:recChrom"
+data-reference-type="ref"
+data-reference="app:recChrom">[app:recChrom]</a>. Finally, CHS
+analysis (discussed in Part <a href="#prt:cereHemo"
+data-reference-type="ref"
+data-reference="prt:cereHemo">[prt:cereHemo]</a>) was achieved using
+methods in Appendices <a href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>.
+For the purposes of this chapter the output of this analysis was D̃/Õ, or the transfer
+function between O and D at
+the oscillation frequency of 0.1 Hz.</p>
+<p>To investigate the different 𝒮 to different regions in
+tissue, which may have different actual hemodynamic oscillations, data
+exhibiting these heterogeneities was simulated. Methods for this are
+explained in Appendix <a href="#app:simSigFromSen"
+data-reference-type="ref"
+data-reference="app:simSigFromSen">[app:simSigFromSen]</a>. Here two
+layers were simulated with different actual Õ
+and D̃ and the apparent recovered
+D̃/Õ retrieved from the
+simulation for comparison to experimental results.</p>
+<h3 id="summary-of-multi-distance-results">Summary of Multi-Distance
+Results</h3>
+<figure id="fig:JBOfig3">
+<div class="center">
+<img src="figures/JBOfig3.png" class="img-fluid" alt="JBOfig3">
+</div>
+<figcaption>Representative time series of the data collected on
+Subject 1 in <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span>. (a) Heart
+rate. (b) Arterial Blood Pressure (ABP) and Total-hemoglobin concentration change (ΔT) at a
+source-detector distance (ρ) of 35 mm. (c) Oxy-hemoglobin concentration change (ΔO) and
+Deoxy-hemoglobin concentration change (ΔD) at a ρ
+of 35 mm. (d) ABP and ΔT at
+ρ of 10 mm. (e) ΔO and
+ΔD at a ρ
+of 10 mm. The shaded areas indicate times of thigh cuff inflation.<br />
+Note 1: These results can be found as Figure 3 in <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span>.</figcaption>
+</figure>
+<figure id="fig:PhotonicsFig5">
+<div class="center">
+<img src="figures/Photonics_fig5.png" class="img-fluid" alt="Photonics_fig5">
+</div>
+<figcaption>Amplitude ((a)&amp;(b)) and phase ((c)&amp;(d)) of phasor ratio D/O (D̃/Õ) at 0.1 Hz versus source-detector distance (ρ)
+(Figure <a href="#fig:MDprobe" data-reference-type="ref"
+data-reference="fig:MDprobe">1.3</a>). Experimental data in (a)&amp;(c)
+represent the average over all subjects, days, and locations for cyclic
+thigh cuff inflation (Solid Lines) and for paced breathing
+(Dashed Lines) from <span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.
+Simulation (Appendix <a href="#app:simSigFromSen"
+data-reference-type="ref"
+data-reference="app:simSigFromSen">[app:simSigFromSen]</a>) results in
+(b)&amp;(d) are for a medium with three-layers of dynamics: top layer
+from <span class="math inline">\(z\)</span> of 0 mm–10 mm with <span
+class="math inline">\(\acrshort{DOvec}~=~\phasor{0.05}{0}{}\)</span>,
+intermediate layer from <span class="math inline">\(z\)</span> of
+10 mm–15 mm with no oscillatory hemodynamics, and bottom layer from
+<span class="math inline">\(z\)</span> of 15 mm–30 mm with <span
+class="math inline">\(\acrshort{DOvec}~=~\phasor{1.00}{-180}{}\)</span>
+(where <span class="math inline">\(z\)</span> is depth). Three analysis
+methods are shown Single-Distance (SD) Intensity (<em>I</em>) (Purple), SD
+Intensity (<em>I</em>)
+(Green), and Single-Slope (SS) <em>I</em> (Cyan). SS
+<em>I</em>
+measurements refer to two sources spaced by approximately 10 mm, plotted
+such that the plotted ρ is the average of the of
+the two sources.<br />
+Note 1: Error bars show standard deviation of all analyzed pixels that
+show significant coherence (Chapter <a href="#ch:signCoh"
+data-reference-type="ref" data-reference="ch:signCoh">[ch:signCoh]</a>)
+in the wavelet transfer function scalogram (Appendices <a
+href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>)
+across all subjects days and locations.<br />
+Note 2: These results can be found as Figure 5 in <span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.</figcaption>
+</figure>
+<p>Figure <a href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a> shows representative time traces
+for a MD CHS
+experiment. This figure results from the protocol in <span
+class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> and shows the
+last 2 min of baseline, 3 min of cyclic cuff occlusions, and the first
+2 min the end baseline. In this figure, all the signals are filtered
+with a 0.15 Hz low-pass filter to suppress the cardiac signal. Figure <a
+href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>(a) shows the heart rate, Figure <a
+href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>(b) and Figure <a
+href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>(c) show ABP,
+ΔT, ΔO and
+ΔD at a ρ
+of 35 mm, and Figure <a href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>(d) and Figure <a
+href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>(e) show ABP,
+ΔT, ΔO and
+ΔD at a ρ
+of 10 mm. The induced oscillations of ABP, ΔT,
+ΔO and ΔD at
+0.1 Hz during cyclic cuff occlusions are clearly visible in Figure <a
+href="#fig:JBOfig3" data-reference-type="ref"
+data-reference="fig:JBOfig3">1.4</a>. Already there is some indication
+of different dynamics at different ρ. However, careful
+quantitative analysis of these signals requires CHS
+phasor analysis (Appendices <a href="#app:phasors"
+data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>).
+Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
+data-reference="fig:PhotonicsFig5">1.5</a> shows the results of such
+analysis on such dynamic traces.</p>
+<p>Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
+data-reference="fig:PhotonicsFig5">1.5</a> shows average results for the
+D̃/Õ over ρ
+for various data-types. To reproduce these experimental results
+(Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
+data-reference="fig:PhotonicsFig5">1.5</a>(a)(c)) and help interpret
+them, we used 𝒮 maps to simulate recovered
+phasors for a three-layered medium (Appendix <a
+href="#app:simSigFromSen" data-reference-type="ref"
+data-reference="app:simSigFromSen">[app:simSigFromSen]</a>), structured
+as follows:<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p>
+<ul>
+<li><p>A top layer (10 mm thick) featuring arterial volume oscillations
+represented by <span
+class="math inline">\(\acrshort{Dph}~=~\phasor{0.05}{20}{\micro\Molar}\)</span>
+and <span
+class="math inline">\(\acrshort{Oph}~=~\phasor{0.95}{20}{\micro\Molar}\)</span>.</p></li>
+<li><p>An intermediate layer (at depths of 10 mm–15 mm) featuring no
+hemodynamic oscillations.</p></li>
+<li><p>A bottom layer (at depths of 15 mm–30 mm) featuring blood flow
+oscillations represented by <span
+class="math inline">\(\acrshort{Dph}~=~\phasor{3.00}{-180}{\micro\Molar}\)</span>
+and <span
+class="math inline">\(\acrshort{Oph}~=~\phasor{3.00}{0}{\micro\Molar}\)</span>.</p></li>
+</ul>
+<p>The simulation parameters including absolute μ<sub>a</sub>
+and μ′<sub>s</sub> can be found in
+Section <a href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">1.1</a>. The simulated phasors
+are reasonable given the results in both <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
+class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span> as
+well as <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>. This
+three-layered dynamic medium, which simulates arterial blood volume
+oscillations in the scalp, no hemodynamic oscillations in the skull, and
+flow velocity oscillations in the brain, we retrieved the apparent
+phasors for all of the same measurements done experimentally (Figure <a
+href="#fig:PhotonicsFig5" data-reference-type="ref"
+data-reference="fig:PhotonicsFig5">1.5</a>(b)(d)) and were able to
+largely reproduce our experimental results. From these simulations one
+may note the significantly greater value of the amplitude of D̃/Õ for SS
+<em>I</em>
+and SD φ
+versus SD <em>I</em> at
+ρs greater than 25 mm, and the
+shorter ρ range (approximately
+15 mm–20 mm) at which SS <em>I</em> and
+SD φ
+yield the asymptotic phase value of -180° for D̃/Õ, which is only
+approached by SD <em>I</em> at
+approximately 35 mm.</p>
+<p>These results in Figure <a href="#fig:PhotonicsFig5"
+data-reference-type="ref" data-reference="fig:PhotonicsFig5">1.5</a>
+provide indications on the different depth-sensitivity of three sets of
+data collected in non-invasive FD NIRS, namely SD
+<em>I</em>, SD
+φ, and SS
+<em>I</em>. It is known that SD
+<em>I</em>
+and SD φ
+have different regions of 𝒮 within tissue, with SD
+φ data probing deeper than
+SD <em>I</em>, and
+that SS <em>I</em>
+affords a reduced 𝒮 to the most superficial
+tissue layer (Figures <a href="#fig:MDsetSDsen"
+data-reference-type="ref" data-reference="fig:MDsetSDsen">1.1</a>,<a
+href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">1.2</a>,&amp;<a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">[fig:DSsenSDSSDSsenCurve]</a>).
+In Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
+data-reference="fig:PhotonicsFig5">1.5</a>, SD
+<em>I</em>
+data shows a trend as the ρ increases, corresponding
+to the larger contribution from deeper tissue sensed at greater ρs.
+It is therefore expected that the asymptotic value of SD
+<em>I</em>
+data at large ρ is more representative of
+deeper brain tissue, even though it still remains sensitive to
+extracerebral, superficial tissue. Probably more surprisingly, the SD
+φ data does not show a
+similar trend with ρ, or at least SD
+φ data appear to reach their
+asymptotic value at a relatively short distance of about 20 mm. We
+assign this behavior to a significantly greater 𝒮
+of SD φ
+data versus SD <em>I</em> data
+to deeper, cerebral tissue. Similarly, and in this case expectedly,
+SS <em>I</em> data
+also shows a greater 𝒮 to deeper tissue with
+respect to SD <em>I</em> data.
+A major advantage of SD φ
+data over SS <em>I</em> data
+is that it only needs one source-detector pair, but it requires the
+instrumental complexity of FD technology. The increased
+noise in φ measurements affects even
+more strongly SS φ
+data, not reported here, than SD φ
+data because SS is essentially a derivative
+measurement which typically amplify noise.</p>
+<p>The results presented here provide evidence that the pursuit of φ
+and SS data-types was warranted.
+Therefore, these studies of multiple ρs <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018 blaneyMultiDistanceFrequencyDomainOptical2019"></span>
+motivated us to explore these data-types in more detail and develop
+further methods utilizing them. The follow chapter will introduce the
+result of this development, DS, and subsequent chapters
+expand on this novel data-type.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The sum of sensitivity to absorption change (𝒮) over the whole medium is
+one if the considered perturbation volumes, see Appendix <a
+href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In the case <span class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span> the 1 probe was
+placed on the right forehead<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Motivation for these phasors is found in Part <a
+href="#prt:cereHemo" data-reference-type="ref"
+data-reference="prt:cereHemo">[prt:cereHemo]</a>.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch1.html" class="btn btn-sm btn-outline-secondary">← Motivation for Seeking Deep Measurements</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch3.html" class="btn btn-sm btn-outline-secondary">Introduction to Dual-Slope →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

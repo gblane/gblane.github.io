@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Determination of Coherence · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Appendices</div>
+                <h1 class="fw-bold mb-3">Determination of Coherence</h1>
+                <hr class="mb-4">
+
+                <h1 id="app:detCoh">Determination of Coherence</h1>
+<p>We identify times and frequencies of significant coherence between
+two signals in a wavelet scalogram by comparing the measured coherence
+to a threshold generated with random surrogate data (Chapter <a
+href="#ch:signCoh" data-reference-type="ref"
+data-reference="ch:signCoh">[ch:signCoh]</a>). This is especially
+important in CHS analysis which focuses on
+signals pairs involving ΔO, ΔD,
+and ΔA. However, in general,
+these methods can be applied to any pair of signals for which you wish
+to find times and frequencies where they are significantly coherent.</p>
+<h2 id="coherence">Coherence</h2>
+<p>𝔠 is a metric used to
+examine the relationship between two signals. Take the two signals <span
+class="math inline">\(x(t)\)</span> and <span
+class="math inline">\(y(t)\)</span> which are a function of time (<span
+class="math inline">\(t\)</span>). Given these two signals we can
+discuss the 𝔠 between them, written as
+<span class="math inline">\(\mathfrak{C}(\widetilde{x}(f),
+\widetilde{y}(f))\)</span>, where <span
+class="math inline">\(\widetilde{x}(f)\)</span> and <span
+class="math inline">\(\widetilde{y}(f)\)</span> are the phasors of <span
+class="math inline">\(x(t)\)</span> and <span
+class="math inline">\(y(t)\)</span>, respectively at frequency <span
+class="math inline">\(f\)</span>.</p>
+<p>Depending on the methods utilized to find the signal’s phasors, 𝔠
+may be a function of frequency (<span class="math inline">\(f\)</span>,
+corresponding to the phasor frequency) or both <span
+class="math inline">\(f\)</span> and <span
+class="math inline">\(t\)</span> (if the analysis allows for time
+resolved phasors). Values of coherence are bounded by 0, &amp; 1 (<span
+class="math inline">\(\acrshort{coh}\in[0,1]\)</span>) taking the value
+of 0 if <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> have no linear relationship whatsoever
+and 1 if they are related by a perfect linear system. For example take
+the time domain transfer function (<em>id est</em> impulse response)
+<span class="math inline">\(h(t)\)</span>, then we can write the
+following: <span class="math display">\[\begin{split}
+    \mathfrak{C}(\widetilde{x}(f), \widetilde{y}(f))\\
+    \begin{cases}
+        = 1 &amp; y(t)=h(t) \otimes x(t) \\
+        \in [0, 1) &amp; otherwise
+    \end{cases}
+    \end{split}\]</span> which is equivalent to: <span
+class="math display">\[\begin{split}
+    \acrshort{coh}(\widetilde{x}(f), \widetilde{y}(f))\\
+    \begin{cases}
+        = 1 &amp; \widetilde{y}(f)=\widetilde{h}(f) \times
+\widetilde{x}(f) \\
+        \in [0, 1) &amp; otherwise
+    \end{cases}
+    \end{split}\]</span> However, in reality two signals are not related
+with a <em>perfect</em> linear system, therefore realistically <span
+class="math inline">\(\acrshort{coh}\in[0,1)\)</span> for real world
+measurements.</p>
+<p>As mentioned above if the phasors are time resolved such as in a
+spectrogram or wavelet scaleogram, the 𝔠 is also time resolved (as
+well as frequency resolved). Additionally, depending on the specific
+analysis methods are parameters the actual meaning of the value of 𝔠
+may be difficult to interpret.</p>
+<h3 id="wavelet-coherence">Wavelet Coherence</h3>
+<p>"</p>
+<p>We utilize a modified version of the MATLAB "wcoherence" function
+to determine the 𝔠 between two signals (say
+<span class="math inline">\(x(t)\)</span> and <span
+class="math inline">\(y(t)\)</span>). Wavelet analysis enables the time
+and frequency resolved phasors of the signals (<span
+class="math inline">\(\widetilde{x}(t,f)\)</span> and <span
+class="math inline">\(\widetilde{y}(t,f)\)</span>). Thus, in this
+section (unlike previous) we show when values are functions of both time
+(<span class="math inline">\(t\)</span>) and (<span
+class="math inline">\(f\)</span>) to highlight this feature of wavelet
+analysis.</p>
+<p>First we obtain the <span
+class="math inline">\(\widetilde{x}(t,f)\)</span> and <span
+class="math inline">\(\widetilde{y}(t,f)\)</span> phasors from the CWT
+as shown in Appendix <a href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>. Using these phasors we
+can write the wavelet 𝔠 <span class="citation"
+data-cites="mathworksMATLABHelp2020"></span>: <span
+class="math display">\[\begin{split}
+        \acrshort{coh}(\widetilde{x}(t,f), \widetilde{y}(t,f))=\\
+        \frac{|\mathfrak{S}\left[\widetilde{x}^{\ast}(t,f)\widetilde{y}(t,f)\right]|^2}
+        {\mathfrak{S}\left[|\widetilde{x}(t,f)|^2\right]\mathfrak{S}\left[|\widetilde{y}(t,f)|^2\right]}
+    \end{split}
+    \label{equ:coh}\]</span> where <span
+class="math inline">\(\mathfrak{S}\)</span> is a time-frequency
+smoothing operator. In the case of our modified "wcoherence" function,
+<span class="math inline">\(\mathfrak{S}\)</span> only smooths in time
+(to preserve frequency resolution) and the smoothing window is a
+Gaussian that scales with the wavelet scale (same as the MATLAB default for
+"wcoherence").</p>
+<p>Examining Equation <a href="#equ:coh" data-reference-type="ref"
+data-reference="equ:coh">[equ:coh]</a> we see that the numerator is the
+squared magnitude of the cross-spectrum, and the denominator is the
+squared magnitude of the two signals phasor’s multiplied together.
+Therefore, 𝔠 may be thought of as a
+normalized cross-spectral density. Some insight may now also be gained
+about the limiting values of 𝔠 now. If the signals are
+completely coherent and the 𝔠 equal to 1, then the
+cross-spectral density is equal to the power-spectral densities of the
+two signals multiplied together. This is one way of saying that all of
+the power from the two signals is coupled together. Conversely if 𝔠
+is 0, then the cross-spectral density is also 0 which means none of the
+power between the signals is coupled.</p>
+<p>Besides that idea that higher 𝔠 means a more coupled
+signals, the interpretation of the actual value of 𝔠
+is difficult. This is in-part because the vlaue of 𝔠
+is dependent on analysis parameters and importantly <span
+class="math inline">\(\mathfrak{S}\)</span>. As the window size of <span
+class="math inline">\(\mathfrak{S}\)</span> becomes smaller 𝔠
+becomes biased to larger values, and if no smoothing is applied (<span
+class="math inline">\(\mathfrak{S}\)</span> having a window of one
+time-frequency pixel) 𝔠 will be 1. Therefore there
+is a trade-off between time-frequency resolution and the ease of
+interpretation of 𝔠. "</p>
+<h2 id="coherence-thresholding">Coherence Thresholding</h2>
+<p>Since the interpretation of the actual value of 𝔠
+is difficult, we opt to make a statement about the significance. To do
+this we do a test for significance at each time-frequency pixel in the
+wavelet scalogram. The threshold for 95 % significance is found using
+the method in Chapter <a href="#ch:signCoh" data-reference-type="ref"
+data-reference="ch:signCoh">[ch:signCoh]</a>. Then this threshold map is
+compared to the 𝔠 map for the two signals of
+interest. Regions where the 𝔠 is above threshold are
+considered to be times and frequencies of significant coherence. Only
+these significant coherence regions are used in further analysis.</p>
+<h3 id="coherent-hemodynamics-spectroscopy-thresholding">Coherent
+Hemodynamics Spectroscopy Thresholding</h3>
+<p>In CHS the region of significant
+coherence is determined for 𝔠(T̃,Ã), 𝔠(Õ,Ã), and 𝔠(D̃,Ã) since ABP
+is assumed to be the chief hemodynamic driver. This is with the goal of
+finding time-frequency regions for the analysis of T̃/Ã and D̃/Õ. For T̃/Ã only areas in
+time-frequency where 𝔠(T̃,Ã) is significant are used
+for analysis. While for D̃/Õ only times-frequency
+areas where 𝔠(Õ,Ã) <em>and</em> 𝔠(D̃,Ã) is significant is used
+for analysis. This selection of only coherent phasor ratio vectors is
+the reason for the <em>coherent</em> name of CHS.</p>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="app7.html" class="btn btn-sm btn-outline-secondary">← Phasor Analysis</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="postface.html" class="btn btn-sm btn-outline-secondary">Current and Future Work →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

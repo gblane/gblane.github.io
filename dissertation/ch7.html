@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test for Significant Coherence · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part II · Cerebral Hemodynamics</div>
+                <h1 class="fw-bold mb-3">Test for Significant Coherence</h1>
+                <hr class="mb-4">
+
+                <h1 id="test-for-significant-coherence">Test for Significant
+Coherence</h1>
+<p><span id="ch:signCoh" data-label="ch:signCoh"></span></p>
+<h2 id="applications-for-a-significant-coherence-test">Applications for
+a Significant Coherence Test</h2>
+<p>In <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span> we
+developed a method to determine whether or not a given pair of signals
+exhibits significant 𝔠. A quantitative assessment
+of the level of 𝔠 between two signals is
+important in many applications. Two bio-medically relevant cases are
+TFA <span class="citation"
+data-cites="claassenTransferFunctionAnalysis2016"></span> of cerebral
+AR and CHS
+<span class="citation"
+data-cites="fantiniDynamicModelTissue2014"></span> (Chapter <a
+href="#ch:CHSintro" data-reference-type="ref"
+data-reference="ch:CHSintro">[ch:CHSintro]</a>), where the first signal
+is ABP and the second signal is
+either cerebral BF velocity in the middle
+cerebral artery (with trans-cranial Doppler ultrasound) or ΔO and
+ΔD, in the cases of TFA
+and CHS, respectively. To
+determine the time intervals and frequency bands in which the signals
+are significantly coherent, a 𝔠 threshold is required.</p>
+<p>In TFA of AR,
+one describes AR in terms of a high-pass
+transfer function between ABP and BF
+velocity <span class="citation"
+data-cites="zhangTransferFunctionAnalysis1998"></span>. In CHS,
+one measures cerebral hemodynamics (typically the cerebral ΔO and
+ΔD with NIRS) that are coherent with a
+specific physiological signal, most commonlyΔA
+<span class="citation"
+data-cites="kainerstorferPracticalStepsApplying2014 sassaroliMeaningCoherentIts2018"></span>.
+The goal of CHS is to translate cerebral
+NIRS measurements into
+physiologically relevant information on cerebral perfusion, including
+AR <span class="citation"
+data-cites="kainerstorferCerebralAutoregulationMicrovasculature2015 khaksariDepthDependenceCoherent2018"></span>
+and cerebral BF <span class="citation"
+data-cites="phamQuantitativeMeasurementsCerebral2019"></span>.</p>
+<p>Methods based on TFA rely on a high level of
+𝔠 between signals considered
+as input and output of a linear system. A high 𝔠
+between input and output signals supports the assumption of a linear,
+uni-variate relationship between input and output signals. However, the
+question of how can one efficiently determine a threshold value of
+significant 𝔠 for the specific signals
+and experimental conditions of a given measurement protocol is still
+open.</p>
+<p>This key requirement of determining of time intervals and frequency
+bands that feature significant 𝔠 between the measured
+signals is just as important for CHS as for TFA.
+In CHS the key signals are ΔO,
+ΔD, ΔT,
+and ΔA <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018"></span>. A difficulty
+arises in considering multiple coherence functions when additional
+physiological effects beyond ABP must be taken into account
+<span class="citation"
+data-cites="paneraiMultipleCoherenceCerebral2006"></span>. An additional
+difficulty of CHS, and of any time-varying
+process, are non-stationary conditions, for which the identification of
+short-lived the coherent periods require a time resolved signal
+processing technique. Therefore, accounting for this non-stationary
+nature and to determine time periods and frequency bands of significant
+𝔠, a 𝔠
+threshold must be found for each time-frequency point.</p>
+<h2 id="the-coherence-threshold-time-frequency-map">The Coherence
+Threshold Time-Frequency Map</h2>
+<p>The work in <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span> focused
+on an algorithm for the determination of this 𝔠
+threshold for use in non-stationary TFA, CHS,
+and similar techniques. This threshold of significant 𝔠
+can be found using multiple samples of surrogate data to generate a
+distribution of 𝔠. Then the percentile of
+the distribution can be used as the threshold corresponding to a
+significance level. However, storing the entire 𝔠
+distribution uses a large amount of RAM. To address this problem,
+we have developed an algorithm to determine the 𝔠
+threshold with little RAM. In-fact, a sub-field of
+data streaming algorithms is devoted to finding quantiles using little
+RAM.</p>
+<p>In non-stationary TFA and CHS,
+we is interested in identifying time intervals and frequency bands that
+feature significant 𝔠 and then analyzing the
+phase and gain relationships of these 𝔠 signals. While various
+signal processing methods can be used, this work will focus on wavelet
+analysis. Using the analytic Morlet mother wavelet, the wavelet 𝔠
+scalogram and wavelet transfer function scalogram are found for pairs of
+signals. The wavelet 𝔠 calculated from
+experimental data (Appendix <a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>)
+is compared against a threshold of 𝔠 (obtained from surrogate
+data) to determine times and frequencies of significant 𝔠,
+and then only those regions in the time-frequency space are analyzed
+(Appendix <a href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>). This workflow relies on
+the predetermination of a 𝔠 threshold map in
+time-frequency space. Such 𝔠 thresholds are obtained by
+generating multiple 100–10000 surrogate data signals with GRN
+to create a distribution of 𝔠 <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004 paneraiStatisticalCriteriaEstimation2016 tianWaveletCoherenceAnalysis2016 grinstedApplicationCrossWavelet2004 milesEstimationSignalCoherence2011"></span>.
+The 95<sup>th</sup> percentile corresponding to a significance level
+<span class="math inline">\(\alpha=0.05\)</span> of these distributions
+is then taken as the 𝔠 threshold. However, some
+studies in the literature used a higher number of iterations to find a
+single 𝔠 threshold that was then
+applied to the entire time-frequency space or as a function of frequency
+but not time <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004 paneraiStatisticalCriteriaEstimation2016 milesEstimationSignalCoherence2011"></span>.
+Additionally, cases with large amount or surrogate data (approximately
+10000) limited their sample length to 512 <span class="citation"
+data-cites="paneraiStatisticalCriteriaEstimation2016"></span>. In
+principle, each time-frequency point should have its own 𝔠
+threshold since the 𝔠 distribution changes with
+frequency and proximity to the temporal edges of the time-frequency map.
+This process of finding 𝔠 thresholds for each pixel
+can be very expensive in terms of RAM usage due to the
+requirement to store the entire distribution of 𝔠
+values.</p>
+<h2 id="methods-for-creating-the-coherence-threshold-map">Methods for
+Creating the Coherence Threshold Map</h2>
+<p>The problem of determining the desired percentile of a large
+distribution of data with limited RAM can be classified as a
+streaming problem, for which a variety of techniques has been proposed
+<span class="citation"
+data-cites="buragohainQuantilesStreams2009 mankuApproximateMediansOther1998 greenwaldSpaceefficientOnlineComputation2001 shrivastavaMedians2004"></span>.
+The goal of this work is not to devise a conceptually novel streaming
+algorithm, but rather to develop an efficient method suited for the
+specific needs of TFA and CHS
+to determine a wavelet coherence threshold from GRN
+surrogate data. We describe an approach to determine wavelet 𝔠
+thresholds with little RAM usage. The algorithm is
+tailored to the MATLAB and takes advantage of
+the native matrix operations since the desired result is a map (2D
+array) of thresholds in the time-frequency space.</p>
+<p>One method for estimating thresholds of significant coherence in
+signal analysis is the random surrogate data method <span
+class="citation" data-cites="faesSurrogateDataAnalysis2004"></span>,
+which has been applied to TFA of AR
+<span class="citation"
+data-cites="paneraiStatisticalCriteriaEstimation2016"></span> and CHS
+<span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018"></span>. In this method,
+GRNs are used to populate two
+signals in time. These random time signals are then analyzed with
+whatever coherence analysis is desired, and the 𝔠
+of the GRN signals found. GRN
+signals are generated over many iterations (typically 100) to create a
+distribution of 𝔠 values for these surrogate
+data <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004"></span>.
+There have been cases where large numbers of iterations have been
+reported of 15000, but this was done for a single threshold value and
+not a map <span class="citation"
+data-cites="paneraiStatisticalCriteriaEstimation2016"></span>. Other
+methods exist such as scrambling a real signal either in TD or
+FD <span class="citation"
+data-cites="faesSurrogateDataAnalysis2004"></span>; however, all
+surrogate data methods result in distributions of 𝔠.
+Although 100 iterations have been used in the past, 1000–10000 or
+greater iterations are desirable for more accurate threshold estimates
+since threshold maps show heterogeneity when too few iterations are
+performed. An example of this heterogeneity will be shown in the
+subsequent sections. A threshold of significance is defined as a given
+percentile of the coherence distribution for surrogate data, with the
+95<sup>th</sup> percentile being a typical choice (<span
+class="math inline">\(\alpha=0.05\)</span>).</p>
+<h4 id="simple-threshold-determination">Simple Threshold
+Determination</h4>
+<p>The simplest method for determination of the desired threshold
+corresponding to a given percentile involves storing the entire 𝔠
+distribution in RAM over the multiple
+iterations of GRN signals. Once all 𝔠
+values in the distribution have been populated, the values are sorted
+and the one corresponding to the desired percentile accessed. The main
+disadvantage of this method is the need for large amounts of RAM.
+Since many signal processing techniques create time-frequency maps of
+coherence, each iteration will create a 2D array (rows and columns
+representing time and frequency, respectively) of 𝔠
+values. This means that the distribution of 𝔠
+values will be stored in a 3D array (rows by columns by
+pages) with the samples indexed along the page dimension. In an example
+where we have a time signal made of 10000 points and the signal analysis
+method will produce 200 frequencies (reasonable for wavelet analysis),
+we will have a 10000 × 200 array of type double (8) where <span
+class="math inline">\(n_{samp}\)</span> is the number of surrogate data
+samples. For typical values of <span
+class="math inline">\(n_{samp}\)</span>, one requires 1.6   of RAM
+for this one variable. However, if we consider more desirable values for
+<span class="math inline">\(n_{samp}\)</span> of 1000–10000 we find the
+need for 16  –160   of RAM, matching or exceeding the
+full capacity of memory of most desktop computers at the time of this
+work. This large RAM requirement likely has led
+to either few iterations being chosen <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004"></span>
+or a single threshold (instead of a map) being estimated <span
+class="citation"
+data-cites="paneraiStatisticalCriteriaEstimation2016"></span>.
+Therefore, this simple method of threshold determination is not
+practical when a threshold map is desired.</p>
+<h4
+id="memory-efficient-algorithm-for-coherence-threshold-determination">Memory
+Efficient Algorithm for Coherence Threshold Determination</h4>
+<figure id="fig:BSPfig1">
+<div class="center">
+<img src="figures/BSPfig1.png" class="img-fluid" alt="BSPfig1" style="width:90.0%">
+</div>
+<figcaption>Structure of the 3-dimensional (3D) array <span
+class="math inline">\(\mathbf{ABN}\)</span> used in the efficient
+threshold algorithm. Each voxel contains a Coherence (𝔠)
+value and the values are increasing in the direction of increasing page
+number. All 𝔠 values below the threshold
+make up the conceptual array <span
+class="math inline">\(\mathbf{A}_{all}\)</span>, this array is never
+stored in its entirety, but only its subset <span
+class="math inline">\(\mathbf{A}\)</span>. The 2-dimensional (2D)
+array <span class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span>
+is stored and contains the length of the conceptual <span
+class="math inline">\(\mathbf{A}_{all}\)</span> for each row and column
+combination. <span class="math inline">\(\mathbf{A}\)</span> and <span
+class="math inline">\(\mathbf{B}\)</span> contain the 𝔠
+sample subsets adjacent to the desired percentile. The threshold 2D
+array (<span class="math inline">\(\mathbf{T}\)</span>) is the first
+element in the sorted <span class="math inline">\(\mathbf{B}\)</span>
+set. The cube shows the implementation of the <span
+class="math inline">\(\mathbf{A}\)</span>, <span
+class="math inline">\(\mathbf{B}\)</span>, and <span
+class="math inline">\(\mathbf{N}\)</span> sets in a 3D
+array. The rows and columns are the time and frequency dimensions while
+the page dimension is 𝔠 value samples. The last
+page of <span class="math inline">\(\mathbf{ABN}\)</span> is a null page
+(<span class="math inline">\(\mathbf{N}\)</span>) that contains a new
+𝔠 sample at each iterative
+step of the algorithm.<br />
+Note 1: This chart can be found as Figure 1 in <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>.</figcaption>
+</figure>
+<figure id="fig:BSPfig2">
+<div class="center">
+<img src="figures/BSPfig2.png" class="img-fluid" alt="BSPfig2">
+</div>
+<figcaption>[(a-c) Initialization] a) <span
+class="math inline">\(\mathbf{ABN}\)</span> Array is initialized with
+<span class="math inline">\(2m_{kp}\)</span> samples and sorted. At the
+end of this phase the thresholds will be at page at index <span
+class="math inline">\(\lfloor
+m_{kp}\left(1-2\alpha\right)\rceil\)</span>. b) In order to shift the
+threshold page (<span class="math inline">\(\mathbf{T}\)</span>) to the
+first page of (<span class="math inline">\(\mathbf{B}\)</span>),
+elements too small to be in <span
+class="math inline">\(\mathbf{A}\)</span> (which belong to its first
+<span class="math inline">\(\lfloor
+m_{kp}\left(1-2\alpha\right)\rceil\)</span> pages) are set to the large
+dummy value (<code>NaN</code> in MathWorks MATrix LABoratory (MATLAB)). c) <span
+class="math inline">\(\mathbf{ABN}\)</span> is sorted, and the
+thresholds are set in the correct page, <span
+class="math inline">\(\mathbf{T}\)</span>. [(d-f) Adding Samples] d)
+2-dimensional (2D) array of new coherence
+samples is placed in <span class="math inline">\(\mathbf{N}\)</span>
+replacing what was there. Then the <span
+class="math inline">\(\mathbf{ABN}\)</span> is sorted. Note that the
+figure does not show an example of first iteration, thus various dummy
+values are already present. e) For row and columns combinations where
+the new element was less than or equal to the last threshold estimate,
+the first page of the array is set to the large dummy value. f) Array is
+sorted. [(g-i) Shifting Elements] g) Based on the value of the new
+samples it is calculated whether they belonged to the <span
+class="math inline">\(\mathbf{A}\)</span> set or the <span
+class="math inline">\(\mathbf{B}\)</span> set and whether the sets are
+the right size for the desired threshold to be at their boundary. Now it
+can be seen that the current threshold estimate is scattered in the page
+dimension and the pages must be shifted for each row and column
+combination. h) For row and column combinations for which set <span
+class="math inline">\(\mathbf{A}\)</span> is now too large, a large
+dummy value is placed in the first page of the array. For cases where
+the <span class="math inline">\(\mathbf{A}\)</span> set is now too
+small, a small dummy value (<code>-Inf</code> in MATLAB) is placed in the last
+page of the array. i) Again, <span
+class="math inline">\(\mathbf{ABN}\)</span> is sorted setting the
+thresholds to be in the correct page, <span
+class="math inline">\(\mathbf{T}\)</span>.<br />
+Note 1: This is found as Figure 2 in <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>.<br />
+Note 2: The full algorithm is shown in Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>.<br />
+Note 3: <span class="math inline">\(\mathbf{A}\)</span>: Set below
+threshold; <span class="math inline">\(\mathbf{B}\)</span>: Set above
+threshold; <span class="math inline">\(\mathbf{T}\)</span>: Page
+corresponding to threshold estimate; <span
+class="math inline">\(\mathbf{N}\)</span>: Extra null page. Blue:
+Number; Light Blue: Number belonging to threshold estimate; Yellow:
+Lower dummy value (<code>-Inf</code> in MATLAB), Red: Upper dummy
+value (<code>NaN</code> in MATLAB).</figcaption>
+</figure>
+<h5 id="summary-of-memory-efficient-algorithm">Summary of Memory
+Efficient Algorithm</h5>
+<p>"</p>
+<p>Here we present a method to estimate the <span
+class="math inline">\(\left(\left(1-\alpha\right)\times100\right)\)</span><sup>th</sup>
+percentile and associated coherence threshold without having to store
+the entire coherence distribution in RAM (Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>) as in <span
+class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>. The
+algorithm is summarized below and will be described in detail in the
+following sections. Additionally, whenever a 𝔠
+value is retrieved that methods in Appendix <a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>
+are used. To estimate the desired percentile with less RAM,
+we start with an initial step that requires building the 𝔠
+distribution for several surrogate data samples (<span
+class="math inline">\(2m_{kp}\approx100\)</span>) that is much smaller
+than the desired value of <span class="math inline">\(n_{samp}\)</span>
+1000–10000 or greater) but similar to the lesser number of sample
+iterations used in the past <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004"></span>.
+Throughout each iterative step of the proposed algorithm, which
+processes a new sample of the 𝔠 distribution, the approach
+is to retain only 𝔠 values that are close to
+the current threshold estimate (Figure <a href="#fig:BSPfig1"
+data-reference-type="ref" data-reference="fig:BSPfig1">1.1</a>). For
+this purpose, a 3D array <span
+class="math inline">\(\mathbf{ABN}\)</span> (time by frequency by
+surrogate sample index; "AB" in Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>) is built. The
+notations <span class="math inline">\(\mathbf{ABN}\)</span> follows from
+the fact that this 3D array is made of three
+sub-arrays <span class="math inline">\(\mathbf{A}\)</span>, <span
+class="math inline">\(\mathbf{B}\)</span>, and <span
+class="math inline">\(\mathbf{N}\)</span>; however, these sub-arrays are
+never separated in RAM and always stored as the
+combination <span class="math inline">\(\mathbf{ABN}\)</span>. <span
+class="math inline">\(\mathbf{ABN}\)</span> consists of a total <span
+class="math inline">\(2m_{kp}+1\)</span> (<span
+class="math inline">\(2m_{kp}\)</span> is "Nkp" in Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>) pages, where each page
+is a 2D time-frequency array: the
+first <span class="math inline">\(m_{kp}\)</span> pages contain
+coherence values below the desired percentile (3D
+subarray <span class="math inline">\(\mathbf{A}\)</span>); the next
+<span class="math inline">\(m_{kp}\)</span> pages contain 𝔠
+values above the desired percentile (3D sub-array <span
+class="math inline">\(\mathbf{B}\)</span>; the last page is used in the
+algorithm to accept a new 𝔠 sample in each iteration
+(2D array <span
+class="math inline">\(\mathbf{N}\)</span>). The first page of <span
+class="math inline">\(\mathbf{B}\)</span> is named <span
+class="math inline">\(\mathbf{T}\)</span> ("cohThresh" in Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>), which is a 2D
+array containing the 𝔠 threshold estimates for
+each time and frequency. First, the algorithm initializes the first
+<span class="math inline">\(2m_{kp}\)</span> pages <span
+class="math inline">\(\mathbf{AB}\)</span> by populating them with the
+first <span class="math inline">\(n_f \times n_t \times 2m_{kp}\)</span>
+coherence samples and, after ordering the samples along the page
+dimension at each time-frequency pixel, estimates the threshold
+(Figure <a href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(a-c) and Listings <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(101-123)). Here, <span
+class="math inline">\(n_f\)</span> and <span
+class="math inline">\(n_t\)</span> are the number of frequency samples
+and the number of time samples ("N1" and "N2" in Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>), respectively. Next, a
+loop is entered, where a new 𝔠 sample is taken at each
+iteration. In the loop, the new 2D array of coherence samples
+is first added to <span class="math inline">\(\mathbf{ABN}\)</span> (in
+the last page, <span class="math inline">\(\mathbf{N}\)</span> and then
+the elements of <span class="math inline">\(\mathbf{ABN}\)</span> are
+properly shifted in the page dimension to keep the 𝔠
+threshold array <span class="math inline">\(\mathbf{T}\)</span> at the
+same page index. Note that during this rearrangement some 𝔠
+values that were present in the <span
+class="math inline">\(\mathbf{ABN}\)</span> array will be discarded and
+will be substituted by some elements of the new coherent sample. The
+method to shift the elements of <span
+class="math inline">\(\mathbf{ABN}\)</span> is controlled by a 2D
+array, <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> ("An" in
+Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>), which contains the
+total number of samples (updated at each iterative step) that are below
+threshold at each time-frequency pixel. <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> is named
+such since it represents the length of the conceptual set <span
+class="math inline">\(\mathbf{A}_{all}\)</span> which contains all the
+samples below the threshold estimate ever extracted until that step of
+the loop (including samples that were extracted and are no more in the
+array <span class="math inline">\(\mathbf{ABN}\)</span>). In the example
+where a 10000 × 200 time-frequency array of thresholds is desired; each
+page would take 16   of RAM. For <span
+class="math inline">\(m=50\)</span> (<em>id est</em> if <span
+class="math inline">\(\mathbf{A}\)</span> and <span
+class="math inline">\(\mathbf{B}\)</span> are each 50 pages deep), the
+3D array <span
+class="math inline">\(\mathbf{ABN}\)</span> would consist of 101 pages.
+This is 1.6   of RAM, reasonable for most
+desktop computers at the time of this work, but allowing for an
+arbitrary <span class="math inline">\(n_{samp}\)</span> of 1000–10000 or
+greater. Notice that if we compare this amount of memory to the examples
+where all coherence samples were saved, the memory usage is equivalent
+to <span class="math inline">\(n_{samp}=100\)</span> for all samples
+saved. This is the key advantage of the algorithm, namely the ability to
+consider an arbitrarily large number of samples with RAM
+usage as if <span class="math inline">\(n_{samp}=2m_{kp}+1\)</span> and
+all samples were saved. Below, we describe in detail the three steps of
+the algorithm: initialization (Listings <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(101-123)), adding
+samples (Listings <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(125-145)), and shifting
+elements (Listings <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(147-168)). "</p>
+<h5 id="initialization">Initialization</h5>
+<p>"</p>
+<p>First, the initial <span class="math inline">\(2m_{kp}\)</span>
+values of 𝔠 obtained from analyzing
+GRN data with Appendix <a
+href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a>. These 𝔠
+values are are used to populate the first <span
+class="math inline">\(2m_{kp}\)</span> pages of the <span
+class="math inline">\(\mathbf{ABN}\)</span> (Listings <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(101-123)). Those values
+are sorted in the page dimension (Figure <a href="#fig:BSPfig2"
+data-reference-type="ref" data-reference="fig:BSPfig2">1.2</a>(a) and
+Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(116)) so that <span
+class="math inline">\(\mathbf{T}\)</span> is easily identified. For
+example, in the case of <span class="math inline">\(\mathbf{A}\)</span>
+and <span class="math inline">\(\mathbf{B}\)</span> having 50 pages each
+<span class="math inline">\(m_{kp}=50\)</span> and <span
+class="math inline">\(\alpha=0.05\)</span>, the coherence thresholds
+will be at page 96 of <span class="math inline">\(\mathbf{ABN}\)</span>.
+Second, we shift the coherence thresholds to the first element of the
+<span class="math inline">\(\mathbf{B}\)</span> sub-array (or page <span
+class="math inline">\(m_{kp}+1\)</span>, page 51 in this example, of the
+<span class="math inline">\(\mathbf{ABN}\)</span> array); to do this,
+the pages with the smallest <span class="math inline">\(\lfloor
+m_{kp}\left(1-2\alpha\right)\rceil\)</span> values in the <span
+class="math inline">\(\mathbf{A}\)</span> sub-array (<em>id est</em> in
+the first 45 pages in this example with <span
+class="math inline">\(m_{kp}=50\)</span> and <span
+class="math inline">\(\alpha=0.05\)</span> are redefined to the large
+dummy value (in the case of MATLAB implementation, "NaN")
+(Figure <a href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(b) and Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(117)). Third, the <span
+class="math inline">\(\mathbf{ABN}\)</span> array is again sorted in the
+page dimension, thus placing the page <span
+class="math inline">\(\mathbf{T}\)</span> at the first page of the <span
+class="math inline">\(\mathbf{B}\)</span> sub-array (Figure <a
+href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(c) and Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(118)), or at page 51 of
+the <span class="math inline">\(\mathbf{ABN}\)</span> array. At this
+stage, the 3D array <span
+class="math inline">\(\mathbf{ABN}\)</span> has the first <span
+class="math inline">\(m_{kp}=50\)</span> pages with 𝔠
+values under threshold (<span class="math inline">\(\mathbf{A}\)</span>
+array), the 5 following pages (the first 5 pages of <span
+class="math inline">\(\mathbf{B}\)</span>) with 𝔠
+value equal or above threshold (first page of <span
+class="math inline">\(\mathbf{B}\)</span>), and all the remaining pages
+of the <span class="math inline">\(\mathbf{B}\)</span> and <span
+class="math inline">\(\mathbf{N}\)</span> sub-arrays are filled with the
+large dummy value ("NaN" in MATLAB). <span
+class="math inline">\(\mathbf{T}\)</span> is accessed to obtain the
+current coherence threshold estimates (Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(122)). A 2D
+array is created (<span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span>; "nA" in
+Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(118)) where each
+element contains the number of samples below the threshold estimate for
+each time-frequency pixel. Per the <span
+class="math inline">\(\left(\left(1-\alpha\right)\times100\right)\)</span><sup>th</sup>
+percentile, all elements of this array are initialized to the same value
+(<span
+class="math inline">\(\left(\left(1-\alpha\right)\times100\right)=95\)</span>
+in this example). Because of this initialization, most of the <span
+class="math inline">\(\mathbf{B}\)</span> array is set to the large
+dummy value and the values in the <span
+class="math inline">\(\mathbf{ABN}\)</span> array are sorted in the page
+dimension. "</p>
+<h5 id="adding-samples">Adding Samples</h5>
+<p>"</p>
+<p>The first step taken during each iteration of the threshold updating
+loop is to obtain a new 2D array of coherence value
+samples from GRN’s input into the
+Appendix <a href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a> methods. This 2D
+array fills the last page, <span
+class="math inline">\(\mathbf{N}\)</span>, of the <span
+class="math inline">\(\mathbf{ABN}\)</span> array (Figure <a
+href="#fig:BSPfig1" data-reference-type="ref"
+data-reference="fig:BSPfig1">1.1</a>), replacing its current values
+(Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(128)). For each row and
+column combination, if the new 𝔠 sample is below the
+current threshold estimate, <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> is
+incremented by one; otherwise <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> is
+unchanged (Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(135-136)). Then the
+<span class="math inline">\(\mathbf{ABN}\)</span> array is sorted in the
+page dimension (Figure <a href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(d) and Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(137)), moving the new
+𝔠 samples into <span
+class="math inline">\(\mathbf{A}\)</span> if they are below the
+threshold estimate, or into <span
+class="math inline">\(\mathbf{B}\)</span> if they are above the
+threshold estimate. As a result, one may end up with some 𝔠
+values below the current threshold estimate that are in <span
+class="math inline">\(\mathbf{B}\)</span> (this happens if there is at
+least one element in <span class="math inline">\(\mathbf{N}\)</span>
+below threshold). To shift these elements into <span
+class="math inline">\(\mathbf{A}\)</span> (where they belong), we set
+the corresponding elements of the first page of <span
+class="math inline">\(\mathbf{ABN}\)</span> to the large dummy value
+("NaN" in MATLAB; Figure <a
+href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(e) and Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(142-145)). After
+re-sorting the array <span class="math inline">\(\mathbf{ABN}\)</span>,
+all the elements of <span class="math inline">\(\mathbf{ABN}\)</span>
+below the threshold estimate will be in <span
+class="math inline">\(\mathbf{A}\)</span>. "</p>
+<h5 id="shifting-elements">Shifting Elements</h5>
+<p>"</p>
+<p>The second step taken during each iteration loop is to determine the
+new threshold estimate. This step is based on a comparison between the
+current values in each row and column combination of <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> and the
+expected value of <span class="math inline">\(i(1-\alpha)\)</span>
+("(1-alpha)*n" in Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(152-153)) where <span
+class="math inline">\(i\)</span> is the iteration number ("n" in
+Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>) including the <span
+class="math inline">\(2m_{kp}\)</span> initialization samplings. This is
+because the initialization of the algorithm is considered to take <span
+class="math inline">\(2m_{kp}\)</span> iterations so that the iteration
+number <span class="math inline">\(i\)</span> is representative of the
+total number of samples taken thus far. We describe the performed
+comparisons following MATLAB notation where arrays
+can be compared to scalars resulting in Boolean arrays: if <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}&lt;i\left(1-\alpha\right)\)</span>
+("An&lt;((1-alpha)*n)" in Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(152)), elements must be
+taken from <span class="math inline">\(\mathbf{B}\)</span> and added to
+<span class="math inline">\(\mathbf{A}\)</span> (at those time-frequency
+pixels of the Boolean array where there is a "true"); if <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}&gt;i\left(1-\alpha\right)\)</span>
+("An&gt;((1-alpha)*n)" in Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(153)), (this statement
+generates an almost complementary Boolean array to the previous one) an
+element must be taken from <span
+class="math inline">\(\mathbf{A}\)</span> and added to <span
+class="math inline">\(\mathbf{B}\)</span>; no action is needed if <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{\mathbf{\text{all}}}} =
+i\left( 1 - \alpha \right)\)</span>. Thus, the row and column
+combinations that require their elements shifted are found (Figure <a
+href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(g)). In cases where pixels must be
+shifted to lower-index pages (from <span
+class="math inline">\(\mathbf{B}\)</span> to <span
+class="math inline">\(\mathbf{A}\)</span>), a large dummy value replaces
+the first page of <span class="math inline">\(\mathbf{ABN}\)</span>
+(Listing <a href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(162)). In cases where
+pixels must be shifted to larger-index pages (from <span
+class="math inline">\(\mathbf{A}\)</span> to <span
+class="math inline">\(\mathbf{B}\)</span>), a small dummy value (in the
+case of MATLAB implementation, "-Inf")
+replaces the last page of <span
+class="math inline">\(\mathbf{ABN}\)</span> (Figure <a
+href="#fig:BSPfig2" data-reference-type="ref"
+data-reference="fig:BSPfig2">1.2</a>(h) and Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(164)). <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> values are
+incremented by one if a sample was moved from <span
+class="math inline">\(\mathbf{B}\)</span> to <span
+class="math inline">\(\mathbf{A}\)</span>, and decremented by one in the
+opposite case. Finally, the <span
+class="math inline">\(\mathbf{ABN}\)</span> array is sorted for the last
+time placing the updated threshold estimates at the <span
+class="math inline">\(\mathbf{T}\)</span> page, the first page of the
+<span class="math inline">\(\mathbf{B}\)</span> array (Listing <a
+href="#lst:threhAlg" data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(168)). The <span
+class="math inline">\(\mathbf{T}\)</span> page is accessed to extract
+the new threshold estimate (Listing <a href="#lst:threhAlg"
+data-reference-type="ref"
+data-reference="lst:threhAlg">[lst:threhAlg]</a>(172)). Because of this
+step, the <span class="math inline">\(\mathbf{ABN}\)</span> array is
+sorted, <span
+class="math inline">\(\mathbf{n}_{\mathbf{A}_{all}}\)</span> and <span
+class="math inline">\(\mathbf{T}\)</span> are updated, and the <span
+class="math inline">\(\mathbf{ABN}\)</span> array is ready for the new
+loop iteration. "</p>
+<h3 id="testing-the-memory-efficient-algorithm">Testing the Memory
+Efficient Algorithm</h3>
+<h4 id="testing-with-constructed-distributions">Testing with Constructed
+Distributions</h4>
+<figure id="fig:BSPfig3">
+<div class="center">
+<img src="figures/BSPfig3.png" class="img-fluid" alt="BSPfig3" style="width:75.0%">
+</div>
+<figcaption>Comparison of true 95<sup>th</sup> percentile and estimated
+95<sup>th</sup> percentile of a test distribution. Top) True threshold
+over all iterations compared to estimated threshold. Bottom) Absolute
+value of the difference between the estimated threshold and the true
+threshold over all iterations. Note that the iteration axis starts at
+100, since 100 samples were taken during initialization of the
+algorithm.<br />
+Note 1: This chart can be found as Figure 3 in <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>.</figcaption>
+</figure>
+<p>To validate the results of the algorithm, its output was compared to
+the true percentile given by a data set consisting of 20000 samples. The
+test set was not a 𝔠 distribution, but rather a
+constructed distribution. In addition, this test was carried out for one
+threshold value, equivalent to one pixel in a real 𝔠
+map. In this example, we take <span
+class="math inline">\(m_{kp}=50\)</span> to be consistent with the
+previous sections. The test data resulted from two random Gaussian
+distributions, one with mean 0 and standard deviation 0.2, and the other
+with mean 0.5 and standard deviation 0.5. Each of the 20000 samples had
+an equal likelihood of coming from either of the Gaussian distributions.
+The test values of these distributions were limited to the range 0–1
+inclusive. The purpose of creating this test data set was to create a
+bag of numbers to test the algorithm against, any bag of numbers
+constructed in various ways could have been used.</p>
+<p>The algorithm was run pulling samples from this test data set to
+construct its estimate of the 95<sup>th</sup> percentile. All the
+samples from the distribution were saved, and the true 95<sup>th</sup>
+percentile for all the data samples pulled thus far was calculated for
+each iteration of the loop. The algorithm was run for all <span
+class="math inline">\(n_{samp}=20000\)</span> samples and did not show a
+difference from the true 95<sup>th</sup> percentile within the third
+significant digit (Figure <a href="#fig:BSPfig3"
+data-reference-type="ref" data-reference="fig:BSPfig3">1.3</a>). The
+true final percentile value was determined by finding the
+95<sup>th</sup> percentile from the whole sample distribution.</p>
+<h4 id="application-of-wavelet-coherence-analysis">Application of
+Wavelet Coherence Analysis</h4>
+<figure id="fig:BSPfig4">
+<div class="center">
+<img src="figures/BSPfig4.png" class="img-fluid" alt="BSPfig4">
+</div>
+<figcaption>Example map of Coherence (𝔠) thresholds generated by the
+algorithm with size 9375 × 145 (1359375 pixels). Map shows 95 % 𝔠
+threshold for a 20 min long signal sampled at 7.8125 Hz with a frequency
+range from 0.001 Hz–3.730 Hz. 𝔠 was found using a version
+the MathWorks MATrix LABoratory (MATLAB) <code>wcoherence</code>
+function, modified to remove smoothing in frequency (see Appendix <a
+href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a>). Left) Thresholds
+generated form 100 iterations using the entire 𝔠
+distribution (initialization of the algorithm). Right) Thresholds
+generated using the algorithm in 24 h with 22601 iterations on a typical
+desktop computer at the time of this work.<br />
+Note 1: This chart can be found as Figure 4 in <span class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>.</figcaption>
+</figure>
+<p>"</p>
+<p>One intended application of this algorithm is to find thresholds for
+significant 𝔠 in wavelet signal analysis
+(Appendices <a href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>).
+Using a map of 𝔠 thresholds, one can
+determine which points in frequency and time are significantly coherent
+for a given pair of signals. The computation of 𝔠
+threshold as a function of time and frequency can be a computationally
+demanding task for more data samples (longer time acquisitions assuming
+a fixed sampling frequency). To evaluate the capabilities of the
+algorithm presented here, we used it to generate 𝔠
+thresholds for the 𝔠 calculated by the MATLAB "wcoherence" function,
+which was modified to remove smoothing in frequency (Figure <a
+href="#fig:BSPfig4" data-reference-type="ref"
+data-reference="fig:BSPfig4">1.4</a>) which is discussed in Appendix <a
+href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a>. The threshold map
+presented in the right panel of Figure <a href="#fig:BSPfig4"
+data-reference-type="ref" data-reference="fig:BSPfig4">1.4</a> was given
+a limit of 24 h to run the algorithm on a typical desktop computer at
+the time of this work. The algorithm completed 22601 iterations in that
+time on a 9375 × 145 map of 𝔠 1359375 individual 𝔠
+thresholds). This map represented thresholds for a 20 min long signal
+acquired at a sample rate of 7.8125 Hz with analyzed frequencies from
+0.001 Hz–3.730 Hz. The left panel of Figure <a href="#fig:BSPfig4"
+data-reference-type="ref" data-reference="fig:BSPfig4">1.4</a> shows the
+initialization of the algorithm (thresholds from 100 iterations).
+Comparing the 100 iteration map to the 22601 iteration map, 100
+iterations yield a much greater heterogeneity compared to 22601
+iterations. This is representative of thresholds generated for a real
+experimental protocol on actual distributions of 𝔠
+(instead of a single constructed distribution as in the previous
+section). It is worth noting that if this map was generated by storing
+the entire 𝔠 distributions 246   of
+memory would have been required, compared to the 1   used by the <span
+class="math inline">\(\mathbf{ABN}\)</span> array in the algorithm.
+"</p>
+<h3 id="discussion-of-the-memory-efficient-algorithm">Discussion of the
+Memory Efficient Algorithm</h3>
+<p>We presented an algorithm designed to calculate threshold values of
+significant 𝔠. The algorithm was
+designed with the specific objective of calculating time-frequency maps
+of 𝔠 thresholds for wavelet
+analysis, but it could be used for any application that requires the
+estimation of a desired percentile of a sampled distribution. The
+algorithm allows the calculation of thresholds from large number of
+samples without requiring large amounts of computer RAM.
+This is because the proposed method employs only the distribution values
+that fall within a region around an iteratively updated threshold. With
+this method, the limitation in the number of samples is determined by
+available computing time, since the RAM that the algorithm
+requires does not increase as more and more samples are acquired. The
+algorithm will allow for the accurate estimation of 𝔠
+thresholds when analyzing pairs of signals. Physiologically relevant
+signals include ABP and either BF or
+ΔO, and ΔD
+which are relevant for TFA of AR and
+CHS.</p>
+<h4 id="values-of-the-number-of-coherence-samples-taken-and-kept">Values
+of the Number of Coherence Samples Taken and Kept</h4>
+<p>The main aim of the algorithm is to estimate threshold maps with
+large <span class="math inline">\(n_{samp}\)</span> (iterations <em>id
+est</em> the number of samples taken) without large RAM
+usage. Previous works have either used small <span
+class="math inline">\(n_{samp}\)</span> or not generated full threshold
+maps (but rather just one threshold value) <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004 paneraiStatisticalCriteriaEstimation2016"></span>.
+From Figures <a href="#fig:BSPfig3" data-reference-type="ref"
+data-reference="fig:BSPfig3">1.3</a>&amp;<a href="#fig:BSPfig4"
+data-reference-type="ref" data-reference="fig:BSPfig4">1.4</a> it can be
+seen that 100 samples are not enough to get a good estimate of the
+threshold <span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 faesSurrogateDataAnalysis2004"></span>.
+The threshold map shown in the left panel of Figure <a
+href="#fig:BSPfig4" data-reference-type="ref"
+data-reference="fig:BSPfig4">1.4</a> shows a visible heterogeneity in
+the time-frequency map of the threshold. This example, generated from
+100 samples, shows that some regions may feature significant coherence
+when a more accurate threshold estimate would not. Thus, more 𝔠
+samples are required (1000–10000 or greater) but, as discussed in, a
+simple threshold determination would require too much RAM
+to generate a threshold map. Thus, a single threshold estimate (not a
+map) with a large <span class="math inline">\(n_{samp}\)</span> has been
+used <span class="citation"
+data-cites="paneraiStatisticalCriteriaEstimation2016"></span>. But from
+the right panel of Figure <a href="#fig:BSPfig4"
+data-reference-type="ref" data-reference="fig:BSPfig4">1.4</a> the
+threshold map does not contain a constant value as the threshold depends
+on frequency and temporal proximity to the edge. Therefore, we need a
+method to estimate entire threshold maps using large <span
+class="math inline">\(n_{samp}\)</span> but little RAM,
+the algorithm presented here achieves this goal.</p>
+<p>The value chosen for <span class="math inline">\(m_{kp}\)</span>
+(size of <span class="math inline">\(\mathbf{A}\)</span> and <span
+class="math inline">\(\mathbf{B}\)</span> along the page dimension
+<em>id est</em> the number of samples kept) has some effect on the
+algorithm. In principle, it should be set as large as possible without
+using too much RAM or reducing computation
+time. Here, <span class="math inline">\(m_{kp}=50\)</span> was chosen
+since it was found to be large enough without using unreasonable amounts
+of RAM. <span
+class="math inline">\(m_{kp}\)</span> can also be chosen to be too
+small. If this is the case, there is a risk of the dummy values
+appearing in the threshold estimate array.</p>
+<h4 id="applicability-of-the-algorithm">Applicability of the
+Algorithm</h4>
+<p>A method that can easily and accurately generate threshold maps is
+important because a different map may be needed for different
+experimental protocols. Different experimental protocols may last
+different durations in time. The data could be collected at different
+sampling rates. In addition, different experiments may require different
+coherent analysis parameters (smoothing in wavelet for example). These
+differences across experimental protocols require 𝔠
+maps to be generated frequently without the need for a specialized
+computer. The algorithm presented here is capable of this, since it does
+not have large memory requirements, and most desktop computers at the
+time of this work can be used to generate thresholds. This leads to the
+possibility of generating thresholds for an experiment overnight on
+one’s computer and then being able to complete the turnaround on
+coherence analysis within one day of a new experiment.</p>
+<p>The algorithm was developed for and inspired by the need for
+significant 𝔠 in TFA
+and CHS. However, its use is not
+limited to these modalities. In principle it could be applied to any
+application that needs percentile estimates of many samples with little
+RAM usage. This is the
+sub-field of quantile estimation in the field of streaming algorithms.
+This work does not aim to develop a new streaming algorithm but rather
+to create a specific implementation that has been optimized for MATLAB and importantly for
+estimation of 2D arrays of percentiles. Note
+that this algorithm is implemented without for loops to index the
+arrays, but uses instead native array operations in MATLAB, an important
+consideration when optimizing for MATLAB. This suggests that the
+algorithm may to applicable to modalities outside TFA
+and CHS.</p>
+<p>Finally, there is a possibility for this algorithm to be implemented
+in other languages. Despite it being optimized for MATLAB by using the native
+array operations, MATLAB has disadvantages.
+First, development in MATLAB requires expensive
+licenses making it inaccessible to some. Second, MATLAB is inherently not as
+fast as other languages since it is designed for data analysis and
+visualization, not writing and compiling standalone programs. Due to
+these disadvantages it may be desirable to implement the algorithm in
+another language. There is nothing about the algorithm that would
+prevent this. Array operations could be implemented in nested for loops
+and large positive and negative numbers could be used for the dummy
+values, thus lending to the possible applicability of the algorithm
+outside MATLAB.</p>
+<h4 id="considerations-and-limitations-of-the-algorithm">Considerations
+and Limitations of the Algorithm</h4>
+<p>The primary problem that can arise running this algorithm is dummy
+values showing up in the <span class="math inline">\(\mathbf{T}\)</span>
+page and ruining the estimation of the threshold. It is recommended that
+a check for dummy values be implemented at every iteration of the
+threshold estimates, and to disregard them. For these cases, either the
+previous iteration estimate, or the max sample value (at a
+time-frequency pixel where a dummy value is present in <span
+class="math inline">\(\mathbf{T}\)</span>) may be used as the updated
+estimate. The latter is more conservative, possibly overestimating the
+𝔠 threshold. Such
+conservative estimates are sometimes desirable in determining
+thresholds. In this conservative spirit, we used the first page of <span
+class="math inline">\(\mathbf{B}\)</span> as the threshold instead of
+the average of the last page of <span
+class="math inline">\(\mathbf{A}\)</span> and the first page of <span
+class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>It is also worth noting that three sorting operations are required
+for each iteration of this algorithm. Sorting operations are one of the
+more computationally expensive operations in terms of processing time.
+Considering the sort operations, the cost of the algorithm is <span
+class="math inline">\(\mathcal{O}\left(6 n_{samp} n_f n_t m_{kp}
+\log_{2}\left(2 m_{kp}\right)\right)\)</span> since MATLAB uses quick sort on the
+<span class="math inline">\(2m_{kp}+1\)</span> values in <span
+class="math inline">\(\mathbf{ABN}\)</span>. This sort must be repeated
+three times for every iteration <span
+class="math inline">\(n_{samp}\)</span>, frequency row <span
+class="math inline">\(n_f\)</span>, and time column <span
+class="math inline">\(n_t\)</span>. Thus, it may be said that this
+algorithm reduces memory cost at the expense of an increased processing
+cost. Parallelism may be a way to alleviate the cost of sorting; because
+the sort is done for row-column <span class="math inline">\(n_f\)</span>
+and <span class="math inline">\(n_t\)</span>. Of course, there may be
+further opportunities to improve the algorithm through parallelism.
+However, the time-frequency analysis of the GRN
+signals that must be done at every iteration dominates the processing
+time in each step and may overshadow the cost of sorting.</p>
+<p>The efficacy of the algorithm maybe further improved to reduce
+computation cost or better take advantage of parallelization. One such
+improvement may involve changing the way new data is added. Instead of
+adding one sample at a time, new data may be added in blocks of multiple
+surrogate data samples (like repeating the initialization step in the
+iterations). This may require fewer sorting operations but would be more
+costly in terms of RAM.</p>
+<h2 class="unnumbered" id="listings">Listings</h2>
+<div class="sourceCode" id="cb1" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\Acrshort{MATLAB} code for memory efficient algorithm for coherence threshold determination\label{lst:threhAlg}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Acronyms: MathWorks MATrix LABoratory (MATLAB).<br />
+Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch6.html" class="btn btn-sm btn-outline-secondary">← Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch8.html" class="btn btn-sm btn-outline-secondary">In-Vivo Cerebral Hemodynamics →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

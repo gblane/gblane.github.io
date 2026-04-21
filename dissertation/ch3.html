@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Dual-Slope · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part I · Preferentially Deep Measurements</div>
+                <h1 class="fw-bold mb-3">Introduction to Dual-Slope</h1>
+                <hr class="mb-4">
+
+                <h1 id="introduction-to-dual-slope">Introduction to Dual-Slope</h1>
+<p><span id="ch:DSintro" data-label="ch:DSintro"></span></p>
+<h2 id="ch:DSintro:sec:DSoverview">Overview of the Dual-Slope
+Method</h2>
+<figure id="fig:DSset">
+<div class="center">
+<img src="figures/DS.png" class="img-fluid" alt="DS">
+</div>
+<figcaption>Example linear-symmetric Dual-Slope (DS) set. Sources shown in red
+and numbered <code>1</code> and <code>2</code>. Detectors shown in blue
+and lettered <code>A</code> and <code>B</code>. Single-Distance (SD)
+short sets are <code>1A</code> and <code>2B</code>, and long sets are
+<code>1B</code> and <code>2A</code>. Common source Single-Slope (SS) sets
+are <code>1AB</code> and <code>2BA</code> (See Note 1). Finally the
+DS set comprises all optodes
+and is named <code>1AB2</code>.<br />
+Note 1: Common detector SS sets <code>A12</code> and
+<code>B21</code> are also present, but are redundant with the common
+source sets shown.<br />
+Note 2: This configuration is typically implemented with of 25 mm, &amp;
+35 mm, that is <code>1A</code> and <code>2B</code> are 25 mm and
+<code>1B</code> and <code>2A</code> are 35 mm</figcaption>
+</figure>
+<p>To address the issue of superficial sensitivity and seek
+preferentially deep sensitivity we developed the DS
+method for NIRS<span class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019 blaneyPhaseDualslopesFrequencydomain2020 fantiniTransformationalChangeField2019"></span>.
+This was inspired by our MD studies<span
+class="citation"
+data-cites="khaksariDepthDependenceCoherent2018 blaneyMultiDistanceFrequencyDomainOptical2019"></span>
+which showed promise in SS and φ
+data-types. We developed DS for FD,
+however a similar technique for TD was also developed
+simultaneously<span class="citation"
+data-cites="sawoszMethodImproveDepth2019"></span>.</p>
+<p>DS relies on the averaging of
+two measurements of the slope of some 𝒴 versus ρ.
+An example of a typical DS optode configuration is
+shown in Figure <a href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a>. In FD NIRS, 𝒴 may
+be the φ or the ln(ρ²<em>I</em>)<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of
+the detected light signal which is measured between a single source and
+detector. This measurement between one source and one detector is dubbed
+SD. Using data at multiple
+ρs, the slopes of φ
+or ln(ρ²<em>I</em>)<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+versus ρ can be measured. These
+slope measurements can be achieved with either a single detector and
+multiple sources or multiple detectors and a single source. Both cases
+are referred to as SS measurements which were
+discussed in Chapter <a href="#ch:shortLong" data-reference-type="ref"
+data-reference="ch:shortLong">[ch:shortLong]</a>.<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>These SS or DS
+measurements of the slope of ln(ρ²<em>I</em>) or φ
+versus ρ can be measured as the
+change of the slope from some baseline value of the slope. This is done
+since the goal of these measurements is not a reconstruction of absolute
+optical properties, but instead, measurements of Δμ<sub>a</sub>
+from a baseline value. Conversion of these changes in slope into Δμ<sub>a</sub>
+is done by introducing a DSF, which can be calculated
+using absolute optical properties or generalized optical path-lengths
+which come from the ⟨L̃⟩. This method is
+explained in detail in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
+<p>A DS measurement is achieved by
+averaging 2 SSs<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+under the following <em>requirements</em><span class="citation"
+data-cites="blaneyDesignSourceDetector2020 fantiniTransformationalChangeField2019"></span>:<a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a></p>
+<ol>
+<li><p><span id="enu:DSreqSSs" data-label="enu:DSreqSSs"></span>A DS set
+is made of two<sup><a href="#foot:numSSinDS" data-reference-type="ref"
+data-reference="foot:numSSinDS">4</a></sup> SSs
+named SS1 &amp; SS2,
+which share sources or detectors but not both.</p></li>
+<li><p><span id="enu:DSreqDelRho"
+data-label="enu:DSreqDelRho"></span>The difference between the ρs
+for both SSs must be the same, thus <span
+class="math inline">\(\left|\acrshort{rho}_{\text{\acrshort{SD}2}}-\acrshort{rho}_{\text{\acrshort{SD}1}}\right|_{\text{\acrshort{SS}1}}=\left|\acrshort{rho}_{\text{\acrshort{SD}2}}-\acrshort{rho}_{\text{\acrshort{SD}2}}\right|_{\text{\acrshort{SS}2}}\)</span>.<sup><a
+href="#foot:SDinSS" data-reference-type="ref"
+data-reference="foot:SDinSS">3</a></sup></p></li>
+<li><p><span id="enu:DSreqShrtLng"
+data-label="enu:DSreqShrtLng"></span>The detector for the shorter SD
+measurement in SS1 must be the same detector
+for the longer SD measurement in SS2.<sup><a
+href="#foot:commonSrc" data-reference-type="ref"
+data-reference="foot:commonSrc">5</a></sup></p></li>
+</ol>
+<p>When designing DS sets, the above
+<em>requirements</em> must be met. But, in addition to these
+<em>requirements</em>, there are also two practical
+<em>constraints</em><span class="citation"
+data-cites="blaneyDesignSourceDetector2020 fantiniTransformationalChangeField2019"></span>:<a
+href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a></p>
+<ol>
+<li><p><span id="enu:DSconRho" data-label="enu:DSconRho"></span>All
+ρs should be between
+20 mm–40 mm.<a href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a></p></li>
+<li><p><span id="enu:DSconDelRho"
+data-label="enu:DSconDelRho"></span>The difference between the ρs
+(<span class="math inline">\(\Delta\rho\)</span>) for the
+SSs should be in the range
+10 mm–20 mm.<a href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a></p></li>
+</ol>
+<p>Given these <em>requirements</em> and <em>constraints</em> many
+different DS sets may be designed<span
+class="citation"
+data-cites="blaneyDesignSourceDetector2020 fantiniTransformationalChangeField2019"></span>.
+However, when point measurements were sought, such as in <span
+class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> which is
+discussed in the next chapter, the so-called linear-symmetric set in
+Figure <a href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> was chosen. Typical ρs
+for this type of set are 25 mm, &amp; 35 mm. More complex sets were
+utilized when DS was expanded into imaging
+in <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span> and <span
+class="citation" data-cites="blaneyDesignSourceDetector2020"></span>,
+this will be discussed in Chapter <a href="#ch:DSimage"
+data-reference-type="ref"
+data-reference="ch:DSimage">[ch:DSimage]</a>.</p>
+<h2 id="advantages-of-dual-slope">Advantages of Dual-Slope</h2>
+<h3 id="suppression-of-artifacts-and-drifts">Suppression of Artifacts
+and Drifts</h3>
+<figure id="fig:DScoup">
+<div class="center">
+<img src="figures/DScoup.png" class="img-fluid" alt="DScoup">
+</div>
+<figcaption>Demonstration of a Dual-Slope (DS) set’s ability to cancel
+artifacts when the detector <code>A</code> fiber was removed and
+replaced from the instrument. The set used two of 25 mm and two of
+35 mm. The optical wavelength (λ) was 690 nm, for which the
+phantom had a absorption coefficient (μ<sub>a</sub>) of 0.017  mm and a reduced scattering coefficient (μ′<sub>s</sub>)
+of 0.43  mm.<br />
+Note 1: This figure can be found as Figure 3 in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</figcaption>
+</figure>
+<h4 id="derivation-of-dual-slope-artifact-cancellation">Derivation of
+Dual-Slope Artifact Cancellation</h4>
+<p>The DS arrangement was inspired by
+the SC approach which was
+developed for achieving calibration-free measurements of absolute
+optical properties in FD NIRS<span class="citation"
+data-cites="hueberNewOpticalProbe1999"></span>. SC
+does not require calibration because instrumental coupling factors is
+canceled out in analysis. The difference between DS and
+SC is that SC was
+developed to use both <em>I</em> and φ
+in FD while DS may
+use just one or the other. Additionally, DS focuses on Δμ<sub>a</sub>
+while SC focuses on absolute μ<sub>a</sub>
+and μ′<sub>s</sub>. Regardless of the
+differences, DS has all of the same
+insensitivity to coupling as SC.</p>
+<p>The full derivation showing artifact cancellation is in the original
+SC and DS
+publications<span class="citation"
+data-cites="hueberNewOpticalProbe1999 sassaroliDualslopeMethodEnhanced2019"></span>,
+but a simplified and less general version is shown here to highlight
+this advantage of DS. First, lets consider the
+optode arrangement shown in Figure <a href="#fig:DSset"
+data-reference-type="ref" data-reference="fig:DSset">1.1</a> and some
+𝒴. 𝒴 is
+measured by all the SDs, but for each SD set
+the theoretical 𝒴 (<span
+class="math inline">\(\text{\acrshort{SD}}\acrshort{Y}_{theo}\)</span>)
+is added to some 𝒜s to yield the measured 𝒴
+(<span
+class="math inline">\(\text{\acrshort{SD}}\acrshort{Y}_{meas}\)</span>).
+There is a unique 𝒜 for each optode, therefore
+we have: <span
+class="math display">\[\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{1A}},meas}=\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{1A}},theo}+\acrshort{A}_{\text{\texttt{1}}}+\acrshort{A}_{\text{\texttt{A}}}
+    \label{equ:SD1Acoup}\]</span> <span
+class="math display">\[\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{1B}},meas}=\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{1B}},theo}+\acrshort{A}_{\text{\texttt{1}}}+\acrshort{A}_{\text{\texttt{B}}}\]</span>
+<span
+class="math display">\[\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{2A}},meas}=\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{2A}},theo}+\acrshort{A}_{\text{\texttt{2}}}+\acrshort{A}_{\text{\texttt{A}}}\]</span>
+<span
+class="math display">\[\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{2B}},meas}=\text{\acrshort{SD}}\acrshort{Y}_{\text{\texttt{2B}},theo}+\acrshort{A}_{\text{\texttt{2}}}+\acrshort{A}_{\text{\texttt{B}}}
+    \label{equ:SD2Bcoup}\]</span> where SD 𝒴 is
+the 𝒴 data for the designated
+SD set (<em>exempli
+gratia</em> <code>1A</code>) which is either measured (<span
+class="math inline">\(meas\)</span>) or theoretical (<span
+class="math inline">\(theo\)</span>). Here we note that the theoretical
+is what we want, but, measured is what we have. As is the measured can
+not be separated from artifacts.<a href="#fn9" class="footnote-ref"
+id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>Now lets consider the SSs in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a>. SS measures the slope of 𝒴
+versus ρ. Considering that SS
+uses the SD from Equations <a
+href="#equ:SD1Acoup" data-reference-type="ref"
+data-reference="equ:SD1Acoup">[equ:SD1Acoup]</a> to <a
+href="#equ:SD2Bcoup" data-reference-type="ref"
+data-reference="equ:SD2Bcoup">[equ:SD2Bcoup]</a> as the dependent
+variable, we have: <span class="math display">\[\begin{split}
+        \text{\text{SS}}\mathcal{Y}_{\text{\texttt{1AB}},meas}=
+        \frac{\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1B}},meas}-\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1A}},meas}}
+        {\rho_{\text{\texttt{1B}}}-\rho_{\text{\texttt{1A}}}}\\
+        =\big[\left(\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1B}},theo}+\mathcal{A}_{\text{\texttt{1}}}+\mathcal{A}_{\text{\texttt{B}}}\right)\\
+        -\left(\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1A}},theo}+\mathcal{A}_{\text{\texttt{1}}}+\mathcal{A}_{\text{\texttt{A}}}\right)\big]\\
+        \div
+\big[\rho_{\text{\texttt{1B}}}-\rho_{\text{\texttt{1A}}}\big]\\
+        =\frac{\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1B}},theo}-\text{\text{SD}}\mathcal{Y}_{\text{\texttt{1A}},theo}+\mathcal{A}_{\text{\texttt{B}}}-\mathcal{A}_{\text{\texttt{A}}}}
+        {\rho_{\text{\texttt{1B}}}-\rho_{\text{\texttt{1A}}}}
+    \end{split}\]</span> <span class="math display">\[\begin{split}
+        \text{\text{SS}}\mathcal{Y}_{\text{\texttt{2BA}},meas}=
+        \frac{\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2A}},meas}-\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2B}},meas}}
+        {\rho_{\text{\texttt{2A}}}-\rho_{\text{\texttt{2B}}}}\\
+        =\big[\left(\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2A}},theo}+\mathcal{A}_{\text{\texttt{2}}}+\mathcal{A}_{\text{\texttt{A}}}\right)\\
+        -\left(\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2B}},theo}+\mathcal{A}_{\text{\texttt{2}}}+\mathcal{A}_{\text{\texttt{B}}}\right)\big]\\
+        \div
+\big[\rho_{\text{\texttt{2A}}}-\rho_{\text{\texttt{2B}}}\big]\\
+        =\frac{\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2A}},theo}-\text{\text{SD}}\mathcal{Y}_{\text{\texttt{2B}},theo}+\mathcal{A}_{\text{\texttt{A}}}-\mathcal{A}_{\text{\texttt{B}}}}
+        {\rho_{\text{\texttt{2A}}}-\rho_{\text{\texttt{2B}}}}
+    \end{split}\]</span> Then realizing that the theoretical SS is
+the slope formed by the theoretical SDs we get: <span
+class="math display">\[\text{\acrshort{SS}}\acrshort{Y}_{\text{\texttt{1AB}},meas}=\text{\acrshort{SS}}\acrshort{Y}_{\text{\texttt{1AB}},theo}+\frac{\acrshort{A}_{\text{\texttt{B}}}-\acrshort{A}_{\text{\texttt{A}}}}{\acrshort{rho}_{\text{\texttt{1B}}}-\acrshort{rho}_{\text{\texttt{1A}}}}\]</span>
+<span
+class="math display">\[\text{\acrshort{SS}}\acrshort{Y}_{\text{\texttt{2BA}},meas}=\text{\acrshort{SS}}\acrshort{Y}_{\text{\texttt{2BA}},theo}+\frac{\acrshort{A}_{\text{\texttt{A}}}-\acrshort{A}_{\text{\texttt{B}}}}{\acrshort{rho}_{\text{\texttt{2A}}}-\acrshort{rho}_{\text{\texttt{2B}}}}\]</span>
+Notice now that the 𝒜 from the 2 sources has
+canceled out thus these SS measurements are only
+effected by arifacts from the detectors.<a href="#fn10"
+class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a></p>
+<p>Finally, we can consider the DS set in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> which is the average of the two SSs:
+<span class="math display">\[\begin{split}
+        \text{\text{DS}}\mathcal{Y}_{\text{\texttt{1AB2}},meas}\\
+        =\frac{\text{\text{SS}}\mathcal{Y}_{\text{\texttt{1AB}},meas}+\text{\text{SS}}\mathcal{Y}_{\text{\texttt{2BA}},meas}}{2}\\
+        =\Bigg[\left(\text{\text{SS}}\mathcal{Y}_{\text{\texttt{1AB}},theo}+\frac{\mathcal{A}_{\text{\texttt{B}}}-\mathcal{A}_{\text{\texttt{A}}}}{\rho_{\text{\texttt{1B}}}-\rho_{\text{\texttt{1A}}}}\right)\\
+        +\left(\text{\text{SS}}\mathcal{Y}_{\text{\texttt{2BA}},theo}+\frac{\mathcal{A}_{\text{\texttt{A}}}-\mathcal{A}_{\text{\texttt{B}}}}{\rho_{\text{\texttt{2A}}}-\rho_{\text{\texttt{2B}}}}\right)\Bigg]\div
+2
+    \end{split}\]</span> Now recall the DS <em>requirement</em> that
+the difference between the ρs for both SSs must
+be the same, so: <span
+class="math display">\[\acrshort{rho}_{\text{\texttt{1B}}}-\acrshort{rho}_{\text{\texttt{1A}}}=\acrshort{rho}_{\text{\texttt{2A}}}-\acrshort{rho}_{\text{\texttt{2B}}}=\Delta\acrshort{rho}_{\text{\texttt{1AB2}}}\]</span>
+therefore: <span class="math display">\[\begin{split}
+        \text{\text{DS}}\mathcal{Y}_{\text{\texttt{1AB2}},meas}\\
+        =\Bigg[\left(\text{\text{SS}}\mathcal{Y}_{\text{\texttt{1AB}},theo}+\frac{\mathcal{A}_{\text{\texttt{B}}}-\mathcal{A}_{\text{\texttt{A}}}}{\Delta\rho_{\text{\texttt{1AB2}}}}\right)\\
+        +\left(\text{\text{SS}}\mathcal{Y}_{\text{\texttt{2BA}},theo}+\frac{\mathcal{A}_{\text{\texttt{A}}}-\mathcal{A}_{\text{\texttt{B}}}}{\Delta\rho_{\text{\texttt{1AB2}}}}\right)\Bigg]\div
+2\\
+        =\frac{\text{\text{SS}}\mathcal{Y}_{\text{\texttt{1AB}},theo}+\text{\text{SS}}\mathcal{Y}_{\text{\texttt{2BA}},theo}}{2}
+    \end{split}\]</span> and finally realizing that the theoretical
+DS is the average of the
+theoretical SSs: <span
+class="math display">\[\text{\acrshort{DS}}\acrshort{Y}_{\text{\texttt{1AB2}},meas}=\text{\acrshort{DS}}\acrshort{Y}_{\text{\texttt{1AB2}},theo}\]</span>
+So the measured DS is the same as the
+theoretical, thus DS is not effected by
+artifacts.<a href="#fn11" class="footnote-ref" id="fnref11"
+role="doc-noteref"><sup>11</sup></a> But this is only true for additive optical artifact (𝒜), so we
+should discuss how valid of a type of artifact this is.</p>
+<p>In FD DS
+measurements, 𝒴 is either ln(ρ²<em>I</em>) or φ.
+So lets consider what an additive effect would mean. For ln(ρ²<em>I</em>) this would be a
+multiplicative artifact on <em>I</em>, which is in-fact a
+reasonable type of artifact. Thus, artifacts that DS can
+cancel include:</p>
+<ul>
+<li><p>Detector gain changes or factors.</p></li>
+<li><p>Source power changes or factors.</p></li>
+<li><p>Optode coupling efficiency, both changes and absolute.</p></li>
+</ul>
+<p>However, a artifact that DS can not cancel is an
+additive one to <em>I</em> which may occur if
+background light changes. However, since most FD
+NIRS instruments only are
+sensitive to light at their <em>f</em><sub>mod</sub>, this is likely not a
+concern. Background light would be a concern for CW,
+however. Thinking of φ artifacts, an additive
+artifact which DS can cancel would be a time
+delay which is likely the most common type of phase artifact. DS can
+not cancel multiplicative factors on the φ which may be caused by the
+instrumental clock artifacts, but these types of artifacts are less
+likely to occur. Therefore, was can conclude that DS is
+nearly insensitive to artifacts, instrumental factors or changes,
+coupling changes, and other drifts described by 𝒜 in
+typical FD NIRS
+experimental conditions.</p>
+<h4 id="example-of-dual-slope-artifact-cancellation">Example of
+Dual-Slope Artifact Cancellation</h4>
+<p>To demonstrate these DS in-sensitivities to
+artifacts an experiment was conducted using the DS
+geometry shown in Figure <a href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> with symmetric short and long ρs of
+25 mm, &amp; 35 mm. Figure <a href="#fig:DScoup"
+data-reference-type="ref" data-reference="fig:DScoup">1.2</a> shows the
+results of this experiment with data analyzed to find Δμ<sub>a</sub>
+using the methods in Appendix <a href="#app:dmuaMeas"
+data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. In this case the fiber
+for detector <code>A</code> was removed from the instrument in steps,
+then slid back into place, and finally pulled out. SD
+measurements that included detector <code>A</code> (<em>id est</em>
+<code>1A</code> and <code>2A</code>) were heavily effected, measuring an
+increase in Δμ<sub>a</sub> due to the decrease in
+<em>I</em>
+or φ. Both SS
+measurements were effected but in opposite ways since
+detector <code>A</code> either comprised the short or the long arm for
+the 2 slopes. For example, considering SS set <code>1AB</code>, SD set
+<code>1A</code> comprised the short arm which experienced a decrease in
+signal which increased the SS’s measurement of slope
+thus, appearing as a decrease Δμ<sub>a</sub>.<a href="#fn12"
+class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>
+Finally, for DS set <code>1AB2</code>
+little to no change in Δμ<sub>a</sub> was observed despite the
+large induced artifact. This is because DS set <code>1AB2</code> is in
+fact the average of SS sets <code>1AB</code> and
+<code>2BA</code> which where effected in opposite ways by said artifact.
+Therefore, we have confirmed that DS can successfully suppress
+artifacts these artifacts. The same suppression would be true for source
+artifacts, coupling artifacts with the tissue, and instrumental
+drifts.</p>
+<h3 id="preferentially-deep-sensitivity">Preferentially Deep
+Sensitivity</h3>
+<h4 id="dual-slope-sensitivity-profile">Dual-Slope Sensitivity
+Profile</h4>
+<figure id="fig:DSsenDSsen">
+<div class="center">
+<img src="figures/DSsetDSsen_edited.png" class="img-fluid" alt="DSsetDSsen_edited">
+</div>
+<figcaption>Regions where the Signal-to-Noise Ratio (SNR) is <span
+class="math inline">\(\geq\)</span> 1 or <span
+class="math inline">\(\leq\)</span> −1 for Dual-Slope (DS) measurements using the
+geometriy shown in Figure <a href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> with of 25 mm, &amp; 35 mm. [Top]
+DS Intensity (<em>I</em>).
+[Bottom] DS phase (φ).<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<br />
+Note 2: Simulation methods are found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<p>Expanding on Figures <a href="#fig:MDsetSDsen"
+data-reference-type="ref"
+data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>&amp;<a
+href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">[fig:MDsetSSsen]</a>, Figure <a
+href="#fig:DSsenDSsen" data-reference-type="ref"
+data-reference="fig:DSsenDSsen">1.3</a> shows the same type of regions
+where the SNR is greater than or equal
+to 1 from the parameters in Section <a href="#ch:shortLong:sec:senPro"
+data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>,
+but now for DS. Particularly, this is the
+linear-symmetric DS set shown in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> with ρs of 25 mm, &amp; 35 mm.
+These profiles (Figure <a href="#fig:DSsenDSsen"
+data-reference-type="ref" data-reference="fig:DSsenDSsen">1.3</a>)
+immediately show the second advantage of DS of data-types such as SD and
+SS. This being preferentially
+deep sensitivity. The methods for creating these 𝒮
+profiles can be found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</p>
+<p>It is common to refer to the profiles for SD
+shown in Figure <a href="#fig:MDsetSDsen" data-reference-type="ref"
+data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a> as
+<em>bananas</em>, therefore we opted to refer to the profiles for DS in
+Figure <a href="#fig:DSsenDSsen" data-reference-type="ref"
+data-reference="fig:DSsenDSsen">1.3</a> as <em>nuts</em>. This naming
+scheme led to the fantastic title of <span class="citation"
+data-cites="fantiniTransformationalChangeField2019"></span> of .
+Comparing <em>bananas</em> to <em>nuts</em> one can see that a
+<em>banana</em> has significant regions near the surface, thus has
+significant superficial contribution. This is not the case for
+<em>nuts</em> where most of the region is localized relatively deep. One
+must be careful to not say that the <em>nut</em> or DS
+𝒮 is deeper however, since
+the lowest extent of the <em>bananas</em> are at approximately the same
+depth as the <em>nut</em>. DS really has the advantage of
+having preferentially deep 𝒮, or suppressing
+superficial.</p>
+<p>This advantage is even more pronounced in DS
+φ where the <em>nut</em> is
+deeper has no part touching the surface unlike DS
+<em>I</em>. However, DS
+φ has the disadvantage of
+increased noise compared to <em>I</em> making the SNR
+lower overall. Additionally, both DS <em>I</em> and
+DS φ
+have regions of negative 𝒮. This is shown as the
+SNR being less than or equal
+to −1. These may make data interpretation difficult and create
+artifacts. This will be explored more in the following sections.
+However, overall, the negative 𝒮 is not a significant
+concern for DS<a href="#fn13"
+class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>
+since it is small and almost entirely cancels out with large layer
+shaped perturbations (Figure <a href="#fig:DSsenSDSSDSsenCurve"
+data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a>).</p>
+<h4
+id="quantitative-comparison-of-sensitivity-for-dual-slope-and-other-data-types">Quantitative
+Comparison of Sensitivity for Dual-Slope and Other Data-Types</h4>
+<h5 id="sensitivity-maps">Sensitivity Maps</h5>
+<figure id="fig:DSsenSDsenMap">
+<div class="center">
+<img src="figures/DSsetSDsenMap_edited.png" class="img-fluid" alt="DSsetSDsenMap_edited">
+</div>
+<figcaption>Maps of Single-Distance (SD) sensitivity to absorption change (𝒮)
+for a long (<code>1B</code>) and a short (<code>1A</code>) distance in
+the Dual-Slope (DS) set shown in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a>. [Top] SD Intensity (<em>I</em>).
+[Bottom] SD phase (φ).
+[Left] The short source-detector distance (ρ) of 25 mm. [Right] The long
+ρ of 35 mm.<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<br />
+Note 2: This figure is on the same scale as Figures <a
+href="#fig:DSsenSSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>&amp;<a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a>.<br />
+Note 3: Simulation methods are found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<figure id="fig:DSsenSSsenMap">
+<div class="center">
+<img src="figures/DSsetSSsenMap_edited.png" class="img-fluid" alt="DSsetSSsenMap_edited">
+</div>
+<figcaption>Maps of Single-Slope (SS) sensitivity to absorption change (𝒮)
+for a set (<code>1AB</code>) in the Dual-Slope (DS) set shown in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> utilizing of 25 mm, &amp; 35 mm.
+[Top] SS Intensity (<em>I</em>).
+[Bottom] SS phase (φ).<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<br />
+Note 2: This figure is on the same scale as Figures <a
+href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>&amp;<a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a>.<br />
+Note 3: Simulation methods are found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<figure id="fig:DSsenDSsenMap">
+<div class="center">
+<img src="figures/DSsetDSsenMap_edited.png" class="img-fluid" alt="DSsetDSsenMap_edited">
+</div>
+<figcaption>Maps of Dual-Slope (DS) sensitivity to absorption change (𝒮)
+for the set (<code>1AB2</code>) in Figure <a href="#fig:DSset"
+data-reference-type="ref" data-reference="fig:DSset">1.1</a> utilizing
+of 25 mm, &amp; 35 mm. [Top] DS Intensity (<em>I</em>).
+[Bottom] DS phase (φ).<br />
+Note 1: Simulation parameters stated in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<br />
+Note 2: This figure is on the same scale as Figures <a
+href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>&amp;<a
+href="#fig:DSsenSSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>.<br />
+Note 3: Simulation methods are found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
+</figure>
+<p>The value of 𝒮 can be interpreted by
+Equation <a href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a> which shows it as the
+ratio between the apparent measured Δμ<sub>a</sub> and the actual Δμ<sub>a</sub>
+of some localized perturbation. The methods for creating these maps are
+discussed in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Appendix <a href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. For detailed examination
+and comparison of the 𝒮 maps the actual values for
+𝒮 are plotted for each of
+the data-types within the DS set shown in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a> with ρs of 25 mm, &amp; 35 mm
+(Figures <a href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>,<a href="#fig:DSsenSSsenMap"
+data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>,&amp;<a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a>). For these simulations the
+same properties as Section <a href="#ch:shortLong:sec:senPro"
+data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>
+were used.</p>
+<p>Figures <a href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>,<a href="#fig:DSsenSSsenMap"
+data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>,&amp;<a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a> show these quantitative 𝒮
+maps all on the same color-scale and approximately on the length scale.
+This is to allow comparison between them. The color-map is chosen so
+that the features for every map type are visible. Since for some maps
+the 𝒮 has a large difference
+from others, the highly negative or highly positive values are shown as
+solid black or white, respectively. It is worth noting that the sum of
+an 𝒮 map is one as long as the
+perturbations are simulated without overlap (Appendix <a
+href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>). In these maps overlap
+is used to smooth the visualization, however, in general the same
+intuition about the sum being the same applies.<a href="#fn14"
+class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
+The intuition being that, overall, there is more positive than negative
+𝒮. Thus, if there is large
+negative 𝒮 in one region there will
+be large positive 𝒮 in another to compensate.
+Also, if the region of sensitivity is large it will have a lower value
+since it is spread out, this is compared to a small region such as is
+the case for short versus long ρ.</p>
+<p>First, lets focus on the SD 𝒮
+maps in Figure <a href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>. In general you can see that
+as the region of sensitivity increases in size the actual value
+decreases, this is due to the aforementioned normalization of the sum of
+𝒮. For this reason going
+from short to long ρs means overall lower values
+of local 𝒮. Thus, the actual shape of
+the region is what should really be focused on. For example, in the case
+of SD <em>I</em> the
+𝒮 is the strongest right
+near the surface underneath the optodes. This is actually the opposite
+of what we want, as it means SD measurements represent
+superficial perturbations, preferentially. Next looking at SD
+φ we see that the 𝒮
+is more spread, but also deeper. Therefore, SD
+φ may already have what we
+want, preferentially deep sensitivity. However, φ
+does have negative 𝒮 near the surface which
+could make data difficult to interpret.<a href="#fn15"
+class="footnote-ref" id="fnref15"
+role="doc-noteref"><sup>15</sup></a></p>
+<p>Next, we may focus on the SS 𝒮
+maps in Figure <a href="#fig:DSsenSSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>. One may naïvely think SS is
+a good idea since it effectively subtracts information from a short
+ρ which represents
+superficial Δμ<sub>a</sub>. However, as soon as one
+looks at the maps it can be seen that SS is problematic. This is
+because it exhibits large regions of negative 𝒮
+and correspondingly large regions of positive 𝒮
+to compensate. This could lead to very confusing data since one does not
+know if the measured perturbation was in the negative or positive
+region. Additionally, one can not argue that the sensitivity is
+preferentially deep as SS shows significant 𝒮
+close to the detectors. Furthermore, such extreme values of sensitivity
+are not desirable since a small perturbation in a particular place may
+dominate the measurement when one really wants to measure a smaller
+amplitude but more spatially spread perturbation. A final argument
+against SS is that it amplifies the
+noise beyond what is present in SD measurements since it is
+effectively a type of derivative measure. Therefore, we argue that SS
+measurements should be avoided.</p>
+<p>Finally, moving to DS in Figure <a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a> we immediately see the
+centralized <em>nut</em> which localizes the sensitivity below the
+detectors. In both DS <em>I</em> and
+φ the superficial
+sensitivity is mostly removed compared to what was seen in SS and
+even SD. For φ
+this is most striking since the <em>nut</em> really is localized deep.
+<em>I</em>, however, still exhibits
+some superficial sensitivity in the center. On the negative side, DS
+does exhibit negative 𝒮 regions. These are not as
+strong as those seen in SS and are rather weak
+particularly for DS φ.
+Furthermore, these regions become less of a concern when larger
+perturbations are considered which cancel with with neighboring positive
+sensitivity, which will be shown in the next section (Figure <a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a>). Overall, these
+results reinforce the advantage of DS’s preferentially deep
+sensitivity.</p>
+<h5 id="sensitivity-curves">Sensitivity Curves</h5>
+<figure id="fig:DSsenSDSSDSsenCurve">
+<div class="center">
+<img src="figures/DSsetSDSSDSsenCurve_edited.png" class="img-fluid" alt="DSsetSDSSDSsenCurve_edited">
+</div>
+<figcaption>Curves of the sensitivity to absorption change (𝒮) to layered perturbations
+extending in all <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> for the Dual-Slope (DS) set shown in Figure <a
+href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a>. Solid lines show Intensity (<em>I</em>)
+data-types and dashed lines show phase (φ) data-types. The short Single-Distance (SD) has
+a source-detector distance (ρ) of 25 mm and the long SD has
+a ρ of 35 mm. [Top] 𝒮
+to a thin layer with top at <span class="math inline">\(z\)</span>.
+[Bottom] 𝒮 to a layer extending from
+<span class="math inline">\(z\)</span> to <span
+class="math inline">\(\infty\)</span>.<sup><a
+href="#foot:senCurveStartOne" data-reference-type="ref"
+data-reference="foot:senCurveStartOne">16</a></sup><br />
+Note 1: Simulation parameters except the perturbation size are stated in
+Section <a href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<br />
+Note 2: Simulation methods are found in Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>.<br />
+Note 3: Single-Slope (SS) is not shown here since
+SS and DS
+have the same 𝒮 to layered
+perturbations.<sup><a href="#foot:SSDSsameForLay"
+data-reference-type="ref"
+data-reference="foot:SSDSsameForLay">17</a></sup></figcaption>
+</figure>
+<p>When biological tissue is measured with NIRS
+the tissue generally has an overall layered structure. For example
+scalp, then skull, then brain in cerebral measurements. For this reason
+it is also helpful to examine 𝒮 curves where the
+perturbations considered are not localized in the lateral directions but
+instead layers. Figure <a href="#fig:DSsenSDSSDSsenCurve"
+data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a> shows this where the
+upper plot is the 𝒮 to a thin layer at
+different depths and the lower plot is the 𝒮
+to the bottom layer of the medium if the medium is split in half at a
+given depth.<a href="#fn16" class="footnote-ref" id="fnref16"
+role="doc-noteref"><sup>16</sup></a> Since layered perturbations are
+considered here DS and SS are
+the same and these curves are labeled as DS in the figure.<a
+href="#fn17" class="footnote-ref" id="fnref17"
+role="doc-noteref"><sup>17</sup></a></p>
+<p>Now that layered perturbations are considered (Figure <a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a>) the issue of negative
+𝒮 is for the most part gone.
+This makes the curves rather easy to interpret. Since we desire
+preferentially deep sensitive a peak at larger <span
+class="math inline">\(z\)</span> in the upper panel of Figure <a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a> and an overall higher
+curve in the lower panel of Figure <a href="#fig:DSsenSDSSDSsenCurve"
+data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a> is desired. The curve
+that exhibits this the most strongly is DS φ
+and unsurprisingly the shorter SD <em>I</em> is
+the worse. Another interesting result in Figure <a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a> is that the short SD
+φ and the DS
+<em>I</em>
+are almost the same. This is impressive evidence that φ
+is a data-type worth pursuing since even at ρ
+of 25 mm it can measure about as deep as DS <em>I</em>.</p>
+<h2 id="discussion-of-the-dual-slope-method">Discussion of the
+Dual-Slope Method</h2>
+<p>The overall conclusion of this chapter is that DS and
+particularly DS φ
+exhibits two advantages:</p>
+<ul>
+<li><p>Insensitivity to artifacts.</p></li>
+<li><p>Preferentially deep sensitivity.</p></li>
+</ul>
+<p>The former advantage is rather robust and will be true in most cases,
+however the later advantage of sensitivity may be more fickle. This is
+because all of the 𝒮 profiles (Figures <a
+href="#fig:MDsetSDsen" data-reference-type="ref"
+data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>,<a
+href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">[fig:MDsetSSsen]</a>,&amp;<a
+href="#fig:DSsenDSsen" data-reference-type="ref"
+data-reference="fig:DSsenDSsen">1.3</a>), maps (Figures <a
+href="#fig:DSsenSDsenMap" data-reference-type="ref"
+data-reference="fig:DSsenSDsenMap">1.4</a>,<a href="#fig:DSsenSSsenMap"
+data-reference-type="ref"
+data-reference="fig:DSsenSSsenMap">1.5</a>,&amp;<a
+href="#fig:DSsenDSsenMap" data-reference-type="ref"
+data-reference="fig:DSsenDSsenMap">1.6</a>), and curves (Figure <a
+href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a>) depend on the
+simulated diffuse optical medium. The one used here and stated in
+Section <a href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>
+is typical for biological tissue<span class="citation"
+data-cites="blaneyMultiDistanceFrequencyDomainOptical2019 blaneyPhaseDualslopesFrequencydomain2020 bigioQuantitativeBiomedicalOptics2016"></span>
+however there is room for variation in the model of the medium. For
+example the medium simulated was the semi-infinite homogeneous with
+extrapolated boundary condition (Appendices <a href="#app:forMod"
+data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a>&amp;<a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>)<span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020 sassaroliDualslopeMethodEnhanced2019"></span>,
+but a better model is likely a layered<span class="citation"
+data-cites="blaneyBroadbandAbsorptionSpectroscopy2021"></span> or even
+more heterogeneous medium. There is some indication that these maps will
+change in these complex scenarios but the general conclusions are
+expected to remain the same.</p>
+<h3
+id="considerations-on-the-noise-of-the-two-data-types-intensity-and-phase">Considerations
+on the Noise of the Two Data Types, Intensity and Phase</h3>
+<p>The main disadvantage of φ measurements is their
+higher noise compared to <em>I</em> measurements. This can be
+seen in the SNR maps presented in
+Figures <a href="#fig:MDsetSDsen" data-reference-type="ref"
+data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>,<a
+href="#fig:MDsetSSsen" data-reference-type="ref"
+data-reference="fig:MDsetSSsen">[fig:MDsetSSsen]</a>,&amp;<a
+href="#fig:DSsenDSsen" data-reference-type="ref"
+data-reference="fig:DSsenDSsen">1.3</a> whose methods are in Appendix <a
+href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. Works have presented
+φ<span class="citation"
+data-cites="toronovStudyLocalCerebral2001"></span> in FD or
+⟨<em>t</em>⟩ and variance<span
+class="citation"
+data-cites="kacprzakFrequencyAnalysisOscillations2019 abdalmalakCanTimeresolvedNIRS2017 milejSubtractionbasedApproachEnhancing2016"></span>
+in TD with a relatively large
+noise. This is also seen in our representative time traces (Figures <a
+href="#fig:JBPfig2" data-reference-type="ref"
+data-reference="fig:JBPfig2">[fig:JBPfig2]</a>,<a href="#fig:SPIE2022_4"
+data-reference-type="ref"
+data-reference="fig:SPIE2022_4">[fig:SPIE2022_4]</a>,&amp;<a
+href="#fig:PHTfig2" data-reference-type="ref"
+data-reference="fig:PHTfig2">[fig:PHTfig2]</a>), particularly in SS
+which suffers from greater noise with respect to SD and
+DS (Appendix <a
+href="#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>). However, there is room
+for improvement, for example by identifying optimal <em>f</em><sub>mod</sub>. In fact, a previous
+TD study looked at the SNR
+of φ as a function of <em>f</em><sub>mod</sub><span class="citation"
+data-cites="toronovOptimizationSignaltonoiseRatio2003"></span> and
+showed that higher <em>f</em><sub>mod</sub>s (higher than the
+140.625 MHz used here) may offer a better SNR for φ.</p>
+<p>Furthermore, there are possible noise improvements that can be
+pursued in our Imagent FD
+NIRS instrument. First, the
+acquisition time or the duty cycle of the measurements we use in a
+time-multiplexed scheme may be increased. Second, due to the time
+multiplexing of our instrument, data from different sources are not
+acquired simultaneously. Therefore, the ideal cancellation of noise is
+not achieved as described in the SC approach<span
+class="citation" data-cites="hueberNewOpticalProbe1999"></span>.
+Addressing these issues by using a different multiplexing scheme or
+frequency encoding would be a first step to improving the SNR
+for φ measurements.</p>
+<h3 id="possible-enhancements-of-the-dual-slope-method">Possible
+Enhancements of the Dual Slope Method</h3>
+<p>A number of aspects of the DS method may be optimized or
+further developed to enhance performance in terms of SNR
+and depth 𝒮, and to develop imaging
+capabilities. For example, as mentioned above, one may identify an
+optimal <em>f</em><sub>mod</sub> to achieve a best
+compromise between SNR and depth of maximal 𝒮.
+One may also consider potential advantages of using multiple <em>f</em><sub>mod</sub>s.
+Furthermore, we have shown that multiple (more than 2) ρs
+may be used in each SS measurement<span
+class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019"></span> and this may
+be advantageous in some applications. Finally, the DS
+method may be a basis for imaging applications, for example by employing
+an array of sources and detectors that features a number of partially
+overlapping DS regions of sensitivity.
+In-fact this imaging application has been under development and will be
+discussed in the following Chapter <a href="#ch:DSimage"
+data-reference-type="ref"
+data-reference="ch:DSimage">[ch:DSimage]</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The data-type linearized Intensity (ln(ρ²<em>I</em>)) is referred to as just
+Intensity (<em>I</em>)
+in most cases.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>To first approximation linearized Intensity (ln(ρ²<em>I</em>)) and phase (φ)
+are linear versus source-detector distance (ρ) in the semi-infinite
+homogeneous medium (Appendices <a href="#app:forMod"
+data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a>&amp;<a
+href="#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>).<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span id="foot:SDinSS"
+data-label="foot:SDinSS"></span>For simplicity of explanation we assume
+that each Single-Slope (SS) is only made of two Single-Distance (SD)
+measurements, however, in general one may consider SS
+measurements using more than two SD. Additionally, we will
+assume that a SS comprises only 1 source or
+1 detector but this is strictly not true since the actual requirements
+are geometrical<span class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019 blaneyDesignSourceDetector2020"></span>.<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><span id="foot:numSSinDS"
+data-label="foot:numSSinDS"></span>Strictly speaking a Dual-Slope (DS) may
+be made by averaging more than 2 , however for simplicity our discussion
+will assume there are two in a DS set.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><span id="foot:commonSrc"
+data-label="foot:commonSrc"></span>The following description of
+<em>requirements</em> assumes each Single-Slope (SS) is made of 1 source and 2
+detectors for simplicity.<sup><a href="#foot:SDinSS"
+data-reference-type="ref" data-reference="foot:SDinSS">3</a>&amp;<a
+href="#foot:numSSinDS" data-reference-type="ref"
+data-reference="foot:numSSinDS">4</a></sup><a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>These <em>constraints</em> are based on Near-InfraRed Spectroscopy (NIRS)
+instrumental limitation and specific values correspond to the ISS Imagent V2 (Imagent).<a href="#fnref6"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>The lower limit of source-detector distance (ρ) is to achieve
+preferentially deep sensitivity and the upper limit is governed by
+detector noise or source power.<a href="#fnref7" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>The lower end limit on the difference in source-detector distance (ρ) is
+limited by measurement noise and the upper limit is due to detector
+dynamic range.<a href="#fnref8" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>If the additive optical artifact (𝒜) is constant in time and Single-Distance (SD) is
+used for dynamic measurements against a baseline, the artifacts do
+cancel out when finding absorption coefficient change (Δμ<sub>a</sub>) (Appendix <a
+href="#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>). However, it is
+typically not reasonable to assume that the are constant in time.<a
+href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Common source , like <code>1AB</code> and
+<code>2BA</code>, cancel out the source artifacts while common detector,
+like <code>A12</code> and <code>B21</code>, cancel out the detector
+artifacts (Figure <a href="#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">1.1</a>).<a href="#fnref10"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Dual-Slope (DS) not being effected by is
+dependent on 𝒜 not changing while one DS
+measurement is made. This is not strictly true since some time
+multiplexing must occur. Thus, in practice DS is insensitive to which
+change on a time scale slower than the multiplexing period. Since this
+period is often on the scale of 10 ms, there is effectively complete
+artifact cancellation in physiological experiments.<a href="#fnref11"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>The same reasoning is true for Single-Slope (SS) set
+<code>2BA</code> but with the long leg changing.<a href="#fnref12"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Despite the negative sensitivity to absorption change (𝒮) of Dual-Slope (DS) not
+being a significant concern, it is a significant concern for Single-Slope (SS)
+where the negative region is large and can create complicated and
+confusing recovered data.<a href="#fnref13" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>The amount of perturbation overlap is governed by the
+perturbation size (Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>) specified in Section <a
+href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.<a
+href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>A negative sensitivity to absorption change (𝒮) representing the opposite
+direction absorption coefficient change (Δμ<sub>a</sub>) being measured from the
+actual, a true increase measured as a decrease for example.<a
+href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p><span id="foot:senCurveStartOne"
+data-label="foot:senCurveStartOne"></span>The curves in the bottom panel
+of Figure <a href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+data-reference="fig:DSsenSDSSDSsenCurve">1.7</a> must approach 1 as
+<span class="math inline">\(z\)</span> approaches 0. This is because
+when <span class="math inline">\(z\)</span> is 0 the sensitivity to absorption change (𝒮) is
+to the whole medium, which is 1 (Appendix <a href="#app:senMaps"
+data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>).<a href="#fnref16"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p><span id="foot:SSDSsameForLay"
+data-label="foot:SSDSsameForLay"></span>Dual-Slope (DS) and Single-Slope (SS)
+being the same in the layered case leads to some interesting
+interpretations of results. This being that if one measures different
+signals from the two SS in a DS
+probe there must be some lateral heterogeneity, or instrumental
+artifacts.<a href="#fnref17" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch2.html" class="btn btn-sm btn-outline-secondary">← Short versus Long Source-Detector Distances</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch4.html" class="btn btn-sm btn-outline-secondary">Point Measurements with Dual-Slope →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Wavelet Coherent Hemodynamics Spectroscopy · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part II · Cerebral Hemodynamics</div>
+                <h1 class="fw-bold mb-3">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</h1>
+                <hr class="mb-4">
+
+                <h1
+id="introduction-to-wavelet-coherent-hemodynamics-spectroscopy">Introduction
+to Wavelet Coherent Hemodynamics Spectroscopy</h1>
+<p><span id="ch:CHSintro" data-label="ch:CHSintro"></span></p>
+<h2 id="hemodynamic-oscillations">Hemodynamic Oscillations</h2>
+<p>Measurements of hemodynamic oscillations using NIRS
+have been relevant for studying both diseased and healthy human brain.
+The oscillations in O and D
+concentrations and their corresponding phase and amplitude
+relationships, either between themselves or with respect to oscillatory
+physiological quantities such as ABP, have been investigated
+for both spontaneous and induced oscillations<span class="citation"
+data-cites="fantiniDynamicModelTissue2014"></span>.</p>
+<p>Spontaneous cerebral hemodynamic oscillations (in the broad frequency
+range 0.01 Hz–1 Hz) occur naturally within the human body and can have a
+wide range of sources, both from systemic contributions of
+cardiovascular dynamics (<em>exempli gratia</em>, from heart rate, ABP)
+and from local effects of metabolic and flow regulations (<em>exempli
+gratia</em>, local vascular reactivity, focal metabolism)<span
+class="citation"
+data-cites="katuraQuantitativeEvaluationInterrelations2006"></span>.
+NIRS studies of spontaneous
+oscillations of ΔO and ΔD
+have been conducted in infants<span class="citation"
+data-cites="tagaSpontaneousOscillationOxy2000 watanabeHemoglobinPhaseOxygenation2017"></span>
+and adult<span class="citation"
+data-cites="obrigSpontaneousLowFrequency2000 pierroPhaseamplitudeInvestigationSpontaneous2012"></span>
+human subjects. Besides spontaneous oscillations, cerebral hemodynamics
+can be induced by several protocols based on systemic perturbations in
+the ABP. These protocols include
+paced breathing<span class="citation"
+data-cites="reinhardOscillatoryCerebralHemodynamics2006"></span><span
+class="citation" data-cites="reinhardSpatialMappingDynamic2014"></span>,
+cyclic inflation and deflation of pneumatic thigh cuffs<span
+class="citation"
+data-cites="aaslidAsymmetricDynamicCerebral2007"></span>, periodic
+head-up-tilting<span class="citation"
+data-cites="chengNoninvasiveOpticalEvaluation2012"></span>, and repeated
+squat-stand<span class="citation"
+data-cites="claassenTransferFunctionAnalysis2016"></span> or sit-stand
+maneuvers<span class="citation"
+data-cites="vanbeekOscillationsCerebralBlood2012"></span>. Even without
+a physiological model that provides a quantitative description of
+oscillations of ΔO and ΔD or
+their associated Õ and D̃,
+their relative amplitude and phase have already been correlated to
+healthy or diseased conditions of cerebral tissue and brain perfusion.
+For example, a study conducted on patients with unilateral carotid
+obstruction in a paced breathing protocol at 0.1 Hz found that the phase
+difference between Õ and D̃
+is larger in the <em>contralateral</em> hemisphere (the healthy one)
+compared to the <em>ipsilateral</em> hemisphere (the affected one) and
+to healthy controls. The authors associated this result with impaired
+cerebral AR in the affected side of the
+brain<span class="citation"
+data-cites="pierroPhaseamplitudeInvestigationSpontaneous2012"></span>.
+Spontaneous hemodynamic oscillations are more appealing for diagnostic
+purposes because they are readily available in all subjects, do not
+require subjective cooperation (<em>exempli gratia</em> paced breathing)
+or forcing maneuvers (<em>exempli gratia</em> cyclic thigh cuff
+occlusion and release) which may not be appropriate for some diseased
+individuals. However, in order to draw meaningful conclusions from any
+hemodynamic oscillations study, stable phase and amplitude relationships
+between the measured oscillating quantities are required. A preliminary
+study that investigated both spontaneous and induced hemodynamic
+oscillations in the frontal area of human subjects concluded that
+induced oscillations are coherent with higher incidence and are
+characterized by more stable phase relationship between Õ
+and D̃ as compared to spontaneous
+oscillations<span class="citation"
+data-cites="sassaroliInducedSpontaneousHemodynamic2017"></span>.</p>
+<p>One method that we have introduced for studying hemodynamic
+oscillations is CHS. It differs from other
+methods of using hemodynamic oscillations for medical diagnostic in two
+aspects:</p>
+<ul>
+<li><p>A spectrum of hemodynamic oscillations at different frequencies
+are investigated in order to measure the frequency-resolved phase and
+amplitude relationship between Õ and D̃
+by considering D̃/Õ.</p></li>
+<li><p>A dedicated mathematical model is used to translate these phase
+and amplitude relationships into physiological parameters useful for
+monitoring micro-vascular integrity, such as capillary and venous
+transit times and a parameter related to the effectiveness of cerebral
+AR.</p></li>
+</ul>
+<p>We have demonstrated the potential of CHS in several studies, both
+in healthy controls<span class="citation"
+data-cites="kainerstorferCerebralAutoregulationMicrovasculature2015"></span>
+and a diseased population<span class="citation"
+data-cites="pierroReducedSpeedMicrovascular2014"></span>. We have also
+used CHS for estimating the
+transfer function between ABP and T to
+assess cerebral AR<span class="citation"
+data-cites="tgavalekosFrequencyresolvedAnalysisCoherent2019"></span>.</p>
+<p>One well known issue that needs to be addressed in non-invasive
+cerebral NIRS is the high sensitivity
+of optical signals to hemodynamics occurring in the superficial,
+extracerebral tissue layers (mainly scalp and skull) as discussed in
+Part <a href="#prt:deepMeas" data-reference-type="ref"
+data-reference="prt:deepMeas">[prt:deepMeas]</a>. In the case of CHS,
+we need to consider the problem of extracerebral contamination. However,
+this problem is somewhat different than in the case of brain activation,
+since the driving force of hemodynamic oscillations is not a brain
+stimulus, but rather a systemic perturbation in ABP.
+Therefore, a high level of correlation between NIRS
+measurements at different ρs is expected. In fNIRS studies of brain
+activation, it is possible to observe task-related hemodynamic
+oscillations in the superficial tissue layers, which may be highly
+correlated with brain hemodynamics<span class="citation"
+data-cites="takahashiInfluenceSkinBlood2011"></span>. However, the
+source of extracerebral contamination is likely to be different than in
+CHS. For example, in an fNIRS study<span
+class="citation"
+data-cites="kirilinaPhysiologicalOriginTaskevoked2012"></span>, the
+authors found that the extracerebral contamination was mainly observed
+in ΔO, as a result of task-evoked
+sympathetic arterial vasoconstriction followed by a decrease in venous
+volume in the scalp. Since CHS is reliant on more
+systemic changes in hemodynamics, methods that localize the entire
+recovered signal or the 𝒮 are desirable. For this
+reason the preferentially deep methods based on optics itself such as
+MD and DS in
+Part <a href="#prt:deepMeas" data-reference-type="ref"
+data-reference="prt:deepMeas">[prt:deepMeas]</a> are well tailored to
+CHS.</p>
+<h2 id="determination-of-hemodynamic-phasors-with-wavelet">Determination
+of Hemodynamic Phasors with Wavelet</h2>
+<p>A key a aspect of CHS is the measurement of
+Õ, D̃,
+and Ã. Simply these phasor
+measurements are not sufficient, as the measurements must also be
+representative of true hemodynamics and exhibit stable amplitudes and
+phase. This leads us to the etymology of CHS, where <em>coherent</em>
+is referring to the reliability and stability of the phasors, and
+hemodynamics spectroscopy refers to the measurement of these phasors of
+<em>hemodynamic</em> qualities at various oscillation frequencies to
+make a <em>spectrum</em>.</p>
+<p>CHS can be done with various
+measures of coherence and signal analysis<span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018"></span>. After considering
+various methods we have settled on a wavelet based approach. This
+approach uses wavelet 𝔠 as the measure of
+coherence and wavelet coefficients as the measure of phasors which are
+time and frequency resolved. The specifics of wavelet phasor analysis is
+in Appendix <a href="#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a> and of coherence is in
+Appendix <a href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a>. To determine if the 𝔠
+is significantly high we generate thresholds from random surrogate
+data<span class="citation"
+data-cites="sassaroliMeaningCoherentIts2018 blaneyAlgorithmDeterminationThresholds2020"></span>.
+The generation of these thresholds is discussed in detail in <span
+class="citation"
+data-cites="blaneyAlgorithmDeterminationThresholds2020"></span> and
+Chapter <a href="#ch:signCoh" data-reference-type="ref"
+data-reference="ch:signCoh">[ch:signCoh]</a>.</p>
+<p>The phasors themselves are not easily interpreted, thus we focus on
+phasor ratio vectors (Appendix <a href="#app:phasors"
+data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>). Additionally, 𝔠
+requires a statement comparing two signals (Appendix <a
+href="#app:detCoh" data-reference-type="ref"
+data-reference="app:detCoh">[app:detCoh]</a>). Therefore, for every pair
+of phasors there is an associated vector representing their transfer
+function and a 𝔠 value. In CHS
+the individual signals considered are of ΔO, ΔD,
+ΔT, and ΔA. The D̃/Õ and T̃/Ã, as well as the 𝔠(Õ,Ã), 𝔠(D̃,Ã), and 𝔠(T̃,Ã) also find particular
+relevance. For T̃/Ã to be considered
+coherent, 𝔠(T̃,Ã) must be able the
+significance threshold; and for D̃/Õ to be significant both
+𝔠(Õ,Ã) and 𝔠(D̃,Ã) must be above threshold
+(Chapter <a href="#ch:signCoh" data-reference-type="ref"
+data-reference="ch:signCoh">[ch:signCoh]</a>). This comes from the
+assumption that ABP is the chief driver in
+these hemodynamic oscillations.</p>
+<h2 id="meanings-of-select-phasors-and-vectors">Meanings of Select
+Phasors and Vectors</h2>
+<figure id="fig:CHSphasors">
+<div class="center">
+<img src="figures/CHSphasors.png" class="img-fluid" alt="CHSphasors">
+</div>
+<figcaption>Example Coherent Hemodynamics Spectroscopy (CHS) phasor relationships at
+0.1 Hz. (a) A typical case. (b) Result from taking the typical case and
+impairing Auto-Regulation (AR) by reducing phase between
+Blood-Flow (BF) and Arterial Blood Pressure (ABP)
+(dark gray arrow) with all knock on effects (light gray arrows). (c)
+Resulting phasor ratio T/A (T̃/Ã) that would be measured in
+both cases, impairing AR created a slightly more
+negative phase difference. (d) Resulting phasor ratio D/O (D̃/Õ) that would be measured in
+both cases, impairing AR created a strongly more
+negative phase difference.<br />
+Note 1: A version of this diagram was presented in <span
+class="citation"
+data-cites="blaneyComparisonSpontaneousInduced2019"></span> and <span
+class="citation"
+data-cites="khaksariDepthDependenceCoherent2018"></span>.<br />
+Acronyms and Symbols: Auto-Regulation (AR); blood Flow (<span
+class="math inline">\(F\)</span> subscript); blood Volume (<span
+class="math inline">\(V\)</span> subscript); blood Flow unit phasor (F̆); blood Volume unit phasor (V̆); Arterial blood pressure phasor (Ã); Total-hemoglobin phasor (T̃);
+Oxy-hemoglobin phasor (Õ); Deoxy-hemoglobin phasor (D̃);
+phasor ratio T/A (T̃/Ã); and phasor ratio D/O (D̃/Õ).</figcaption>
+</figure>
+<p>In the previous section, the D̃/Õ and T̃/Ã are introduced as
+relevant vectors for analysis. To understand why this is we shall look
+at their physiological meaning. First, we should introduce the concepts
+of BV and BF
+oscillations with corresponding V̆ and F̆. ΔT is
+considered a surrogate for BV change and Δ(O−D)
+and surrogate for BF change. Therefore, T̃
+is modeled as along the V̆ direction and Õ
+and D̃ components associated with
+BF (which is designated with
+the <span class="math inline">\(V\)</span> subscript) are along the same
+direction and add to T̃. Additionally, the Õ
+and D̃ components associated with
+BF (which is designated with
+the <span class="math inline">\(F\)</span> subscript) as modeled with a
+180° phase difference. Finally, the F̆ is expected to have a
+parameter dependent phase difference between it and <span
+class="math inline">\(\acrshort{Oph}_{F}\)</span>. This phase correction
+for F̆ is in-fact one of the
+chief differences between CHS and previous work which
+considered Δ(O−D) as BF, as
+CHS temporally corrects Δ(O−D)
+to more directly measure BF<span class="citation"
+data-cites="fantiniDynamicModelTissue2014 phamQuantitativeMeasurementsCerebral2019"></span>.</p>
+<p>Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+data-reference="fig:CHSphasors">1.1</a>(a) shows all of the
+aforementioned phasor relationships and connects them to the measured
+phasors Õ, D̃,
+T̃, and Ã for an example at
+0.1 Hz<span class="citation"
+data-cites="kainerstorferCerebralAutoregulationMicrovasculature2015"></span>.
+Key phasor relationships follow: <span
+class="math display">\[\acrshort{Tph}=\acrshort{Oph}+\acrshort{Dph}=\acrshort{Oph}_V+\acrshort{Dph}_V\]</span>
+<span
+class="math display">\[\acrshort{Oph}=\acrshort{Oph}_V+\acrshort{Oph}_F\]</span>
+<span
+class="math display">\[\acrshort{Dph}=\acrshort{Dph}_V+\acrshort{Dph}_F\]</span>
+<span
+class="math display">\[\acrshort{Oph}_F=-\acrshort{Dph}_F\]</span></p>
+<p>The CHS hemodynamic model<span
+class="citation"
+data-cites="sassaroliInducedSpontaneousHemodynamic2017"></span> allows
+us to find physiological interpretations for all of these relations. The
+measurable Õ and D̃
+are decomposed into contributions from blood volume and BF and
+BV (here, we neglect
+oscillations in the metabolic rate of oxygen). <span
+class="math inline">\(\acrshort{Oph}_V\)</span> and <span
+class="math inline">\(\acrshort{Dph}_V\)</span> are in phase with each
+other and with T̃ and V̆ as mentioned above. The
+relative amplitude of <span
+class="math inline">\(\acrshort{Oph}_V\)</span> and <span
+class="math inline">\(\acrshort{Dph}_V\)</span> is determined by the
+oxygen saturation of the volume-oscillating vascular compartment which
+is assumed to be 75 %<span class="citation"
+data-cites="kainerstorferOpticalOximetryVolumeoscillating2016"></span>.
+As described, <span class="math inline">\(\widetilde{O}_F\)</span> and
+<span class="math inline">\(\widetilde{D}_F\)</span> are in opposition
+of phase and have the same magnitude. <span
+class="math inline">\(\acrshort{Oph}_F\)</span> lags F̆ as a result of the blood
+transit time in the microvasculature<span class="citation"
+data-cites="fantiniDynamicModelTissue2014"></span>, here this was
+assumed to be 40° as computed with our model using typical values for
+the blood transit times and other model parameters. Finally, BF
+oscillations lead the Ã in the presence of AR,
+with a greater lead phase for more effective AR,
+and they are in phase with the Ã in the absence of AR.
+This is key to interpreting these phasor relations, since simply by
+changing the phase difference between F̆ and Ã all of the measured
+phasors also change. This model allows for interpretation of such a
+change in AR.</p>
+<p>Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+data-reference="fig:CHSphasors">1.1</a>(b) simulates a impaired AR
+compared to Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+data-reference="fig:CHSphasors">1.1</a>(a) by moving F̆ closer to Ã. We have kept the
+amplitude of Õ, the phase of T̃
+(<em>id est</em> the phase of V̆), and the phase angle
+between F̆ and <span
+class="math inline">\(\acrshort{Oph}_F\)</span> (which reflects the
+blood transit time in the microvasculature) constant.</p>
+<p>Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+data-reference="fig:CHSphasors">1.1</a>(c)(d) also shows the D̃/Õ and T̃/Ã (at 0.1 Hz in this case)
+which is the actual output of 𝔠 threshold a wavelet CHS
+analysis. The key is how these vectors change with impaired AR,
+which can be used as an interpretation of measured CHS
+results. First, focusing on D̃/Õ, when AR was
+impaired the phase became strongly more negative and the amplitude ratio
+decreased. For T̃/Ã the impaired AR
+caused a weakly more negative phase and an increase in amplitude. This
+tells us that if we see these effects in measured data they can be
+interpreted as AR impairment. Additionally,
+this indicates that the strongest measure of AR is
+the phase of D̃/Õ. Further chapters
+present such data <em>in vivo</em> and provide physiological
+interpretation motivated by these models.</p>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch5.html" class="btn btn-sm btn-outline-secondary">← Dual-Slope Imaging</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch7.html" class="btn btn-sm btn-outline-secondary">Test for Significant Coherence →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

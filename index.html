@@ -54,6 +54,7 @@
                     <li class="nav-item"><a class="nav-link" href="#research">Research</a></li>
                     <li class="nav-item"><a class="nav-link" href="#teaching">Teaching</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dissertation/index.html">Dissertation</a></li>
                 </ul>
             </div>
         </div>
@@ -62,7 +63,7 @@
     <!-- Bio -->
     <section id="bio">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center gx-5">
                 <div class="col-md-3 text-center mb-4 mb-md-0">
                     <img src="https://lh3.googleusercontent.com/d/1K9FCwAmBIO4cnpK-nn9NBMmOYHMrtJJC" alt="Giles Blaney"
                          class="rounded-circle img-fluid shadow"
@@ -115,8 +116,8 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">BME-0010 Electrical Circuits and Biomedical Applications</h5>
-                            <p class="card-text text-muted small">Lecturer · Tufts University School of Engineering · Fa 2023, 2024, 2025</p>
-                            <p class="card-text">Required course for biomedical engineers. Designed syllabus de novo. Average instructor evaluations: 4.3/5.0 (Fa'23) &amp; 4.4/5.0 (Fa'24 &amp; Fa'25).</p>
+                            <p class="card-text text-muted small">Tufts University School of Engineering · Fall 2023, 2024, 2025</p>
+                            <p class="card-text">Required circuits course for biomedical engineers</p>
                         </div>
                     </div>
                 </div>
@@ -124,26 +125,8 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">HONORS-295 Radiation: Technology, Nature, and Society</h5>
-                            <p class="card-text text-muted small">Lecturer · UMass Boston Honors College · Spring 2025</p>
-                            <p class="card-text">Natural science general education course developed de novo. Average course evaluations: 4.2/5.0; average instructor evaluations: 4.2/5.0.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Research Mentor</h5>
-                            <p class="card-text text-muted small">Tufts University School of Engineering · Spring 2018 – Present</p>
-                            <p class="card-text">Research mentor for 2 PhD, 4 MS, and 5 BS students. Capstone mentor for one team of 5 BS students.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Teaching Assistant</h5>
-                            <p class="card-text text-muted small">Tufts University School of Engineering · Fall 2018, Spring 2019</p>
-                            <p class="card-text">BME-0151 Biophotonics (Sp'19) and BME-0143 Biological Systems (Fa'18).</p>
+                            <p class="card-text text-muted small">UMass Boston Honors College · Spring 2025</p>
+                            <p class="card-text">Natural science general education course</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +137,7 @@
     <!-- Tools -->
     <section id="tools">
         <div class="container">
-            <h2 class="fw-bold">Tools &amp; Apps</h2>
+            <h2 class="fw-bold">Tools</h2>
             <div class="section-divider"></div>
             <p class="mb-4">Interactive browser-based tools built on physical and numerical models.</p>
 
@@ -173,7 +156,18 @@
                     </a>
                 </div>
 
-                <!-- Add more tool cards here following the same pattern -->
+                <div class="col-md-4">
+                    <a href="tools/diffuse-reflectance/index.html" class="text-decoration-none text-dark">
+                        <div class="card h-100 tool-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Diffuse Reflectance</h5>
+                                <p class="card-text text-muted small">CW · Diffusion Theory · Plotly</p>
+                                <p class="card-text">Interactive R(ρ) for a semi-infinite homogeneous medium. Adjust μ<sub>a</sub> and μ'<sub>s</sub> and watch the curve update in real time.</p>
+                            </div>
+                            <div class="card-footer text-muted small">Open tool →</div>
+                        </div>
+                    </a>
+                </div>
 
             </div>
         </div>
@@ -190,15 +184,40 @@
     <script>
         const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
-        fetch("https://api.semanticscholar.org/graph/v1/author/51904482/papers?fields=title,year,venue,authors,citationCount,openAccessPdf&limit=50&sort=citationCount")
-            .then(r => r.json())
+        const CACHE_KEY = 'pubs_v1';
+        const CACHE_TTL = 86400000; // 24h
+
+        function loadPubs() {
+            try {
+                const raw = localStorage.getItem(CACHE_KEY);
+                if (raw) {
+                    const { ts, data } = JSON.parse(raw);
+                    if (Date.now() - ts < CACHE_TTL) return Promise.resolve(data);
+                }
+            } catch (_) {}
+            return fetch("https://api.semanticscholar.org/graph/v1/author/51904482/papers?fields=title,year,venue,authors,citationCount,openAccessPdf,externalIds&limit=1000")
+                .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+                .then(data => {
+                    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch (_) {}
+                    return data;
+                });
+        }
+
+        loadPubs()
             .then(data => {
                 const container = document.getElementById("publications");
-                container.innerHTML = data.data.map(p => {
+                const sorted = data.data.sort((a, b) => b.citationCount - a.citationCount);
+                const hIndex = sorted.reduce((h, p, i) => p.citationCount >= i + 1 ? i + 1 : h, 0);
+                container.innerHTML = sorted.slice(0, hIndex).map(p => {
                     const authors = esc(p.authors.map(a => a.name).join(", "));
                     const venue = esc([p.venue, p.year].filter(Boolean).join(", "));
-                    const link = p.openAccessPdf
-                        ? `<a href="${esc(p.openAccessPdf.url)}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">PDF</a>`
+                    const pdfUrl = p.openAccessPdf?.url;
+                    const doi = p.externalIds?.DOI;
+                    const href = doi ? `https://doi.org/${doi}` : (pdfUrl || `https://www.semanticscholar.org/paper/${p.paperId}`);
+                    let linkText = null;
+                    try { linkText = new URL(href).hostname.replace(/^www\./, ""); } catch (_) {}
+                    const link = href
+                        ? `<a href="${esc(href)}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">${esc(linkText)}</a>`
                         : "";
                     return `
                         <div class="col-md-6">
@@ -214,7 +233,8 @@
                         </div>`;
                 }).join("");
             })
-            .catch(() => {
+            .catch(err => {
+                console.error("Publications fetch failed:", err);
                 document.getElementById("publications").innerHTML =
                     `<div class="col-12">Unable to load publications. <a href="https://scholar.google.com/citations?user=zous0mAAAAAJ&hl=en" target="_blank">View on Google Scholar</a>.</div>`;
             });
