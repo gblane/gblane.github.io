@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="Giles Blaney, PhD">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://api.semanticscholar.org">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { padding-top: 70px; }
@@ -62,8 +64,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-3 text-center mb-4 mb-md-0">
-                    <!-- Replace src with your photo -->
-                    <img src="photo.jpg" alt="Giles Blaney"
+                    <img src="https://lh3.googleusercontent.com/d/1K9FCwAmBIO4cnpK-nn9NBMmOYHMrtJJC" alt="Giles Blaney"
                          class="rounded-circle img-fluid shadow"
                          style="max-width: 180px;"
                          onerror="this.style.display='none'">
@@ -72,20 +73,19 @@
                     <h1 class="display-5 fw-bold">Giles Blaney, PhD</h1>
                     <div class="section-divider"></div>
                     <p class="lead">
-                        <!-- Add your title / affiliation here -->
-                        Researcher &amp; Educator
+                        NIH Pathway to Independence Postdoctoral Scholar · Diffuse Optical Imaging of Tissue (DOIT) Lab, Tufts University
                     </p>
                     <p>
-                        <!-- Add a short bio paragraph here -->
-                        Welcome to my personal website. I work on [research area] at [institution].
-                        My interests include [topic 1], [topic 2], and [topic 3].
+                        Giles Blaney is a postdoctoral scholar in the Diffuse Optical Imaging of Tissue (DOIT) lab at Tufts University. Giles earned his Doctor of Philosophy in Biomedical Engineering from Tufts in 2022 after 5 years in the DOIT lab. He is from Wenham, MA, a small town north of Boston. Before coming to Tufts, Giles received a Bachelor of Science in Mechanical Engineering and Physics from Northeastern University in 2017. Currently, he is researching diffuse optical techniques to detect changes deeper within a scattering medium.
                     </p>
-                    <div class="d-flex gap-3 mt-3 flex-wrap">
-                        <!-- Add links as needed -->
-                        <a href="mailto:123gpb@gmail.com" class="btn btn-outline-primary btn-sm">Email</a>
+                    <div class="d-flex gap-3 mt-3 flex-wrap align-items-center">
+                        <a href="mailto:Giles.Blaney@tufts.edu" class="btn btn-outline-primary btn-sm">Email</a>
+                        <span class="text-muted small">Giles.Blaney@tufts.edu or giles&#46;blaney&#64;gmail&#46;com</span>
+                        <div class="w-100"></div>
                         <a href="https://github.com/gblane" class="btn btn-outline-dark btn-sm" target="_blank">GitHub</a>
-                        <!-- <a href="#" class="btn btn-outline-secondary btn-sm" target="_blank">Google Scholar</a> -->
-                        <!-- <a href="#" class="btn btn-outline-secondary btn-sm" target="_blank">CV</a> -->
+                        <a href="https://linkedin.com/in/gilesblaney/" class="btn btn-outline-secondary btn-sm" target="_blank">LinkedIn</a>
+                        <a href="https://scholar.google.com/citations?user=zous0mAAAAAJ&hl=en" class="btn btn-outline-secondary btn-sm" target="_blank">Google Scholar</a>
+                        <a href="https://drive.google.com/file/d/1hDcE3TpdN2cfzTSZEgtOfhxqoLIlBBgj/view?usp=drive_link" class="btn btn-outline-secondary btn-sm" target="_blank">CV</a>
                     </div>
                 </div>
             </div>
@@ -97,34 +97,9 @@
         <div class="container">
             <h2 class="fw-bold">Research</h2>
             <div class="section-divider"></div>
-
-            <p class="mb-4">
-                <!-- Brief overview of your research program -->
-                My research focuses on [research area]. Below are selected projects and publications.
-            </p>
-
-            <!-- Add a card per project or publication group -->
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Project / Paper Title</h5>
-                            <p class="card-text text-muted small">Journal or Conference, Year</p>
-                            <p class="card-text">Brief description of the work and its significance.</p>
-                            <!-- <a href="#" class="btn btn-sm btn-outline-primary">Paper</a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Project / Paper Title</h5>
-                            <p class="card-text text-muted small">Journal or Conference, Year</p>
-                            <p class="card-text">Brief description of the work and its significance.</p>
-                            <!-- <a href="#" class="btn btn-sm btn-outline-primary">Paper</a> -->
-                        </div>
-                    </div>
-                </div>
+            <p class="mb-4">Diffuse optical techniques for detecting physiological changes in biological tissue, including frequency-domain near-infrared spectroscopy (FD-NIRS) and dual-slope imaging methods.</p>
+            <div id="publications" class="row g-4">
+                <div class="col-12 text-muted">Loading publications…</div>
             </div>
         </div>
     </section>
@@ -135,27 +110,40 @@
             <h2 class="fw-bold">Teaching</h2>
             <div class="section-divider"></div>
 
-            <p class="mb-4">
-                <!-- Brief teaching statement or overview -->
-                Courses taught and educational materials I have developed.
-            </p>
-
             <div class="row g-4">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Course Name</h5>
-                            <p class="card-text text-muted small">Institution · Semester Year</p>
-                            <p class="card-text">Role and brief description of the course.</p>
+                            <h5 class="card-title">BME-0010 Electrical Circuits and Biomedical Applications</h5>
+                            <p class="card-text text-muted small">Lecturer · Tufts University School of Engineering · Fa 2023, 2024, 2025</p>
+                            <p class="card-text">Required course for biomedical engineers. Designed syllabus de novo. Average instructor evaluations: 4.3/5.0 (Fa'23) &amp; 4.4/5.0 (Fa'24 &amp; Fa'25).</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Course Name</h5>
-                            <p class="card-text text-muted small">Institution · Semester Year</p>
-                            <p class="card-text">Role and brief description of the course.</p>
+                            <h5 class="card-title">HONORS-295 Radiation: Technology, Nature, and Society</h5>
+                            <p class="card-text text-muted small">Lecturer · UMass Boston Honors College · Spring 2025</p>
+                            <p class="card-text">Natural science general education course developed de novo. Average course evaluations: 4.2/5.0; average instructor evaluations: 4.2/5.0.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Research Mentor</h5>
+                            <p class="card-text text-muted small">Tufts University School of Engineering · Spring 2018 – Present</p>
+                            <p class="card-text">Research mentor for 2 PhD, 4 MS, and 5 BS students. Capstone mentor for one team of 5 BS students.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Teaching Assistant</h5>
+                            <p class="card-text text-muted small">Tufts University School of Engineering · Fall 2018, Spring 2019</p>
+                            <p class="card-text">BME-0151 Biophotonics (Sp'19) and BME-0143 Biological Systems (Fa'18).</p>
                         </div>
                     </div>
                 </div>
@@ -177,7 +165,7 @@
                         <div class="card h-100 tool-card">
                             <div class="card-body">
                                 <h5 class="card-title">tinyMC</h5>
-                                <p class="card-text text-muted small">Monte Carlo · PyScript</p>
+                                <p class="card-text text-muted small">Monte Carlo · Plotly</p>
                                 <p class="card-text">3D isotropic random walk simulator. Enter a step count and visualize the projected X–Y path.</p>
                             </div>
                             <div class="card-footer text-muted small">Open tool →</div>
@@ -194,10 +182,42 @@
     <!-- Footer -->
     <footer class="bg-dark text-light py-4 mt-0">
         <div class="container text-center">
-            <p class="mb-0 small">&copy; 2025 Giles Blaney, PhD · Built with Bootstrap &amp; PyScript</p>
+            <p class="mb-0 small">&copy; Giles Blaney, PhD · Last updated April 2026</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+        fetch("https://api.semanticscholar.org/graph/v1/author/51904482/papers?fields=title,year,venue,authors,citationCount,openAccessPdf&limit=50&sort=citationCount")
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById("publications");
+                container.innerHTML = data.data.map(p => {
+                    const authors = esc(p.authors.map(a => a.name).join(", "));
+                    const venue = esc([p.venue, p.year].filter(Boolean).join(", "));
+                    const link = p.openAccessPdf
+                        ? `<a href="${esc(p.openAccessPdf.url)}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">PDF</a>`
+                        : "";
+                    return `
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">${esc(p.title)}</h6>
+                                    <p class="card-text text-muted small mb-1">${venue}</p>
+                                    <p class="card-text text-muted small mb-1">${authors}</p>
+                                    <p class="card-text small">${p.citationCount} citations</p>
+                                    ${link}
+                                </div>
+                            </div>
+                        </div>`;
+                }).join("");
+            })
+            .catch(() => {
+                document.getElementById("publications").innerHTML =
+                    `<div class="col-12">Unable to load publications. <a href="https://scholar.google.com/citations?user=zous0mAAAAAJ&hl=en" target="_blank">View on Google Scholar</a>.</div>`;
+            });
+    </script>
 </body>
 </html>

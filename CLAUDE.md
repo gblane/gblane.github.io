@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**tinyMC** — a Monte Carlo simulation visualizer running entirely in the browser via [PyScript](https://pyscript.net/). No build step, no npm, no framework. Python code runs client-side using WebAssembly.
+Personal academic website (gblane.github.io) with embedded browser-based interactive tools. No build step, no npm, no framework — static HTML/CSS/JS served directly.
 
 ## Local Development
 
@@ -13,22 +13,19 @@ python -m http.server 8000
 # visit http://localhost:8000
 ```
 
-No build, lint, or test commands exist.
+## Site Structure
 
-## Architecture
+- `index.html` — main personal site (Bio, Research, Teaching, Tools sections); Bootstrap 5.3.3; links to tools via `tools/<name>/index.html`
+- `tools/tinymc/index.html` — tinyMC tool; vanilla JS + Plotly 2.35.2; all logic inline
 
-- `index.html` — single page; loads PyScript from CDN, defines `#input`, `#output`, `#plot` divs, and embeds `main.py` via `<script type="py">`
-- `main.py` — all application logic; uses PyScript's `@when` decorator to bind the button click event, then runs the simulation and renders via `display(fig, target="plot")`
-- `pyscript.json` — declares Python package dependencies (`numpy`, `matplotlib`) fetched at runtime
+## tinyMC Architecture (`tools/tinymc/`)
 
-## Key Patterns
+All simulation and rendering logic lives inline in `tools/tinymc/index.html`:
 
-- **Event binding**: `@when("click", selector="#calculate-button")` links DOM events to Python functions
-- **DOM access**: `document.getElementById()` imported from `pyscript`
-- **Plot output**: `display(fig, target="plot")` renders matplotlib figures into the `#plot` div
-- **Terminal**: The `terminal` attribute on the `<script type="py">` tag exposes a Python console in the page; `print()` goes there — the page instructs users to wait for "ready" before clicking Calculate
+- `runMC(n)` — pure JS function; samples step directions uniformly on the unit sphere using `arccos(1 - 2r)` / `2πr`, accumulates X/Y path
+- `plot(x, y)` — calls `Plotly.react("plot", ...)` to render into `#plot` div
+- Button click handler reads `#number-input`, calls `runMC`, then `plot`; uses `setTimeout(..., 0)` to allow the status text to paint before the synchronous simulation runs
 
-## Notes
+## Adding New Tools
 
-- 3D plot code is commented out in `main.py` (was using `projection='3d'`); the simulation computes x/y/z but currently only plots x/y
-- PyScript version is pinned to `2025.2.1` in both the CDN URLs and implicitly in `pyscript.json`
+Follow the tinyMC pattern: create `tools/<name>/index.html` with a Bootstrap navbar linking back to `../../index.html`, then add a card in the `#tools` section of `index.html`.
