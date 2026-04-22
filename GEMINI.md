@@ -34,6 +34,7 @@ For HTML/Web development on Fedora, the following editors are recommended:
     - Dissertation pages link back via `../index.html`.
     - Always copy the navbar block from an existing tool page when creating new content.
     - The active link should be `#tools` for tool pages and `Dissertation` for dissertation pages.
+- **Favicon:** All HTML pages should include `<link rel="icon" href="data:,">` in the `<head>` to suppress 404 errors for `favicon.ico`.
 
 ### Interactive Tools (`tools/`)
 - Located in `tools/<name>/index.html`.
@@ -44,6 +45,10 @@ For HTML/Web development on Fedora, the following editors are recommended:
 ### Dissertation Section (`dissertation/`)
 - 22 static HTML pages plus `index.html` and `figures/`. 
 - **Editing:** Edit these HTML files directly. They are no longer programmatically generated from LaTeX sources.
+
+### Bio & Education
+- **Links:** Use `.bio-link-inline` for award or lab links within the bio subtitle for a subtle, interactive look.
+- **Education:** Use an unstyled list (`list-unstyled`) with `<strong>` for degree names and `small.text-muted` for minors. Spell out all degree names (e.g., "Biomedical Engineering").
 
 ### Publications
 - Publication data is fetched dynamically from the Semantic Scholar Graph API (Author ID: `51904482`).
