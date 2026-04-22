@@ -1,0 +1,132 @@
+/* gblane.github.io — shared styles */
+
+:root {
+    --bg:          #f9f8f5;
+    --text:        #1a1a1a;
+    --muted:       #6b6b6b;
+    --accent:      #1a5276;
+    --border:      #e0dcd6;
+    --card-bg:     #ffffff;
+    --section-alt: #f2f0ec;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    padding-top: 60px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+/* ── Navbar ───────────────────────────────────────── */
+.navbar {
+    background: #fff !important;
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 0;
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text) !important;
+}
+
+.nav-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted) !important;
+    padding: 0.4rem 0.8rem !important;
+    transition: color 0.15s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--border);
+}
+
+/* Dark hamburger icon for white navbar */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2826%2C26%2C26%2C0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ── Shared card ──────────────────────────────────── */
+.site-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    height: 100%;
+    transition: border-color 0.15s;
+}
+.tool-link:hover .site-card { border-color: var(--accent); }
+
+/* ── Section helpers ──────────────────────────────── */
+.section-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+}
+
+.section-rule {
+    width: 36px;
+    height: 2px;
+    background: var(--accent);
+    border: none;
+    margin: 14px 0 28px;
+}
+
+/* ── Tool pages ───────────────────────────────────── */
+.tool-header { padding: 2rem 0 1.5rem; }
+.tool-title  { font-size: 2rem; font-weight: 700; margin-bottom: 0.15rem; }
+.tool-subtitle { font-size: 0.88rem; color: var(--muted); }
+
+.param-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+}
+
+.about-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.4rem;
+    margin-top: 0.75rem;
+}
+
+.about-title {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+}
+
+.about-text {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0;
+}

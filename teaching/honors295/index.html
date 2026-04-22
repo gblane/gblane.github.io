@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HONORS-295 · Giles Blaney</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../site.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <style>
+        .course-hero {
+            padding: 88px 0 56px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .course-number {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .course-title {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.4rem;
+        }
+
+        .course-meta {
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        /* Material sections */
+        .material-section { padding: 52px 0; border-bottom: 1px solid var(--border); }
+        .material-section:last-child { border-bottom: none; }
+
+        .material-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Material rows */
+        .mat-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .mat-row:last-child { border-bottom: none; }
+
+        .mat-date {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+            min-width: 3.5rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .mat-label {
+            font-size: 0.88rem;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .mat-sublabel {
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: block;
+            margin-top: 0.1rem;
+        }
+
+        .mat-links {
+            display: flex;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .mat-link {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid var(--accent);
+            border-radius: 2px;
+            padding: 2px 7px;
+            transition: background 0.12s, color 0.12s;
+            white-space: nowrap;
+        }
+        .mat-link:hover { background: var(--accent); color: #fff; }
+
+        footer { background: #1c1c1c; color: #777; padding: 1.75rem 0; font-size: 0.78rem; text-align: center; }
+        footer a { color: #999; text-decoration: none; }
+        footer a:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#research">Research</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="../../index.html#teaching">Teaching</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../dissertation/index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="course-hero">
+        <div class="container">
+            <div class="course-number">UMass Boston Honors College · HONORS-295</div>
+            <h1 class="course-title">Radiation: Technology,<br>Nature, and Society</h1>
+            <p class="course-meta">Spring 2025 &nbsp;·&nbsp; Honors College &nbsp;·&nbsp; Natural science general education</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Lectures -->
+        <div class="material-section">
+            <h2 class="material-title">Lectures</h2>
+
+            <div class="mat-row">
+                <span class="mat-date">U2D2</span>
+                <span class="mat-label">Physics of Light</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U3D1</span>
+                <span class="mat-label">Radio: Position and Distance</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U4D1</span>
+                <span class="mat-label">Microwave: Cooking</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U5D1</span>
+                <span class="mat-label">Infrared: Near-Infrared Spectroscopy</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U5D2</span>
+                <span class="mat-label">Infrared: Infrared Photography</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6D2</span>
+                <span class="mat-label">Visible: Color</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U7D1</span>
+                <span class="mat-label">Ultraviolet: Quantum</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U7D2</span>
+                <span class="mat-label">Ultraviolet: UV Photography</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U8D1</span>
+                <span class="mat-label">X-Ray: Medical Imaging</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U8D2</span>
+                <span class="mat-label">X-Ray: High Energy Astronomy</span>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U9D1</span>
+                <span class="mat-label">Gamma: High Energy Radiation</span>
+            </div>
+        </div>
+
+        <!-- KCI Materials -->
+        <div class="material-section">
+            <h2 class="material-title">Knowledge Check-In Materials</h2>
+
+            <div class="mat-row">
+                <span class="mat-date">U6 · A</span>
+                <span class="mat-label">
+                    Transmittance Spectrum — Version A
+                    <span class="mat-sublabel">Gel filter identification problem (KCI5)</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/I1.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6 · B</span>
+                <span class="mat-label">
+                    Transmittance Spectrum — Version B
+                    <span class="mat-sublabel">Gel filter identification problem (KCI5)</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/I2.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6 · C</span>
+                <span class="mat-label">
+                    Transmittance Spectrum — Version C
+                    <span class="mat-sublabel">Gel filter identification problem (KCI5)</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/I3.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6 · i</span>
+                <span class="mat-label">
+                    Absorbance Spectrum α
+                    <span class="mat-sublabel">Answer choice for KCI5</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/A1.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6 · ii</span>
+                <span class="mat-label">
+                    Absorbance Spectrum β
+                    <span class="mat-sublabel">Answer choice for KCI5</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/A2.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+            <div class="mat-row">
+                <span class="mat-date">U6 · iii</span>
+                <span class="mat-label">
+                    Absorbance Spectrum γ
+                    <span class="mat-sublabel">Answer choice for KCI5</span>
+                </span>
+                <div class="mat-links">
+                    <a href="pdfs/A3.pdf" class="mat-link" target="_blank">PDF</a>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /container -->
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Giles Blaney, PhD &nbsp;·&nbsp; <a href="mailto:Giles.Blaney@tufts.edu">Giles.Blaney@tufts.edu</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
