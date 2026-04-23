@@ -6,7 +6,7 @@
     <title>Simulation of Apparent Measurements · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -90,7 +90,7 @@ match.</p>
 <h2 id="simulation-of-measurements-of-dynamic-changes">Simulation of
 Measurements of Dynamic Changes</h2>
 <p>When analyzing data for Δμ<sub>a</sub> the analysis methods are
-those found in Appendix <a href="#app:dmuaMeas"
+those found in Appendix <a href="app3.html#app:dmuaMeas"
 data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. These methods are
 based on retrieving Δμ<sub>a</sub> as if the change occurred
@@ -99,14 +99,14 @@ change is localized, what is measured will not be the same as the actual
 Δμ<sub>a</sub>. This relationship
 depends on analysis method and perturbation location which is the
 meaning of 𝒮 maps (Appendix <a
-href="#app:senMaps" data-reference-type="ref"
+href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>). Therefore, these
 simulations are done using 𝒮 as the forward model and
-Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a> as the inverse.</p>
 <p>Assume a medium is voxalized into <span
 class="math inline">\(N_{vox}\)</span> voxels <em>without overlap</em>.
-Then using the methods in Appendix <a href="#app:senMaps"
+Then using the methods in Appendix <a href="app5.html#app:senMaps"
 data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>, a <span
 class="math inline">\(N_{vox}\times 1\)</span> vector of 𝒮
@@ -114,14 +114,14 @@ class="math inline">\(N_{vox}\times 1\)</span> vector of 𝒮
 created for whichever datatype one wishes to simulate. Now for the same
 voxels we can simulate a actual Δμ<sub>a</sub> <span
 class="math inline">\(N_{vox}\times 1\)</span> vector (<span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span>).
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span>).
 Rearranging Equation <a href="#equ:sen_dmua" data-reference-type="ref"
 data-reference="equ:sen_dmua">[equ:sen_dmua]</a> and summing over all
 voxels we can calculate the apparent measured Δμ<sub>a</sub>
 (<span class="math inline">\(\Delta\mu_a_{,apparent}\)</span>):
 <span
-class="math display">\[\acrshort{dmua}_{,apparent}=\harp{\acrshort{sen}}^T
-\acrshort{dmuaVec}_{,actual}\]</span> It is emphasized that this method
+class="math display">\[\Delta\mu_a_{,apparent}=\harp{\mathcal{S}}^T
+\Delta\vec{\mu}_a_{,actual}\]</span> It is emphasized that this method
 only works if the 𝒮 values correspond to
 voxels which <em>do not overlap</em>, and of course the order of the
 voxels in the two vectors must be the same.</p>
@@ -144,7 +144,7 @@ class="math inline">\(z\geq\)</span>10 mm. The following code will
 retrieve the apparent measured Δμ<sub>a</sub> with SD
 <em>I</em>
 ("dmua_apparent") using <span
-class="math inline">\(\harp{\acrshort{sen}}\)</span> ("Svec") from
+class="math inline">\(\harp{\mathcal{S}}\)</span> ("Svec") from
 Listing <a href="#lst:senMaps" data-reference-type="ref"
 data-reference="lst:senMaps">[lst:senMaps]</a>:</p>
 <pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>armt.rSrc=[-35/2, 0, 0]; %mm
@@ -172,25 +172,25 @@ with different Δμ<sub>a</sub> dynamics. "</p>
 Δμ<sub>a</sub>. However, often we to
 simulate ΔO and ΔD.
 This turns out to be simple, the forward model for Δμ<sub>a</sub>
-from Appendix <a href="#app:forMod" data-reference-type="ref"
+from Appendix <a href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a> can be used to find actual
 Δμ<sub>a</sub> at every voxel from the
 actual ΔO and ΔD at
 each voxel. Then the above simulation methods find apparent Δμ<sub>a</sub>
 which can be converted to apparent ΔO and ΔD
-with Appendix <a href="#app:recChrom" data-reference-type="ref"
+with Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>. If this is done, the
 simulation needs to be run at two or more λs.</p>
 <p>Furthermore, if one wishes to simulate Õ and D̃
 the same methods can also be applied. The forward models to retrieve
 Δμ<sub>a</sub> from Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a> will accept complex numbers
 which represent Õ and D̃
 and will result the μ<sub>a</sub> phasors. Then the 𝒮
 methods will also work with complex numbers to give the apparent μ<sub>a</sub>
 phasor, and finally these complex μ<sub>a</sub> phasors can be input into
-the methods in Appendix <a href="#app:recChrom"
+the methods in Appendix <a href="app4.html#app:recChrom"
 data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a> to result in apparent
 Õ and D̃.</p>
@@ -211,7 +211,7 @@ of Measurements of Absolute Optical Properties</h2>
 <p>As stated above, the simulations in this appendix are primarily
 concerned with testing mismatched forward and inverse models. In the
 case of the measurement of absolute optical properties, the inverse
-model is the one in Appendix <a href="#app:absOptPropMeas"
+model is the one in Appendix <a href="app2.html#app:absOptPropMeas"
 data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> which is
 based on the semi-infinite homogeneous medium. Most of the interest in
@@ -220,26 +220,26 @@ heterogeneous media. This was done extensively in Part <a
 href="#prt:DSspect" data-reference-type="ref"
 data-reference="prt:DSspect">[prt:DSspect]</a>.</p>
 <p>Our inverse model for absolute optical properties (Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>) takes
 measurements of R̃ at two ρ
 as input. Therefore any forward model which calculates R̃
 as a function of ρ may be used to generate
 forward data for the inverse model. The first such forward model is the
-two-layer forward model in Appendix <a href="#app:forMod"
+two-layer forward model in Appendix <a href="app1.html#app:forMod"
 data-reference-type="ref" data-reference="app:forMod">[app:forMod]</a>
 which gives R̃ from a medium with two
 layers having different μ<sub>a</sub> and μ′<sub>s</sub>. Another forward model
 that may be used is Monte Carlo which can simulate even more complex
 distributions of μ<sub>a</sub> and μ′<sub>s</sub>
 to generate R̃ which also can be
-inverted with the methods in Appendix <a href="#app:absOptPropMeas"
+inverted with the methods in Appendix <a href="app2.html#app:absOptPropMeas"
 data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>.</p>
 <p>In practice this is quite simple. Any forward model you like is used
 to generate R̃ at at least two ρs.
 Then this R̃ is input into the methods
-in Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+in Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> to result
 in the effective homogeneous μ<sub>a</sub> and μ′<sub>s</sub>. The result from this
 computational experiment is called <em>effective homogeneous</em>

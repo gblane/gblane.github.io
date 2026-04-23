@@ -6,7 +6,7 @@
     <title>Absolute Absorption Spectroscopy of Tissue · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -141,7 +141,7 @@ class="math inline">\(z_{top}\)</span>).</p>
 </div>
 </div>
 <p>Various tissues were measured using the combined DS CW-bDRS/SC FD-NIRS
-approach from Chapter <a href="#ch:DSbDRS" data-reference-type="ref"
+approach from Chapter <a href="ch9.html#ch:DSbDRS" data-reference-type="ref"
 data-reference="ch:DSbDRS">[ch:DSbDRS]</a>. In <span class="citation"
 data-cites="blaneyBroadbandAbsorptionSpectroscopy2021"></span> 3 human
 subjects were labeled A, B, &amp; C and were measured at 6 locations
@@ -164,7 +164,7 @@ Subject A, the measurements were repeated seven times on each tissue,
 while for Subjects B &amp; C they were repeated 3 times. In each case
 the repeated measurements were taken over multiple days.</p>
 <p>The instrumentation and methods for DS CW-bDRS/SC FD-NIRS
-measurements were the same as the Chapter <a href="#ch:DSbDRS"
+measurements were the same as the Chapter <a href="ch9.html#ch:DSbDRS"
 data-reference-type="ref" data-reference="ch:DSbDRS">[ch:DSbDRS]</a> and
 <span class="citation"
 data-cites="blaneyDualSlopeDiffuseReflectance2021"></span> with the
@@ -174,7 +174,7 @@ optical probes were used, 1 for SC FD
 NIRS and 1 for DS
 CW bDRS, that realized a linear
 symmetric DS arrangement in Figure <a
-href="#fig:DSset" data-reference-type="ref"
+href="ch3.html#fig:DSset" data-reference-type="ref"
 data-reference="fig:DSset">[fig:DSset]</a> with ρ
 of 25 mm, &amp; 35 mm. CW and FD
 measurements were taken within a few minutes and millimeters of each
@@ -223,8 +223,8 @@ from broadband measurements <span class="citation"
 data-cites="baleJobsisPresentDay2016"></span>. These chromophores may be
 fit for using a linear combination of their ε
 spectra to explain the measured μ<sub>a</sub> (Appendices <a
-href="#app:forMod" data-reference-type="ref"
-data-reference="app:forMod">[app:forMod]</a>&amp;<a href="#app:recChrom"
+href="app1.html#app:forMod" data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a>&amp;<a href="app4.html#app:recChrom"
 data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>). Broadband μ<sub>a</sub>
 spectroscopy increases the accuracy of chromophore concentration
@@ -265,18 +265,18 @@ data-cites="blaneyBroadbandAbsorptionSpectroscopy2021"></span> absolute
 CW bDRS
 plus SC FD
 NIRS and the methods in
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> and <span
 class="citation"
 data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>. These μ<sub>a</sub>
 spectra were fit to O, D,
 W, and L εs
-using the methods in Appendix <a href="#app:recChrom"
+using the methods in Appendix <a href="app4.html#app:recChrom"
 data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>. Additionally, the fits
 were done a second time allowing an spectrally constant artifact ε
 in the fit to retrieve <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> as a fifth parameter
+class="math inline">\(\mu_a_{Bck}\)</span> as a fifth parameter
 <span class="citation"
 data-cites="blaneyBroadbandAbsorptionSpectroscopy2021 lankaNoninvasiveInvestigationAdipose2020"></span>.
 This allowed us to examine the goodness of the fits with and without the
@@ -284,10 +284,10 @@ This allowed us to examine the goodness of the fits with and without the
 how the recovered O, D,
 W, and L
 changed between the 2 fits. The need to use <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> to achieve a good
+class="math inline">\(\mu_a_{Bck}\)</span> to achieve a good
 fit was considered a measure of fit artifact. These 2 fits are referred
 to as No Bck and Yes Bck depending on the presence of <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span>.</p>
+class="math inline">\(\mu_a_{Bck}\)</span>.</p>
 <p>In each case, the recovered chromophore concentrations were used to
 calculate the fitted μ<sub>a</sub> spectrum, which is
 compared with the one obtained from the data. The goodness of these fits
@@ -297,11 +297,11 @@ degrees-of-freedom. In these fits, the number of explanatory variables
 was taken as the <span class="math inline">\(n_C\)</span> and the number
 of measurements as <span class="math inline">\(n_{\text{CW}} /
 n_{\text{FWHM}}\)</span> where, <span
-class="math inline">\(n_{\acrshort{FWHM}}\)</span> is the FWHM
+class="math inline">\(n_{\mathrm{FWHM}}\)</span> is the FWHM
 of the DS CW-bDRS
 system’s spectral point-spread function in λ
 samples. For the system employed here, <span
-class="math inline">\(n_{\acrshort{FWHM}}=20\)</span> samples or about
+class="math inline">\(n_{\mathrm{FWHM}}=20\)</span> samples or about
 10 nm, as measured using a helium-neon laser. Thus, the number of
 independent measurements, and further the fit goodness accounted for the
 spectral width of the system.</p>
@@ -367,7 +367,7 @@ is S, <em>b</em> is the <em>b</em>
 data-reference="equ:scatPowLaw">[equ:scatPowLaw]</a>&amp;<a
 href="#equ:scatb" data-reference-type="ref"
 data-reference="equ:scatb">[equ:scatb]</a> and Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>). Optimization was carried
 out with the "interior-point" algorithm of "fmincon". For each fit it
 was unsure that a local minimum was either found or possibly found by
@@ -376,16 +376,16 @@ the optimization algorithm.</p>
 difference between the measured and simulated recovered optical
 properties (<em>id est</em> the sum of the squared residuals). The
 simulated recovered optical properties utilized Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a> to simulate <em>R</em> and
 R̃ then Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> on said
 <em>R</em>
 and R̃ to retrieve simulated
 recovered μ<sub>a</sub> and μ′<sub>s</sub>
 at the various experimental λs (Appendix <a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a> and <span
 class="citation"
 data-cites="blaneyBroadbandAbsorptionSpectroscopy2021"></span>). For
@@ -399,7 +399,7 @@ W, L,
 and 2. These fits goodnesses were also evaluated using R̄² just as the previous
 section considering the number of explanatory variables as 12 and the
 number of measurements as <span
-class="math inline">\(n_{\acrshort{CW}}/n_{\acrshort{FWHM}}+2\)</span>
+class="math inline">\(n_{\mathrm{CW}}/n_{\mathrm{FWHM}}+2\)</span>
 to account for the two FD measurements as well as the
 CW measurements. "</p>
 <h3 id="in-vivo-spectral-results"><em>In-Vivo</em> Spectral Results</h3>
@@ -456,7 +456,7 @@ Equations <a href="#equ:scatPowLaw" data-reference-type="ref"
 data-reference="equ:scatPowLaw">[equ:scatPowLaw]</a>&amp;<a
 href="#equ:scatb" data-reference-type="ref"
 data-reference="equ:scatb">[equ:scatb]</a> and Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>.</p>
 </div>
 </div>
@@ -511,7 +511,7 @@ Note 2: No Bck is a fit without an absorption background.</figcaption>
 <img src="figures/AOfig2.png" class="img-fluid" alt="AOfig2">
 </div>
 <figcaption>Example fits (<span
-class="math inline">\(\hat{\acrshort{mua}}\)</span>) of mean absorption coefficient (μ<sub>a</sub>)
+class="math inline">\(\hat{\mu_a}\)</span>) of mean absorption coefficient (μ<sub>a</sub>)
 spectra over optical wavelength (λ) for two data sets from
 <span class="citation"
 data-cites="blaneyBroadbandAbsorptionSpectroscopy2021"></span>. (a)-(b)
@@ -531,12 +531,12 @@ the change in the degrees-of-freedom) by adding a spectrally independent
 background for 15 of 18 cases (fit goodness is unaffected in the
 remaining three cases). Furthermore, this fit improvement is achieved
 solely by a spectrally constant <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> since higher order
+class="math inline">\(\mu_a_{Bck}\)</span> since higher order
 backgrounds (linear, quadratic, <em>et cetera</em>) do not significantly
 improve the fits, as can be seen in Figure <a href="#fig:AOfigS7"
 data-reference-type="ref" data-reference="fig:AOfigS7">1.2</a>.</p>
 <p>Examining the effect of the inclusion of <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> in the fits, it can
+class="math inline">\(\mu_a_{Bck}\)</span> in the fits, it can
 be seen that this background typically decreases the recovered O and
 D
 concentration, and thus the recovered T concentration (in cases
@@ -544,7 +544,7 @@ where Yes Bck exhibited fit improvement over No Bck). This is not the
 case for W and L
 concentrations, which show little to no difference. Additionally, S is
 also negligibly impacted by the inclusion of <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span>.</p>
+class="math inline">\(\mu_a_{Bck}\)</span>.</p>
 <p>Further, the effect of this μ<sub>a</sub> background on the spectral
 fit shape can also be seen in Figure <a href="#fig:AOfig2"
 data-reference-type="ref" data-reference="fig:AOfig2">1.3</a>, which
@@ -564,7 +564,7 @@ href="#tab:AOtab1" data-reference-type="ref"
 data-reference="tab:AOtab1">[tab:AOtab1]</a>) the inclusion of
 background has almost no effect on the fit, which is reflected by the
 small recovered <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> and the unimproved
+class="math inline">\(\mu_a_{Bck}\)</span> and the unimproved
 R̄² (Table <a
 href="#tab:AOtab2" data-reference-type="ref"
 data-reference="tab:AOtab2">[tab:AOtab2]</a>). The detailed fits and
@@ -586,7 +586,7 @@ Effective Two-Layered Chromophores and Two-Layer Modeling</h4>
 </div>
 <figcaption>Measured (points) and modeled (lines) recovered constant
 absorption background (<span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span>) values versus top
+class="math inline">\(\mu_a_{Bck}\)</span>) values versus top
 layer thickness (<span class="math inline">\(z_{top}\)</span>). Measured
 data found in Tables <a href="#tab:AOtab1" data-reference-type="ref"
 data-reference="tab:AOtab1">[tab:AOtab1]</a>&amp;<a href="#tab:AOtab2"
@@ -599,9 +599,9 @@ data-reference-type="ref" data-reference="fig:AOfig4">1.5</a>).
 Models I&amp;II have the same absorption coefficient (μ<sub>a</sub>) and reduced scattering power coefficient (<em>b</em>)
 parameters, with the only difference being in reduced scattering coefficient (μ′<sub>s</sub>):
 Model I <span
-class="math inline">\(\acrshort{musp}_{Layer~1}(\SI{830}{\nano\meter})&gt;\acrshort{musp}_{Layer~2}(\SI{830}{\nano\meter})\)</span>;
+class="math inline">\(\mu_s'_{Layer~1}(\SI{830}{\nano\meter})&gt;\mu_s'_{Layer~2}(\SI{830}{\nano\meter})\)</span>;
 Model II <span
-class="math inline">\(\acrshort{musp}_{Layer~1}(\SI{830}{\nano\meter})&lt;\acrshort{musp}_{Layer~2}(\SI{830}{\nano\meter})\)</span>.
+class="math inline">\(\mu_s'_{Layer~1}(\SI{830}{\nano\meter})&lt;\mu_s'_{Layer~2}(\SI{830}{\nano\meter})\)</span>.
 Shaded region represents varying each parameter by <span
 class="math inline">\(\pm\)</span>25 % without co-variation.<br />
 Note 1: This figure can be found as Figure 3 in <span class="citation"
@@ -633,9 +633,9 @@ href="#fig:AOfig3" data-reference-type="ref"
 data-reference="fig:AOfig3">1.4</a>. Models I&amp;II have the same absorption coefficient (μ<sub>a</sub>)
 and <em>b</em> parameters with the only
 difference being in reduced scattering coefficient (μ′<sub>s</sub>): Model I <span
-class="math inline">\(\acrshort{musp}_{Layer~1}(\SI{830}{\nano\meter})&gt;\acrshort{musp}_{Layer~2}(\SI{830}{\nano\meter})\)</span>;
+class="math inline">\(\mu_s'_{Layer~1}(\SI{830}{\nano\meter})&gt;\mu_s'_{Layer~2}(\SI{830}{\nano\meter})\)</span>;
 Model II <span
-class="math inline">\(\acrshort{musp}_{Layer~1}(\SI{830}{\nano\meter})&lt;\acrshort{musp}_{Layer~2}(\SI{830}{\nano\meter})\)</span>.
+class="math inline">\(\mu_s'_{Layer~1}(\SI{830}{\nano\meter})&lt;\mu_s'_{Layer~2}(\SI{830}{\nano\meter})\)</span>.
 Shaded region represents varying each parameter by <span
 class="math inline">\(\pm\)</span>25 % without co-variation.<br />
 Note 1: This figure can be found as Figure 4 in <span class="citation"
@@ -723,7 +723,7 @@ sensitivity to scattering perturbations. However, these results pertain
 to absolute sensitivity, whose calculation is non-obvious.</p>
 <p>To further understand the background artifact’s relation to
 heterogeneity, the value of the <span
-class="math inline">\(\acrshort{mua}_{Bck}\)</span> (Table <a
+class="math inline">\(\mu_a_{Bck}\)</span> (Table <a
 href="#tab:AOtab2" data-reference-type="ref"
 data-reference="tab:AOtab2">[tab:AOtab2]</a>) is plotted in Figure <a
 href="#fig:AOfig3" data-reference-type="ref"
@@ -756,13 +756,13 @@ layer.</p></li>
 remained the same).</p></li>
 </ul>
 <p>For these theoretical simulations, methods in Appendices <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>,<a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>,<a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>,&amp;<a
-href="#app:recChrom" data-reference-type="ref"
+href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a> were used to obtain
 effective homogeneous recovered chromophore concentrations, which are
 plotted. These curves are not fits to the data, but rather models based
@@ -985,7 +985,7 @@ errors were ruled out as the source of background μ<sub>a</sub>.</p>
 <p>Finally, approximations in the model used were interrogated. The
 heart of the analysis is the diffusion theory model for a homogeneous
 semi-infinite medium with extrapolated boundary conditions (Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>). Different boundary
 conditions (zero-boundary) and a different geometry (cylindrical) <span
 class="citation" data-cites="liemertLightDiffusionTurbid2010"></span>
@@ -1156,7 +1156,7 @@ to Understand the Partial Volume Effect</h3>
 analyze data collected from a complex medium. That complex medium being
 biological tissue, which has a heterogeneous distribution of optical
 properties, and that simplified model often being the semi-infinite
-homogeneous model seen in Appendix <a href="#app:forMod"
+homogeneous model seen in Appendix <a href="app1.html#app:forMod"
 data-reference-type="ref" data-reference="app:forMod">[app:forMod]</a>
 <span class="citation"
 data-cites="continiPhotonMigrationTurbid1997"></span>. Therefore,
@@ -1200,12 +1200,12 @@ In <span class="citation"
 data-cites="blaneyBroadbandDiffuseOptical2022"></span>, analytical
 expressions from diffusion theory for the R̃
 in a two-layer medium was used to generate forward data (Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>) and expressions for a
 semi-infinite homogeneous medium is used to invert data (Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>&amp;<a
-href="#app:recChrom" data-reference-type="ref"
+href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>).</p>
 <h3 id="description-of-two-layer-simulations">Description of Two-Layer
 Simulations</h3>
@@ -1224,15 +1224,15 @@ href="#equ:scatPowLaw" data-reference-type="ref"
 data-reference="equ:scatPowLaw">[equ:scatPowLaw]</a>&amp;<a
 href="#equ:scatb" data-reference-type="ref"
 data-reference="equ:scatb">[equ:scatb]</a> and Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>). These parameters are both
 inputs to the two-layer forward models (with the parameters possibly
-being different in different layers; Appendix <a href="#app:forMod"
+being different in different layers; Appendix <a href="app1.html#app:forMod"
 data-reference-type="ref" data-reference="app:forMod">[app:forMod]</a>)
 and the out puts of the full inversion (Appendices <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>&amp;<a
-href="#app:recChrom" data-reference-type="ref"
+href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>)</p>
 <p>To generate forward data the SC FD
 NIRS / DS
@@ -1249,17 +1249,17 @@ Therefore, the simulated instrument outputs:</p>
 <ul>
 <li><p>4 FD R̃
 (<span
-class="math inline">\(\acrshort{RCom}(\acrshort{lam},\acrshort{rho})\)</span>;
+class="math inline">\(\widetilde{R}(\lambda,\rho)\)</span>;
 two λs and two ρs).</p></li>
 <li><p>1498 CW <em>R</em>
 (<span
-class="math inline">\(\acrshort{R}(\acrshort{lam},\acrshort{rho})\)</span>;
+class="math inline">\(R(\lambda,\rho)\)</span>;
 749 λs and two ρs).</p></li>
 </ul>
 <p>based on the expressions for a two-layer medium in Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>.</p>
-<p>The two-layer forward model (Appendix <a href="#app:forMod"
+<p>The two-layer forward model (Appendix <a href="app1.html#app:forMod"
 data-reference-type="ref" data-reference="app:forMod">[app:forMod]</a>)
 used expressions derived from diffusion theory to simulated a two-layer
 medium and both R̃ and <em>R</em>. The
@@ -1269,36 +1269,36 @@ parameters are as follows:</p>
 <ol>
 <li><p>T concentration in the top
 layer (<span
-class="math inline">\(\acrshort{T}_{top}\)</span>).</p></li>
+class="math inline">\(T_{top}\)</span>).</p></li>
 <li><p>T concentration in the bottom
 layer (<span
-class="math inline">\(\acrshort{T}_{bot}\)</span>).</p></li>
+class="math inline">\(T_{bot}\)</span>).</p></li>
 <li><p>S in the top layer (<span
-class="math inline">\(\acrshort{S}_{top}\)</span>).</p></li>
+class="math inline">\(S_{top}\)</span>).</p></li>
 <li><p>S in the bottom layer (<span
-class="math inline">\(\acrshort{S}_{bot}\)</span>).</p></li>
+class="math inline">\(S_{bot}\)</span>).</p></li>
 <li><p>W volume fraction in the top
 layer (<span
-class="math inline">\(\acrshort{W}_{top}\)</span>).</p></li>
+class="math inline">\(W_{top}\)</span>).</p></li>
 <li><p>W volume fraction in the
 bottom layer (<span
-class="math inline">\(\acrshort{W}_{bot}\)</span>).</p></li>
+class="math inline">\(W_{bot}\)</span>).</p></li>
 <li><p>L volume fraction in the top
 layer (<span
-class="math inline">\(\acrshort{L}_{top}\)</span>).</p></li>
+class="math inline">\(L_{top}\)</span>).</p></li>
 <li><p>L volume fraction in the
 bottom layer (<span
-class="math inline">\(\acrshort{L}_{bot}\)</span>).</p></li>
+class="math inline">\(L_{bot}\)</span>).</p></li>
 <li><p>The μ′<sub>s</sub> at 830 nm in the top
 layer (<span
-class="math inline">\(\acrshort{musp}_{top}(\SI{830}{\nano\meter})\)</span>).</p></li>
+class="math inline">\(\mu_s'_{top}(\SI{830}{\nano\meter})\)</span>).</p></li>
 <li><p>The μ′<sub>s</sub> at 830 nm in the bottom
 layer (<span
-class="math inline">\(\acrshort{musp}_{bot}(\SI{830}{\nano\meter})\)</span>).</p></li>
+class="math inline">\(\mu_s'_{bot}(\SI{830}{\nano\meter})\)</span>).</p></li>
 <li><p>The <em>b</em> in the top layer (<span
-class="math inline">\(\acrshort{b}_{top}\)</span>).</p></li>
+class="math inline">\(b_{top}\)</span>).</p></li>
 <li><p>The <em>b</em> in the bottom layer (<span
-class="math inline">\(\acrshort{b}_{bot}\)</span>).</p></li>
+class="math inline">\(b_{bot}\)</span>).</p></li>
 <li><p>The thickness of the top layer (<span
 class="math inline">\(z_{top}\)</span>).</p></li>
 </ol>
@@ -1310,16 +1310,16 @@ spectrum<a href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a> for each layer from the absorption
 parameters. These layer-dependent absorption spectra were calculated as
 a linear combination of known ε as shown in Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a> <span class="citation"
 data-cites="prahlTabulatedMolarExtinction1998 kouRefractiveIndicesWater1993 veenDeterminationVISNIR2004"></span>.
 The μ′<sub>s</sub> spectrum was calculated
 for each layer using a power law as shown in Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>.</p>
 <p>The analytical two-layer model for diffuse reflectance <span
 class="citation" data-cites="liemertLightDiffusionTurbid2010"></span>
-(Appendix <a href="#app:forMod" data-reference-type="ref"
+(Appendix <a href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>) took the μ<sub>a</sub>
 and μ′<sub>s</sub> spectra for each layer
 and <span class="math inline">\(z_{top}\)</span> as input with a final
@@ -1329,16 +1329,16 @@ output given the above input parameters for each ρ
 and λ.</p>
 <p>Using these R̃ and <em>R</em> the
 recovery of absolute optical properties was achieved using a iterative
-method described in Appendix <a href="#app:absOptPropMeas"
+method described in Appendix <a href="app2.html#app:absOptPropMeas"
 data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. This
 output effective homogeneous absolute μ̃<sub>eff</sub> for the FD
 λs, and effective homogeneous
 absolute μ<sub>eff</sub> for the CW
 λs (Appendix <a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>). As shown in
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> μ̃<sub>eff</sub> is converted to μ<sub>a</sub>
 and μ′<sub>s</sub> for the FD
 λs. Then the full μ<sub>a</sub>
@@ -1354,7 +1354,7 @@ homogeneous<a href="#fn3" class="footnote-ref" id="fnref3"
 role="doc-noteref"><sup>3</sup></a> recovered T,
 S, W, and
 L
-using the methods in Appendix <a href="#app:recChrom"
+using the methods in Appendix <a href="app4.html#app:recChrom"
 data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>.</p>
 <p>Therefore, the output of these <em>in silico</em> experiments was the
@@ -1362,23 +1362,23 @@ absorption and scattering parameters necessary to describe an equivalent
 homogeneous medium:</p>
 <ol>
 <li><p>Recovered effective homogeneous T concentration (<span
-class="math inline">\(\acrshort{T}_{rec}\)</span>).</p></li>
+class="math inline">\(T_{rec}\)</span>).</p></li>
 <li><p>Recovered effective homogeneous S (<span
-class="math inline">\(\acrshort{S}_{rec}\)</span>).</p></li>
+class="math inline">\(S_{rec}\)</span>).</p></li>
 <li><p>Recovered effective homogeneous W volume fraction (<span
-class="math inline">\(\acrshort{W}_{rec}\)</span>).</p></li>
+class="math inline">\(W_{rec}\)</span>).</p></li>
 <li><p>Recovered effective homogeneous L volume fraction (<span
-class="math inline">\(\acrshort{L}_{rec}\)</span>).</p></li>
+class="math inline">\(L_{rec}\)</span>).</p></li>
 <li><p>Recovered effective homogeneous μ′<sub>s</sub> at 830 nm (<span
-class="math inline">\(\acrshort{musp}_{rec}(\SI{830}{\nano\meter})\)</span>).</p></li>
+class="math inline">\(\mu_s'_{rec}(\SI{830}{\nano\meter})\)</span>).</p></li>
 <li><p>Recovered effective homogeneous <em>b</em> (<span
-class="math inline">\(\acrshort{b}_{rec}\)</span>).</p></li>
+class="math inline">\(b_{rec}\)</span>).</p></li>
 </ol>
 <p>Equivalent homogeneous medium meaning, given the two-layer properties
 modeled and the ρs and λs
 simulated, these effective homogeneous properties give the same R̃
 and <em>R</em> as the two-layered case
-(Appendix <a href="#app:simSigFromSen" data-reference-type="ref"
+(Appendix <a href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>).</p>
 <h4 id="sensitivity-in-a-two-layer-medium">Sensitivity in a Two-Layer
 Medium</h4>
@@ -1582,7 +1582,7 @@ to Absorption Parameters in a Two-Layered Medium</h4>
 <p><span>l|S[table-format=1.3]S[table-format=1.5]S[table-format=1.5]S[table-format=1.5]</span>
 &amp; <span><span class="math inline">\(\delta
 \text{T}~(\si{\micro\Molar})\)</span></span> &amp; <span><span
-class="math inline">\(\delta \acrshort{S}\)</span></span> &amp;
+class="math inline">\(\delta S\)</span></span> &amp;
 <span><span class="math inline">\(\delta \text{W}\)</span></span>
 &amp; <span><span class="math inline">\(\delta
 \text{L}\)</span></span><br />
@@ -1997,7 +1997,7 @@ recovered L changes, which typically is
 assumed to not have dynamics.<a href="#fnref15" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 <li id="fn16"><p>The range of physically possible reduced scattering power coefficient (<em>b</em>) is
-between 0 and 4 (Appendix <a href="#app:forMod"
+between 0 and 4 (Appendix <a href="app1.html#app:forMod"
 data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>).<a href="#fnref16"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>

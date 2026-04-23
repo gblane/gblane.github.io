@@ -16,7 +16,10 @@
       "Bash(cp /home/giles/TuftsBox_local/Teaching/HONORS295_RadTecNatSoc/AJPIAS_paper/supp/A_30.pdf /home/giles/GitHub/gblane.github.io/teaching/honors295/pdfs/A3.pdf)",
       "Bash(cp /home/giles/TuftsBox_local/Teaching/HONORS295_RadTecNatSoc/AJPIAS_paper/supp/I_1.pdf /home/giles/GitHub/gblane.github.io/teaching/honors295/pdfs/I1.pdf)",
       "Bash(cp /home/giles/TuftsBox_local/Teaching/HONORS295_RadTecNatSoc/AJPIAS_paper/supp/I_2.pdf /home/giles/GitHub/gblane.github.io/teaching/honors295/pdfs/I2.pdf)",
-      "Bash(git -C /home/giles/GitHub/gblane.github.io status --short)"
+      "Bash(git -C /home/giles/GitHub/gblane.github.io status --short)",
+      "Bash(git *)",
+      "Bash(cp /home/giles/GitHub/gblane.github.io/index.html /tmp/index_bio_research.html)",
+      "Bash(cp /home/giles/GitHub/gblane.github.io/site.css /tmp/site_testing.css)"
     ]
   }
 }

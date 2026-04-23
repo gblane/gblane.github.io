@@ -6,7 +6,7 @@
     <title>Measuring Changes in the Absorption Coefficient · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -101,16 +101,16 @@ multiple ρs.</p></li>
 <li><p>DS <em>I</em>:
 Realizable in CW and FD
 using a DS set (Chapter <a
-href="#ch:DSintro" data-reference-type="ref"
+href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>).</p></li>
 <li><p>DS φ:
 Possible in FD using a DS set
-(Chapter <a href="#ch:DSintro" data-reference-type="ref"
+(Chapter <a href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>).</p></li>
 </ul>
 <p>Each of these methods yields a time trace of effective Δμ<sub>a</sub>, which may then be
 converted into time traces of ΔO and ΔD
-(Appendix <a href="#app:recChrom" data-reference-type="ref"
+(Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>).</p>
 <h2 id="generalized-total-optical-path-length">Generalized Total Optical
 Path-Length</h2>
@@ -122,11 +122,11 @@ data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a> and its
 accompanying definitions of variables we can write ⟨L̃⟩ for a semi-infinite
 medium with extrapolated boundary: <span
 class="math display">\[\begin{split}
-        \acrshort{LpathCom}=
-        \frac{3\acrshort{musp}}{8\pi\acrshort{RCom}}\\
+        {\langle \widetilde{L} \rangle}=
+        \frac{3\mu_s'}{8\pi\widetilde{R}}\\
         \times\left(\frac{z_0
-e^{-\|\acrshort{r}_1\|\acrshort{mueffCom}}}{\|\acrshort{r}_1\|}-\frac{z_0&#39;
-e^{-\|\acrshort{r}_2\|\acrshort{mueffCom}}}{\|\acrshort{r}_2\|}\right)
+e^{-\|\vec{r}_1\|\widetilde{\mu}_{eff}}}{\|\vec{r}_1\|}-\frac{z_0&#39;
+e^{-\|\vec{r}_2\|\widetilde{\mu}_{eff}}}{\|\vec{r}_2\|}\right)
     \end{split}
     \label{equ:Lcom_semiInf}\]</span> which primarily depends on μ<sub>a</sub>,
 μ′<sub>s</sub>, and ρ
@@ -144,15 +144,15 @@ data-types such as FD <em>I</em>
 (<span class="math inline">\(\langle L \rangle_{I}\)</span> or
 <span class="math inline">\(\langle L \rangle_{\phi}\)</span>)
 which are obtained from: <span
-class="math display">\[\acrshort{Lpath}_{\acrshort{I}}=\Re\left[\acrshort{LpathCom}\right]\]</span>
+class="math display">\[{\langle L \rangle}_{I}=\Re\left[{\langle \widetilde{L} \rangle}\right]\]</span>
 <span
-class="math display">\[\acrshort{Lpath}_{\acrshort{phi}}=\Im\left[\acrshort{LpathCom}\right]\]</span></p>
+class="math display">\[{\langle L \rangle}_{\phi}=\Im\left[{\langle \widetilde{L} \rangle}\right]\]</span></p>
 <p>In the case of the ⟨<em>L</em>⟩ for CW
 <em>I</em>
 (<span class="math inline">\(\langle L \rangle_{\text{CW}}\)</span>),
 the above expressions may still be used simply by setting ω or <em>f</em><sub>mod</sub>
 to zero. This will result in a real instead of complex ⟨<em>L</em>⟩ which is itself <span
-class="math inline">\(\acrshort{Lpath}_{\acrshort{CW}}\)</span>. Unlike
+class="math inline">\({\langle L \rangle}_{\mathrm{CW}}\)</span>. Unlike
 <span class="math inline">\(\langle L \rangle_{I}\)</span> or
 <span class="math inline">\(\langle L \rangle_{\phi}\)</span>,
 <span class="math inline">\(\langle L \rangle_{\phi}\)</span>
@@ -174,11 +174,11 @@ data-cites="sassaroliCommentModifiedBeer2004"></span> (denoted here with
 highlight its use in conjunction with intensity measurements). One may
 introduce a similar, generalized DPF concept for SD
 φ (denoted as <span
-class="math inline">\(\acrshort{DPF}_{\acrshort{phi}}\)</span>). In the
+class="math inline">\(\mathrm{DPF}_{\phi}\)</span>). In the
 following expressions we also utilize ⟨<em>L</em>⟩ for <em>I</em> or
 φ (<span
-class="math inline">\(\acrshort{Lpath}_{\acrshort{I}}\)</span> or <span
-class="math inline">\(\acrshort{Lpath}_{\acrshort{phi}}\)</span>)
+class="math inline">\({\langle L \rangle}_{I}\)</span> or <span
+class="math inline">\({\langle L \rangle}_{\phi}\)</span>)
 in-place of DPF which result in more
 concise expressions since they do not require ρ.</p>
 <p>Considering a baseline SD <em>I</em> or
@@ -196,7 +196,7 @@ follows: <span class="math display">\[\begin{split}
         \Delta\mu_a_{,\text{SD}\phi}=-\frac{\text{SD}\phi-\text{SD}\phi_0}{\langle L \rangle_{\phi}}\\
         =-\frac{\text{SD}\phi-\text{SD}\phi_0}{\rho\text{DPF}_{\phi}}
     \end{split}\]</span> Since for 𝒴: <span
-class="math display">\[\acrshort{DPF}_{\acrshort{Y}}=\frac{\acrshort{Lpath}_{\acrshort{Y}}}{\acrshort{rho}}\]</span></p>
+class="math display">\[\mathrm{DPF}_{\mathcal{Y}}=\frac{{\langle L \rangle}_{\mathcal{Y}}}{\rho}\]</span></p>
 <p>Example values of ⟨<em>L</em>⟩ and DPF
 for various optical properties can be found in the supplementary
 material of <span class="citation"
@@ -210,29 +210,29 @@ slope refers to the slope of ln(ρ²<em>I</em>) on ρ
 (<span class="math inline">\(\text{SS}I\)</span>), while
 for φ the slope is of φ
 on ρ (<span
-class="math inline">\(\acrshort{SS}\acrshort{phi}\)</span>), and we
+class="math inline">\(\mathrm{SS}\phi\)</span>), and we
 introduce baseline slopes (<span
-class="math inline">\(\acrshort{SS}\acrshort{I}_0\)</span> or <span
-class="math inline">\(\acrshort{SS}\acrshort{phi}_0\)</span>). For slope
+class="math inline">\(\mathrm{SS}I_0\)</span> or <span
+class="math inline">\(\mathrm{SS}\phi_0\)</span>). For slope
 methods we also introduce the DSF which is a proportionality
 constant to convert to Δμ<sub>a</sub> similar to DPF.</p>
 <p>For Δμ<sub>a</sub> from SS we
 have: <span
-class="math display">\[\acrshort{dmua}_{,\acrshort{SS}\acrshort{I}}=-\frac{\acrshort{SS}\acrshort{I}-\acrshort{SS}\acrshort{I}_0}{\acrshort{DSF}_{\acrshort{I}}}\]</span>
+class="math display">\[\Delta\mu_a_{,\mathrm{SS}I}=-\frac{\mathrm{SS}I-\mathrm{SS}I_0}{\mathrm{DSF}_{I}}\]</span>
 <span
-class="math display">\[\acrshort{dmua}_{,\acrshort{SS}\acrshort{phi}}=-\frac{\acrshort{SS}\acrshort{phi}-\acrshort{SS}\acrshort{phi}_0}{\acrshort{DSF}_{\acrshort{phi}}}\]</span>
+class="math display">\[\Delta\mu_a_{,\mathrm{SS}\phi}=-\frac{\mathrm{SS}\phi-\mathrm{SS}\phi_0}{\mathrm{DSF}_{\phi}}\]</span>
 Considering 𝒴 which can be either <em>I</em> or
 φ we can define DSF:
 <span class="math display">\[\text{DSF}_{\mathcal{Y}}=
     \frac{\sum_{i=1}^{N_{\text{SD}}}{\left(\rho_i-\bar{\rho}\right)\langle L \rangle_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}{\sum_{i=1}^{N_{\text{SD}}}\left(\rho_i-\bar{\rho}\right)^2}\]</span>
 where we note that ⟨<em>L</em>⟩ is a function of the
 source and detector position (<span
-class="math inline">\(\acrshort{r}_{src}\)</span> and <span
-class="math inline">\(\acrshort{r}_{det}\)</span>). Here, <span
-class="math inline">\(N_{\acrshort{SD}}\)</span> refers to the number of
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(\vec{r}_{det}\)</span>). Here, <span
+class="math inline">\(N_{\mathrm{SD}}\)</span> refers to the number of
 SD measurements in the SS set
 which is being considered. Additionally, <span
-class="math inline">\(\acrshort{r}_{det}\)</span> is indexed by <span
+class="math inline">\(\vec{r}_{det}\)</span> is indexed by <span
 class="math inline">\(i\)</span> since the expression assumes a common
 source and multiple detectors in the SS set, if the opisite is true
 the index would be on the source position. In general the sum is over
@@ -241,19 +241,19 @@ the various SD sets that make up the SS and
 positions of the source and detector in the SD
 set. Next we will define the various ρ variables in the above
 expression: <span
-class="math display">\[\acrshort{rho}_i=\|\acrshort{r}_{src}-\acrshort{r}_{det,i}\|\]</span>
+class="math display">\[\rho_i=\|\vec{r}_{src}-\vec{r}_{det,i}\|\]</span>
 <span
-class="math display">\[\bar{\acrshort{rho}}=\frac{\sum_{i=1}^{N_{\acrshort{SD}}}
-\acrshort{rho}_i}{N_{\acrshort{SD}}}\]</span> where the detector was
+class="math display">\[\bar{\rho}=\frac{\sum_{i=1}^{N_{\mathrm{SD}}}
+\rho_i}{N_{\mathrm{SD}}}\]</span> where the detector was
 chosen to be indexed as before, but this can be adapted depending on the
 particular SS arrangement.</p>
 <p>Finally, we can define the Δμ<sub>a</sub> for a DS
 set. Considering a DS set made of SSs
 <span class="math inline">\(\text{SS}_1\)</span> and <span
-class="math inline">\(\acrshort{SS}_2\)</span> with corresponding DSFs
+class="math inline">\(\mathrm{SS}_2\)</span> with corresponding DSFs
 for those SS sets of <span
-class="math inline">\(\acrshort{DSF}_{\acrshort{Y},1}\)</span> and <span
-class="math inline">\(\acrshort{DSF}_{\acrshort{Y},2}\)</span> we can
+class="math inline">\(\mathrm{DSF}_{\mathcal{Y},1}\)</span> and <span
+class="math inline">\(\mathrm{DSF}_{\mathcal{Y},2}\)</span> we can
 write Δμ<sub>a</sub> for DS:
 <span class="math display">\[\begin{split}
         \Delta\mu_a_{,\text{DS}I}=\\

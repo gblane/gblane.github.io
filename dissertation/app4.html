@@ -6,7 +6,7 @@
     <title>Recovery of Chromophore Concentrations · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -81,11 +81,11 @@
                 <hr class="mb-4">
 
                 <h1 id="app:recChrom">Recovery of Chromophore Concentrations</h1>
-<p>Methods in Appendix <a href="#app:absOptPropMeas"
+<p>Methods in Appendix <a href="app2.html#app:absOptPropMeas"
 data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> retrieve
 the absolute μ<sub>a</sub> and methods in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a> retrieve an Δμ<sub>a</sub>. Typically we wish to
 convert these measurement to either absolute or dynamic changes (for
 μ<sub>a</sub> or Δμ<sub>a</sub>) in chromophore
@@ -133,13 +133,13 @@ consider two cases:</p>
 <li><p>If <span class="math inline">\(N_{lam}&gt;N_{chrom}\)</span>
 MATLAB will utilize "qr"
 decomposition to invert <span
-class="math inline">\(\acrshort{EXT}\)</span>.</p></li>
+class="math inline">\(\mathbf{E}\)</span>.</p></li>
 <li><p>If <span class="math inline">\(N_{lam}=N_{chrom}\)</span> MATLAB will use some numerical
 method to find <span
-class="math inline">\(\acrshort{EXT}^{-1}\)</span>.</p></li>
+class="math inline">\(\mathbf{E}^{-1}\)</span>.</p></li>
 </ul>
 <p>For "qr" decomposition we write <strong>E</strong> as: <span
-class="math display">\[\acrshort{EXT}=\mathbf{Q}\mathbf{R}=
+class="math display">\[\mathbf{E}=\mathbf{Q}\mathbf{R}=
     \begin{bmatrix}
         \mathbf{Q}_1 &amp; \mathbf{Q}_2
     \end{bmatrix}
@@ -158,17 +158,17 @@ class="math display">\[\begin{split}
         \harp{C}=\\
         \begin{cases}
             \mathbf{R}_1^{-1}\left(\mathbf{Q}_1^T
-\acrshort{muaVec}\right) &amp; N_{lam}&gt;N_{chrom} \\
-            \acrshort{EXT}^{-1}\acrshort{muaVec} &amp; N_{lam}=N_{chrom}
+\vec{\mu}_a\right) &amp; N_{lam}&gt;N_{chrom} \\
+            \mathbf{E}^{-1}\vec{\mu}_a &amp; N_{lam}=N_{chrom}
         \end{cases}
     \end{split}\]</span> or finding <span
 class="math inline">\(\Delta\harp{C}\)</span> from Δμ⃗<sub>a</sub>: <span
 class="math display">\[\begin{split}
     \Delta\harp{C}=\\
     \begin{cases}
-        \mathbf{R}_1^{-1}\left(\mathbf{Q}_1^T \acrshort{dmuaVec}\right)
+        \mathbf{R}_1^{-1}\left(\mathbf{Q}_1^T \Delta\vec{\mu}_a\right)
 &amp; N_{lam}&gt;N_{chrom} \\
-        \acrshort{EXT}^{-1}\acrshort{dmuaVec} &amp; N_{lam}=N_{chrom}
+        \mathbf{E}^{-1}\Delta\vec{\mu}_a &amp; N_{lam}=N_{chrom}
     \end{cases}
     \end{split}\]</span></p>
 <p>As an example of when <span
@@ -177,12 +177,12 @@ finding ΔO and ΔD
 from Δμ<sub>a</sub> at λs of
 690 nm, &amp; 830 nm. For this we will use the following <strong>E</strong>
 of ε: <span
-class="math display">\[\acrshort{EXT}=
+class="math display">\[\mathbf{E}=
     \begin{bmatrix}
-        \acrshort{ext}_{\acrshort{O}}(\SI{690}{\nano\meter}) &amp;
-\acrshort{ext}_{\acrshort{D}}(\SI{690}{\nano\meter}) \\
-        \acrshort{ext}_{\acrshort{O}}(\SI{830}{\nano\meter}) &amp;
-\acrshort{ext}_{\acrshort{D}}(\SI{830}{\nano\meter})
+        \epsilon_{O}(\SI{690}{\nano\meter}) &amp;
+\epsilon_{D}(\SI{690}{\nano\meter}) \\
+        \epsilon_{O}(\SI{830}{\nano\meter}) &amp;
+\epsilon_{D}(\SI{830}{\nano\meter})
     \end{bmatrix}\]</span> which we will write as "E_OD" in MATLAB using "ext" followed by
 the chromophore name and λ to represent the various
 ε. Considering that we have

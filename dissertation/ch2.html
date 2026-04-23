@@ -6,7 +6,7 @@
     <title>Short versus Long Source-Detector Distances · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -90,19 +90,19 @@ This is based on the idea that longer ρs are sensitive to deeper
 parts of the medium. If we focus on measurement of Δμ<sub>a</sub>, we can produce 𝒮
 maps as those shown in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>. The
-methods for doing this are shown in Appendix <a href="#app:senMaps"
+methods for doing this are shown in Appendix <a href="app5.html#app:senMaps"
 data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>. Essentially 𝒮
 may be interpreted using the following expression: <span
-class="math display">\[\acrshort{sen}_i\left(\acrshort{r}_j\right)=
-    \frac{\left[\acrshort{dmua}_{,apparent}\right]_i}
-    {\acrshort{dmua}_{,actual}\left(\acrshort{r}_j\right)}
+class="math display">\[\mathcal{S}_i\left(\vec{r}_j\right)=
+    \frac{\left[\Delta\mu_a_{,apparent}\right]_i}
+    {\Delta\mu_a_{,actual}\left(\vec{r}_j\right)}
     \label{equ:sen_dmua}\]</span> which, shows the 𝒮
 of measurement <span class="math inline">\(i\)</span> which measures an
 apparent absorption change of <span
-class="math inline">\(\left[\acrshort{dmua}_{,apparent}\right]_i\)</span>
+class="math inline">\(\left[\Delta\mu_a_{,apparent}\right]_i\)</span>
 when there is an actual absorption change of <span
-class="math inline">\(\acrshort{dmua}_{,actual}\)</span> at position
+class="math inline">\(\Delta\mu_a_{,actual}\)</span> at position
 <span class="math inline">\(\vec{r}_j\)</span>. 𝒮
 has the property that when it is spatially summed over the who medium
 the result is one,<a href="#fn1" class="footnote-ref" id="fnref1"
@@ -116,7 +116,7 @@ the 𝒮 maps can be converted to
 SNR maps. Methods for doing
 this are explained in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
-Appendix <a href="#app:senMaps" data-reference-type="ref"
+Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>. Using the SNR
 maps, one may choose to create Boolean maps showing where the SNR
 is greater than one. These are the maps shown in this chapter to
@@ -143,7 +143,7 @@ different of 11 mm, 16 mm, 21 mm, 25 mm, 30 mm, 35 mm, &amp; 40 mm.
 Note 1: Simulation parameters stated in Section <a
 href="#ch:shortLong:sec:senPro" data-reference-type="ref"
 data-reference="ch:shortLong:sec:senPro">1.1</a>.<br />
-Note 2: Simulation methods in Appendix <a href="#app:senMaps"
+Note 2: Simulation methods in Appendix <a href="app5.html#app:senMaps"
 data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
 </figure>
@@ -153,7 +153,7 @@ between a single source and single detector. These changes can then be
 converted to apparent Δμ<sub>a</sub> using the DPF
 method as shown in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
-Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
 <p>Figure <a href="#fig:MDsetSDsen" data-reference-type="ref"
 data-reference="fig:MDsetSDsen">1.1</a> shows maps of where the SNR
@@ -193,7 +193,7 @@ different source-detector distance (ρ) pairs of 11 mm, &amp;
 Note 1: Simulation parameters stated in Section <a
 href="#ch:shortLong:sec:senPro" data-reference-type="ref"
 data-reference="ch:shortLong:sec:senPro">1.1</a>.<br />
-Note 2: Simulation methods in Appendix <a href="#app:senMaps"
+Note 2: Simulation methods in Appendix <a href="app5.html#app:senMaps"
 data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>.</figcaption>
 </figure>
@@ -206,7 +206,7 @@ versus ρ. These changes are then
 converted to Δμ<sub>a</sub> using the DSF
 method described in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
-Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
 <p>Figure <a href="#fig:MDsetSSsen" data-reference-type="ref"
 data-reference="fig:MDsetSSsen">1.2</a> shows regions where the absolute
@@ -239,7 +239,7 @@ negative 𝒮 region. However, if the
 layered, then SS has a significant advantage
 over SD since the negative and
 positive superficial 𝒮 regions mostly cancel
-(Figure <a href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+(Figure <a href="ch3.html#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
 data-reference="fig:DSsenSDSSDSsenCurve">[fig:DSsenSDSSDSsenCurve]</a>)
 leaving a signal representative of the deep region.</p>
 <h2 id="multi-distance-measurement-on-the-human-brain">Multi-Distance
@@ -303,12 +303,12 @@ forehead.<a href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a> During the experiment ABP
 oscillations were induced at 0.1 Hz using either thigh cuff inflation
 (Figures <a href="#fig:JBOfig3" data-reference-type="ref"
-data-reference="fig:JBOfig3">1.4</a>,<a href="#fig:PHTfig2"
+data-reference="fig:JBOfig3">1.4</a>,<a href="ch8.html#fig:PHTfig2"
 data-reference-type="ref"
 data-reference="fig:PHTfig2">[fig:PHTfig2]</a>,&amp;<a
-href="#fig:JBPfig1" data-reference-type="ref"
+href="ch4.html#fig:JBPfig1" data-reference-type="ref"
 data-reference="fig:JBPfig1">[fig:JBPfig1]</a>) or paced breathing
-(Figure <a href="#fig:PHTfig2" data-reference-type="ref"
+(Figure <a href="ch8.html#fig:PHTfig2" data-reference-type="ref"
 data-reference="fig:PHTfig2">[fig:PHTfig2]</a>). The duration of these
 oscillations were 3 min in either case. These oscillations will be
 discussed in more detail in Part <a href="#prt:cereHemo"
@@ -318,22 +318,22 @@ lasted 15 min.</p>
 <h4 id="analysis-overview">Analysis Overview</h4>
 <p>The baseline μ<sub>a</sub> and μ′<sub>s</sub>
 were measured using calibrated MD measurements and the linear
-slopes method in Appendix <a href="#app:absOptPropMeas"
+slopes method in Appendix <a href="app2.html#app:absOptPropMeas"
 data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. Then using
 these absolute properties the methods in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a> were used to retrieve
 temporal traces of Δμ<sub>a</sub> which where converted to
 ΔO and ΔD
-using the methods in Appendix <a href="#app:recChrom"
+using the methods in Appendix <a href="app4.html#app:recChrom"
 data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>. Finally, CHS
 analysis (discussed in Part <a href="#prt:cereHemo"
 data-reference-type="ref"
 data-reference="prt:cereHemo">[prt:cereHemo]</a>) was achieved using
-methods in Appendices <a href="#app:phasors" data-reference-type="ref"
-data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+methods in Appendices <a href="app7.html#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>.
 For the purposes of this chapter the output of this analysis was D̃/Õ, or the transfer
 function between O and D at
@@ -341,7 +341,7 @@ the oscillation frequency of 0.1 Hz.</p>
 <p>To investigate the different 𝒮 to different regions in
 tissue, which may have different actual hemodynamic oscillations, data
 exhibiting these heterogeneities was simulated. Methods for this are
-explained in Appendix <a href="#app:simSigFromSen"
+explained in Appendix <a href="app6.html#app:simSigFromSen"
 data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>. Here two
 layers were simulated with different actual Õ
@@ -378,16 +378,16 @@ represent the average over all subjects, days, and locations for cyclic
 thigh cuff inflation (Solid Lines) and for paced breathing
 (Dashed Lines) from <span class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.
-Simulation (Appendix <a href="#app:simSigFromSen"
+Simulation (Appendix <a href="app6.html#app:simSigFromSen"
 data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>) results in
 (b)&amp;(d) are for a medium with three-layers of dynamics: top layer
 from <span class="math inline">\(z\)</span> of 0 mm–10 mm with <span
-class="math inline">\(\acrshort{DOvec}~=~\phasor{0.05}{0}{}\)</span>,
+class="math inline">\(\widetilde{D}/\widetilde{O}~=~\phasor{0.05}{0}{}\)</span>,
 intermediate layer from <span class="math inline">\(z\)</span> of
 10 mm–15 mm with no oscillatory hemodynamics, and bottom layer from
 <span class="math inline">\(z\)</span> of 15 mm–30 mm with <span
-class="math inline">\(\acrshort{DOvec}~=~\phasor{1.00}{-180}{}\)</span>
+class="math inline">\(\widetilde{D}/\widetilde{O}~=~\phasor{1.00}{-180}{}\)</span>
 (where <span class="math inline">\(z\)</span> is depth). Three analysis
 methods are shown Single-Distance (SD) Intensity (<em>I</em>) (Purple), SD
 Intensity (<em>I</em>)
@@ -397,11 +397,11 @@ measurements refer to two sources spaced by approximately 10 mm, plotted
 such that the plotted ρ is the average of the of
 the two sources.<br />
 Note 1: Error bars show standard deviation of all analyzed pixels that
-show significant coherence (Chapter <a href="#ch:signCoh"
+show significant coherence (Chapter <a href="ch7.html#ch:signCoh"
 data-reference-type="ref" data-reference="ch:signCoh">[ch:signCoh]</a>)
 in the wavelet transfer function scalogram (Appendices <a
-href="#app:phasors" data-reference-type="ref"
-data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+href="app7.html#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>)
 across all subjects days and locations.<br />
 Note 2: These results can be found as Figure 5 in <span class="citation"
@@ -437,9 +437,9 @@ href="#fig:JBOfig3" data-reference-type="ref"
 data-reference="fig:JBOfig3">1.4</a>. Already there is some indication
 of different dynamics at different ρ. However, careful
 quantitative analysis of these signals requires CHS
-phasor analysis (Appendices <a href="#app:phasors"
+phasor analysis (Appendices <a href="app7.html#app:phasors"
 data-reference-type="ref"
-data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>).
 Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">1.5</a> shows the results of such
@@ -452,23 +452,23 @@ for various data-types. To reproduce these experimental results
 data-reference="fig:PhotonicsFig5">1.5</a>(a)(c)) and help interpret
 them, we used 𝒮 maps to simulate recovered
 phasors for a three-layered medium (Appendix <a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>), structured
 as follows:<a href="#fn3" class="footnote-ref" id="fnref3"
 role="doc-noteref"><sup>3</sup></a></p>
 <ul>
 <li><p>A top layer (10 mm thick) featuring arterial volume oscillations
 represented by <span
-class="math inline">\(\acrshort{Dph}~=~\phasor{0.05}{20}{\micro\Molar}\)</span>
+class="math inline">\(\widetilde{D}~=~\phasor{0.05}{20}{\micro\Molar}\)</span>
 and <span
-class="math inline">\(\acrshort{Oph}~=~\phasor{0.95}{20}{\micro\Molar}\)</span>.</p></li>
+class="math inline">\(\widetilde{O}~=~\phasor{0.95}{20}{\micro\Molar}\)</span>.</p></li>
 <li><p>An intermediate layer (at depths of 10 mm–15 mm) featuring no
 hemodynamic oscillations.</p></li>
 <li><p>A bottom layer (at depths of 15 mm–30 mm) featuring blood flow
 oscillations represented by <span
-class="math inline">\(\acrshort{Dph}~=~\phasor{3.00}{-180}{\micro\Molar}\)</span>
+class="math inline">\(\widetilde{D}~=~\phasor{3.00}{-180}{\micro\Molar}\)</span>
 and <span
-class="math inline">\(\acrshort{Oph}~=~\phasor{3.00}{0}{\micro\Molar}\)</span>.</p></li>
+class="math inline">\(\widetilde{O}~=~\phasor{3.00}{0}{\micro\Molar}\)</span>.</p></li>
 </ul>
 <p>The simulation parameters including absolute μ<sub>a</sub>
 and μ′<sub>s</sub> can be found in
@@ -516,7 +516,7 @@ tissue layer (Figures <a href="#fig:MDsetSDsen"
 data-reference-type="ref" data-reference="fig:MDsetSDsen">1.1</a>,<a
 href="#fig:MDsetSSsen" data-reference-type="ref"
 data-reference="fig:MDsetSSsen">1.2</a>,&amp;<a
-href="#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
+href="ch3.html#fig:DSsenSDSSDSsenCurve" data-reference-type="ref"
 data-reference="fig:DSsenSDSSDSsenCurve">[fig:DSsenSDSSDSsenCurve]</a>).
 In Figure <a href="#fig:PhotonicsFig5" data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">1.5</a>, SD
@@ -562,7 +562,7 @@ role="doc-endnotes">
 <ol>
 <li id="fn1"><p>The sum of sensitivity to absorption change (𝒮) over the whole medium is
 one if the considered perturbation volumes, see Appendix <a
-href="#app:senMaps" data-reference-type="ref"
+href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>.<a href="#fnref1"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>In the case <span class="citation"

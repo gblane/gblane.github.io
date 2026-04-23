@@ -6,7 +6,7 @@
     <title>Dual-Slope Based Absolute Broadband-Spectroscopy · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -117,12 +117,12 @@ In FD both μ<sub>a</sub>
 and μ′<sub>s</sub> may be measured using the
 spatial dependence of ln(ρ²<em>I</em>) and φ
 to retrieve μ̃<sub>eff</sub> as discussed in
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. The chief
 complication of this technique is calibration, since each
 source-detector pair may have differing instrumental contributions
 (because of the individual source emission and detector sensitivity
-properties as seen in Chapter <a href="#ch:DSintro"
+properties as seen in Chapter <a href="ch3.html#ch:DSintro"
 data-reference-type="ref" data-reference="ch:DSintro">[ch:DSintro]</a>)
 and differing coupling factors between optodes and sample. A method
 which compensates for the differing instrumental contributions is the
@@ -141,10 +141,10 @@ method is also capable of making absolute measurements <span
 class="citation"
 data-cites="hueberNewOpticalProbe1999 blaneyFunctionalBrainMapping2022"></span>.
 This is since calibration factors cancel in the averaging of slope as
-shown in Chapter <a href="#ch:DSintro" data-reference-type="ref"
+shown in Chapter <a href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>. When the SC /
 DS optode geometry (Figure <a
-href="#fig:DSset" data-reference-type="ref"
+href="ch3.html#fig:DSset" data-reference-type="ref"
 data-reference="fig:DSset">[fig:DSset]</a>) is used for only measurement
 of one optical data-type it is named DS instead of SD.
 When used in CW only <em>R</em> is
@@ -189,7 +189,7 @@ decay of μ′<sub>s</sub> with λ
 data-cites="bigioQuantitativeBiomedicalOptics2016"></span>, and
 decoupling of μ<sub>a</sub> from μ<sub>eff</sub> retrieved from the CW
 bDRS data (Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>).</p>
 <p>At this point, a small note on nomenclature is valuable. The acronym
 combination MD FD
@@ -206,7 +206,7 @@ distinction between SC and DS is
 the use of R̃ in SC
 FD versus <em>R</em> in
 DS DS
-(Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+(Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>).</p>
 <h2
 id="techniques-experiments-and-absolute-absorption-retrieval">Techniques,
@@ -230,7 +230,7 @@ data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.</figcaption>
 was implemented with the purpose of measuring absolute μ̃<sub>eff</sub> (to retrieve μ<sub>a</sub>
 and μ′<sub>s</sub>) of highly scattering
 media. The Imagent whose parameters were
-stated in Section <a href="#ch:shortLong:sec:MDmethExpPara"
+stated in Section <a href="ch2.html#ch:shortLong:sec:MDmethExpPara"
 data-reference-type="ref"
 data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>
 was used for this purpose.</p>
@@ -249,7 +249,7 @@ id="fnref2" role="doc-noteref"><sup>2</sup></a> These measurements were
 used to calculate the absolute μ̃<sub>eff</sub> and then the absolute
 μ<sub>a</sub> and μ′<sub>s</sub>
 of the diffuse medium as described in Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>.</p>
 <h4
 id="continuous-wave-dual-slope-broadband-diffuse-reflectance-spectroscopy">Continuous-Wave
@@ -280,7 +280,7 @@ optode configuration (Figure <a href="#fig:ASfig2"
 data-reference-type="ref" data-reference="fig:ASfig2">1.2</a>(c)) used
 was the same as described in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
-Figure <a href="#fig:DSset" data-reference-type="ref"
+Figure <a href="ch3.html#fig:DSset" data-reference-type="ref"
 data-reference="fig:DSset">[fig:DSset]</a>; it contained 2 source
 positions and 2 detector positions. The linearly symmetric arrangement
 resulted in a calibrated measurement from 25 mm–35 mm.</p>
@@ -290,11 +290,11 @@ to achieve the multiplexing needed for DS measurements. The
 measurement requires the <em>R</em> signal be acquired from all
 combinations of sources (named <code>1</code> and <code>2</code>;
 Figures <a href="#fig:ASfig2" data-reference-type="ref"
-data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="#fig:DSset"
+data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="ch3.html#fig:DSset"
 data-reference-type="ref" data-reference="fig:DSset">[fig:DSset]</a>)
 and detectors (named <code>A</code> and <code>B</code>; Figures <a
 href="#fig:ASfig2" data-reference-type="ref"
-data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="#fig:DSset"
+data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="ch3.html#fig:DSset"
 data-reference-type="ref" data-reference="fig:DSset">[fig:DSset]</a>).
 To do so, both the sources and detectors must be multiplexed (Figure <a
 href="#fig:ASfig2" data-reference-type="ref"
@@ -445,7 +445,7 @@ data-acronym-label="II" data-acronym-form="singular+short">II</span>
 plus <span data-acronym-label="N7"
 data-acronym-form="singular+short">N7</span> plus <span
 data-acronym-label="N7" data-acronym-form="singular+short">N7</span>).
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> describes
 the analysis of these data to result in these absolute μ̃<sub>eff</sub> and μ<sub>eff</sub>.</p>
 <h3 id="retrieval-of-absolute-absorption-spectra">Retrieval of Absolute
@@ -456,31 +456,31 @@ bDRS method yields a real
 must be known to find μ<sub>a</sub> using the following
 expression <span class="citation"
 data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>: <span
-class="math display">\[\acrshort{mua}=\sqrt{\frac{\acrshort{musp}^2}{4}+\frac{\acrshort{mueff}^2}{3}}-\frac{\acrshort{musp}}{2}
+class="math display">\[\mu_a=\sqrt{\frac{\mu_s'^2}{4}+\frac{\mu_{eff}^2}{3}}-\frac{\mu_s'}{2}
     \label{equ:muaFROMmueffmusp}\]</span> To address the need to know
 μ′<sub>s</sub>, the μ̃<sub>eff</sub> data from the MD
 FD NIRS
 measurements were used. FD NIRS
 yielded a measurement of μ′<sub>s</sub> at 2 λs
 (<span
-class="math inline">\(\acrshort{musp}_{\acrshort{FD}}(\acrshort{lam}_1)\)</span>
+class="math inline">\(\mu_s'_{\mathrm{FD}}(\lambda_1)\)</span>
 and <span
-class="math inline">\(\acrshort{musp}_{\acrshort{FD}}(\acrshort{lam}_2)\)</span>;
+class="math inline">\(\mu_s'_{\mathrm{FD}}(\lambda_2)\)</span>;
 where λ is the 2 from FD)
 from μ̃<sub>eff</sub> (Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>). These
 <span class="math inline">\(\mu_s'_{\text{FD}}\)</span>
 measurements are then extrapolated using the following expression based
 on <em>b</em> to find μ′<sub>s</sub>
 at all the λs used by bDRS: <span
-class="math display">\[\acrshort{musp}(\acrshort{lam})=\acrshort{musp}_{\acrshort{FD}}(\acrshort{lam}_1)
-\times \left( \frac{\acrshort{lam}}{\acrshort{lam}_1}
-\right)^{-\acrshort{b}}
+class="math display">\[\mu_s'(\lambda)=\mu_s'_{\mathrm{FD}}(\lambda_1)
+\times \left( \frac{\lambda}{\lambda_1}
+\right)^{-b}
     \label{equ:scatPowLaw}\]</span> <span
-class="math display">\[\acrshort{b}={\frac{\ln\left[\acrshort{musp}_{\acrshort{FD}}(\acrshort{lam}_2)
-/ \acrshort{musp}_{\acrshort{FD}}(\acrshort{lam}_1) \right]}{\ln\left[
-\acrshort{lam}_1/\acrshort{lam}_2 \right]}}
+class="math display">\[b={\frac{\ln\left[\mu_s'_{\mathrm{FD}}(\lambda_2)
+/ \mu_s'_{\mathrm{FD}}(\lambda_1) \right]}{\ln\left[
+\lambda_1/\lambda_2 \right]}}
     \label{equ:scatb}\]</span> Therefore, when analyzing DS
 CW bDRS
 data, μ<sub>a</sub> is found for each λ
@@ -555,7 +555,7 @@ data-cites="veenDeterminationVISNIR2004"></span> volume fractions) μ<sub>a</sub
 of the milk and W phantom. The expected μ<sub>a</sub>
 spectrum for this milk and W phantom was computed using
 the forward model for μ<sub>a</sub> in Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>. The R² was
 calculated for the milk and W data and model, yielding a
 value of 0.98, implying that 98 % of the variance in the milk and W μ<sub>a</sub>
@@ -612,7 +612,7 @@ extrapolation) or contributions from other absorbers in the milk other
 than W and L.
 Overall the quantitative agreement between the expected and measured
 milk and W spectra (Appendix <a
-href="#app:forMod" data-reference-type="ref"
+href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a>) are quite good with a
 R² of 0.98, indicating an
 accurate measurement of absolute μ<sub>a</sub> by DS
@@ -709,8 +709,8 @@ un-scattered light is detected). To yield the spectrum of μ<sub>a</sub>
 (needed to recover concentration in the diffuse experiment) for <span
 data-acronym-label="II" data-acronym-form="singular+short">II</span>,
 the <em>a</em> must be assumed: <span
-class="math display">\[\acrshort{mua}=\acrshort{mut}
-(1-\acrshort{a})\]</span> This must be considered for <span
+class="math display">\[\mu_a=\mu_t
+(1-a)\]</span> This must be considered for <span
 data-acronym-label="II" data-acronym-form="singular+short">II</span>
 since it is not in solution in water but instead a suspension of carbon
 particles. λ independent values of

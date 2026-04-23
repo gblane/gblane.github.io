@@ -6,7 +6,7 @@
     <title>Test for Significant Coherence · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -96,7 +96,7 @@ data-cites="claassenTransferFunctionAnalysis2016"></span> of cerebral
 AR and CHS
 <span class="citation"
 data-cites="fantiniDynamicModelTissue2014"></span> (Chapter <a
-href="#ch:CHSintro" data-reference-type="ref"
+href="ch6.html#ch:CHSintro" data-reference-type="ref"
 data-reference="ch:CHSintro">[ch:CHSintro]</a>), where the first signal
 is ABP and the second signal is
 either cerebral BF velocity in the middle
@@ -173,12 +173,12 @@ signal processing methods can be used, this work will focus on wavelet
 analysis. Using the analytic Morlet mother wavelet, the wavelet 𝔠
 scalogram and wavelet transfer function scalogram are found for pairs of
 signals. The wavelet 𝔠 calculated from
-experimental data (Appendix <a href="#app:detCoh"
+experimental data (Appendix <a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>)
 is compared against a threshold of 𝔠 (obtained from surrogate
 data) to determine times and frequencies of significant 𝔠,
 and then only those regions in the time-frequency space are analyzed
-(Appendix <a href="#app:phasors" data-reference-type="ref"
+(Appendix <a href="app7.html#app:phasors" data-reference-type="ref"
 data-reference="app:phasors">[app:phasors]</a>). This workflow relies on
 the predetermination of a 𝔠 threshold map in
 time-frequency space. Such 𝔠 thresholds are obtained by
@@ -392,7 +392,7 @@ class="citation"
 data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>. The
 algorithm is summarized below and will be described in detail in the
 following sections. Additionally, whenever a 𝔠
-value is retrieved that methods in Appendix <a href="#app:detCoh"
+value is retrieved that methods in Appendix <a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>
 are used. To estimate the desired percentile with less RAM,
 we start with an initial step that requires building the 𝔠
@@ -508,7 +508,7 @@ data-reference="lst:threhAlg">[lst:threhAlg]</a>(147-168)). "</p>
 <p>First, the initial <span class="math inline">\(2m_{kp}\)</span>
 values of 𝔠 obtained from analyzing
 GRN data with Appendix <a
-href="#app:detCoh" data-reference-type="ref"
+href="app8.html#app:detCoh" data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a>. These 𝔠
 values are are used to populate the first <span
 class="math inline">\(2m_{kp}\)</span> pages of the <span
@@ -584,7 +584,7 @@ dimension. "</p>
 <p>The first step taken during each iteration of the threshold updating
 loop is to obtain a new 2D array of coherence value
 samples from GRN’s input into the
-Appendix <a href="#app:detCoh" data-reference-type="ref"
+Appendix <a href="app8.html#app:detCoh" data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a> methods. This 2D
 array fills the last page, <span
 class="math inline">\(\mathbf{N}\)</span>, of the <span
@@ -759,7 +759,7 @@ threshold for a 20 min long signal sampled at 7.8125 Hz with a frequency
 range from 0.001 Hz–3.730 Hz. 𝔠 was found using a version
 the MathWorks MATrix LABoratory (MATLAB) <code>wcoherence</code>
 function, modified to remove smoothing in frequency (see Appendix <a
-href="#app:detCoh" data-reference-type="ref"
+href="app8.html#app:detCoh" data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a>). Left) Thresholds
 generated form 100 iterations using the entire 𝔠
 distribution (initialization of the algorithm). Right) Thresholds
@@ -771,8 +771,8 @@ data-cites="blaneyAlgorithmDeterminationThresholds2020"></span>.</figcaption>
 <p>"</p>
 <p>One intended application of this algorithm is to find thresholds for
 significant 𝔠 in wavelet signal analysis
-(Appendices <a href="#app:phasors" data-reference-type="ref"
-data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+(Appendices <a href="app7.html#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="app8.html#app:detCoh"
 data-reference-type="ref" data-reference="app:detCoh">[app:detCoh]</a>).
 Using a map of 𝔠 thresholds, one can
 determine which points in frequency and time are significantly coherent
@@ -785,7 +785,7 @@ thresholds for the 𝔠 calculated by the MATLAB "wcoherence" function,
 which was modified to remove smoothing in frequency (Figure <a
 href="#fig:BSPfig4" data-reference-type="ref"
 data-reference="fig:BSPfig4">1.4</a>) which is discussed in Appendix <a
-href="#app:detCoh" data-reference-type="ref"
+href="app8.html#app:detCoh" data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a>. The threshold map
 presented in the right panel of Figure <a href="#fig:BSPfig4"
 data-reference-type="ref" data-reference="fig:BSPfig4">1.4</a> was given

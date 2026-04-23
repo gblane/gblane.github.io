@@ -6,7 +6,7 @@
     <title>Dual-Slope Imaging · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -125,7 +125,7 @@ data-reference="lst:DSdis">[lst:DSdis]</a>.</figcaption>
 <p>To design a DS imaging arrangement we
 required a succinct set of methods that enforced the
 <em>requirements</em> and <em>constraints</em> stated in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>.
 We start with a pen and paper design of a configuration that is suitable
 to create many DS sets as in <span
@@ -146,14 +146,14 @@ check:</p>
 <li><p>Sets are eliminated that do not meet the minimum and maximum
 ρ <em>constraints</em>
 (20 mm, &amp; 40 mm, respectively; <em>Constraint</em> <a
-href="#enu:DSconRho" data-reference-type="ref"
+href="ch3.html#enu:DSconRho" data-reference-type="ref"
 data-reference="enu:DSconRho">[enu:DSconRho]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 </ul>
 <p>This results in all SD sets that meet the ρ
 <em>constraints</em> within the arrangement (and their number <span
-class="math inline">\(m_{\text{\acrshort{SD}}}\)</span>). This portion
+class="math inline">\(m_{\text{\mathrm{SD}}}\)</span>). This portion
 of the algorithm is implemented with MATLAB code in Listing <a
 href="#lst:SDdis" data-reference-type="ref"
 data-reference="lst:SDdis">[lst:SDdis]</a>.</p>
@@ -161,31 +161,31 @@ data-reference="lst:SDdis">[lst:SDdis]</a>.</p>
 sets (Figure <a href="#fig:RSIfig2" data-reference-type="ref"
 data-reference="fig:RSIfig2">1.2</a>). This is done by looping through
 every combination of two different SD sets (<span
-class="math inline">\(m_{\text{\acrshort{SD}}} \times
-\left(m_{\text{\acrshort{SD}}}-1\right) \times 2\)</span> combinations).
+class="math inline">\(m_{\text{\mathrm{SD}}} \times
+\left(m_{\text{\mathrm{SD}}}-1\right) \times 2\)</span> combinations).
 For each possible combination of SD sets 2 checks are done to
 ensure the combination forms a valid new SS set:</p>
 <ul>
 <li><p>An exclusive or (<em>id est</em> <code>xor</code>) that the
 sources <code>xor</code> the detectors are the same for the two SD
 sets (<em>id est</em> the SD sets share a source or a
-detector but not both; <em>Requirement</em> <a href="#enu:DSreqSSs"
+detector but not both; <em>Requirement</em> <a href="ch3.html#enu:DSreqSSs"
 data-reference-type="ref"
 data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 <li><p>The difference in ρs (<span
-class="math inline">\(\Delta\acrshort{rho}\)</span>) between the two
+class="math inline">\(\Delta\rho\)</span>) between the two
 SD sets meets the minimum and
 maximum consideration (10 mm, &amp; 20 mm, respectively;
-<em>Constraint</em> <a href="#enu:DSconDelRho" data-reference-type="ref"
+<em>Constraint</em> <a href="ch3.html#enu:DSconDelRho" data-reference-type="ref"
 data-reference="enu:DSconDelRho">[enu:DSconDelRho]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 </ul>
 <p>This step results in all the possible SS measurements in the
 arrangement (and their number <span
-class="math inline">\(m_{\text{\acrshort{SS}}}\)</span>). This second
+class="math inline">\(m_{\text{\mathrm{SS}}}\)</span>). This second
 part of the algorithm is implemented using MATLAB code in Listing <a
 href="#lst:SSdis" data-reference-type="ref"
 data-reference="lst:SSdis">[lst:SSdis]</a>.</p>
@@ -194,51 +194,51 @@ arrangement (Figure <a href="#fig:RSIfig3" data-reference-type="ref"
 data-reference="fig:RSIfig3">1.3</a>). Again, a loop is entered that
 loops through all combinations, this time of SS
 sets which are not the same (<span
-class="math inline">\(m_{\text{\acrshort{SS}}} \times
-\left(m_{\text{\acrshort{SS}}}-1\right) \times 2\)</span> combinations).
+class="math inline">\(m_{\text{\mathrm{SS}}} \times
+\left(m_{\text{\mathrm{SS}}}-1\right) \times 2\)</span> combinations).
 For each SS combination 5 checks are
 done to ensure that the two SS sets form a new valid DS
 set:</p>
 <ul>
 <li><p>That between the 2 SS sets there are exactly 2
 unique sources and 2 unique detectors (related to
-<em>Requirements</em> <a href="#enu:DSreqSSs" data-reference-type="ref"
+<em>Requirements</em> <a href="ch3.html#enu:DSreqSSs" data-reference-type="ref"
 data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a>&amp;<a
-href="#enu:DSreqShrtLng" data-reference-type="ref"
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
 data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 <li><p>That between the 2 SS sets (4 SD
 sets) there are no repeated source-detectors pairs (<em>id est</em>
 there are four unique SD sets; related to
-<em>Requirements</em> <a href="#enu:DSreqSSs" data-reference-type="ref"
+<em>Requirements</em> <a href="ch3.html#enu:DSreqSSs" data-reference-type="ref"
 data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a>&amp;<a
-href="#enu:DSreqShrtLng" data-reference-type="ref"
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
 data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 <li><p>Between the two SS sets the sources/detectors
 that make up the shorter/longer SD measurement are not the
 same (<em>id est</em> no source or detector is used for the long or the
 short measurement more than once; <em>Requirement</em> <a
-href="#enu:DSreqShrtLng" data-reference-type="ref"
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
 data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 <li><p>The difference between the SD ρs
 (<span class="math inline">\(\Delta\rho\)</span>) for each
 SS set that comprise the DS set
-are the same (<em>Requirement</em> <a href="#enu:DSreqDelRho"
+are the same (<em>Requirement</em> <a href="ch3.html#enu:DSreqDelRho"
 data-reference-type="ref"
 data-reference="enu:DSreqDelRho">[enu:DSreqDelRho]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
 <li><p>The DS set found at each iteration
 is new and has not already been found in a previous iteration.</p></li>
 </ul>
 <p>The result of the algorithm is to identify all possible DS
 sets in the arrangement (and their number <span
-class="math inline">\(m_{\text{\acrshort{DS}}}\)</span>). Finally, this
+class="math inline">\(m_{\text{\mathrm{DS}}}\)</span>). Finally, this
 last part of the algorithm is implemented with MATLAB code in Listing <a
 href="#lst:DSdis" data-reference-type="ref"
 data-reference="lst:DSdis">[lst:DSdis]</a>.</p>
@@ -248,10 +248,10 @@ source and detector r⃗. The various checks ensure
 the DS <em>requirements</em> are
 met, however there are also tunable parameters that allow the
 <em>constraints</em> to be changed (minimum ρ
-from <em>Constraint</em> <a href="#enu:DSconRho"
+from <em>Constraint</em> <a href="ch3.html#enu:DSconRho"
 data-reference-type="ref"
 data-reference="enu:DSconRho">[enu:DSconRho]</a> in Section <a
-href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>
 <em>et cetera</em>). The algorithm has a run time of approximately
 200 ms (for 10 detectors and 16 sources) on a CPU
@@ -274,7 +274,7 @@ positions as symbols. (b) Free body diagram of all forces acting on
 sources and detectors. (c) Evolution of the 4 SD .
 (d) Evolution of the two SS ρ
 differences (<span
-class="math inline">\(\Delta\acrshort{rho}\)</span>).<br />
+class="math inline">\(\Delta\rho\)</span>).<br />
 Note 1: This chart can be found as Figure 4 in <span class="citation"
 data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
 </figure>
@@ -296,13 +296,13 @@ class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <ul>
 <li><p>The nominal ρ for the short leg of a
 SS set (<span
-class="math inline">\(\acrshort{rho}_{0,s}\)</span>).</p></li>
+class="math inline">\(\rho_{0,s}\)</span>).</p></li>
 <li><p>The nominal ρ for the long leg (<span
-class="math inline">\(\acrshort{rho}_{0,l}\)</span>).</p></li>
+class="math inline">\(\rho_{0,l}\)</span>).</p></li>
 <li><p>The nominal difference between ρs in a SS set
 (<span class="math inline">\(\Delta\rho_0\)</span>).</p></li>
 <li><p>The minimum source-detector separation (<span
-class="math inline">\(\acrshort{rho}\acrshort{rho}_{min}\)</span>).</p></li>
+class="math inline">\(\rho\rho_{min}\)</span>).</p></li>
 </ul>
 <p>The final arrangement will have DS sets with ρs as
 close to their nominal values as possible given the overall connections
@@ -334,14 +334,14 @@ slight under-damping, thus allowing the system to converge.</p>
 source and detector which are combined using Newton’s second law of
 motion (Figure <a href="#fig:RSIfig4" data-reference-type="ref"
 data-reference="fig:RSIfig4">1.4</a>(b)): <span
-class="math display">\[\mathfrak{M}\ddot{\acrshort{r}}=\Sigma{\vec{F}}_{\text{\acrshort{SD}}}+\Sigma{\vec{F}}_{\Delta
-\text{\acrshort{SS}}}+\Sigma{\vec{F}}_{repul}+{\vec{F}}_{damp}
+class="math display">\[\mathfrak{M}\ddot{\vec{r}}=\Sigma{\vec{F}}_{\text{\mathrm{SD}}}+\Sigma{\vec{F}}_{\Delta
+\text{\mathrm{SS}}}+\Sigma{\vec{F}}_{repul}+{\vec{F}}_{damp}
     \label{equ:posRefEOM}\]</span> where, <span
-class="math inline">\(\ddot{\acrshort{r}}\)</span> is the acceleration
+class="math inline">\(\ddot{\vec{r}}\)</span> is the acceleration
 vector for a given element, <span
-class="math inline">\({\vec{F}}_{\text{\acrshort{SD}}}\)</span> is the
+class="math inline">\({\vec{F}}_{\text{\mathrm{SD}}}\)</span> is the
 SD force, <span
-class="math inline">\({\vec{F}}_{\Delta \text{\acrshort{SS}}}\)</span>
+class="math inline">\({\vec{F}}_{\Delta \text{\mathrm{SS}}}\)</span>
 is the SS difference in ρ
 force, <span class="math inline">\({\vec{F}}_{repul}\)</span> is the
 repulsion force, and <span
@@ -355,11 +355,11 @@ and specific to DS.</p>
 <p>The SD force causes sources and
 detectors to be attracted to positions that will create ρ
 close to the nominal values (<span
-class="math inline">\(\acrshort{rho}_{0,s}\)</span> or <span
-class="math inline">\(\acrshort{rho}_{0,l}\)</span>): <span
-class="math display">\[{\vec{F}}_{\text{\acrshort{SD}}}=\mathfrak{K}(\|\acrshort{r}_{\text{\acrshort{SD}}}\|-\rho_0)\hat{r}_{\text{\acrshort{SD}}}\]</span>
+class="math inline">\(\rho_{0,s}\)</span> or <span
+class="math inline">\(\rho_{0,l}\)</span>): <span
+class="math display">\[{\vec{F}}_{\text{\mathrm{SD}}}=\mathfrak{K}(\|\vec{r}_{\text{\mathrm{SD}}}\|-\rho_0)\hat{r}_{\text{\mathrm{SD}}}\]</span>
 where, <span
-class="math inline">\(\|\acrshort{r}_{\text{\acrshort{SD}}}\|\)</span>
+class="math inline">\(\|\vec{r}_{\text{\mathrm{SD}}}\|\)</span>
 is the Euclidean distance between the element considered and its pair,
 <span class="math inline">\({\hat{r}}_{\text{\text{SD}}}\)</span> is
 the unit vector pointing from the element to its pair, and <span
@@ -372,25 +372,25 @@ distance pair in a SS set).</p>
 SS sets to be attracted to
 configurations that have a difference in the ρs
 close to the nominal value (<span
-class="math inline">\(\Delta\acrshort{rho}_0\)</span>): <span
-class="math display">\[{\vec{F}}_{\Delta\text{\acrshort{SS}}}=\mathfrak{K}(|\|\acrshort{r}_{\text{\acrshort{SD}}2}\|-\|\acrshort{r}_{\text{\acrshort{SD}}1}\||-\Delta\acrshort{rho}_0)\hat{r}_{\Delta\text{\acrshort{SS}}}\]</span>
+class="math inline">\(\Delta\rho_0\)</span>): <span
+class="math display">\[{\vec{F}}_{\Delta\text{\mathrm{SS}}}=\mathfrak{K}(|\|\vec{r}_{\text{\mathrm{SD}}2}\|-\|\vec{r}_{\text{\mathrm{SD}}1}\||-\Delta\rho_0)\hat{r}_{\Delta\text{\mathrm{SS}}}\]</span>
 where, <span
-class="math inline">\(\acrshort{r}_{\text{\acrshort{SD}}1}\)</span> and
+class="math inline">\(\vec{r}_{\text{\mathrm{SD}}1}\)</span> and
 <span
-class="math inline">\(\acrshort{r}_{\text{\acrshort{SD}}2}\)</span> are
+class="math inline">\(\vec{r}_{\text{\mathrm{SD}}2}\)</span> are
 the Euclidean norms of source-detector displacement vectors for the two
 SD pairs, and <span
-class="math inline">\({\hat{r}}_{\Delta\text{\acrshort{SS}}}\)</span> is
+class="math inline">\({\hat{r}}_{\Delta\text{\mathrm{SS}}}\)</span> is
 the unit vector pointing from the element considered to the element of
 the SS set of the same type. For
 example, for a common source SS set that contains one
 source and two detectors (<code>A</code> and <code>B</code>), there will
 be a <span
-class="math inline">\({\hat{r}}_{\Delta\text{\acrshort{SS}}}\)</span>
+class="math inline">\({\hat{r}}_{\Delta\text{\mathrm{SS}}}\)</span>
 pointing from <code>A</code> to <code>B</code> which controls the force
 that acts upon <code>A</code>, and vice versa for <code>B</code>. Thus,
 each SS set creates 2 <span
-class="math inline">\({\vec{F}}_{\Delta\text{\acrshort{SS}}}\)</span>
+class="math inline">\({\vec{F}}_{\Delta\text{\mathrm{SS}}}\)</span>
 forces which act on the non-common element types in the set.
 Additionally, if 2 SS sets form a DS
 set, the symmetric nature of the <em>requirements</em> creates resulting
@@ -403,18 +403,18 @@ activates if sources and detectors get closer than the minimum distance
 (<span class="math inline">\(\rho_{min}\)</span>): <span
 class="math display">\[\begin{split}
         {\vec{F}}_{repul}=\xi
-\left(\frac{1}{\acrshort{rho}_{min}}-\frac{1}{\|\acrshort{r}_{repul}\|}\right)\\
+\left(\frac{1}{\rho_{min}}-\frac{1}{\|\vec{r}_{repul}\|}\right)\\
             \times
-H\left(\acrshort{rho}_{min}-\|\acrshort{r}_{repul}\|\right)\hat{r}_{repul}
+H\left(\rho_{min}-\|\vec{r}_{repul}\|\right)\hat{r}_{repul}
     \end{split}\]</span> where, <span
-class="math inline">\(\|\acrshort{r}_{repul}\|\)</span> is the Euclidean
+class="math inline">\(\|\vec{r}_{repul}\|\)</span> is the Euclidean
 distance between the element and its repulsor, <span
 class="math inline">\(H\)</span> is the Heaviside step function, and
 <span class="math inline">\({\hat{r}}_{repul}\)</span> is the unit
 vector pointing from the element its repulsor.</p>
 <p>Finally, the damping force creates non-conservation friction within
 the system allowing for convergence: <span
-class="math display">\[{\vec{F}}_{damp}=-\mathfrak{D}\dot{\acrshort{r}}\
+class="math display">\[{\vec{F}}_{damp}=-\mathfrak{D}\dot{\vec{r}}\
 \]</span> where <span class="math inline">\(\dot{\vec{r}}\)</span>
 is the velocity vector. Euler’s method with a step of <span
 class="math inline">\(\Delta t\)</span> is used to iteratively solve
@@ -435,7 +435,7 @@ before it is actually constructed.</p>
 <h3 id="the-sensitivity-matrix">The Sensitivity Matrix</h3>
 <p>The first step for image reconstruction is to determine the 𝒮
 maps for each measurement in a given array. This is done using the
-methods in Appendix <a href="#app:senMaps" data-reference-type="ref"
+methods in Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>. Remember 𝒮
 can be interpreted using Equation <a href="#equ:sen_dmua"
 data-reference-type="ref"
@@ -452,21 +452,21 @@ define a <span class="math inline">\(m\times v\)</span> <strong>𝒮</strong> fo
 array with <span class="math inline">\(m\)</span> measurements and <span
 class="math inline">\(v\)</span> voxels in the imaged medium: <span
 class="math display">\[\begin{split}
-        \acrshort{senMat}=\\
+        \boldsymbol{\mathcal{S}}=\\
         \begin{bmatrix}
-            \acrshort{sen}_1\left(\acrshort{r}_1\right)
-&amp;   \cdots  &amp;   \acrshort{sen}_1\left(\acrshort{r}_j\right)  &amp;  \cdots
-&amp;    \acrshort{sen}_1\left(\acrshort{r}_v\right) \\
+            \mathcal{S}_1\left(\vec{r}_1\right)
+&amp;   \cdots  &amp;   \mathcal{S}_1\left(\vec{r}_j\right)  &amp;  \cdots
+&amp;    \mathcal{S}_1\left(\vec{r}_v\right) \\
             \vdots  &amp;   \ddots &amp;    \ddots
 &amp;    \ddots  &amp;   \vdots \\
-            \acrshort{sen}_i\left(\acrshort{r}_1\right)  &amp;  \ddots
-&amp;    \acrshort{sen}_i\left(\acrshort{r}_j\right)  &amp;  \ddots
-&amp;    \acrshort{sen}_i\left(\acrshort{r}_v\right) \\
+            \mathcal{S}_i\left(\vec{r}_1\right)  &amp;  \ddots
+&amp;    \mathcal{S}_i\left(\vec{r}_j\right)  &amp;  \ddots
+&amp;    \mathcal{S}_i\left(\vec{r}_v\right) \\
             \vdots  &amp;   \ddots &amp;    \ddots
 &amp;    \ddots  &amp;   \vdots \\
-            \acrshort{sen}_m\left(\acrshort{r}_1\right)
-&amp;   \cdots  &amp;   \acrshort{sen}_m\left(\acrshort{r}_j\right)  &amp;  \cdots
-&amp;    \acrshort{sen}_m\left(\acrshort{r}_v\right) \\
+            \mathcal{S}_m\left(\vec{r}_1\right)
+&amp;   \cdots  &amp;   \mathcal{S}_m\left(\vec{r}_j\right)  &amp;  \cdots
+&amp;    \mathcal{S}_m\left(\vec{r}_v\right) \\
         \end{bmatrix}
     \end{split}\]</span> Now considering a so-called apparent <span
 class="math inline">\(m \times 1\)</span> Δμ⃗<sub>a</sub> that is measured by
@@ -474,38 +474,38 @@ the array and a <span class="math inline">\(v \times 1\)</span> Δμ⃗<sub>a</s
 voxel values, we can write following forward model based off Equation <a
 href="#equ:sen_dmua" data-reference-type="ref"
 data-reference="equ:sen_dmua">[equ:sen_dmua]</a>: <span
-class="math display">\[\acrshort{dmuaVec}_{,apparent}=\acrshort{senMat}\acrshort{dmuaVec}_{,actual}
+class="math display">\[\Delta\vec{\mu}_a_{,apparent}=\boldsymbol{\mathcal{S}}\Delta\vec{\mu}_a_{,actual}
     \label{equ:senMatForward}\]</span></p>
 <p>Image reconstruction will focus on inverting Equation <a
 href="#equ:senMatForward" data-reference-type="ref"
 data-reference="equ:senMatForward">[equ:senMatForward]</a>. Given that
 <span class="math inline">\(\Delta\vec{\mu}_a_{,apparent}\)</span> is
 what we have and we can calculate <strong>𝒮</strong> (Appendix <a
-href="#app:senMaps" data-reference-type="ref"
+href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>), the inversion will be
 finding an inverse for <strong>𝒮</strong> which multiplied by
 <span class="math inline">\(\Delta\vec{\mu}_a_{,apparent}\)</span>
 gives us <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> (Equation <a
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> (Equation <a
 href="#equ:senMatInverse" data-reference-type="ref"
 data-reference="equ:senMatInverse">[equ:senMatInverse]</a>). It is worth
 noting that since <span class="math inline">\(m&lt;&lt;v\)</span> in
 these imaging problems, there will be many <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> which
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> which
 satisfies Equation <a href="#equ:senMatForward"
 data-reference-type="ref"
 data-reference="equ:senMatForward">[equ:senMatForward]</a>. Whatever
 inverse is chosen will find the <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> which meets
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> which meets
 some properties according to the inverse. Since this so-called recovered
 Δμ⃗<sub>a</sub> will not be unique, we
 will not call the particular one retrieved <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> since it is
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> since it is
 almost certainly not the <em>actual</em> Δμ⃗<sub>a</sub>. Therefore, we will
 called the particular reconstructed <span class="math inline">\(v\time
 1\)</span> Δμ⃗<sub>a</sub> from the inverse, the
 <em>recovered</em> (<em>id est</em> <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}\)</span>).</p>
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span>).</p>
 <h3 id="the-moore-penrose-inverse">The Moore-Penrose Inverse</h3>
 <p>To invert Equation <a href="#equ:senMatForward"
 data-reference-type="ref"
@@ -513,14 +513,14 @@ data-reference="equ:senMatForward">[equ:senMatForward]</a> we have
 chosen the MP <span class="citation"
 data-cites="penroseGeneralizedInverseMatrices1955"></span>. This
 retrieves the <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}\)</span> with the
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> with the
 lowest Euclidean norm of all Δμ⃗<sub>a</sub> that would satisfy the
 forward model (Equation <a href="#equ:senMatForward"
 data-reference-type="ref"
 data-reference="equ:senMatForward">[equ:senMatForward]</a>). As is
 convention, we use a superscript <span class="math inline">\(+\)</span>
 to represent this inverse as follows: <span
-class="math display">\[\acrshort{dmuaVec}_{,recovered}=\acrshort{senMat}^+\acrshort{dmuaVec}_{,apparent}
+class="math display">\[\Delta\vec{\mu}_a_{,recovered}=\boldsymbol{\mathcal{S}}^+\Delta\vec{\mu}_a_{,apparent}
     \label{equ:senMatInverse}\]</span></p>
 <p>The MP can be formulated in
 various ways, and may or may not include Tikhonov regularization, which
@@ -529,12 +529,12 @@ formulation of the Moore-Penrose pseudoinverse with Tikhonov
 regularization is as follows <span class="citation"
 data-cites="doulgerakisHighdensityFunctionalDiffuse2019 penroseGeneralizedInverseMatrices1955"></span>:
 <span
-class="math display">\[\acrshort{senMat}^+=\acrshort{senMat}^T\left(\acrshort{senMat}\acrshort{senMat}^T+\mathfrak{a}\mathbf{I}\right)^{-1}\]</span>
+class="math display">\[\boldsymbol{\mathcal{S}}^+=\boldsymbol{\mathcal{S}}^T\left(\boldsymbol{\mathcal{S}}\boldsymbol{\mathcal{S}}^T+\mathfrak{a}\mathbf{I}\right)^{-1}\]</span>
 where the <span class="math inline">\(T\)</span> superscript is
 transpose, the <span class="math inline">\(-1\)</span> superscript is
 the matrix inverse, <span class="math inline">\(\mathbf{I}\)</span> is
 the identity matrix, and: <span
-class="math display">\[\mathfrak{a}=a_{tik}\times\max{\left(diag\left(\acrshort{senMat}\acrshort{senMat}^T\right)\right)}\]</span>
+class="math display">\[\mathfrak{a}=a_{tik}\times\max{\left(diag\left(\boldsymbol{\mathcal{S}}\boldsymbol{\mathcal{S}}^T\right)\right)}\]</span>
 where <span class="math inline">\(\mathfrak{a}\)</span> is the Tikhonov
 regularization parameter which scales with the maximum singular value of
 <strong>𝒮</strong>, and <span
@@ -543,7 +543,7 @@ should be chosen based on the noise in the measurement to optimize
 signal-to-noise against smoothing in the reconstructed image.</p>
 <p>The MP can also be formulated in
 terms of the SVD of <strong>𝒮</strong>: <span
-class="math display">\[\acrshort{senMat}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T
+class="math display">\[\boldsymbol{\mathcal{S}}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T
     \label{equ:SwithSVD}\]</span> <span
 class="math display">\[\mathbf{\Sigma}=
     \begin{bmatrix}
@@ -574,7 +574,7 @@ without Tikhonov regularization is formulated as follows <span
 class="citation"
 data-cites="mathworksMATLABHelp2020 penroseGeneralizedInverseMatrices1955"></span>:
 <span
-class="math display">\[\acrshort{senMat}^+=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T
+class="math display">\[\boldsymbol{\mathcal{S}}^+=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T
     \label{equ:MPwithSVD}\]</span> the inverse of the non-square <span
 class="math inline">\(\mathbf{\Sigma}\)</span> has the trivial
 expression: <span class="math display">\[\mathbf{\Sigma}^{-1}=
@@ -616,7 +616,7 @@ Equation <a href="#equ:senMatForward" data-reference-type="ref"
 data-reference="equ:senMatForward">[equ:senMatForward]</a> into
 Equation <a href="#equ:senMatInverse" data-reference-type="ref"
 data-reference="equ:senMatInverse">[equ:senMatInverse]</a> yields: <span
-class="math display">\[\acrshort{dmuaVec}_{,recovered}=\acrshort{SpSMat}\acrshort{dmuaVec}_{,actual}
+class="math display">\[\Delta\vec{\mu}_a_{,recovered}=\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\Delta\vec{\mu}_a_{,actual}
     \label{equ:SpS}\]</span> where the <span
 class="math inline">\(v\times v\)</span> <strong>𝒮⁺𝒮</strong> is the key operator
 that transforms the actual absorption perturbation vector into the
@@ -660,7 +660,7 @@ data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
 <p>The first method we use to examine <strong>𝒮⁺𝒮</strong> is by producing the
 ℛ⃗ which can be visualized
 in a voxelated map. This vector is defined as: <span
-class="math display">\[\acrshort{Recon}=\frac{diag\left(\acrshort{SpSMat}\right)}{m}\]</span>
+class="math display">\[\vec{\mathcal{R}}=\frac{diag\left(\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\right)}{m}\]</span>
 where, the diagonal elements of <strong>𝒮⁺𝒮</strong> are normalized by <span
 class="math inline">\(m\)</span> since the trace of <strong>𝒮⁺𝒮</strong> is equal to <span
 class="math inline">\(m\)</span> <span class="citation"
@@ -686,7 +686,7 @@ will be discussed in further sections.</p>
 <p>The second map which is used to visualize <strong>𝒮⁺𝒮</strong> compared to the
 identity is the 𝒞⃗. This vector is defined
 as: <span
-class="math display">\[\acrshort{Cross}=\frac{\acrshort{SpSMat}\harp{1}-diag\left(\acrshort{SpSMat}\right)}{v-1}\]</span>
+class="math display">\[\vec{\mathcal{C}}=\frac{\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\harp{1}-diag\left(\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\right)}{v-1}\]</span>
 where, <span class="math inline">\(\harp{1}\)</span> is the <span
 class="math inline">\(v\times 1\)</span> vector of ones. Conceptually
 the elements of the cross-talk vector are the average of the
@@ -724,11 +724,11 @@ perturbations can be done efficiently by considering <strong>𝒮⁺𝒮</strong
 voxel impulse response vectors. This can be seen by examining
 Equation <a href="#equ:SpS" data-reference-type="ref"
 data-reference="equ:SpS">[equ:SpS]</a>, and considering a <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> that
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> that
 contains all zeros except a 1 in element <span
 class="math inline">\(j\)</span> (a unit perturbation only in voxel
 <span class="math inline">\(j\)</span>). Then <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}\)</span> will be
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> will be
 the <span class="math inline">\(j\)</span><sub>th</sub> column of <strong>𝒮⁺𝒮</strong>. Thus, <strong>𝒮⁺𝒮</strong> contains the response
 vectors (in its rows and columns since it is symmetric) for a unit
 perturbation in each voxel. In this section, we discuss efficient ways
@@ -736,9 +736,9 @@ to calculate resolution and localization maps in MATLAB. However, the methods
 could be adapted to other programming languages.</p>
 <p>For notation, we introduce the <strong>Γ</strong> and the <strong>Δ</strong>
 as follows: <span
-class="math display">\[\acrshort{Res}=\left[\harp{\Gamma}_x,
+class="math display">\[\mathbf{\Gamma}=\left[\harp{\Gamma}_x,
 \harp{\Gamma}_y, \harp{\Gamma}_z\right]\]</span> <span
-class="math display">\[\acrshort{Loc}=\left[\harp{\Delta}_x,
+class="math display">\[\mathbf{\Delta}=\left[\harp{\Delta}_x,
 \harp{\Delta}_y, \harp{\Delta}_z\right]\]</span> where <strong>Γ</strong>
 and <strong>Δ</strong> are both <span
 class="math inline">\(v\times 3\)</span> matrices containing the map of
@@ -852,16 +852,16 @@ but the disadvantage of needing to store <strong>𝒮⁺𝒮</strong> in RAM.</p
 <p>There are also scalar values that can be used to evaluate the imaging
 effectiveness of <strong>𝒮</strong>. One value is the κ of <strong>𝒮</strong>, which represents the
 instability of the imaging system. The κ is defined as: <span
-class="math display">\[\acrshort{kappa}=\|\acrshort{senMat}\|\|\acrshort{senMat}^+\|\]</span>
+class="math display">\[\kappa=\|\boldsymbol{\mathcal{S}}\|\|\boldsymbol{\mathcal{S}}^+\|\]</span>
 where smaller κ is better, meaning a
 more stable system <span class="citation"
 data-cites="mathworksMATLABHelp2020"></span>. In this work we use the
 <span class="math inline">\(\ell_2\)</span>-norm for our discussion but
 the condition number can be defined with any norm that is desired. For
 comparison, in the best case of Gaussian random sampling, <span
-class="math inline">\(\acrshort{kappa}=\mathcal{O}\left(1\right)\)</span>.
+class="math inline">\(\kappa=\mathcal{O}\left(1\right)\)</span>.
 But in the worst case of a singular <strong>𝒮</strong>, <span
-class="math inline">\(\acrshort{kappa}=\infty\)</span>.</p>
+class="math inline">\(\kappa=\infty\)</span>.</p>
 <h4 id="singular-value-decomposition-and-singular-vectors">Singular
 Value Decomposition and Singular Vectors</h4>
 <figure id="fig:RSIfig12">
@@ -883,9 +883,9 @@ data-reference-type="ref"
 data-reference="equ:SwithSVD">[equ:SwithSVD]</a>&amp;<a
 href="#equ:MPwithSVD" data-reference-type="ref"
 data-reference="equ:MPwithSVD">[equ:MPwithSVD]</a> yields: <span
-class="math display">\[\acrshort{SpSMat}=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T\]</span>
+class="math display">\[\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T\]</span>
 which can be simplified to: <span
-class="math display">\[\acrshort{SpSMat}=\left[\harp{V}_1, \ldots,
+class="math display">\[\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}=\left[\harp{V}_1, \ldots,
 \harp{V}_m, \harp{0}, \ldots, \harp{0}\right]\mathbf{V}^T\]</span> by
 the orthogonality of <span class="math inline">\(\mathbf{U}\)</span>
 (<em>id est</em> <span
@@ -906,25 +906,25 @@ formulated using the right singular vectors.</p>
 Equation <a href="#equ:SpS" data-reference-type="ref"
 data-reference="equ:SpS">[equ:SpS]</a>: <span
 class="math display">\[\begin{split}
-        \acrshort{dmuaVec}_{,recovered}=\\
+        \Delta\vec{\mu}_a_{,recovered}=\\
             \left[\harp{V}_1, \ldots, \harp{V}_m, \harp{0}, \ldots,
-\harp{0}\right]\mathbf{V}^T\acrshort{dmuaVec}_{,actual}
+\harp{0}\right]\mathbf{V}^T\Delta\vec{\mu}_a_{,actual}
     \end{split}\]</span> where, it can be seen by the orthogonality of
 <span class="math inline">\(\mathbf{V}\)</span>, that if <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> is any of
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> is any of
 the first <span class="math inline">\(m\)</span> right singular vectors
 of <strong>𝒮</strong> (or any linear
 combination of them), then a perfect reconstruction will be achieved
 (<em>id est</em> <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}=\mathbf{V}^T\acrshort{dmuaVec}_{,actual}\)</span>).
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}=\mathbf{V}^T\Delta\vec{\mu}_a_{,actual}\)</span>).
 Conversely, if <span
-class="math inline">\(\acrshort{dmuaVec}_{,actual}\)</span> is any of
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> is any of
 the last <span class="math inline">\(v-m\)</span> right singular
 vectors, then a null reconstruction will be achieved (<em>id est</em>
 <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}=\harp{0}\)</span>).
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}=\harp{0}\)</span>).
 This means that <span
-class="math inline">\(\acrshort{dmuaVec}_{,recovered}\)</span> is
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> is
 spanned by the vectors (<span class="math inline">\(\harp{V}_1, \ldots,
 \harp{V}_m\)</span>). In other words, any reconstructed image must be
 some linear combination of the first <span
@@ -948,7 +948,7 @@ and <span class="math inline">\(\sigma_m\)</span> is the minimum
 singular value. Therefore κ can also be expressed as
 <span class="citation-keys text-muted small">[mathworksMATLABHelp2020]</span>:
 <span
-class="math display">\[\acrshort{kappa}=\frac{\sigma_1}{\sigma_m}\]</span>
+class="math display">\[\kappa=\frac{\sigma_1}{\sigma_m}\]</span>
 showing that the κ (meaning the system
 stability) can be thought of as the ratio of biggest and smallest
 singular values. This suggests that a better conditioned system will
@@ -968,24 +968,24 @@ consider two simple examples with <span
 class="math inline">\(m=2\)</span> and <span
 class="math inline">\(v=3\)</span>. First, we consider the case where
 one measurement is very weekly sensitive to the medium: <span
-class="math display">\[\acrshort{senMat}=
+class="math display">\[\boldsymbol{\mathcal{S}}=
     \begin{bmatrix}
         1/3 &amp; 1/3 &amp; 1/3 \\
         0   &amp; 0   &amp; 10^{-6} \\
     \end{bmatrix}\]</span> Then <span
 class="math inline">\(\sigma_1=0.6\)</span>, <span
 class="math inline">\(\sigma_2=8\times{10}^{-7}\)</span>, and <span
-class="math inline">\(\acrshort{kappa}=7\times{10}^5\)</span>, showing
+class="math inline">\(\kappa=7\times{10}^5\)</span>, showing
 that one measurement is problematic. Second, consider the case where the
 two measurements have close to the same sensitivity: <span
-class="math display">\[\acrshort{senMat}=
+class="math display">\[\boldsymbol{\mathcal{S}}=
     \begin{bmatrix}
         1/3 &amp; 1/3 &amp; 1/3 \\
         1/3 &amp; 1/3+10^{-6} &amp; 1/3-10^{-6} \\
     \end{bmatrix}\]</span> Then <span
 class="math inline">\(\sigma_1=0.8\)</span>, <span
 class="math inline">\(\sigma_2=10^{-6}\)</span> and <span
-class="math inline">\(\acrshort{kappa}=8\times{10}^5\)</span>, showing
+class="math inline">\(\kappa=8\times{10}^5\)</span>, showing
 again there is a problematic measurement (because one measurement is
 redundant). We note that examining these values cannot be done blindly
 since their magnitudes are dependent on the specific reconstruction
@@ -1171,10 +1171,10 @@ thread.</p>
 Arrays</h3>
 <p>The evaluation methods and results in the for the following example
 arrays rely on the creation of sensitivity maps for each DS set
-per Appendix <a href="#app:senMaps" data-reference-type="ref"
+per Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a>. For our simulations, we
 used the same medium paramters stated in Section <a
-href="#ch:shortLong:sec:senPro" data-reference-type="ref"
+href="ch2.html#ch:shortLong:sec:senPro" data-reference-type="ref"
 data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.
 These optical properties are consistent with previous work concerning
 sensitivity maps <span class="citation"
@@ -1526,7 +1526,7 @@ to instrumental drifts and changes in optical coupling with tissue, and
 calibration-free absolute measurements <span class="citation"
 data-cites="hueberNewOpticalProbe1999"></span>. This allows for robust
 measurements weakly impacted by motion or instrumental artifacts as
-discussed in Chapter <a href="#ch:DSintro" data-reference-type="ref"
+discussed in Chapter <a href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>.</p>
 <p>Aside from fNIRS experiments, the array
 could also be used for non-invasive optical measurements of tissue where
@@ -1603,7 +1603,7 @@ phantoms were measured using scanned MD FD
 NIRS. We used the Imagent FD
 NIRS instrument whose
 operational parameters are stated in Section <a
-href="#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
+href="ch2.html#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
 data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>.
 The optical probe consisted of 400 μm multi-mode fibers to deliver
 light, and 3 mm fiber bundles to collect light.</p>
@@ -1649,7 +1649,7 @@ those of the solid phantom were μ<sub>a</sub> = 0.0130 ± 0.0001  mm and
 μ′<sub>s</sub> = 0.818 ± 0.004  mm. The
 optical properties of the liquid phantom resulted in DSF
 values for <em>I</em> and φ
-of 7.4 and 1.4, respectively (Appendix <a href="#app:dmuaMeas"
+of 7.4 and 1.4, respectively (Appendix <a href="app3.html#app:dmuaMeas"
 data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>) <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>. Three
@@ -1676,16 +1676,16 @@ measurements with non-invasive cerebral NIRS. In addition to
 collecting experimental data, we also present theoretical calculations
 assuming no scattering perturbations or refractive index mismatch at the
 perturbation boundary according to the methods in Appendix <a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>.
 Additionally, we have investigated the effect of modeling a scattering
 perturbation so that we may comment on its effect.</p>
 <p>For analysis, Δμ<sub>a</sub> from each DS set
 in the circular array was calculated using the methods in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a> for the various
 perturbation configurations. From these the <strong>𝒮</strong> was created using the
-methods in Appendix <a href="#app:senMaps" data-reference-type="ref"
+methods in Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a> and images of Δμ<sub>a</sub>
 were recovered using Equation <a href="#equ:senMatInverse"
 data-reference-type="ref"
@@ -1789,7 +1789,7 @@ experiments, the scattering contrast was in the range
 inclusion/background interface (in our experiments, the absorbing
 inclusion had <span class="math inline">\(n\approx
 1.4\)</span>, while the liquid phantom had <span
-class="math inline">\(\acrshort{n}\approx 1.35\)</span> <span
+class="math inline">\(n\approx 1.35\)</span> <span
 class="citation"
 data-cites="foxDairyChemistryBiochemistry2015"></span>).</p></li>
 <li><p>Extrapolated boundary conditions at the flat phantom/air
@@ -1920,7 +1920,7 @@ DS φ.</p></li>
 and μ′<sub>s</sub> the array was analysed in
 SC mode on the baseline data
 (averaged over time) with the iterative recovery methods in Appendix <a
-href="#app:absOptPropMeas" data-reference-type="ref"
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. This
 resulted in a measurement of μ<sub>a</sub> and μ′<sub>s</sub>
 for each of the <span class="math inline">\(m=27\)</span> sets in the
@@ -1933,7 +1933,7 @@ beneath the array.</p>
 <p>To use the array in DS mode, the DS
 derived Δμ<sub>a</sub> was found for each
 time-point during the experiment using the methods in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. Then, a map of Δμ<sub>a</sub>
 was reconstructed using methods previously described above via the MP
 and Equation <a href="#equ:senMatInverse" data-reference-type="ref"
@@ -1949,7 +1949,7 @@ data and the reconstructed image for the second layer presented. From
 this method, an image of Δμ<sub>a</sub> for 2 λs
 was calculated for each time-point during the experiment. This was then
 converted to an image stack of ΔD and ΔO
-using Appendix <a href="#app:recChrom" data-reference-type="ref"
+using Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>.</p>
 <p>During the VO, the maximum rate of blood
 accumulation (from a linear fit of ΔT) was calculated for each
@@ -2104,7 +2104,7 @@ short (approximately 25 mm]) and two long (approximately 37 mm), see
 Figure <a href="#fig:SPIE2022_1" data-reference-type="ref"
 data-reference="fig:SPIE2022_1">1.22</a>[Left]. The Imagent was again utilized with
 the same operating parameters stated in Section <a
-href="#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
+href="ch2.html#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
 data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>,
 and a sampling frequency of 5 Hz. The array was placed over on the back
 of the subject’s head such that the top of the array was over the visual
@@ -2124,7 +2124,7 @@ presented in <span class="citation"
 data-cites="blaneyFunctionalBrainMapping2022"></span>.</p>
 <p>For an absolute measurement, the array was again used in SC
 mode on the averaged baseline data using the iterative recovery method
-in Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+in Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. Absolute
 optical properties were found and the complex effective path-lengths
 calculated <span class="citation"
@@ -2132,10 +2132,10 @@ data-cites="sassaroliDualslopeMethodEnhanced2019"></span>, which were
 required to calculate the DPFs and DSFs
 for the relative measurement <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> as
-described in Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+described in Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. For image
 reconstruction <strong>𝒮</strong> was calculated using
-Appendix <a href="#app:senMaps" data-reference-type="ref"
+Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
 data-reference="app:senMaps">[app:senMaps]</a> and inverted with the
 MP and Equation <a
 href="#equ:senMatInverse" data-reference-type="ref"
@@ -2143,7 +2143,7 @@ data-reference="equ:senMatInverse">[equ:senMatInverse]</a>.</p>
 <p>For a relative measurement, ΔO and ΔD
 traces were calculated for each SD and DS set
 from Δμ<sub>a</sub> per the methods in
-Appendix <a href="#app:recChrom" data-reference-type="ref"
+Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>. The signals were
 low-pass filtered to 0.5 Hz and folding averaged across the 11
 activation periods.<a href="#fn4" class="footnote-ref" id="fnref4"
@@ -2217,7 +2217,7 @@ array data were applied to imaging DS and φ
 data derived images would exhibit higher contrast compared to SD and
 <em>I</em>, respectively. This is
 consistent with DS’s expected preferentially
-deep sensitivity shown in Chapter <a href="#ch:DSintro"
+deep sensitivity shown in Chapter <a href="ch3.html#ch:DSintro"
 data-reference-type="ref" data-reference="ch:DSintro">[ch:DSintro]</a>,
 which has been observed during systemic blood pressure oscillations
 <span class="citation"
@@ -2275,7 +2275,7 @@ role="doc-endnotes">
 <ol>
 <li id="fn1"><p>These source-detector distance (ρ) parameters are primarily
 related to the Dual-Slope (DS) <em>constraints</em> in
-Section <a href="#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+Section <a href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
 data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>.<a
 href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>These dynamical parameters are not critical in their

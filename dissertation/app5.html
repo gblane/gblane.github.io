@@ -6,7 +6,7 @@
     <title>Generation of Sensitivity Maps · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -92,17 +92,17 @@ href="#equ:Lcom_semiInf" data-reference-type="ref"
 data-reference="equ:Lcom_semiInf">[equ:Lcom_semiInf]</a> and ⟨ℓ̃⟩ to generate 𝒮.
 𝒮 maps can be generated for
 any of the methods to measure Δμ<sub>a</sub> from Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. These 𝒮
 values may be used to create a <strong>𝒮</strong> for imaging
-applications (Chapter <a href="#ch:DSimage" data-reference-type="ref"
+applications (Chapter <a href="ch5.html#ch:DSimage" data-reference-type="ref"
 data-reference="ch:DSimage">[ch:DSimage]</a>), to generate 𝒮
-maps (Chapters <a href="#ch:shortLong" data-reference-type="ref"
+maps (Chapters <a href="ch2.html#ch:shortLong" data-reference-type="ref"
 data-reference="ch:shortLong">[ch:shortLong]</a>&amp;<a
-href="#ch:DSintro" data-reference-type="ref"
+href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>) or for simulation of
 dynamic measurements as discussed in Appendix <a
-href="#app:simSigFromSen" data-reference-type="ref"
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
 data-reference="app:simSigFromSen">[app:simSigFromSen]</a>.</p>
 <h2 id="generalized-partial-optical-path-length">Generalized Partial
 Optical Path-Length</h2>
@@ -115,40 +115,40 @@ with the path through some localized region within the diffuse medium.
 To do this we must introduce the following r⃗:</p>
 <ul>
 <li><p>The position of the isotropic source of <span
-class="math inline">\(\acrshort{r}_{src}\)</span> (this is typically
+class="math inline">\(\vec{r}_{src}\)</span> (this is typically
 <span
-class="math inline">\(\acrshort{r}_{src}=\frac{1}{\acrshort{musp}}\hat{z}\)</span>
+class="math inline">\(\vec{r}_{src}=\frac{1}{\mu_s'}\hat{z}\)</span>
 for a pencil beam at the origin).</p></li>
 <li><p>The position of the detector of <span
-class="math inline">\(\acrshort{r}_{det}\)</span> (this is typically
+class="math inline">\(\vec{r}_{det}\)</span> (this is typically
 <span
-class="math inline">\(\acrshort{r}_{det}=\acrshort{rho}\hat{x}\)</span>
+class="math inline">\(\vec{r}_{det}=\rho\hat{x}\)</span>
 for a detector at ρ along the
 x-axis).</p></li>
 <li><p>The position of the localized absorption perturbation of <span
-class="math inline">\(\acrshort{r}_{pert}\)</span> with volume of <span
+class="math inline">\(\vec{r}_{pert}\)</span> with volume of <span
 class="math inline">\(V\)</span>.</p></li>
 </ul>
 <p>Using these positions we find that the ⟨ℓ̃⟩ for the perturbation
 at <span class="math inline">\(\vec{r}_{pert}\)</span> with volume
 <span class="math inline">\(V\)</span> is: <span
-class="math display">\[\acrshort{lpathCom}=\frac{\acrshort{PHIcom}\left[\acrshort{r}_{src},\acrshort{r}_{pert}\right]\acrshort{RCom}\left[\acrshort{r}_{pert},\acrshort{r}_{det}\right]}{\acrshort{RCom}\left[\acrshort{r}_{src},\acrshort{r}_{det}\right]}
+class="math display">\[{\langle \widetilde{\ell} \rangle}=\frac{\widetilde{\Phi}\left[\vec{r}_{src},\vec{r}_{pert}\right]\widetilde{R}\left[\vec{r}_{pert},\vec{r}_{det}\right]}{\widetilde{R}\left[\vec{r}_{src},\vec{r}_{det}\right]}
 V\]</span> where <span
-class="math inline">\(\acrshort{PHIcom}\left[\acrshort{r}_{src},\acrshort{r}_{pert}\right]\)</span>
+class="math inline">\(\widetilde{\Phi}\left[\vec{r}_{src},\vec{r}_{pert}\right]\)</span>
 is the Φ̃ at <span
-class="math inline">\(\acrshort{r}_{pert}\)</span> given a isotropic
+class="math inline">\(\vec{r}_{pert}\)</span> given a isotropic
 source at <span class="math inline">\(\vec{r}_{src}\)</span>, <span
-class="math inline">\(\acrshort{RCom}\left[\acrshort{r}_{pert},\acrshort{r}_{det}\right]\)</span>
+class="math inline">\(\widetilde{R}\left[\vec{r}_{pert},\vec{r}_{det}\right]\)</span>
 is the R̃ detected at <span
-class="math inline">\(\acrshort{r}_{det}\)</span> given a isotropic
+class="math inline">\(\vec{r}_{det}\)</span> given a isotropic
 source at <span class="math inline">\(\vec{r}_{pert}\)</span>, and
 <span
-class="math inline">\(\acrshort{RCom}\left[\acrshort{r}_{src},\acrshort{r}_{det}\right]\)</span>
+class="math inline">\(\widetilde{R}\left[\vec{r}_{src},\vec{r}_{det}\right]\)</span>
 is the R̃ detected at <span
-class="math inline">\(\acrshort{r}_{det}\)</span> given a isotropic
+class="math inline">\(\vec{r}_{det}\)</span> given a isotropic
 source at <span class="math inline">\(\vec{r}_{src}\)</span>. The
 expressions for R̃ and Φ̃ can be found in
-Appendix <a href="#app:forMod" data-reference-type="ref"
+Appendix <a href="app1.html#app:forMod" data-reference-type="ref"
 data-reference="app:forMod">[app:forMod]</a> as Equations <a
 href="#equ:RCom_semiInf" data-reference-type="ref"
 data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a>&amp;<a
@@ -158,28 +158,28 @@ equation of ⟨ℓ⟩ is implemented in
 Listing <a href="#lst:lpath" data-reference-type="ref"
 data-reference="lst:lpath">[lst:lpath]</a>.</p>
 <p>As with other complex variables, the CW version of ⟨ℓ⟩, named <span
-class="math inline">\(\acrshort{lpath}_{\acrshort{CW}}\)</span>, can be
+class="math inline">\({\langle \ell \rangle}_{\mathrm{CW}}\)</span>, can be
 found by setting ω to zero in the
 expressions for R̃ and Φ̃ to get <em>R</em> and
 Φ instead. Just like ⟨<em>L</em>⟩ in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, ⟨ℓ⟩ has a physical meaning
 (while ⟨ℓ̃⟩’s meaning is less
 clear thus leading to the name <em>general</em> path-length). The
 physical interpretation for ⟨ℓ⟩ is the average
 path-length that a photon from <span
-class="math inline">\(\acrshort{r}_{src}\)</span> and detected at <span
-class="math inline">\(\acrshort{r}_{det}\)</span> spends inside a region
+class="math inline">\(\vec{r}_{src}\)</span> and detected at <span
+class="math inline">\(\vec{r}_{det}\)</span> spends inside a region
 centered at <span class="math inline">\(\vec{r}_{pert}\)</span>
 with volume <span class="math inline">\(V\)</span>.</p>
 <p>As with ⟨<em>L</em>⟩ in Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, the ⟨ℓ⟩ for FD
 data-types <em>I</em> (<em>id est</em> amplitude)
 and φ can be defined: <span
-class="math display">\[\acrshort{lpath}_{\acrshort{I}}=\Re\left[\acrshort{lpathCom}\right]\]</span>
+class="math display">\[{\langle \ell \rangle}_{I}=\Re\left[{\langle \widetilde{\ell} \rangle}\right]\]</span>
 <span
-class="math display">\[\acrshort{lpath}_{\acrshort{phi}}=\Im\left[\acrshort{lpathCom}\right]\]</span>
+class="math display">\[{\langle \ell \rangle}_{\phi}=\Im\left[{\langle \widetilde{\ell} \rangle}\right]\]</span>
 The following sections utilize these ⟨ℓ⟩s combined with ⟨<em>L</em>⟩ to express 𝒮
 for various data-types. It is important to note that ⟨ℓ⟩ controls the
 perturbation in question for 𝒮 both in terms of its
@@ -194,29 +194,29 @@ to a perturbation with ⟨ℓ⟩. The expression for
 SD 𝒮
 can be written as follows for 𝒴 which can be either <em>I</em> or
 φ: <span
-class="math display">\[\acrshort{sen}_{\acrshort{SD}\acrshort{Y}}=\frac{\acrshort{lpath}_{\acrshort{Y}}}{\acrshort{Lpath}_{\acrshort{Y}}}
+class="math display">\[\mathcal{S}_{\mathrm{SD}\mathcal{Y}}=\frac{{\langle \ell \rangle}_{\mathcal{Y}}}{{\langle L \rangle}_{\mathcal{Y}}}
     \label{equ:senSD}\]</span> where, ⟨ℓ⟩ is written above and
 ⟨<em>L</em>⟩ can be found in
-Appendix <a href="#app:dmuaMeas" data-reference-type="ref"
+Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
 <p>Next lets consider a SS set made of <span
-class="math inline">\(N_{\acrshort{SD}}\)</span> SD
+class="math inline">\(N_{\mathrm{SD}}\)</span> SD
 sets with a single source at r⃗ of <span
-class="math inline">\(\acrshort{r}_{src}\)</span> and <span
-class="math inline">\(N_{\acrshort{SD}}\)</span> detectors indexed by
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(N_{\mathrm{SD}}\)</span> detectors indexed by
 <span class="math inline">\(i\)</span> at r⃗s of <span
-class="math inline">\(\acrshort{r}_{src,det}\)</span>. Remembering the
+class="math inline">\(\vec{r}_{src,det}\)</span>. Remembering the
 notation of DSF from Appendix <a
-href="#app:dmuaMeas" data-reference-type="ref"
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
 data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, we can express the
 SS 𝒮
 to a perturbation with ⟨ℓ⟩: <span
-class="math display">\[\acrshort{sen}_{\acrshort{SS}\acrshort{Y}}=
-    \frac{\sum_{i=1}^{N_{\acrshort{SD}}}{\left(\acrshort{rho}_i-\bar{\acrshort{rho}}\right)\acrshort{lpath}_{\acrshort{Y}}\left[\acrshort{r}_{src},\acrshort{r}_{det,i}\right]}}
-    {\sum_{i=1}^{N_{\acrshort{SD}}}{\left(\acrshort{rho}_i-\bar{\acrshort{rho}}\right)\acrshort{Lpath}_{\acrshort{Y}}\left[\acrshort{r}_{src},\acrshort{r}_{det,i}\right]}}
+class="math display">\[\mathcal{S}_{\mathrm{SS}\mathcal{Y}}=
+    \frac{\sum_{i=1}^{N_{\mathrm{SD}}}{\left(\rho_i-\bar{\rho}\right){\langle \ell \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}
+    {\sum_{i=1}^{N_{\mathrm{SD}}}{\left(\rho_i-\bar{\rho}\right){\langle L \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}
     \label{equ:senSS}\]</span> noting that we write the ⟨ℓ⟩ a and ⟨<em>L</em>⟩ as functions of <span
-class="math inline">\(\acrshort{r}_{src}\)</span> and <span
-class="math inline">\(\acrshort{r}_{det,i}\)</span> since they are
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(\vec{r}_{det,i}\)</span> since they are
 important for the sum. They are of course functions of other variables
 which are omitted for brevity. Additionally, it should be noted that for
 simplicity the expression is written assuming one source and multiple
@@ -298,31 +298,31 @@ define the noise equivalent absorption change as the change in
 absorption that results from a change in the signal at the level of the
 noise in that signal. We start by writing the noise equivalent
 absorption change (<span
-class="math inline">\(\sigma_{\acrshort{mua}}\)</span>) for the three
+class="math inline">\(\sigma_{\mu_a}\)</span>) for the three
 methods (SD, SS, )
 and 𝒴 (either <em>I</em> or
 φ): <span
-class="math display">\[\sigma_{\acrshort{mua},\acrshort{SD}\acrshort{Y}}=\frac{\sigma_{\acrshort{Y}}}{\acrshort{Lpath}_{\acrshort{Y}}}\]</span>
+class="math display">\[\sigma_{\mu_a,\mathrm{SD}\mathcal{Y}}=\frac{\sigma_{\mathcal{Y}}}{{\langle L \rangle}_{\mathcal{Y}}}\]</span>
 <span
-class="math display">\[\sigma_{\acrshort{mua},\acrshort{SS}\acrshort{Y}}=
-    \frac{\sigma_{\acrshort{Y}}\sqrt{\sum_{i=1}^{N_{\acrshort{SD}}}\left(\acrshort{rho}_i-\bar{\acrshort{rho}}\right)^2}}
-    {\sum_{i=1}^{N_{\acrshort{SD}}}{(\acrshort{rho}_i-\bar{\acrshort{rho}})\acrshort{Lpath}_{\acrshort{Y}}\left[\acrshort{r}_{src},\acrshort{r}_{det,i}\right]}}\]</span>
+class="math display">\[\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}}=
+    \frac{\sigma_{\mathcal{Y}}\sqrt{\sum_{i=1}^{N_{\mathrm{SD}}}\left(\rho_i-\bar{\rho}\right)^2}}
+    {\sum_{i=1}^{N_{\mathrm{SD}}}{(\rho_i-\bar{\rho}){\langle L \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}\]</span>
 <span
-class="math display">\[\sigma_{\acrshort{mua},\acrshort{DS}\acrshort{Y}}=
-    \frac{\sqrt{\sigma_{\acrshort{mua},\acrshort{SS}\acrshort{Y}1}^2+\sigma_{\acrshort{mua},\acrshort{SS}\acrshort{Y}2}^2}}{2}\]</span>
+class="math display">\[\sigma_{\mu_a,\mathrm{DS}\mathcal{Y}}=
+    \frac{\sqrt{\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}1}^2+\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}2}^2}}{2}\]</span>
 where, in this case we have <em>only derived the expression for DS for
 a symmetric DS set</em>. <span
-class="math inline">\(\sigma_{\acrshort{Y}}\)</span> is the noise of
+class="math inline">\(\sigma_{\mathcal{Y}}\)</span> is the noise of
 𝒴. For <em>I</em> this
 is in units of a fraction compared to baseline and for φ
 the units are simply rad. Now that we have <span
-class="math inline">\(\sigma_{\acrshort{mua}}\)</span> for the various
+class="math inline">\(\sigma_{\mu_a}\)</span> for the various
 data-types we can write the SNR both in terms of the
 apparent measured Δμ<sub>a</sub> and the actual Δμ<sub>a</sub>
 of the perturbation in question: <span
-class="math display">\[\acrshort{SNR}=
-    \frac{\acrshort{dmua}_{,apparent}}{\sigma_{\acrshort{mua}}}=
-    \frac{\acrshort{sen}\acrshort{dmua}_{,actual}}{\sigma_{\acrshort{mua}}}\]</span>
+class="math display">\[\mathrm{SNR}=
+    \frac{\Delta\mu_a_{,apparent}}{\sigma_{\mu_a}}=
+    \frac{\mathcal{S}\Delta\mu_a_{,actual}}{\sigma_{\mu_a}}\]</span>
 note that this SNR is dependent not only on
 the analysis method, data type (with associated noise), and probe
 geometry, but also on the assumed true absorption perturbation and its
