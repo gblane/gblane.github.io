@@ -1,10 +1,10 @@
 # GEMINI.md
 
 ## Project Overview
-This repository contains the personal academic website and digital dissertation of Giles Blaney, PhD. It is a static site designed for high performance and portability, featuring interactive biomedical optics simulators and a comprehensive LaTeX-to-HTML converted dissertation.
+This repository contains the personal academic website and digital dissertation of Giles Blaney, PhD. It is a static site designed for high performance and portability, featuring interactive biomedical optics simulators, a comprehensive LaTeX-to-HTML converted dissertation, and course materials.
 
 - **Primary Technologies:** HTML5, CSS3 (Bootstrap 5.3.3), JavaScript (Plotly 2.35.2), Python 3.
-- **Architecture:** No-framework static site. Interactive tools are self-contained within their respective directories.
+- **Architecture:** No-framework static site. Interactive tools and course materials are self-contained within their respective directories.
 
 ## Building and Running
 
@@ -32,15 +32,22 @@ For HTML/Web development on Fedora, the following editors are recommended:
 - **Navbar:** Every page uses a standard Bootstrap 5 fixed-top **white** navbar (plain `.navbar` class, not `navbar-dark`).
     - Tools pages link back via `../../index.html`.
     - Dissertation pages link back via `../index.html`.
-    - Always copy the navbar block from an existing tool page when creating new content.
-    - The active link should be `#tools` for tool pages and `Dissertation` for dissertation pages.
+    - Teaching pages link back via `../../index.html`.
+    - Always copy the navbar block from an existing page when creating new content.
+    - The active link should correspond to the current section (e.g., `#tools` for tool pages, `#teaching` for course pages, `Dissertation` for dissertation pages).
 - **Favicon:** All HTML pages should include `<link rel="icon" href="data:,">` in the `<head>` to suppress 404 errors for `favicon.ico`.
+- **CSS:** Global styles are in `site.css`. Section-specific styles (like the bio photo or lab banner) are often defined in `<style>` blocks within the HTML file itself.
 
 ### Interactive Tools (`tools/`)
 - Located in `tools/<name>/index.html`.
 - **Layout:** Use a Bootstrap container with a row split into `col-md-4` (Parameter controls/About) and `col-md-8` (Plotly chart).
 - **Styling:** Use `.tool-header`, `.tool-title`, `.tool-subtitle`, `.param-card`, and `.about-card` from `site.css` for consistency.
 - **Implementation:** Prefer vanilla JavaScript with inline scripts to keep tools self-contained and easy to debug.
+
+### Teaching Section (`teaching/`)
+- Located in `teaching/<course_id>/index.html`.
+- Contains course materials like lecture slides and notes, typically stored as PDFs in a `pdfs/` subdirectory.
+- Uses `.site-card` (from `site.css`) for course links on the main page, and standard Bootstrap containers for content.
 
 ### Dissertation Section (`dissertation/`)
 - 22 static HTML pages plus `index.html` and `figures/`. 
@@ -53,3 +60,4 @@ For HTML/Web development on Fedora, the following editors are recommended:
 ### Publications
 - Publication data is fetched dynamically from the Semantic Scholar Graph API (Author ID: `51904482`).
 - Results are cached in `localStorage` (`pubs_v1`) for 24 hours. Clear the cache (`localStorage.removeItem('pubs_v1')`) in the browser console to force a refresh during development.
+- The publication list is filtered based on the h-index (top `h` papers by citation count).
