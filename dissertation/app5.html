@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generation of Sensitivity Maps · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Appendices</div>
+                <h1 class="fw-bold mb-3">Generation of Sensitivity Maps</h1>
+                <hr class="mb-4">
+
+                <h1 id="app:senMaps">Generation of Sensitivity Maps</h1>
+<p>Equation <a href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a> shows the physical
+meaning of 𝒮 in terms of a measured and
+actual local Δμ<sub>a</sub>. However, Equation <a
+href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a> is not how 𝒮
+is computed. We instead utilize utilize expressions for ⟨L̃⟩ from Equation <a
+href="#equ:Lcom_semiInf" data-reference-type="ref"
+data-reference="equ:Lcom_semiInf">[equ:Lcom_semiInf]</a> and ⟨ℓ̃⟩ to generate 𝒮.
+𝒮 maps can be generated for
+any of the methods to measure Δμ<sub>a</sub> from Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. These 𝒮
+values may be used to create a <strong>𝒮</strong> for imaging
+applications (Chapter <a href="ch5.html#ch:DSimage" data-reference-type="ref"
+data-reference="ch:DSimage">[ch:DSimage]</a>), to generate 𝒮
+maps (Chapters <a href="ch2.html#ch:shortLong" data-reference-type="ref"
+data-reference="ch:shortLong">[ch:shortLong]</a>&amp;<a
+href="ch3.html#ch:DSintro" data-reference-type="ref"
+data-reference="ch:DSintro">[ch:DSintro]</a>) or for simulation of
+dynamic measurements as discussed in Appendix <a
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
+data-reference="app:simSigFromSen">[app:simSigFromSen]</a>.</p>
+<h2 id="generalized-partial-optical-path-length">Generalized Partial
+Optical Path-Length</h2>
+<p>Similar ⟨L̃⟩ in Equation <a
+href="#equ:Lcom_semiInf" data-reference-type="ref"
+data-reference="equ:Lcom_semiInf">[equ:Lcom_semiInf]</a> which describes
+the path of all photons in a semi-infinite homogeneous diffusion medium,
+we can also consider the ⟨ℓ̃⟩ which is concerned
+with the path through some localized region within the diffuse medium.
+To do this we must introduce the following r⃗:</p>
+<ul>
+<li><p>The position of the isotropic source of <span
+class="math inline">\(\vec{r}_{src}\)</span> (this is typically
+<span
+class="math inline">\(\vec{r}_{src}=\frac{1}{\mu_s'}\hat{z}\)</span>
+for a pencil beam at the origin).</p></li>
+<li><p>The position of the detector of <span
+class="math inline">\(\vec{r}_{det}\)</span> (this is typically
+<span
+class="math inline">\(\vec{r}_{det}=\rho\hat{x}\)</span>
+for a detector at ρ along the
+x-axis).</p></li>
+<li><p>The position of the localized absorption perturbation of <span
+class="math inline">\(\vec{r}_{pert}\)</span> with volume of <span
+class="math inline">\(V\)</span>.</p></li>
+</ul>
+<p>Using these positions we find that the ⟨ℓ̃⟩ for the perturbation
+at <span class="math inline">\(\vec{r}_{pert}\)</span> with volume
+<span class="math inline">\(V\)</span> is: <span
+class="math display">\[{\langle \widetilde{\ell} \rangle}=\frac{\widetilde{\Phi}\left[\vec{r}_{src},\vec{r}_{pert}\right]\widetilde{R}\left[\vec{r}_{pert},\vec{r}_{det}\right]}{\widetilde{R}\left[\vec{r}_{src},\vec{r}_{det}\right]}
+V\]</span> where <span
+class="math inline">\(\widetilde{\Phi}\left[\vec{r}_{src},\vec{r}_{pert}\right]\)</span>
+is the Φ̃ at <span
+class="math inline">\(\vec{r}_{pert}\)</span> given a isotropic
+source at <span class="math inline">\(\vec{r}_{src}\)</span>, <span
+class="math inline">\(\widetilde{R}\left[\vec{r}_{pert},\vec{r}_{det}\right]\)</span>
+is the R̃ detected at <span
+class="math inline">\(\vec{r}_{det}\)</span> given a isotropic
+source at <span class="math inline">\(\vec{r}_{pert}\)</span>, and
+<span
+class="math inline">\(\widetilde{R}\left[\vec{r}_{src},\vec{r}_{det}\right]\)</span>
+is the R̃ detected at <span
+class="math inline">\(\vec{r}_{det}\)</span> given a isotropic
+source at <span class="math inline">\(\vec{r}_{src}\)</span>. The
+expressions for R̃ and Φ̃ can be found in
+Appendix <a href="app1.html#app:forMod" data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a> as Equations <a
+href="#equ:RCom_semiInf" data-reference-type="ref"
+data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a>&amp;<a
+href="#equ:PHIcom_semiInf" data-reference-type="ref"
+data-reference="equ:PHIcom_semiInf">[equ:PHIcom_semiInf]</a>. This
+equation of ⟨ℓ⟩ is implemented in
+Listing <a href="#lst:lpath" data-reference-type="ref"
+data-reference="lst:lpath">[lst:lpath]</a>.</p>
+<p>As with other complex variables, the CW version of ⟨ℓ⟩, named <span
+class="math inline">\({\langle \ell \rangle}_{\mathrm{CW}}\)</span>, can be
+found by setting ω to zero in the
+expressions for R̃ and Φ̃ to get <em>R</em> and
+Φ instead. Just like ⟨<em>L</em>⟩ in Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, ⟨ℓ⟩ has a physical meaning
+(while ⟨ℓ̃⟩’s meaning is less
+clear thus leading to the name <em>general</em> path-length). The
+physical interpretation for ⟨ℓ⟩ is the average
+path-length that a photon from <span
+class="math inline">\(\vec{r}_{src}\)</span> and detected at <span
+class="math inline">\(\vec{r}_{det}\)</span> spends inside a region
+centered at <span class="math inline">\(\vec{r}_{pert}\)</span>
+with volume <span class="math inline">\(V\)</span>.</p>
+<p>As with ⟨<em>L</em>⟩ in Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, the ⟨ℓ⟩ for FD
+data-types <em>I</em> (<em>id est</em> amplitude)
+and φ can be defined: <span
+class="math display">\[{\langle \ell \rangle}_{I}=\Re\left[{\langle \widetilde{\ell} \rangle}\right]\]</span>
+<span
+class="math display">\[{\langle \ell \rangle}_{\phi}=\Im\left[{\langle \widetilde{\ell} \rangle}\right]\]</span>
+The following sections utilize these ⟨ℓ⟩s combined with ⟨<em>L</em>⟩ to express 𝒮
+for various data-types. It is important to note that ⟨ℓ⟩ controls the
+perturbation in question for 𝒮 both in terms of its
+location (<span class="math inline">\(\vec{r}_{pert}\)</span>) and
+volume (<span class="math inline">\(V\)</span>). Typically, ⟨ℓ⟩ is found for very small
+voxels, 1 × 1 × 1 mm or smaller, and then summed to find ⟨ℓ⟩ for a larger
+perturbation of some specific shape.</p>
+<h2 id="sensitivity-to-local-absorption-perturbation">Sensitivity to
+Local Absorption Perturbation</h2>
+<p>First lets consider the SD set with ⟨<em>L</em>⟩ and its 𝒮
+to a perturbation with ⟨ℓ⟩. The expression for
+SD 𝒮
+can be written as follows for 𝒴 which can be either <em>I</em> or
+φ: <span
+class="math display">\[\mathcal{S}_{\mathrm{SD}\mathcal{Y}}=\frac{{\langle \ell \rangle}_{\mathcal{Y}}}{{\langle L \rangle}_{\mathcal{Y}}}
+    \label{equ:senSD}\]</span> where, ⟨ℓ⟩ is written above and
+⟨<em>L</em>⟩ can be found in
+Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>.</p>
+<p>Next lets consider a SS set made of <span
+class="math inline">\(N_{\mathrm{SD}}\)</span> SD
+sets with a single source at r⃗ of <span
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(N_{\mathrm{SD}}\)</span> detectors indexed by
+<span class="math inline">\(i\)</span> at r⃗s of <span
+class="math inline">\(\vec{r}_{src,det}\)</span>. Remembering the
+notation of DSF from Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>, we can express the
+SS 𝒮
+to a perturbation with ⟨ℓ⟩: <span
+class="math display">\[\mathcal{S}_{\mathrm{SS}\mathcal{Y}}=
+    \frac{\sum_{i=1}^{N_{\mathrm{SD}}}{\left(\rho_i-\bar{\rho}\right){\langle \ell \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}
+    {\sum_{i=1}^{N_{\mathrm{SD}}}{\left(\rho_i-\bar{\rho}\right){\langle L \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}
+    \label{equ:senSS}\]</span> noting that we write the ⟨ℓ⟩ a and ⟨<em>L</em>⟩ as functions of <span
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(\vec{r}_{det,i}\)</span> since they are
+important for the sum. They are of course functions of other variables
+which are omitted for brevity. Additionally, it should be noted that for
+simplicity the expression is written assuming one source and multiple
+detectors, however, in general the sum is over all the SDs in
+the SS set.</p>
+<p>Finally, lets consider a DS set made of two SS
+sets named <span class="math inline">\(\text{SS}_1\)</span> and
+<span class="math inline">\(\text{SS}_2\)</span>. Using the
+numerator and denominator of Equation <a href="#equ:senSS"
+data-reference-type="ref" data-reference="equ:senSS">[equ:senSS]</a>
+surrounded by curly brackets to represent the encompassed expression for
+a given SS, we can write the 𝒮
+to a perturbation with ⟨ℓ⟩ for DS as:
+<span class="math display">\[\begin{split}
+        \mathcal{S}_{\text{DS}\mathcal{Y}}=\\
+        \Bigg(\left\{\sum_{i=1}^{N_{\text{SD}}}{\left(\rho_i-\bar{\rho}\right)\langle \ell \rangle_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}\right\}_{\text{SS}_1}\\
+            +\left\{\sum_{i=1}^{N_{\text{SD}}}{\left(\rho_i-\bar{\rho}\right)\langle \ell \rangle_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}\right\}_{\text{SS}_2}\Bigg)\\
+        \div
+        \Bigg(\left\{\sum_{i=1}^{N_{\text{SD}}}{\left(\rho_i-\bar{\rho}\right)\langle L \rangle_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}\right\}_{\text{SS}_1}\\
+            +\left\{\sum_{i=1}^{N_{\text{SD}}}{\left(\rho_i-\bar{\rho}\right)\langle L \rangle_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}\right\}_{\text{SS}_2}\Bigg)
+    \end{split}\]</span> where we note that for a symmetric DS
+set, the DS 𝒮
+is simply the average of the two SS 𝒮s
+within the set. This is because the denominator of Equation <a
+href="#equ:RCom_semiInf" data-reference-type="ref"
+data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a> and the DSFs
+are the same for the two SSs in a symmetric DS
+set.</p>
+<p>A key property of 𝒮 regardless of data-type is
+that the sum over perturbations everywhere in the medium is one. This is
+the same as saying that if the Δμ<sub>a</sub> occurs everywhere the
+apparent measured Δμ<sub>a</sub> and actual Δμ<sub>a</sub>
+will be the same. Caution should be taken however, since if overlapped
+perturbations are simulated when calculating 𝒮
+then one should no longer expect the sum of all 𝒮
+to be one.</p>
+<h3
+id="computational-methods-to-generate-sensitivity-maps">Computational
+Methods to Generate Sensitivity Maps</h3>
+<p>Listing <a href="#lst:senMaps" data-reference-type="ref"
+data-reference="lst:senMaps">[lst:senMaps]</a> shows the MATLAB code for generation of
+𝒮 maps. This code is
+supported by the functions for R̃, Φ̃, ⟨L̃⟩, and ⟨ℓ̃⟩ in Listings <a
+href="#lst:RCom" data-reference-type="ref"
+data-reference="lst:RCom">[lst:RCom]</a>,<a href="#lst:PHIcom"
+data-reference-type="ref"
+data-reference="lst:PHIcom">[lst:PHIcom]</a>,<a href="#lst:Lpath"
+data-reference-type="ref"
+data-reference="lst:Lpath">[lst:Lpath]</a>,&amp;<a href="#lst:lpath"
+data-reference-type="ref" data-reference="lst:lpath">[lst:lpath]</a>.
+The key to efficient generation of 𝒮 maps in Listing <a
+href="#lst:senMaps" data-reference-type="ref"
+data-reference="lst:senMaps">[lst:senMaps]</a> is the calculation of
+⟨ℓ̃⟩ and other values for
+every voxel in the medium simultaneously. This is done by carefully
+writing the supporting functions so that they could process a vector of
+voxel positions instead of one at a time. Lines 179-180 show a simple
+way to get a list of all voxel positions within the medium, and
+lines 190-191 show an example of where ⟨ℓ⟩ is computed for all
+positions simultaneously for particular source-detector pair.</p>
+<p>After the code generates all of the 𝒮 values for each voxel,
+where the voxels are considered to be small, 𝒮
+is found for larger perturbations by sums. For example to get layered
+𝒮 the fine voxelized 𝒮
+is summed in all <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> dimensions. Also to generate maps for
+larger perturbations convolution with the perturbation shape is
+preformed (for example lines 351-354 in Listing  <a href="#lst:senMaps"
+data-reference-type="ref"
+data-reference="lst:senMaps">[lst:senMaps]</a>), however it should be
+noted that the output shows the results with overlap. Therefore, if
+overlap is simulated the sum of all 𝒮 in the medium is no longer
+one.</p>
+<h2 id="extension-of-sensitivity-to-signal-to-noise">Extension of
+Sensitivity to Signal-to-Noise</h2>
+<p>Using the 𝒮, we can calculate a SNR
+associated with each perturbation within the medium. To this aim, we
+define the noise equivalent absorption change as the change in
+absorption that results from a change in the signal at the level of the
+noise in that signal. We start by writing the noise equivalent
+absorption change (<span
+class="math inline">\(\sigma_{\mu_a}\)</span>) for the three
+methods (SD, SS, )
+and 𝒴 (either <em>I</em> or
+φ): <span
+class="math display">\[\sigma_{\mu_a,\mathrm{SD}\mathcal{Y}}=\frac{\sigma_{\mathcal{Y}}}{{\langle L \rangle}_{\mathcal{Y}}}\]</span>
+<span
+class="math display">\[\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}}=
+    \frac{\sigma_{\mathcal{Y}}\sqrt{\sum_{i=1}^{N_{\mathrm{SD}}}\left(\rho_i-\bar{\rho}\right)^2}}
+    {\sum_{i=1}^{N_{\mathrm{SD}}}{(\rho_i-\bar{\rho}){\langle L \rangle}_{\mathcal{Y}}\left[\vec{r}_{src},\vec{r}_{det,i}\right]}}\]</span>
+<span
+class="math display">\[\sigma_{\mu_a,\mathrm{DS}\mathcal{Y}}=
+    \frac{\sqrt{\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}1}^2+\sigma_{\mu_a,\mathrm{SS}\mathcal{Y}2}^2}}{2}\]</span>
+where, in this case we have <em>only derived the expression for DS for
+a symmetric DS set</em>. <span
+class="math inline">\(\sigma_{\mathcal{Y}}\)</span> is the noise of
+𝒴. For <em>I</em> this
+is in units of a fraction compared to baseline and for φ
+the units are simply rad. Now that we have <span
+class="math inline">\(\sigma_{\mu_a}\)</span> for the various
+data-types we can write the SNR both in terms of the
+apparent measured Δμ<sub>a</sub> and the actual Δμ<sub>a</sub>
+of the perturbation in question: <span
+class="math display">\[\mathrm{SNR}=
+    \frac{\Delta\mu_a_{,apparent}}{\sigma_{\mu_a}}=
+    \frac{\mathcal{S}\Delta\mu_a_{,actual}}{\sigma_{\mu_a}}\]</span>
+note that this SNR is dependent not only on
+the analysis method, data type (with associated noise), and probe
+geometry, but also on the assumed true absorption perturbation and its
+size.</p>
+<h2 class="unnumbered" id="listings">Listings</h2>
+<div class="sourceCode" id="cb1" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\acrfull{MATLAB} code for generation of \acrfull{lpathCom} given a vector of positions\label{lst:lpath}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+<div class="sourceCode" id="cb2" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\acrfull{MATLAB} code for generation of \acrfull{sen} maps\label{lst:senMaps}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="app4.html" class="btn btn-sm btn-outline-secondary">← Recovery of Chromophore Concentrations</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="app6.html" class="btn btn-sm btn-outline-secondary">Simulation of Apparent Measurements →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

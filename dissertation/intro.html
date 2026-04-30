@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action active fw-bold py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Preface</div>
+                <h1 class="fw-bold mb-3">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</h1>
+                <hr class="mb-4">
+
+                <h1
+id="a-brief-introduction-to-frequency-domain-near-infrared-spectroscopy">A
+Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</h1>
+<p><span id="ch:FDNIRSintro" data-label="ch:FDNIRSintro"></span></p>
+<figure id="fig:fluFromScat">
+<div class="center">
+<img src="figures/flu.png" class="img-fluid" alt="flu" style="width:75.0%">
+</div>
+<figcaption>Example distribution of fluence rate (Φ) which may be thought of as
+photon density produced from the diffusion of many photons. An Example
+possible path of a single photon is shown as a white line.</figcaption>
+</figure>
+<figure id="fig:spectFromAbs">
+<div class="center">
+<img src="figures/spect.png" class="img-fluid" alt="spect" style="width:75.0%">
+</div>
+<figcaption>[Top] The average length of a path before a photon is
+absorbed (1/μ<sub>a</sub>) versus optical wavelength (λ) in
+biological tissue. Long path-lengths allow for deeper light penetration,
+these regions are so-called optical windows and are shown in green.
+[Bottom] The typical absorption coefficient (μ<sub>a</sub>) versus λ
+for typical biological chromophores (<em>id est</em>
+absorbers).</figcaption>
+</figure>
+<figure id="fig:FDbrain">
+<div class="center">
+<img src="figures/FDbrain.png" class="img-fluid" alt="FDbrain">
+</div>
+<figcaption>Example of FD NIRS
+applied to the human brain. Temporal profile of source light in red and
+of detected light in blue.<br />
+Symbols: phase (φ), angular modulation frequency (ω), source Intensity (<em>I</em>), &amp;
+detected Reflectance (<em>R</em>)</figcaption>
+</figure>
+<p>To understand what FD NIRS
+is we must first understand the optically diffuse medium. In an
+optically diffuse medium light moves about by randomly changing the
+direction it’s traveling. Particles representing packets of light are
+called photons. The act of these photons randomly changing direction is
+called scattering. Therefore, one says that an optically diffuse medium
+is one in which the behavior of photons is mostly described by their
+scattering. An example of a possible random photon path from scattering
+can be seen in Figure <a href="#fig:fluFromScat"
+data-reference-type="ref" data-reference="fig:fluFromScat">1.1</a>.</p>
+<p>In reality many media may be described in this optically diffuse way.
+For example, a cloud is optically diffuse. In a cloud photons enter,
+randomly scatter within, then exit. Due to the random scattering of the
+photons, your eye can not determine where a photons entered the cloud,
+thus the cloud appears opaque or white. Expanding on this example you
+may realize that, in general, what is described as an optically diffuse
+medium is seen as opaque. Examples of this are the aforementioned cloud,
+a glass of milk, or even biological tissue.</p>
+<p>Scattering is not the only thing that may happen to a photon in a
+diffuse medium. A second common property that a diffuse medium has is
+absorption. This is when photons die when they interact with the medium.
+Take a black cup of coffee, this medium is primarily absorbing since
+photons die off as they travel through the liquid. But black coffee has
+little scattering since the photons do not change direction much.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> If the coffee is strong and dark we
+know that it has high absorption, while if it is light and watery we
+know it has low absorption. Now imagine we add milk to the coffee, this
+will make the coffee opaque as we have just added scattering and the
+photons’ directions within the liquid are now randomized. If we add
+cream instead of milk we may notice the coffee is even more opaque since
+cream has higher scattering compared to milk.</p>
+<p>Both absorption and scattering are probabilistic statements since
+every time a photon interacts with a piece of the medium there is a some
+chance that it will be absorbed, scattered, or neither. This is
+probabilistic because there is chance or probability associated with
+these events, just like when flipping a coin or rolling a dice. Since
+these interactions happen billions of times within the medium, the
+average behavior of the photons becomes rather predictable. In the coin
+flipping analogy, this is the same as saying that, if you flip a coin
+billions of times, we can predict that very close to half those times it
+will come up heads. An example of this predictable average distribution
+of the photons can be see in Figure <a href="#fig:fluFromScat"
+data-reference-type="ref" data-reference="fig:fluFromScat">1.1</a>. This
+is in some ways amazing since we have stared with random events and can
+draw predictable conclusions. Focusing on diffusion theory, a theory
+that describes a optically diffuse medium, this average behavior can be
+modeled using two optical properties that are associated with the
+absorption probability and probability of scatter in a random direction.
+These properties are named the μ<sub>a</sub> and the μ′<sub>s</sub>.</p>
+<p>FD NIRS
+essentially seeks to measure these two properties, that is the μ<sub>a</sub>
+and the μ′<sub>s</sub>, to describe a diffuse
+medium. In general μ<sub>a</sub> provides chemical
+information about the medium, like the strength of the coffee in the
+above example, and μ′<sub>s</sub> provides structural
+information, like the amount of fat droplets from cream in the coffee. A
+popular application of NIRS is in the measurement of
+biological tissues. In this cause μ<sub>a</sub> may give us information
+about concentrations of blood. The μ<sub>a</sub> of blood is dependent on
+the λ, which can be thought of
+as the color of the light. A typical dependence of μ<sub>a</sub>
+on λ is shown in Figure <a
+href="#fig:spectFromAbs" data-reference-type="ref"
+data-reference="fig:spectFromAbs">1.2</a>. NIRS
+is called NIRS because the technique
+focuses on a range of colors or λs starting from red and going
+to near-infrared,<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a> with the former being visible by the
+human eye and the latter not. The reason for this choice of λs is
+that biological tissue tends to have lower absorption in this range,
+thus photons can probe further into tissue. In-fact Figure <a
+href="#fig:spectFromAbs" data-reference-type="ref"
+data-reference="fig:spectFromAbs">1.2</a> shows the average path before
+absorption versus λ to show this so-called
+optical window of tissue.</p>
+<p>Now lets consider how NIRS measurements are
+physically done. In the most basic sense some source of light is used to
+inject<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> photons into a medium, then that
+light is detected at some other point at some ρ.<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The
+way the source light varies in time describes the flavor of NIRS. This is either CW,
+FD, or TD. In
+the case of CW the source light does not
+change with time, for FD the brightness or intensity
+of the light oscillates as a sinusoidal wave,<a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and
+finally TD uses a source with a brief
+pulse of light. Focusing only on the interpretation of FD,
+the detected light will have some oscillation amplitude (<em>id est</em>
+<em>I</em>) and some time shift which
+is called its φ shift. This provides two
+pieces of information about the behavior of light within the medium
+which then may be translated into the two desired properties, the μ<sub>a</sub>
+and the μ′<sub>s</sub>.</p>
+<p>As mentioned above, a notable application of diffuse optics and NIRS
+is on biological tissues <span class="citation"
+data-cites="fantiniFrequencyDomainTechniquesCerebral2020 bigioQuantitativeBiomedicalOptics2016 scholkmannReviewContinuousWave2014"></span>.
+However, diffuse optics finds a variety of applications in several other
+fields of study. In food science <span class="citation"
+data-cites="ozakiNearInfraredSpectroscopyFood2006"></span>, it may be
+applied for inspection <span class="citation"
+data-cites="johnsonOverviewNearinfraredSpectroscopy2020"></span> or
+evaluation <span class="citation"
+data-cites="kademiApplicationsMiniaturizedPortable2019"></span>. In
+pharmaceutical manufacturing, diffuse optics may join other process
+analytical technologies, for example to analyze and characterize
+particles <span class="citation"
+data-cites="razucNearinfraredSpectroscopicApplications2019"></span> or
+powders <span class="citation"
+data-cites="stranzingerReviewSensingTechnologies2021"></span>. A few
+other examples include archaeological soil analysis <span
+class="citation"
+data-cites="trantVisibleNearinfraredSpectroscopy2020"></span>,
+dendrology (study of wood) <span class="citation"
+data-cites="tsuchikawaReviewRecentApplication2015"></span>, and art
+authentication <span class="citation"
+data-cites="chenAuthenticationInferenceSeal2017"></span>. In the study
+of biological tissue, diffuse optics finds applications in basic
+research, medical diagnostics, and physiological monitoring. Examples
+include clinical brain monitoring <span class="citation"
+data-cites="langeClinicalBrainMonitoring2019"></span>, the study of
+brain activation <span class="citation"
+data-cites="agbanglaUseNearinfraredSpectroscopy2017"></span>, breast
+imaging <span class="citation"
+data-cites="grosenickReviewOpticalBreast2016"></span>, and muscle
+measurements in sports science <span class="citation"
+data-cites="perreyMuscleOximetrySports2018"></span>. This is by no means
+an exhaustive list of the possible applications of NIRS
+and diffuse optics.</p>
+<p>Regardless of application, a laboratory can purchase a commercially
+available FD NIRS
+instrument for their research. In this work the Imagent was utilized for all
+FD NIRS
+experiments. These instruments provide FD measurements at multiple
+discrete λs and retrieve the <em>I</em> and
+φ of the detected FD
+light. Therefore, they can be used either for absolute measurement of
+optical properties μ<sub>a</sub> and μ′<sub>s</sub>
+or dynamic measurements of μ<sub>a</sub> which are interpreted as
+hemodynamics.</p>
+<p>We conclude this introduction with a specific example of a FD
+NIRS experiment applied to the
+human brain. When a person experiences some visual stimulus, it is
+expected that the visual portion of their brain will begin to utilize
+more oxygen. This causes the body to increase BF to
+the visual cortex and so that more oxygen may be supplied there. An
+increase in BF is indicated by an increase
+in the concentration of O and a decrease in the
+concentration of D. Since these concentrations
+are connected to μ<sub>a</sub> by Figure <a
+href="#fig:spectFromAbs" data-reference-type="ref"
+data-reference="fig:spectFromAbs">1.2</a>, one may measure this change
+using FD NIRS. Therefore an experiment
+may be devised to make these so-called fNIRS measurements as shown in
+Figure <a href="#fig:FDbrain" data-reference-type="ref"
+data-reference="fig:FDbrain">1.3</a>. Here sinusoidal light is injected
+into the subject’s head where it diffuses through the brain before being
+detected. The detected light’s phase shift and amplitude is measured and
+may be converted to optical properties and blood concentrations. Through
+analysis the changes in O and D may
+indicate BF and thus brain activity.
+This example is just one application in which FD
+NIRS may be used to make
+measurements on tissue. The following dissertation will discuss details
+on how to collect and analyze these FD NIRS
+data, including the case of this example experiment, as well as various
+other experiments and applications.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Credit for this example goes to Prof. Steven Jacques.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This near-infrared optical wavelength (λ) range is approximately
+600 nm–1000 nm.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>By inject we simply mean that photons are made to enter
+the medium, this can be as simple as shining a light at the optical
+medium.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>source-detector distance (ρ) is typically on the order
+of 10 mm.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The modulation frequency (<em>f</em><sub>mod</sub>) is on the order of 100 MHz
+for Frequency-Domain (FD).<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="organization.html" class="btn btn-sm btn-outline-secondary">← Organization of this Work</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch1.html" class="btn btn-sm btn-outline-secondary">Motivation for Seeking Deep Measurements →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

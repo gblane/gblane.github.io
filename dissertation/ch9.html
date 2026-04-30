@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual-Slope Based Absolute Broadband-Spectroscopy · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part III · Calibration-Free Spectroscopy</div>
+                <h1 class="fw-bold mb-3">Dual-Slope Based Absolute Broadband-Spectroscopy</h1>
+                <hr class="mb-4">
+
+                <h1 id="dual-slope-based-absolute-broadband-spectroscopy">Dual-Slope
+Based Absolute Broadband-Spectroscopy</h1>
+<p><span id="ch:DSbDRS" data-label="ch:DSbDRS"></span></p>
+<h2 id="motivation-for-dual-slope-based-spectroscopy">Motivation for
+Dual-Slope Based Spectroscopy</h2>
+<p><span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span> presented the
+design and validation of an instrument for DS bDRS. This instrument afforded
+calibration-free, CW measurements of broadband
+absorbance of optically diffusive media, which may be translated into
+absolute μ<sub>a</sub> spectra by adding FD
+measurements of μ′<sub>s</sub> at two λs.
+μ<sub>a</sub> and μ′<sub>s</sub>
+are the chief quantities of interest in the field of diffuse optics and
+diffuse biomedical optics <span class="citation"
+data-cites="bigioQuantitativeBiomedicalOptics2016 scholkmannReviewContinuousWave2014 durduranDiffuseOpticsTissue2010 jacquesTutorialDiffuseLight2008"></span>,
+and they feature a λ dependence that is often
+of crucial importance. In the case of most biological tissues, the
+dominating scattering condition of diffuse optics is realized in the
+optical window used by NIRS. Measurements of the
+λ dependent μ<sub>a</sub>
+of tissue yields information about the concentration of chromophores
+with known ε spectra, while
+measurements of μ′<sub>s</sub> spectra yields structural
+information related to the size and density of scattering centers <span
+class="citation"
+data-cites="bigioQuantitativeBiomedicalOptics2016"></span>.</p>
+<p>The primary difficulty in these measurements is the decoupling of
+μ<sub>a</sub> and μ′<sub>s</sub>
+contributions to the measured optical signal. Both FD and
+TD are capable of doing this
+<span class="citation"
+data-cites="fantiniFrequencyDomainTechniquesCerebral2020 fishkinPropagationPhotondensityWaves1993"></span>.
+In FD both μ<sub>a</sub>
+and μ′<sub>s</sub> may be measured using the
+spatial dependence of ln(ρ²<em>I</em>) and φ
+to retrieve μ̃<sub>eff</sub> as discussed in
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. The chief
+complication of this technique is calibration, since each
+source-detector pair may have differing instrumental contributions
+(because of the individual source emission and detector sensitivity
+properties as seen in Chapter <a href="ch3.html#ch:DSintro"
+data-reference-type="ref" data-reference="ch:DSintro">[ch:DSintro]</a>)
+and differing coupling factors between optodes and sample. A method
+which compensates for the differing instrumental contributions is the
+so-called MD scanning, where either the
+source or the detector is moved across the surface of the optical medium
+<span class="citation"
+data-cites="fantiniSemiinfinitegeometryBoundaryProblem1994"></span>. In
+doing so, the instrumental factors remain the same for each ρ
+(same source and same detector used for each distance) and thus the
+measurement of slope is independent of these factors. However, differing
+coupling factors may still be present if during the scan the source (or
+detector) moves away or toward the tissue surface (in a non-contact
+case), or experiences a variable contact pressure (in a contact case).
+Aside from MD scanning, the SC/DS
+method is also capable of making absolute measurements <span
+class="citation"
+data-cites="hueberNewOpticalProbe1999 blaneyFunctionalBrainMapping2022"></span>.
+This is since calibration factors cancel in the averaging of slope as
+shown in Chapter <a href="ch3.html#ch:DSintro" data-reference-type="ref"
+data-reference="ch:DSintro">[ch:DSintro]</a>. When the SC /
+DS optode geometry (Figure <a
+href="ch3.html#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">[fig:DSset]</a>) is used for only measurement
+of one optical data-type it is named DS instead of SD.
+When used in CW only <em>R</em> is
+retrieved, so the method is referred to as DS. Using CW
+DS the calibration-free
+absolute μ<sub>eff</sub> can be retrieved,
+similar to how calibration-free absolute μ̃<sub>eff</sub> can be retrieved from
+SC FD.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<p>One of the limitations of time-resolved NIRS
+methods, such as FD NIRS, is the added
+instrumental complexity compared to CW. There has been work in
+broadband time-resolved spectroscopy <span class="citation"
+data-cites="lankaNoninvasiveInvestigationAdipose2020"></span>, however,
+such instruments require complex instruments (super-continuum lasers,
+single photon counting, and instrument response calibration). Because of
+this, the norm in time-resolved NIRS methods is the use of two
+or a few λs as opposed to a continuous
+broadband spectrum <span class="citation"
+data-cites="fantiniFrequencyDomainTechniquesCerebral2020"></span>. In
+contrast, CW methods may use broadband
+light sources, such as halogen lamps, and spectrometer detectors, since
+there is no need for measurements of fast temporal characteristics.
+These spectroscopic methods in CW lead to the name bDRS
+due to their collection geometry and use of a spectrometer as a detector
+(instead of APDs or PMTs
+typical in time-resolved methods). Therefore, CW
+bDRS has the advantage of
+collecting data over many λs but the disadvantage that
+μ<sub>a</sub> and μ′<sub>s</sub>
+are coupled within μ<sub>eff</sub> do to the use of CW
+illumination. A solution that has become more and more common is to
+combine a time-resolved NIRS instrument at few λs
+with a CW bDRS
+system <span class="citation"
+data-cites="vasudevanMethodQuantitativeBroadband2020 ganesanDiffuseOpticalSpectroscopic2016 konugoluvenkatasekarBroadband60013502016 osullivanDiffuseOpticalImaging2012 tachtsidisHybridMultiDistancePhase2010 bevilacquaBroadbandAbsorptionSpectroscopy2000"></span>.
+Such a technique allows extrapolation of scattering from few to many
+λs, by assuming a power law
+decay of μ′<sub>s</sub> with λ
+<span class="citation"
+data-cites="bigioQuantitativeBiomedicalOptics2016"></span>, and
+decoupling of μ<sub>a</sub> from μ<sub>eff</sub> retrieved from the CW
+bDRS data (Appendix <a
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>).</p>
+<p>At this point, a small note on nomenclature is valuable. The acronym
+combination MD FD
+NIRS refers to a FD
+method capable of measuring absolute μ̃<sub>eff</sub> (which can separate
+μ<sub>a</sub> and μ′<sub>s</sub>) at discrete λs
+from measurements at multiple ρs. The acronyms DS
+CW bDRS
+refers to a technique capable of measuring λ-resolved calibration-free
+μ<sub>eff</sub> (which depends on μ<sub>a</sub>
+and μ′<sub>s</sub>) over a range of many
+λs. It is noted that the
+distinction between SC and DS is
+the use of R̃ in SC
+FD versus <em>R</em> in
+DS DS
+(Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>).</p>
+<h2
+id="techniques-experiments-and-absolute-absorption-retrieval">Techniques,
+Experiments, and Absolute Absorption Retrieval</h2>
+<h3 id="techniques">Techniques</h3>
+<h4
+id="frequency-domain-multi-distance-near-infrared-spectroscopy">Frequency-Domain
+Multi-Distance Near-Infrared Spectroscopy</h4>
+<figure id="fig:ASfig1">
+<div class="center">
+<img src="figures/ASfig1.png" class="img-fluid" alt="ASfig1" style="width:75.0%">
+</div>
+<figcaption>Frequency-Domain (FD) Near-InfraRed Spectroscopy (NIRS)
+methods to achieve measurements of absolute complex effective attenuation coefficient (μ̃<sub>eff</sub>). (a) Render of Multi-Distance (MD) scan
+done on diffuse optical phantoms. (b) Schematic of 11 different source-detector distance (ρ)
+realized during the MD scan.<br />
+Note 1: This figure can be found as Figure 1 in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.</figcaption>
+</figure>
+<p>FD NIRS
+was implemented with the purpose of measuring absolute μ̃<sub>eff</sub> (to retrieve μ<sub>a</sub>
+and μ′<sub>s</sub>) of highly scattering
+media. The Imagent whose parameters were
+stated in Section <a href="ch2.html#ch:shortLong:sec:MDmethExpPara"
+data-reference-type="ref"
+data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>
+was used for this purpose.</p>
+<p>FD NIRS
+was implemented in a MD scan. To achieve this, a
+single detector fiber bundle (3 mm) was held at a fixed location and two
+co-localized source fibers (600 μm; two λs) were scanned via a linear
+stage (Figure <a href="#fig:ASfig1" data-reference-type="ref"
+data-reference="fig:ASfig1">1.1</a>(a)). In doing so, the R̃
+(amplitude and phase) was measured at 11 distances (from 15 mm–25 mm
+spaced by 1 mm; Figure <a href="#fig:ASfig1" data-reference-type="ref"
+data-reference="fig:ASfig1">1.1</a>(b)). This MD
+scan allowed for measurements of R̃ slopes versus ρ
+without the need for calibration.<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a> These measurements were
+used to calculate the absolute μ̃<sub>eff</sub> and then the absolute
+μ<sub>a</sub> and μ′<sub>s</sub>
+of the diffuse medium as described in Appendix <a
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>.</p>
+<h4
+id="continuous-wave-dual-slope-broadband-diffuse-reflectance-spectroscopy">Continuous-Wave
+Dual-Slope Broadband Diffuse Reflectance Spectroscopy</h4>
+<figure id="fig:ASfig2">
+<div class="center">
+<img src="figures/ASfig2.png" class="img-fluid" alt="ASfig2" style="width:75.0%">
+</div>
+<figcaption>broadband Diffuse Reflectance Spectroscopy (bDRS) methods to achieve
+measurements of absolute effective attenuation coefficient (μ<sub>eff</sub>) spectra. (a) Render of
+bDRS probe on a diffuse
+optical phantom. (b) Schematic of Dual-Slope (DS) bDRS
+device. (c) Schematic of the source (<code>1</code> and <code>2</code>)
+and detector (<code>A</code> and <code>B</code>) positions on the DS
+bDRS probe.<br />
+Note 1: This figure can be found as Figure 2 in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.<br />
+Acronyms: Universal Serial Bus (USB); and Transistor-Transistor Logic (TTL).</figcaption>
+</figure>
+<p>CW bDRS
+was implemented in with the purpose of measuring absolute μ<sub>eff</sub> spectra of optically
+diffusive media (Figure <a href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(a)). This was realized using a DS
+optode geometry which allowed for calibration-free measurements of the
+CW <em>R</em> slope
+(versus ρ). The DS
+optode configuration (Figure <a href="#fig:ASfig2"
+data-reference-type="ref" data-reference="fig:ASfig2">1.2</a>(c)) used
+was the same as described in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and
+Figure <a href="ch3.html#fig:DSset" data-reference-type="ref"
+data-reference="fig:DSset">[fig:DSset]</a>; it contained 2 source
+positions and 2 detector positions. The linearly symmetric arrangement
+resulted in a calibrated measurement from 25 mm–35 mm.</p>
+<p>This DS CW
+bDRS system was custom built
+to achieve the multiplexing needed for DS measurements. The
+measurement requires the <em>R</em> signal be acquired from all
+combinations of sources (named <code>1</code> and <code>2</code>;
+Figures <a href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="ch3.html#fig:DSset"
+data-reference-type="ref" data-reference="fig:DSset">[fig:DSset]</a>)
+and detectors (named <code>A</code> and <code>B</code>; Figures <a
+href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(c)&amp;<a href="ch3.html#fig:DSset"
+data-reference-type="ref" data-reference="fig:DSset">[fig:DSset]</a>).
+To do so, both the sources and detectors must be multiplexed (Figure <a
+href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(b)). Sources were multiplexed by
+using 2 shuttered HAL light sources, each
+connected to 1 source position. Shutter state was controlled via a TTL
+signal from an <span data-acronym-label="Arduino"
+data-acronym-form="singular+short">Arduino</span> micro-controller which
+was connected to the control computer via USB. Light was delivered from
+the sources to the probe using 2 mm fiber bundles. The light sources
+output an approximate black-body spectrum with a temperature of about
+2650 K (peak at about 1000 nm). On the detector side, diffuse CW
+light was collected using a 600 μm fiber at each of the 2 detector
+positions. Multiplexing of the detector positions was done using a <span
+data-acronym-label="LBMB" data-acronym-form="singular+short">LBMB</span>
+fiber switch where the common end was connected to a HERO
+spectrometer via a 600 μm fiber. The spectrometer was configured with a
+500 μm slit and collected 1024 λs between about
+498 nm–1064 nm.</p>
+<p>The bottleneck in the multiplexing sequence is the switching time of
+the <span data-acronym-label="LBMB"
+data-acronym-form="singular+short">LBMB</span> fiber switch. Because of
+this, the cycle of source-detector position combinations was optimized
+to minimize <span data-acronym-label="LBMB"
+data-acronym-form="singular+short">LBMB</span> actuation. Naming
+source-detector combinations as source number (<code>1</code> or
+<code>2</code>) then detector letter (<code>A</code> or <code>B</code>;
+Figure <a href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(c)) an example measurement sequence
+could be:</p>
+<div class="center">
+<p>...<code>1A</code>]<span
+class="math inline">\(\rightarrow\)</span>[<code>1A</code><code>2A</code><code>2B</code><code>1B</code>]<span
+class="math inline">\(\rightarrow\)</span><br />
+[<code>1B</code><code>2B</code><code>2A</code><code>1A</code>]<span
+class="math inline">\(\rightarrow\)</span>[<code>1A</code>...</p>
+</div>
+<p>where, is a source switch, is a detector switch, and the square
+brackets show one full DS set acquisition. The <em>R</em> from
+each source-detector combination is linearly interpolated to the average
+absolute time for their corresponding DS set. Thus 4 <em>R</em>
+measurements that contribute to a DS measurement are effectively
+synchronous, thus preventing potential temporal artifacts when studying
+dynamic samples or biological tissue.</p>
+<h3 id="validation-experiments">Validation Experiments</h3>
+<figure id="fig:ASfig3">
+<div class="center">
+<img src="figures/ASfig3.png" class="img-fluid" alt="ASfig3">
+</div>
+<figcaption>Expected spectral features of near-infrared dyes in water,
+provided by the manufacturer. (a) Normalized Absorbance (<span
+class="math inline">\(A\)</span>) versus optical wavelength (λ) of <span
+data-acronym-label="N7" data-acronym-form="singular+full">N7</span> dye.
+(b) Normalized <span class="math inline">\(A\)</span> of <span
+data-acronym-label="N8" data-acronym-form="singular+full">N8</span>
+dye.<br />
+Note 1: This figure can be found as Figure 3 in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.</figcaption>
+</figure>
+<p>The purpose of the experiments in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span> was to
+validate the DS bDRS
+instrument. This was done using a liquid optical phantom which was
+measured at different dyes concentrations to confirm the DS
+CW bDRS’s ability to distinguish
+spectral features and measure absolute μ<sub>a</sub>. A total of 5 L of the
+phantom was made, and placed in a cylindrical tank (Figures <a
+href="#fig:ASfig1" data-reference-type="ref"
+data-reference="fig:ASfig1">1.1</a>(a)&amp;<a href="#fig:ASfig2"
+data-reference-type="ref" data-reference="fig:ASfig2">1.2</a>(a)). The
+base of the phantom was made of 2 % reduced fat milk and W (43 %
+milk and 57 % W volume fraction) such that
+the scattering properties were similar to those of biological tissue in
+the near-infrared range. The μ′<sub>s</sub> was assumed to not change
+as dyes were added since the addition of the dyes is expected to have a
+negligible effect on scattering. Each time the phantom was measured, the
+measurement was done by both MD FD
+NIRS and DS
+CW bDRS.</p>
+<p>Three dyes were added in the following order: <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>,
+<span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span>, and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>.
+<span data-acronym-label="II"
+data-acronym-form="singular+short">II</span> is expected to have a
+relatively flat or decreasing μ<sub>a</sub> spectrum with λ
+in the near-infrared range <span class="citation"
+data-cites="dininniUseIndiaInk2010 martelliCalibrationScatteringAbsorption2007"></span>.
+By contrast, <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> are
+expected to have μ<sub>a</sub> peaks at around 746 nm,
+&amp; 869 nm, respectively (Figure <a href="#fig:ASfig3"
+data-reference-type="ref" data-reference="fig:ASfig3">1.3</a>). However,
+the actual peak λ may shift depending on the
+chemical properties of the solvent according to the dye documentation
+and previous experiments <span class="citation"
+data-cites="cugmasPoorOpticalStability2019"></span>.</p>
+<p>The measurements and dye additions proceeded as follows (measurements
+meaning both MD FD
+NIRS and DS
+CW bDRS). First, the milk and
+W
+base phantom was mixed, then measured. Then, <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span> was
+mixed in and the phantom measured again. Next <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span> was
+mixed and again the phantom measured. Finally, <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> was
+also mixed into the phantom and the measurement was done for a final
+time. The amount of each addition of dye was such that all μ<sub>a</sub>
+spectra were expected to stay within typical μ<sub>a</sub>
+values of biological tissue (approximately 0.005  mm–0.020  mm <span
+class="citation"
+data-cites="bigioQuantitativeBiomedicalOptics2016"></span>).</p>
+<p>The temporal sampling parameters of the DS CW
+bDRS system were set to yield
+a relatively fast sampling rate while still measuring a relevant λ
+range. Along these lines, DS CW
+bDRS data were analyzed
+between 600 nm–900 nm and the sampling rate was set to 2.5 Hz. For DS
+CW bDRS
+5 min of data were averaged for analysis. The MD
+FD NIRS
+measurement took 30 s at each step for a total measurement time of
+5.5 min (11 steps; Figure <a href="#fig:ASfig1"
+data-reference-type="ref" data-reference="fig:ASfig1">1.1</a>), and had
+a sampling rate of 2.8 Hz. These parameters were chosen such that the
+rate and time of DS CW
+bDRS and MD
+FD NIRS
+were approximately equal.</p>
+<p>Therefore the phantom experiments in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span> resulted in
+MD FD
+NIRS measurements of μ̃<sub>eff</sub> at 2 λs
+and DS CW
+bDRS measurements of μ<sub>eff</sub> between 600 nm–900 nm
+for four phantoms (milk and W, milk and W plus
+<span data-acronym-label="II"
+data-acronym-form="singular+short">II</span>, milk and W plus
+<span data-acronym-label="II"
+data-acronym-form="singular+short">II</span> plus <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span>,
+and milk and W plus <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+plus <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> plus <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span>).
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> describes
+the analysis of these data to result in these absolute μ̃<sub>eff</sub> and μ<sub>eff</sub>.</p>
+<h3 id="retrieval-of-absolute-absorption-spectra">Retrieval of Absolute
+Absorption Spectra</h3>
+<p>Since the DS CW
+bDRS method yields a real
+μ<sub>eff</sub>, μ′<sub>s</sub>
+must be known to find μ<sub>a</sub> using the following
+expression <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>: <span
+class="math display">\[\mu_a=\sqrt{\frac{\mu_s'^2}{4}+\frac{\mu_{eff}^2}{3}}-\frac{\mu_s'}{2}
+    \label{equ:muaFROMmueffmusp}\]</span> To address the need to know
+μ′<sub>s</sub>, the μ̃<sub>eff</sub> data from the MD
+FD NIRS
+measurements were used. FD NIRS
+yielded a measurement of μ′<sub>s</sub> at 2 λs
+(<span
+class="math inline">\(\mu_s'_{\mathrm{FD}}(\lambda_1)\)</span>
+and <span
+class="math inline">\(\mu_s'_{\mathrm{FD}}(\lambda_2)\)</span>;
+where λ is the 2 from FD)
+from μ̃<sub>eff</sub> (Appendix <a
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>). These
+<span class="math inline">\(\mu_s'_{\text{FD}}\)</span>
+measurements are then extrapolated using the following expression based
+on <em>b</em> to find μ′<sub>s</sub>
+at all the λs used by bDRS: <span
+class="math display">\[\mu_s'(\lambda)=\mu_s'_{\mathrm{FD}}(\lambda_1)
+\times \left( \frac{\lambda}{\lambda_1}
+\right)^{-b}
+    \label{equ:scatPowLaw}\]</span> <span
+class="math display">\[b={\frac{\ln\left[\mu_s'_{\mathrm{FD}}(\lambda_2)
+/ \mu_s'_{\mathrm{FD}}(\lambda_1) \right]}{\ln\left[
+\lambda_1/\lambda_2 \right]}}
+    \label{equ:scatb}\]</span> Therefore, when analyzing DS
+CW bDRS
+data, μ<sub>a</sub> is found for each λ
+using the assumed μ′<sub>s</sub> expressed above for each
+λ.</p>
+<h2 id="results-from-validation-experiment">Results from Validation
+Experiment</h2>
+<figure id="fig:ASfig4">
+<div class="center">
+<img src="figures/ASfig4.png" class="img-fluid" alt="ASfig4" style="width:75.0%">
+</div>
+<figcaption>Results from phantom experiment in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>. (a) Absolute
+absorption coefficient (μ<sub>a</sub>) spectra as a function of
+optical wavelength (λ). Showing results from Dual-Slope (DS)
+Continuous-Wave (CW) broadband Diffuse Reflectance Spectroscopy (bDRS)
+and Multi-Distance (MD) Frequency-Domain (FD)
+Near-InfraRed Spectroscopy (NIRS) measurements. Spectra
+shown for the following phantoms: Milk and W (MW),
+MW plus <span
+data-acronym-label="II" data-acronym-form="singular+full">II</span>,
+MW plus <span
+data-acronym-label="II" data-acronym-form="singular+abbrv">II</span>
+plus <span data-acronym-label="N7"
+data-acronym-form="singular+full">N7</span>, and, finally, MW plus
+<span data-acronym-label="II"
+data-acronym-form="singular+abbrv">II</span> plus <span
+data-acronym-label="N7" data-acronym-form="singular+abbrv">N7</span>
+plus <span data-acronym-label="N8"
+data-acronym-form="singular+full">N8</span>. DS
+CW bDRS
+points show individual λ measurements and lines
+show smoothed (moving average) spectra for visualization. Dashed line
+shows the expected μ<sub>a</sub> spectrum for MW
+modeled as Water (W) and Lipid (L) extinction coefficient (ε).
+(b) absorption coefficient change (Δμ<sub>a</sub>) from adding <span
+data-acronym-label="N8" data-acronym-form="singular+abbrv">N8</span>,
+(c) Δμ<sub>a</sub> from adding <span
+data-acronym-label="N7" data-acronym-form="singular+abbrv">N7</span>,
+and (d)Δμ<sub>a</sub> from adding <span
+data-acronym-label="II"
+data-acronym-form="singular+abbrv">II</span>.<br />
+Note 1: This figure can be found as Figure 4 in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.</figcaption>
+</figure>
+<p>The phantom experiment described consisted of measuring 4 phantoms,
+each with both MD FD
+NIRS (Figure <a
+href="#fig:ASfig1" data-reference-type="ref"
+data-reference="fig:ASfig1">1.1</a>(a)) and DS
+CW bDRS
+(Figure <a href="#fig:ASfig2" data-reference-type="ref"
+data-reference="fig:ASfig2">1.2</a>(a)). The phantoms were milk and
+W, that with <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+added, then that again with <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> added, and then that yet
+again with <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span> added.</p>
+<p>Figure <a href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a> shows the results of this
+experiment. The absolute μ<sub>a</sub> spectrum is shown across
+λs for all 4 phantoms and 2
+measurement methods (Figure <a href="#fig:ASfig4"
+data-reference-type="ref" data-reference="fig:ASfig4">1.4</a>(a)).
+Additionally, Figure <a href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(a) shows a dashed line representing
+the modeled (as 99.1 % W <span class="citation"
+data-cites="popeAbsorptionSpectrum3801997 kouRefractiveIndicesWater1993"></span>
+and 0.9 % L <span class="citation"
+data-cites="veenDeterminationVISNIR2004"></span> volume fractions) μ<sub>a</sub>
+of the milk and W phantom. The expected μ<sub>a</sub>
+spectrum for this milk and W phantom was computed using
+the forward model for μ<sub>a</sub> in Appendix <a
+href="app1.html#app:forMod" data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a>. The R² was
+calculated for the milk and W data and model, yielding a
+value of 0.98, implying that 98 % of the variance in the milk and W μ<sub>a</sub>
+data is explained by the modeled milk and W ε
+spectra. In Figure <a href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(b)-(d) the Δμ<sub>a</sub>
+as a result of adding the 3 different dyes (<span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>,
+<span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span>, and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>) is
+shown. The error regions in all plots are dominated by the systematic
+uncertainty in the ρ on the DS
+CW bDRS
+probe (estimated at  ± 0.1 mm for chained dimensions) and within the
+MD FD
+NIRS measurement (estimated at
+ ± 0.5 mm for initial position and  ± 0.01 mm for scan pitch). Note the
+flat μ<sub>a</sub> contribution from <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span> and
+the spectral features from <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>.
+Particularly, a peak between 700 nm–800 nm for <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span> and
+a peak between 800 nm–900 nm for <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>.</p>
+<h2
+id="discussion-of-dual-slope-broadband-spectroscopy-validation">Discussion
+of Dual-Slope Broadband Spectroscopy Validation</h2>
+<h3 id="the-milk-and-water-absorption-spectrum">The Milk and Water
+Absorption Spectrum</h3>
+<p>First, before any dyes were added in the validation experiment (just
+milk and W) the phantom was measured to
+yield an μ<sub>a</sub> spectrum dominated by
+W
+(Figure <a href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(a)). This milk and W
+spectra had the expected spectral features of water (hump at about
+750 nm and sharp increase starting at about 800 nm) <span
+class="citation" data-cites="kouRefractiveIndicesWater1993"></span>.
+Further, the expected milk and W ε
+spectrum agrees (within error) with the experimental data for the
+spectral range between 690 nm–830 nm, where μ′<sub>s</sub>
+is interpolated (not extrapolated) from the MD
+FD NIRS
+measurement. Below 690 nm the agreement is lost likely due to the very
+low W μ<sub>a</sub>,
+such that even low μ<sub>a</sub> contributions from fat,
+proteins, or other milk constituents in the milk and W
+medium may become detectable. Above 830 nm the agreement also degrades
+possibly because of incorrect μ′<sub>s</sub> values (from
+extrapolation) or contributions from other absorbers in the milk other
+than W and L.
+Overall the quantitative agreement between the expected and measured
+milk and W spectra (Appendix <a
+href="app1.html#app:forMod" data-reference-type="ref"
+data-reference="app:forMod">[app:forMod]</a>) are quite good with a
+R² of 0.98, indicating an
+accurate measurement of absolute μ<sub>a</sub> by DS
+CW bDRS.</p>
+<h3
+id="comparing-frequency-domain-and-continuous-wave-retrieved-absorption">Comparing
+Frequency-Domain and Continuous-Wave Retrieved Absorption</h3>
+<p>Further, the μ<sub>a</sub> measured by MD
+FD NIRS
+agrees within error with DS CW
+bDRS at all points of
+comparison except for <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>. For <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> the
+difference between the measurements is about 10 %, and the combined
+errors for the 2 measurements amount to about 8 % (dominated by
+uncertainty in ρ). Admittedly, μ′<sub>s</sub>
+found by MD FD
+NIRS is used to find the μ<sub>a</sub>
+for DS CW
+bDRS, and thus the
+measurements are related. However, the observed agreement demonstrates a
+reliable absolute measurement of the slope of <em>R</em> with
+the DS CW
+bDRS instrument, given the
+accurate measurements with the scanning MD method used by MD
+FD NIRS
+in controlled laboratory conditions. In the case of <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>,
+where the 2 instruments do not agree, the most likely explanation is
+instrumental error (ρ uncertainty and boundary
+conditions). The ρ uncertainty accounts for
+most of the difference between the measurements, and the remaining
+unaccounted disagreement may be explained by uncertainties in boundary
+conditions (true depth of fibers in phantom, existence of meniscus,
+<em>et cetera</em>). These ρ uncertainties and boundary
+effects may have changed for each measurement, since after the addition
+of each dye the instruments needed to be re-setup and placed on the
+phantom. This may explain why instrumental errors impacted differently
+the measurements of different dyes. Additionally, there is evidence that
+the <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>
+dyes are not stable over time (discussed below) and the 2 measurements
+are not simultaneous (5 min–10 min between measurements). Any of these
+considerations may have lead to the lack of agreement for <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>.
+However, given the existence of these considerations and the close
+agreement in 6 out of 8 cases, we find that the results serves to
+validate the absolute absorbance measured by DS
+CW bDRS.</p>
+<h3 id="the-additions-of-dye-to-the-phantom">The Additions of Dye to the
+Phantom</h3>
+<figure id="fig:ASfig5">
+<div class="center">
+<img src="figures/ASfig5.png" class="img-fluid" alt="ASfig5" style="width:75.0%">
+</div>
+<figcaption>Comparison of optical wavelength (λ) normalized Absorbance
+(<span class="math inline">\(A\)</span>) peak locations for 2 dyes. 4
+types of spectra shown: Diffuse Reflectance (<code>Diff Refl</code>,
+<em>id est</em>, in milk from validation experiment), provided by the
+Manufacturer (<code>Manu</code>; <em>id est</em> in water), Diffuse
+Transmitance (<code>Diff Tran</code>; <em>id est</em>, in milk), and
+Transmission (<code>Tran</code>; <em>id est</em>, in water). (a) <span
+data-acronym-label="N7" data-acronym-form="singular+full">N7</span> dye.
+(b) <span data-acronym-label="N8"
+data-acronym-form="singular+full">N8</span> dye.<br />
+Note 1: This figure can be found as Figure 5 in <span class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span>.</figcaption>
+</figure>
+<p>Focusing on the individual dye additions allows for validation of the
+measurement of spectral features. The first dye added was <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>,
+which is expected to have a flat or decreasing spectral dependence with
+λ <span class="citation"
+data-cites="dininniUseIndiaInk2010"></span>. The change in the μ<sub>a</sub>
+spectrum observed confirmed this λ dependence and, again,
+agreed with the measurements at 2 λs with MD
+FD NIRS
+(Figure <a href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(d)). Further evaluation was carried
+out to estimate the recovered concentration of <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+given the measured Δμ<sub>a</sub>. The true concentration
+(in volume fraction) of <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span> in the phantom was
+5.7 × 10<sup>−6</sup> given the phantom volume and the amount of <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+added. The same <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span> was measured in
+transmission in non-diffuse solutions of known concentrations to yield
+spectra of the μ<sub>t</sub> (assuming only
+un-scattered light is detected). To yield the spectrum of μ<sub>a</sub>
+(needed to recover concentration in the diffuse experiment) for <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>,
+the <em>a</em> must be assumed: <span
+class="math display">\[\mu_a=\mu_t
+(1-a)\]</span> This must be considered for <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+since it is not in solution in water but instead a suspension of carbon
+particles. λ independent values of
+<span class="math inline">\(a=\)</span> 0–0.15 were assumed
+which yielded recovered concentrations of
+5.2 × 10<sup>−6</sup>–6.1 × 10<sup>−6</sup>, respectively. This range of
+low <em>a</em> values of pure <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span>
+indicates that its μ<sub>s</sub> is much smaller than the
+μ<sub>a</sub> coefficient, which is
+consistent with the literature <span class="citation"
+data-cites="dininniUseIndiaInk2010 martelliCalibrationScatteringAbsorption2007"></span>.
+The range resulted in measurement errors of −8.8 %–7.0 % (given true
+value of 5.7 × 10<sup>−6</sup>). Therefore, it is expected that DS
+CW bDRS
+is capable of recovering accurate chromophore concentrations given that
+the ε spectra is known (not the
+case here since the <em>a</em> for <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span> was
+not measured). For <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> the
+concentration recovery was not carried out due to temporal and spectral
+instability of the dyes (discussed below).</p>
+<p>Moving on from <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span>, the next 2 dyes were
+expected to feature a more interesting spectrum (Figure <a
+href="#fig:ASfig3" data-reference-type="ref"
+data-reference="fig:ASfig3">1.3</a>). <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> was added after <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span> and
+the Δμ<sub>a</sub> presented in Figure <a
+href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(c). The expected peak between
+700 nm–800 nm was present. However, upon closer examination, the exact
+peak location is shifted about 12 nm higher for the DS
+CW bDRS
+measurement compared to the expected spectrum (Figure <a
+href="#fig:ASfig5" data-reference-type="ref"
+data-reference="fig:ASfig5">1.5</a>(a)). When the next and final dye,
+<span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>, was added, yet again there
+was a peak present in approximately the expected location (Figure <a
+href="#fig:ASfig4" data-reference-type="ref"
+data-reference="fig:ASfig4">1.4</a>(b)). But, as with <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span>
+there was an about 12 nm shift to longer λs in the DS
+CW bDRS
+measurement. This is consistent with a bathochromic shift, which is
+possible for these dyes given the manufacturer information and previous
+studies <span class="citation"
+data-cites="cugmasPoorOpticalStability2019"></span>. The hypothesis is
+that when in milk the dyes exhibit a bathochromic shift due to the
+different bulk polar nature of milk versus W. To test this possibility, 2
+further measurements were done on <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>. <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> was
+measured in transmission (in a semi-micro cuvette) both in water and in
+the milk and W mixture (Figure <a
+href="#fig:ASfig5" data-reference-type="ref"
+data-reference="fig:ASfig5">1.5</a>(b)). The results show that the
+transmission spectral absorbance for <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span> in milk matches the DS
+CW bDRS
+peak location, whereas the transmission spectral absorbance of <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span> in
+water matches the manufacturer provided spectra. Thus, this transmission
+experiment supports the hypothesis that these dyes exhibit a
+bathochromic shift of about 12 nm when in the milk and W
+mixture. However, it is unknown if the amplitude of the μ<sub>a</sub>
+peak is also effected (hyperchromic or hypochromic shift) for these
+dyes. The dyes were also found to be temporally unstable, as extended
+time in solution caused <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> to lose its near-infrared
+μ<sub>a</sub> peak, and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>’s
+peak shifted roughly 200 nm to the blue. These spectral and temporal
+instabilities stopped the analysis of the concentrations of these dyes
+in the diffuse phantom. But, despite this, DS CW
+bDRS was still capable of
+distinguishing the dye’s spectral features.</p>
+<h2
+id="summary-of-dual-slope-broadband-diffuse-reflectance-spectroscopy-validation">Summary
+of Dual-Slope Broadband Diffuse Reflectance Spectroscopy Validation</h2>
+<p>Summarizing the discussion above, the results in <span
+class="citation"
+data-cites="blaneyDualSlopeDiffuseReflectance2021"></span> on the liquid
+phantom serve to validate the DS CW
+bDRS instrument’s ability to
+measure spectral features and absolute values of μ<sub>a</sub>
+in a diffuse medium. In 6 of 8 cases (all except 690 nm, &amp; 830 nm
+for <span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>), the absolute μ<sub>a</sub>
+measured with DS CW
+bDRS agreed within error with
+MD FD
+NIRS. DS
+CW bDRS
+also accurately measured the expected μ<sub>a</sub> spectrum of milk and W mixed
+(<span class="math inline">\(R^2=\num{0.98}\)</span>).
+Additionally, the DS CW
+bDRS instrument correctly
+measured the flat spectra of <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span> and the peaks of <span
+data-acronym-label="N7" data-acronym-form="singular+short">N7</span> and
+<span data-acronym-label="N8"
+data-acronym-form="singular+short">N8</span>. The concentration of <span
+data-acronym-label="II" data-acronym-form="singular+short">II</span> was
+estimated suggesting the ability to recover chromophore concentrations
+given the extinction. Finally, it was confirmed that the recovered peak
+locations of the <span data-acronym-label="N7"
+data-acronym-form="singular+short">N7</span> and <span
+data-acronym-label="N8" data-acronym-form="singular+short">N8</span>
+dyes are what is expected for these dyes in milk. The follow chapter
+shows the application of this technique on biological tissue.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>effective attenuation coefficient (μ<sub>eff</sub>) can not be separated into
+absorption coefficient (μ<sub>a</sub>) and reduced scattering coefficient (μ′<sub>s</sub>)
+as complex effective attenuation coefficient (μ̃<sub>eff</sub>) can. To find μ<sub>a</sub>
+from μ<sub>eff</sub>, μ′<sub>s</sub>
+must be known.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Without calibration assuming unchanging coupling with
+the sample since the same fibers are used for each distance and the
+fiber/sample contact remains about the same during the linear scan.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch8.html" class="btn btn-sm btn-outline-secondary">← In-Vivo Cerebral Hemodynamics</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch10.html" class="btn btn-sm btn-outline-secondary">Absolute Absorption Spectroscopy of Tissue →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

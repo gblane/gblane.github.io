@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual-Slope Imaging · Giles Blaney</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { padding-top: 70px; }
+        figure { margin: 2rem 0; text-align: center; }
+        figure img { max-width: 100%; }
+        figcaption { margin-top: .75rem; font-size: .875rem; color: #555; text-align: left; }
+        .citation-keys { font-size: .75rem; }
+        .math-display { overflow-x: auto; }
+        section.footnotes { font-size: .85rem; border-top: 1px solid #dee2e6; margin-top: 2rem; padding-top: 1rem; }
+        #chapter-content h1 { font-size: 1.75rem; margin-bottom: .25rem; }
+        #chapter-content h2 { font-size: 1.35rem; margin-top: 2rem; }
+        #chapter-content h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+        #chapter-content h4 { font-size: 1rem; margin-top: 1.25rem; }
+        .part-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-semibold" href="../index.html">Giles Blaney, PhD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#bio">Bio</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#research">Research</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#teaching">Teaching</a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dissertation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-lg-2 d-none d-lg-block bg-light border-end" style="min-height:calc(100vh - 70px); padding-top:1.5rem;">
+                <p class="px-3 mb-1 text-muted small fw-bold">DISSERTATION</p>
+                <div class="list-group list-group-flush">
+<a href="index.html" class="list-group-item list-group-item-action py-1 small">Overview</a>
+<a href="organization.html" class="list-group-item list-group-item-action py-1 small">Organization of this Work</a>
+<a href="intro.html" class="list-group-item list-group-item-action py-1 small">A Brief Introduction to Frequency-Domain Near-Infrared Spectroscopy</a>
+<a href="ch1.html" class="list-group-item list-group-item-action py-1 small">Motivation for Seeking Deep Measurements</a>
+<a href="ch2.html" class="list-group-item list-group-item-action py-1 small">Short versus Long Source-Detector Distances</a>
+<a href="ch3.html" class="list-group-item list-group-item-action py-1 small">Introduction to Dual-Slope</a>
+<a href="ch4.html" class="list-group-item list-group-item-action py-1 small">Point Measurements with Dual-Slope</a>
+<a href="ch5.html" class="list-group-item list-group-item-action active fw-bold py-1 small">Dual-Slope Imaging</a>
+<a href="ch6.html" class="list-group-item list-group-item-action py-1 small">Introduction to Wavelet Coherent Hemodynamics Spectroscopy</a>
+<a href="ch7.html" class="list-group-item list-group-item-action py-1 small">Test for Significant Coherence</a>
+<a href="ch8.html" class="list-group-item list-group-item-action py-1 small">In-Vivo Cerebral Hemodynamics</a>
+<a href="ch9.html" class="list-group-item list-group-item-action py-1 small">Dual-Slope Based Absolute Broadband-Spectroscopy</a>
+<a href="ch10.html" class="list-group-item list-group-item-action py-1 small">Absolute Absorption Spectroscopy of Tissue</a>
+<a href="app1.html" class="list-group-item list-group-item-action py-1 small">Forward Models</a>
+<a href="app2.html" class="list-group-item list-group-item-action py-1 small">Measurement of Absolute Optical Properties</a>
+<a href="app3.html" class="list-group-item list-group-item-action py-1 small">Measuring Changes in the Absorption Coefficient</a>
+<a href="app4.html" class="list-group-item list-group-item-action py-1 small">Recovery of Chromophore Concentrations</a>
+<a href="app5.html" class="list-group-item list-group-item-action py-1 small">Generation of Sensitivity Maps</a>
+<a href="app6.html" class="list-group-item list-group-item-action py-1 small">Simulation of Apparent Measurements</a>
+<a href="app7.html" class="list-group-item list-group-item-action py-1 small">Phasor Analysis</a>
+<a href="app8.html" class="list-group-item list-group-item-action py-1 small">Determination of Coherence</a>
+<a href="postface.html" class="list-group-item list-group-item-action py-1 small">Current and Future Work</a>
+<a href="ack.html" class="list-group-item list-group-item-action py-1 small">Acknowledgments</a>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-lg-10 py-4 px-md-5" id="chapter-content">
+                <div class="part-label mb-1">Part I · Preferentially Deep Measurements</div>
+                <h1 class="fw-bold mb-3">Dual-Slope Imaging</h1>
+                <hr class="mb-4">
+
+                <h1 id="dual-slope-imaging">Dual-Slope Imaging</h1>
+<p><span id="ch:DSimage" data-label="ch:DSimage"></span></p>
+<h2 id="design-of-a-dual-slope-imaging-array">Design of a Dual-Slope
+Imaging Array</h2>
+<h3 id="discovering-dual-slope-sets">Discovering Dual-Slope Sets</h3>
+<figure id="fig:RSIfig1">
+<div class="center">
+<img src="figures/RSI_fig1.png" class="img-fluid" alt="RSI_fig1" style="width:69.4%">
+</div>
+<figcaption>Flowchart showing the Single-Distance (SD) discovery part of the Dual-Slope (DS)
+discovery algorithm.<br />
+Note 1: Can be found as Figure 1 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.<br />
+Note 2: Implemented in Listing <a href="#lst:SDdis"
+data-reference-type="ref"
+data-reference="lst:SDdis">[lst:SDdis]</a>.</figcaption>
+</figure>
+<figure id="fig:RSIfig2">
+<div class="center">
+<img src="figures/RSI_fig2.png" class="img-fluid" alt="RSI_fig2" style="width:71.4%">
+</div>
+<figcaption>Flowchart showing the Single-Slope (SS) discovery part of the Dual-Slope (DS)
+discovery algorithm.<br />
+Note 1: Can be found as Figure 2 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.<br />
+Note 2: Implemented in Listing <a href="#lst:SSdis"
+data-reference-type="ref"
+data-reference="lst:SSdis">[lst:SSdis]</a>.</figcaption>
+</figure>
+<figure id="fig:RSIfig3">
+<div class="center">
+<img src="figures/RSI_fig3.png" class="img-fluid" alt="RSI_fig3" style="width:80.0%">
+</div>
+<figcaption>Flowchart showing the last part of the DS
+discovery algorithm where the DS sets themselves are
+found.<br />
+Note 1: Can be found as Figure 3 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.<br />
+Note 2: Implemented in Listing <a href="#lst:DSdis"
+data-reference-type="ref"
+data-reference="lst:DSdis">[lst:DSdis]</a>.</figcaption>
+</figure>
+<p>To design a DS imaging arrangement we
+required a succinct set of methods that enforced the
+<em>requirements</em> and <em>constraints</em> stated in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>.
+We start with a pen and paper design of a configuration that is suitable
+to create many DS sets as in <span
+class="citation" data-cites="blaneyDesignSourceDetector2020"></span>.
+Then, we use a DS set discovery algorithm
+which takes the source and detector r⃗s as inputs. This algorithm
+finds all the possible DS sets that meet the
+<em>requirements</em> and <em>constraints</em>.</p>
+<p>The algorithm starts by finding all the possible SD
+sets within a source-detector arrangement (Figure <a href="#fig:RSIfig1"
+data-reference-type="ref" data-reference="fig:RSIfig1">1.1</a>). This is
+trivial given that <span class="math inline">\(s\)</span> sources and
+<span class="math inline">\(d\)</span> detectors result in <span
+class="math inline">\(s\times d\)</span> possible SD
+sets. However, the algorithm then eliminates sets according to 1
+check:</p>
+<ul>
+<li><p>Sets are eliminated that do not meet the minimum and maximum
+ρ <em>constraints</em>
+(20 mm, &amp; 40 mm, respectively; <em>Constraint</em> <a
+href="ch3.html#enu:DSconRho" data-reference-type="ref"
+data-reference="enu:DSconRho">[enu:DSconRho]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+</ul>
+<p>This results in all SD sets that meet the ρ
+<em>constraints</em> within the arrangement (and their number <span
+class="math inline">\(m_{\text{\mathrm{SD}}}\)</span>). This portion
+of the algorithm is implemented with MATLAB code in Listing <a
+href="#lst:SDdis" data-reference-type="ref"
+data-reference="lst:SDdis">[lst:SDdis]</a>.</p>
+<p>Then the algorithm moves on to find all the possible SS
+sets (Figure <a href="#fig:RSIfig2" data-reference-type="ref"
+data-reference="fig:RSIfig2">1.2</a>). This is done by looping through
+every combination of two different SD sets (<span
+class="math inline">\(m_{\text{\mathrm{SD}}} \times
+\left(m_{\text{\mathrm{SD}}}-1\right) \times 2\)</span> combinations).
+For each possible combination of SD sets 2 checks are done to
+ensure the combination forms a valid new SS set:</p>
+<ul>
+<li><p>An exclusive or (<em>id est</em> <code>xor</code>) that the
+sources <code>xor</code> the detectors are the same for the two SD
+sets (<em>id est</em> the SD sets share a source or a
+detector but not both; <em>Requirement</em> <a href="ch3.html#enu:DSreqSSs"
+data-reference-type="ref"
+data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+<li><p>The difference in ρs (<span
+class="math inline">\(\Delta\rho\)</span>) between the two
+SD sets meets the minimum and
+maximum consideration (10 mm, &amp; 20 mm, respectively;
+<em>Constraint</em> <a href="ch3.html#enu:DSconDelRho" data-reference-type="ref"
+data-reference="enu:DSconDelRho">[enu:DSconDelRho]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+</ul>
+<p>This step results in all the possible SS measurements in the
+arrangement (and their number <span
+class="math inline">\(m_{\text{\mathrm{SS}}}\)</span>). This second
+part of the algorithm is implemented using MATLAB code in Listing <a
+href="#lst:SSdis" data-reference-type="ref"
+data-reference="lst:SSdis">[lst:SSdis]</a>.</p>
+<p>Finally, the algorithm finds all the possible DS sets within the
+arrangement (Figure <a href="#fig:RSIfig3" data-reference-type="ref"
+data-reference="fig:RSIfig3">1.3</a>). Again, a loop is entered that
+loops through all combinations, this time of SS
+sets which are not the same (<span
+class="math inline">\(m_{\text{\mathrm{SS}}} \times
+\left(m_{\text{\mathrm{SS}}}-1\right) \times 2\)</span> combinations).
+For each SS combination 5 checks are
+done to ensure that the two SS sets form a new valid DS
+set:</p>
+<ul>
+<li><p>That between the 2 SS sets there are exactly 2
+unique sources and 2 unique detectors (related to
+<em>Requirements</em> <a href="ch3.html#enu:DSreqSSs" data-reference-type="ref"
+data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a>&amp;<a
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
+data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+<li><p>That between the 2 SS sets (4 SD
+sets) there are no repeated source-detectors pairs (<em>id est</em>
+there are four unique SD sets; related to
+<em>Requirements</em> <a href="ch3.html#enu:DSreqSSs" data-reference-type="ref"
+data-reference="enu:DSreqSSs">[enu:DSreqSSs]</a>&amp;<a
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
+data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+<li><p>Between the two SS sets the sources/detectors
+that make up the shorter/longer SD measurement are not the
+same (<em>id est</em> no source or detector is used for the long or the
+short measurement more than once; <em>Requirement</em> <a
+href="ch3.html#enu:DSreqShrtLng" data-reference-type="ref"
+data-reference="enu:DSreqShrtLng">[enu:DSreqShrtLng]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+<li><p>The difference between the SD ρs
+(<span class="math inline">\(\Delta\rho\)</span>) for each
+SS set that comprise the DS set
+are the same (<em>Requirement</em> <a href="ch3.html#enu:DSreqDelRho"
+data-reference-type="ref"
+data-reference="enu:DSreqDelRho">[enu:DSreqDelRho]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>).</p></li>
+<li><p>The DS set found at each iteration
+is new and has not already been found in a previous iteration.</p></li>
+</ul>
+<p>The result of the algorithm is to identify all possible DS
+sets in the arrangement (and their number <span
+class="math inline">\(m_{\text{\mathrm{DS}}}\)</span>). Finally, this
+last part of the algorithm is implemented with MATLAB code in Listing <a
+href="#lst:DSdis" data-reference-type="ref"
+data-reference="lst:DSdis">[lst:DSdis]</a>.</p>
+<p>The realization of this algorithm allows for the automatic discovery
+of DS sets from any list of
+source and detector r⃗. The various checks ensure
+the DS <em>requirements</em> are
+met, however there are also tunable parameters that allow the
+<em>constraints</em> to be changed (minimum ρ
+from <em>Constraint</em> <a href="ch3.html#enu:DSconRho"
+data-reference-type="ref"
+data-reference="enu:DSconRho">[enu:DSconRho]</a> in Section <a
+href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>
+<em>et cetera</em>). The algorithm has a run time of approximately
+200 ms (for 10 detectors and 16 sources) on a CPU
+with clock speed of 2.6 GHz and 8   of RAM. Furthermore it can be
+used to iteratively refine the position of the sources and detectors by
+rearranging them (using different starting points) or applying position
+refinement (discussed in the following sections) and finding the new
+possible DS sets over the multiple
+iterations.</p>
+<h3 id="refining-a-dual-slope-array">Refining a Dual-Slope Array</h3>
+<figure id="fig:RSIfig4">
+<div class="center">
+<img src="figures/RSI_fig4.png" class="img-fluid" alt="RSI_fig4" style="width:75.0%">
+</div>
+<figcaption>Example position refinement for 1 Dual-Slope (DS) set.
+(a) Evolution of the positions of sources (<code>1</code> and
+<code>2</code>) and detectors (<code>A</code> and <code>B</code>) after
+random start positions, showing their trajectories as lines and final
+positions as symbols. (b) Free body diagram of all forces acting on
+sources and detectors. (c) Evolution of the 4 SD .
+(d) Evolution of the two SS ρ
+differences (<span
+class="math inline">\(\Delta\rho\)</span>).<br />
+Note 1: This chart can be found as Figure 4 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>Once all the DS sets for an arrangement
+have been identified, the exact positions of the sources and detectors
+are refined. This is done by introducing simulated forces between
+elements acting such that desired parameters of the DS
+sets are met. The dynamical system is then allowed to reach equilibrium
+through Euler’s method for solving a system of ordinary differential
+equations, and the new coordinates of the sources and detectors are
+saved (Figure <a href="#fig:RSIfig4" data-reference-type="ref"
+data-reference="fig:RSIfig4">1.4</a>). Such a system can also be used to
+find valid source-detector arrangements that meet the DS
+requirements from random starting positions of the sources and detectors
+which is seen in Figure <a href="#fig:RSIfig4" data-reference-type="ref"
+data-reference="fig:RSIfig4">1.4</a>.</p>
+<p>4 parameters control the final positions in the system:<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li><p>The nominal ρ for the short leg of a
+SS set (<span
+class="math inline">\(\rho_{0,s}\)</span>).</p></li>
+<li><p>The nominal ρ for the long leg (<span
+class="math inline">\(\rho_{0,l}\)</span>).</p></li>
+<li><p>The nominal difference between ρs in a SS set
+(<span class="math inline">\(\Delta\rho_0\)</span>).</p></li>
+<li><p>The minimum source-detector separation (<span
+class="math inline">\(\rho\rho_{min}\)</span>).</p></li>
+</ul>
+<p>The final arrangement will have DS sets with ρs as
+close to their nominal values as possible given the overall connections
+between the elements of the arrangement, and the minimum separation
+ensures no detector will be saturated by a close source. Other than the
+4 parameters above, another 5 parameters control the dynamics of the
+simulation and how the equilibrium is reached:<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<ul>
+<li><p>The element mass (<span
+class="math inline">\(\mathfrak{M}\)</span>; [mass]).</p></li>
+<li><p>The spring constant (<span
+class="math inline">\(\mathfrak{K}\)</span>; [mass  time<sup>−2</sup> or
+force  length<sup>−1</sup>]).</p></li>
+<li><p>The damping ratio (<span class="math inline">\(\zeta\)</span>;
+[-]).</p></li>
+<li><p>The repulsion coefficient (<span
+class="math inline">\(\xi\)</span>;
+[mass  length<sup>2</sup>  time<sup>−2</sup> or energy]).</p></li>
+<li><p>The time step (<span class="math inline">\(\Delta t\)</span>;
+[time]).</p></li>
+</ul>
+<p><span class="math inline">\(\zeta\)</span> controls the damping
+coefficient (<span
+class="math inline">\(\mathfrak{D}=2\zeta\sqrt{\mathfrak{KM}}\)</span>
+[mass  time<sup>−1</sup>]) which is set to slightly below 1 to cause a
+slight under-damping, thus allowing the system to converge.</p>
+<p>The above parameters are used to control 4 forces that act upon each
+source and detector which are combined using Newton’s second law of
+motion (Figure <a href="#fig:RSIfig4" data-reference-type="ref"
+data-reference="fig:RSIfig4">1.4</a>(b)): <span
+class="math display">\[\mathfrak{M}\ddot{\vec{r}}=\Sigma{\vec{F}}_{\text{\mathrm{SD}}}+\Sigma{\vec{F}}_{\Delta
+\text{\mathrm{SS}}}+\Sigma{\vec{F}}_{repul}+{\vec{F}}_{damp}
+    \label{equ:posRefEOM}\]</span> where, <span
+class="math inline">\(\ddot{\vec{r}}\)</span> is the acceleration
+vector for a given element, <span
+class="math inline">\({\vec{F}}_{\text{\mathrm{SD}}}\)</span> is the
+SD force, <span
+class="math inline">\({\vec{F}}_{\Delta \text{\mathrm{SS}}}\)</span>
+is the SS difference in ρ
+force, <span class="math inline">\({\vec{F}}_{repul}\)</span> is the
+repulsion force, and <span
+class="math inline">\({\vec{F}}_{damp}\)</span> is the damping force. We
+note that the key force in this method encouraging the creation of DS
+sets is <span class="math inline">\({\vec{F}}_{\Delta
+\text{\text{SS}}}\)</span>, which, when applied to symmetric SSs,
+causes the arrangement to converge to a valid DS
+arrangement. The use of this force in this way makes this method novel
+and specific to DS.</p>
+<p>The SD force causes sources and
+detectors to be attracted to positions that will create ρ
+close to the nominal values (<span
+class="math inline">\(\rho_{0,s}\)</span> or <span
+class="math inline">\(\rho_{0,l}\)</span>): <span
+class="math display">\[{\vec{F}}_{\text{\mathrm{SD}}}=\mathfrak{K}(\|\vec{r}_{\text{\mathrm{SD}}}\|-\rho_0)\hat{r}_{\text{\mathrm{SD}}}\]</span>
+where, <span
+class="math inline">\(\|\vec{r}_{\text{\mathrm{SD}}}\|\)</span>
+is the Euclidean distance between the element considered and its pair,
+<span class="math inline">\({\hat{r}}_{\text{\text{SD}}}\)</span> is
+the unit vector pointing from the element to its pair, and <span
+class="math inline">\(\rho_0\)</span> is the nominal distance between
+the elements (<span class="math inline">\(\rho_{0,s}\)</span>
+or <span class="math inline">\(\rho_{0,l}\)</span>, depending
+on whether the SD pair is the short or long
+distance pair in a SS set).</p>
+<p>The SS difference force causes
+SS sets to be attracted to
+configurations that have a difference in the ρs
+close to the nominal value (<span
+class="math inline">\(\Delta\rho_0\)</span>): <span
+class="math display">\[{\vec{F}}_{\Delta\text{\mathrm{SS}}}=\mathfrak{K}(|\|\vec{r}_{\text{\mathrm{SD}}2}\|-\|\vec{r}_{\text{\mathrm{SD}}1}\||-\Delta\rho_0)\hat{r}_{\Delta\text{\mathrm{SS}}}\]</span>
+where, <span
+class="math inline">\(\vec{r}_{\text{\mathrm{SD}}1}\)</span> and
+<span
+class="math inline">\(\vec{r}_{\text{\mathrm{SD}}2}\)</span> are
+the Euclidean norms of source-detector displacement vectors for the two
+SD pairs, and <span
+class="math inline">\({\hat{r}}_{\Delta\text{\mathrm{SS}}}\)</span> is
+the unit vector pointing from the element considered to the element of
+the SS set of the same type. For
+example, for a common source SS set that contains one
+source and two detectors (<code>A</code> and <code>B</code>), there will
+be a <span
+class="math inline">\({\hat{r}}_{\Delta\text{\mathrm{SS}}}\)</span>
+pointing from <code>A</code> to <code>B</code> which controls the force
+that acts upon <code>A</code>, and vice versa for <code>B</code>. Thus,
+each SS set creates 2 <span
+class="math inline">\({\vec{F}}_{\Delta\text{\mathrm{SS}}}\)</span>
+forces which act on the non-common element types in the set.
+Additionally, if 2 SS sets form a DS
+set, the symmetric nature of the <em>requirements</em> creates resulting
+SS differences forces that
+encourage the DS <em>requirements</em> to be
+met.</p>
+<p>The repulsive force pushes sources and detectors apart such that
+detectors will not become saturated by near sources. The force only
+activates if sources and detectors get closer than the minimum distance
+(<span class="math inline">\(\rho_{min}\)</span>): <span
+class="math display">\[\begin{split}
+        {\vec{F}}_{repul}=\xi
+\left(\frac{1}{\rho_{min}}-\frac{1}{\|\vec{r}_{repul}\|}\right)\\
+            \times
+H\left(\rho_{min}-\|\vec{r}_{repul}\|\right)\hat{r}_{repul}
+    \end{split}\]</span> where, <span
+class="math inline">\(\|\vec{r}_{repul}\|\)</span> is the Euclidean
+distance between the element and its repulsor, <span
+class="math inline">\(H\)</span> is the Heaviside step function, and
+<span class="math inline">\({\hat{r}}_{repul}\)</span> is the unit
+vector pointing from the element its repulsor.</p>
+<p>Finally, the damping force creates non-conservation friction within
+the system allowing for convergence: <span
+class="math display">\[{\vec{F}}_{damp}=-\mathfrak{D}\dot{\vec{r}}\
+\]</span> where <span class="math inline">\(\dot{\vec{r}}\)</span>
+is the velocity vector. Euler’s method with a step of <span
+class="math inline">\(\Delta t\)</span> is used to iteratively solve
+Equation<a href="#equ:posRefEOM" data-reference-type="ref"
+data-reference="equ:posRefEOM">[equ:posRefEOM]</a> finding the r⃗ of
+each source and detector at each time step. When the system converges to
+equilibrium, the new positions of the arrangement elements are saved,
+and the arrangement is optimized for the desired nominal distances.
+Furthermore, the DS set discovery algorithm may
+be run again in the case of iterative design.</p>
+<p>Aside from the automated refinement, manual refinement may also be
+conducted. This manual refinement would be informed by the evaluation
+results of the array that will be discussed in the following sections.
+Essentially, any DS will go through many design
+iterations using all of the aforementioned and to be mentioned methods
+before it is actually constructed.</p>
+<h2 id="image-reconstruction">Image Reconstruction</h2>
+<h3 id="the-sensitivity-matrix">The Sensitivity Matrix</h3>
+<p>The first step for image reconstruction is to determine the 𝒮
+maps for each measurement in a given array. This is done using the
+methods in Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. Remember 𝒮
+can be interpreted using Equation <a href="#equ:sen_dmua"
+data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a> which shows each 𝒮
+value being related on two things. First, is the particular measurement
+(<span class="math inline">\(i\)</span> in Equation <a
+href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a>), second, is the
+perturbation r⃗ within the diffuse medium
+(<span class="math inline">\(\vec{r}_j\)</span> in Equation <a
+href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a>). Therefore, we can
+define a <span class="math inline">\(m\times v\)</span> <strong>𝒮</strong> for a given imaging
+array with <span class="math inline">\(m\)</span> measurements and <span
+class="math inline">\(v\)</span> voxels in the imaged medium: <span
+class="math display">\[\begin{split}
+        \boldsymbol{\mathcal{S}}=\\
+        \begin{bmatrix}
+            \mathcal{S}_1\left(\vec{r}_1\right)
+&amp;   \cdots  &amp;   \mathcal{S}_1\left(\vec{r}_j\right)  &amp;  \cdots
+&amp;    \mathcal{S}_1\left(\vec{r}_v\right) \\
+            \vdots  &amp;   \ddots &amp;    \ddots
+&amp;    \ddots  &amp;   \vdots \\
+            \mathcal{S}_i\left(\vec{r}_1\right)  &amp;  \ddots
+&amp;    \mathcal{S}_i\left(\vec{r}_j\right)  &amp;  \ddots
+&amp;    \mathcal{S}_i\left(\vec{r}_v\right) \\
+            \vdots  &amp;   \ddots &amp;    \ddots
+&amp;    \ddots  &amp;   \vdots \\
+            \mathcal{S}_m\left(\vec{r}_1\right)
+&amp;   \cdots  &amp;   \mathcal{S}_m\left(\vec{r}_j\right)  &amp;  \cdots
+&amp;    \mathcal{S}_m\left(\vec{r}_v\right) \\
+        \end{bmatrix}
+    \end{split}\]</span> Now considering a so-called apparent <span
+class="math inline">\(m \times 1\)</span> Δμ⃗<sub>a</sub> that is measured by
+the array and a <span class="math inline">\(v \times 1\)</span> Δμ⃗<sub>a</sub> of so-called actual
+voxel values, we can write following forward model based off Equation <a
+href="#equ:sen_dmua" data-reference-type="ref"
+data-reference="equ:sen_dmua">[equ:sen_dmua]</a>: <span
+class="math display">\[\Delta\vec{\mu}_a_{,apparent}=\boldsymbol{\mathcal{S}}\Delta\vec{\mu}_a_{,actual}
+    \label{equ:senMatForward}\]</span></p>
+<p>Image reconstruction will focus on inverting Equation <a
+href="#equ:senMatForward" data-reference-type="ref"
+data-reference="equ:senMatForward">[equ:senMatForward]</a>. Given that
+<span class="math inline">\(\Delta\vec{\mu}_a_{,apparent}\)</span> is
+what we have and we can calculate <strong>𝒮</strong> (Appendix <a
+href="app5.html#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>), the inversion will be
+finding an inverse for <strong>𝒮</strong> which multiplied by
+<span class="math inline">\(\Delta\vec{\mu}_a_{,apparent}\)</span>
+gives us <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> (Equation <a
+href="#equ:senMatInverse" data-reference-type="ref"
+data-reference="equ:senMatInverse">[equ:senMatInverse]</a>). It is worth
+noting that since <span class="math inline">\(m&lt;&lt;v\)</span> in
+these imaging problems, there will be many <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> which
+satisfies Equation <a href="#equ:senMatForward"
+data-reference-type="ref"
+data-reference="equ:senMatForward">[equ:senMatForward]</a>. Whatever
+inverse is chosen will find the <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> which meets
+some properties according to the inverse. Since this so-called recovered
+Δμ⃗<sub>a</sub> will not be unique, we
+will not call the particular one retrieved <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> since it is
+almost certainly not the <em>actual</em> Δμ⃗<sub>a</sub>. Therefore, we will
+called the particular reconstructed <span class="math inline">\(v\time
+1\)</span> Δμ⃗<sub>a</sub> from the inverse, the
+<em>recovered</em> (<em>id est</em> <span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span>).</p>
+<h3 id="the-moore-penrose-inverse">The Moore-Penrose Inverse</h3>
+<p>To invert Equation <a href="#equ:senMatForward"
+data-reference-type="ref"
+data-reference="equ:senMatForward">[equ:senMatForward]</a> we have
+chosen the MP <span class="citation"
+data-cites="penroseGeneralizedInverseMatrices1955"></span>. This
+retrieves the <span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> with the
+lowest Euclidean norm of all Δμ⃗<sub>a</sub> that would satisfy the
+forward model (Equation <a href="#equ:senMatForward"
+data-reference-type="ref"
+data-reference="equ:senMatForward">[equ:senMatForward]</a>). As is
+convention, we use a superscript <span class="math inline">\(+\)</span>
+to represent this inverse as follows: <span
+class="math display">\[\Delta\vec{\mu}_a_{,recovered}=\boldsymbol{\mathcal{S}}^+\Delta\vec{\mu}_a_{,apparent}
+    \label{equ:senMatInverse}\]</span></p>
+<p>The MP can be formulated in
+various ways, and may or may not include Tikhonov regularization, which
+aids in smoothing noise in the measurement. The typical matrix
+formulation of the Moore-Penrose pseudoinverse with Tikhonov
+regularization is as follows <span class="citation"
+data-cites="doulgerakisHighdensityFunctionalDiffuse2019 penroseGeneralizedInverseMatrices1955"></span>:
+<span
+class="math display">\[\boldsymbol{\mathcal{S}}^+=\boldsymbol{\mathcal{S}}^T\left(\boldsymbol{\mathcal{S}}\boldsymbol{\mathcal{S}}^T+\mathfrak{a}\mathbf{I}\right)^{-1}\]</span>
+where the <span class="math inline">\(T\)</span> superscript is
+transpose, the <span class="math inline">\(-1\)</span> superscript is
+the matrix inverse, <span class="math inline">\(\mathbf{I}\)</span> is
+the identity matrix, and: <span
+class="math display">\[\mathfrak{a}=a_{tik}\times\max{\left(diag\left(\boldsymbol{\mathcal{S}}\boldsymbol{\mathcal{S}}^T\right)\right)}\]</span>
+where <span class="math inline">\(\mathfrak{a}\)</span> is the Tikhonov
+regularization parameter which scales with the maximum singular value of
+<strong>𝒮</strong>, and <span
+class="math inline">\(a_{tik}\)</span> is a tunable parameter which
+should be chosen based on the noise in the measurement to optimize
+signal-to-noise against smoothing in the reconstructed image.</p>
+<p>The MP can also be formulated in
+terms of the SVD of <strong>𝒮</strong>: <span
+class="math display">\[\boldsymbol{\mathcal{S}}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T
+    \label{equ:SwithSVD}\]</span> <span
+class="math display">\[\mathbf{\Sigma}=
+    \begin{bmatrix}
+        \sigma_1    &amp; 0         &amp; 0         &amp;
+0         &amp; 0         &amp; \cdots    &amp; 0 \\
+        0           &amp; \ddots    &amp; 0         &amp;
+0         &amp; 0         &amp; \cdots    &amp; 0 \\
+        0           &amp; 0         &amp;\sigma_k   &amp;
+0         &amp; 0         &amp; \cdots    &amp; 0 \\
+        0           &amp; 0         &amp; 0         &amp;
+\ddots    &amp; 0         &amp; \cdots    &amp; 0 \\
+        0           &amp; 0         &amp; 0         &amp;
+0         &amp; \sigma_m  &amp; \cdots    &amp; 0 \\
+    \end{bmatrix}\]</span> where <span
+class="math inline">\(\mathbf{U}\)</span> is the <span
+class="math inline">\(m\times m\)</span> matrix of left singular vectors
+of <strong>𝒮</strong>, <span
+class="math inline">\(\mathbf{V}\)</span> is the <span
+class="math inline">\(v\times v\)</span> matrix of right singular
+vectors of <strong>𝒮</strong>, and <span
+class="math inline">\(\mathbf{\Sigma}\)</span> is the diagonal <span
+class="math inline">\(m\times v\)</span> matrix of <span
+class="math inline">\(m\)</span> singular values (<span
+class="math inline">\(\sigma_k\)</span>) of <span
+class="math inline">\(\mathbf{S}\)</span>. Using the SVD
+of <strong>𝒮</strong>, the MP
+without Tikhonov regularization is formulated as follows <span
+class="citation"
+data-cites="mathworksMATLABHelp2020 penroseGeneralizedInverseMatrices1955"></span>:
+<span
+class="math display">\[\boldsymbol{\mathcal{S}}^+=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T
+    \label{equ:MPwithSVD}\]</span> the inverse of the non-square <span
+class="math inline">\(\mathbf{\Sigma}\)</span> has the trivial
+expression: <span class="math display">\[\mathbf{\Sigma}^{-1}=
+    \begin{bmatrix}
+        \frac{1}{\sigma_1}  &amp; 0         &amp;
+0                     &amp; 0         &amp; 0                     \\
+        0                   &amp; \ddots    &amp;
+0                     &amp; 0         &amp; 0                     \\
+        0                   &amp; 0         &amp;
+\frac{1}{\sigma_k}    &amp; 0         &amp; 0                     \\
+        0                   &amp; 0         &amp;
+0                     &amp; \ddots    &amp; 0                     \\
+        0                   &amp; 0         &amp;
+0                     &amp; 0         &amp; \frac{1}{\sigma_m}    \\
+        \vdots              &amp; \vdots    &amp;
+\vdots                &amp; \vdots    &amp; \vdots                \\
+        0                   &amp; 0         &amp;
+0                     &amp; 0         &amp; 0                     \\
+    \end{bmatrix}\]</span> Here we note possible instability in the
+calculation of the MP if there are singular
+values that are close to zero. This is related to the κ discussed in further
+sections.</p>
+<p>Depending on the application and need, either formulation of the
+MP may be helpful. In the
+scope of this chapter we use both to examine and understand
+characteristics of the <strong>𝒮</strong> for a given DS
+optical array and understand how the image reconstruction will behave.
+This understanding is used to inform the imaging array design
+process.</p>
+<h3
+id="evaluation-of-a-imaging-system-using-the-moore-penrose-inverse">Evaluation
+of a Imaging System Using the Moore-Penrose Inverse</h3>
+<p>Given various DS arrays we need a way to
+specify the performance of different arrangements to choose the most
+effective for imaging. This is done by examining the imaging system in
+terms of the MP for image reconstruction.
+The following discussions assume no regularization. Substituting
+Equation <a href="#equ:senMatForward" data-reference-type="ref"
+data-reference="equ:senMatForward">[equ:senMatForward]</a> into
+Equation <a href="#equ:senMatInverse" data-reference-type="ref"
+data-reference="equ:senMatInverse">[equ:senMatInverse]</a> yields: <span
+class="math display">\[\Delta\vec{\mu}_a_{,recovered}=\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\Delta\vec{\mu}_a_{,actual}
+    \label{equ:SpS}\]</span> where the <span
+class="math inline">\(v\times v\)</span> <strong>𝒮⁺𝒮</strong> is the key operator
+that transforms the actual absorption perturbation vector into the
+recovered one. In the ideal case where the matrix <strong>𝒮⁺𝒮</strong> is the identity matrix,
+the image reconstruction would be perfect. This requires the MP
+to be equal to the true inverse which implies that <strong>𝒮</strong> is a square matrix
+(<em>id est</em> <span class="math inline">\(m=v\)</span>, same number
+of voxels as measurements). This can be achieved by choosing a medium
+voxelization with only <span class="math inline">\(m\)</span> voxels and
+reconstructing equivalent absorption changes for those large voxels.
+However, this would require uniform absorption properties across such
+large voxels, and the use of a <strong>𝒮</strong> that reflects the size
+of such large voxels. Furthermore, the goal of imaging is to reconstruct
+maps of absorption perturbations with a fine voxel grade to represent
+arbitrary shapes of optical perturbations. Thus, we will focus on cases
+where <span class="math inline">\(v&gt;&gt;m\)</span> and we examine
+ways to specify how close <strong>𝒮⁺𝒮</strong> is to the identity
+matrix.</p>
+<h4 id="maps-evaluating-array-performance">Maps Evaluating Array
+Performance</h4>
+<h5 id="reconstruction-and-cross-talk-maps">Reconstruction and
+Cross-Talk Maps</h5>
+<figure id="fig:RSIfig8">
+<div class="center">
+<img src="figures/RSI_fig8.png" class="img-fluid" alt="RSI_fig8">
+</div>
+<figcaption>inverse sensitivity matrix product (<strong>𝒮⁺𝒮</strong>) results: (a) reconstruction vector (ℛ⃗) and (b) cross-talk vector (𝒞⃗) for the circular
+arrangement.<br />
+Note 1: This figure can be found as Figure 8 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<figure id="fig:RSIfig9">
+<div class="center">
+<img src="figures/RSI_fig9.png" class="img-fluid" alt="RSI_fig9">
+</div>
+<figcaption>inverse sensitivity matrix product (<strong>𝒮⁺𝒮</strong>) results: (a) reconstruction vector (ℛ⃗) and (b) cross-talk vector (𝒞⃗) for the hexagonal
+arrangement.<br />
+Note 1: This figure can be found as Figure 9 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>The first method we use to examine <strong>𝒮⁺𝒮</strong> is by producing the
+ℛ⃗ which can be visualized
+in a voxelated map. This vector is defined as: <span
+class="math display">\[\vec{\mathcal{R}}=\frac{diag\left(\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\right)}{m}\]</span>
+where, the diagonal elements of <strong>𝒮⁺𝒮</strong> are normalized by <span
+class="math inline">\(m\)</span> since the trace of <strong>𝒮⁺𝒮</strong> is equal to <span
+class="math inline">\(m\)</span> <span class="citation"
+data-cites="penroseGeneralizedInverseMatrices1955"></span>. This
+normalizes ℛ⃗ such that the sum of its
+elements is equal to 1. The ℛ⃗ map (made of the <span
+class="math inline">\(v\)</span> values of the reconstruction vector
+elements for the <span class="math inline">\(v\)</span> voxels) shows
+the weight with which the imaging system reconstructs an actual
+perturbation into its true voxel (higher values are better). In the
+ideal case, the vector’s elements would be all ones. Visualizing the
+ℛ⃗ map shows which parts of
+the medium will reconstruct perturbations well.</p>
+<p>Examples of these ℛ⃗ and 𝒞⃗ maps can be seen in
+Figures <a href="#fig:RSIfig8" data-reference-type="ref"
+data-reference="fig:RSIfig8">1.5</a>&amp;<a href="#fig:RSIfig9"
+data-reference-type="ref" data-reference="fig:RSIfig9">1.6</a>. These
+show the maps for two different array designs (Figures <a
+href="#fig:RSIfig6" data-reference-type="ref"
+data-reference="fig:RSIfig6">1.12</a>&amp;<a href="#fig:RSIfig7"
+data-reference-type="ref" data-reference="fig:RSIfig7">1.11</a>) which
+will be discussed in further sections.</p>
+<p>The second map which is used to visualize <strong>𝒮⁺𝒮</strong> compared to the
+identity is the 𝒞⃗. This vector is defined
+as: <span
+class="math display">\[\vec{\mathcal{C}}=\frac{\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\harp{1}-diag\left(\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}\right)}{v-1}\]</span>
+where, <span class="math inline">\(\harp{1}\)</span> is the <span
+class="math inline">\(v\times 1\)</span> vector of ones. Conceptually
+the elements of the cross-talk vector are the average of the
+off-diagonal elements of <strong>𝒮⁺𝒮</strong> for each row. The <span
+class="math inline">\(v\)</span> values of the cross-talk vector
+elements indicate the average weight with which actual perturbations
+elsewhere in the medium are reconstructed to a given voxel (lower values
+are better). In the ideal case, 𝒞⃗ would be a vector of
+zeros. When visualized as a map it shows where the imaging system will
+reconstruct actual perturbations in the incorrect voxel.</p>
+<h5 id="resolution-and-localization-maps">Resolution and Localization
+Maps</h5>
+<figure id="fig:RSIfig10">
+<div class="center">
+<img src="figures/RSI_fig10.png" class="img-fluid" alt="RSI_fig10">
+</div>
+<figcaption>inverse sensitivity matrix product (<strong>𝒮⁺𝒮</strong>) impulse response
+results: (a) resolution matrix (<strong>Γ</strong>) and (b) localization matrix (<strong>Δ</strong>)
+for the circular arrangement.<br />
+Note 1: This figure can be found as Figure 10 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<figure id="fig:RSIfig11">
+<div class="center">
+<img src="figures/RSI_fig11.png" class="img-fluid" alt="RSI_fig11">
+</div>
+<figcaption>inverse sensitivity matrix product (<strong>𝒮⁺𝒮</strong>) impulse response
+results: (a) resolution matrix (<strong>Γ</strong>) and (b) localization matrix (<strong>Δ</strong>)
+for the hexagonal arrangement.<br />
+Note 1: This figure can be found as Figure 11 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>Determining the resolution and offset (localization) of reconstructed
+perturbations can be done efficiently by considering <strong>𝒮⁺𝒮</strong> as a matrix of unit
+voxel impulse response vectors. This can be seen by examining
+Equation <a href="#equ:SpS" data-reference-type="ref"
+data-reference="equ:SpS">[equ:SpS]</a>, and considering a <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> that
+contains all zeros except a 1 in element <span
+class="math inline">\(j\)</span> (a unit perturbation only in voxel
+<span class="math inline">\(j\)</span>). Then <span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> will be
+the <span class="math inline">\(j\)</span><sub>th</sub> column of <strong>𝒮⁺𝒮</strong>. Thus, <strong>𝒮⁺𝒮</strong> contains the response
+vectors (in its rows and columns since it is symmetric) for a unit
+perturbation in each voxel. In this section, we discuss efficient ways
+to calculate resolution and localization maps in MATLAB. However, the methods
+could be adapted to other programming languages.</p>
+<p>For notation, we introduce the <strong>Γ</strong> and the <strong>Δ</strong>
+as follows: <span
+class="math display">\[\mathbf{\Gamma}=\left[\harp{\Gamma}_x,
+\harp{\Gamma}_y, \harp{\Gamma}_z\right]\]</span> <span
+class="math display">\[\mathbf{\Delta}=\left[\harp{\Delta}_x,
+\harp{\Delta}_y, \harp{\Delta}_z\right]\]</span> where <strong>Γ</strong>
+and <strong>Δ</strong> are both <span
+class="math inline">\(v\times 3\)</span> matrices containing the map of
+resolution or localization in each coordinate direction (3 columns for
+the coordinate directions <span class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span>, and <span
+class="math inline">\(z\)</span>). For example, the <span
+class="math inline">\(j\)</span><sup>th</sup> element of <span
+class="math inline">\(\harp{\Gamma}_x\)</span> (<span
+class="math inline">\(\harp{\Gamma}_{x,j}\)</span>) is the reconstructed
+FWHM resolution along <span
+class="math inline">\(x\)</span> for a perturbation in voxel <span
+class="math inline">\(j\)</span>. Additionally, the <span
+class="math inline">\(j\)</span><sup>th</sup> element of <span
+class="math inline">\(\harp{\Delta}_x\)</span> (<span
+class="math inline">\(\Delta_{x,j}\)</span>) is the offset between the
+actual perturbation location and the reconstructed maximum location
+along <span class="math inline">\(x\)</span> for a perturbation in voxel
+<span class="math inline">\(j\)</span>.</p>
+<p>"</p>
+<p>For computation of these matrices in MATLAB, we must consider the
+data format. <strong>𝒮⁺𝒮</strong> ("SpS") has size <span
+class="math inline">\(v\times v\)</span> ("[n,n]=size(SpS)" in MATLAB), but we want to
+consider the response maps in a 3D coordinate system. Thus,
+"SpS" is reshaped as follows:</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>SpS_grid2=reshape(SpS,...
+    [ny,nx,nz,ny,nx,nz]);</code></pre>
+<p>where, "nx", "ny", and "nz" are the number of voxels in the <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span>, and <span
+class="math inline">\(z\)</span> directions, respectively. Now,
+"SpS_grid2" is a 6D array, where the first 3
+dimensions can index a perturbation location and the remaining 3D
+array is the reconstructed map (note switching the indexing to the last
+three would produce the same result since "SpS" is symmetric). For
+example:</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>reconMap=squeeze(...
+    SpS_grid2(iy,ix,iz,:,:,:));</code></pre>
+<p>where "reconMap" is the 3D array of the reconstructed
+map for a unit perturbation at voxel "[iy,ix,iz]". The resolution and
+localization are computed for each of the 3 dimensions. Thus, first we
+find the linear reconstruction along the axis of interest (<span
+class="math inline">\(x\)</span> shown here):</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>Mrcn_gridx=sum(sum(...
+    SpS_grid2,4),6);</code></pre>
+<p>where "Mrcn_gridx" is the 4 non-singular-dimension array containing
+the linear reconstruction (along the 5<sup>th</sup> dimension) for a
+perturbation in every voxel location (first 3 dimensions). This is
+obtained by summing the 3D reconstructed maps along
+the <span class="math inline">\(y\)</span> and <span
+class="math inline">\(z\)</span> directions (4<sup>th</sup> and
+6<sup>th</sup> dimension). The same method can be used for the other 2
+directions by summing over different indices. With <strong>𝒮⁺𝒮</strong> in this form we can now
+quickly find the resolution and localization maps along each
+dimension.</p>
+<p>We define the resolution in terms of the FWHM
+which can be computed in one line using the data structured in this way
+(<span class="math inline">\(x\)</span> direction shown):</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>Gamma_x=sum(...
+    Mrcn_gridx&gt;=...
+    (max(Mrcn_gridx,[],5)/2),...
+    5)*dx;</code></pre>
+<p>where "Gamma_x" is <span
+class="math inline">\(\harp{\Gamma}_x\)</span> reshaped to be a 3D map
+and "dx" is the voxel pitch in the <span
+class="math inline">\(x\)</span> direction. Similar reasoning follows
+for the other two directions.</p>
+<p>For the localization map we must first create a 3D
+array of actual perturbation location indices in each dimension for
+every voxel location (<span class="math inline">\(x\)</span> direction
+shown):</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>[~,XX,~]=meshgrid(1:ny,1:nx,1:nz);</code></pre>
+<p>where, "XX" is the 3D array of the <span
+class="math inline">\(x\)</span> indices of the actual perturbation
+location for a perturbation in every possible location in 3D.
+Next, the indices of the reconstructed maxima must be found (again for
+the <span class="math inline">\(x\)</span> direction):</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>[~,maxInds_x]=max(Mrcn_gridx,...
+    [], 5);</code></pre>
+<p>where, "maxInds_x" is the 3D array with the <span
+class="math inline">\(x\)</span> index of the maximum of the
+reconstructed image for an actual perturbation in every voxel location.
+Finally, we can compare "XX" to "maxInds_x" to find the localization
+map:</p>
+<pre style="Matlab-editor" data-basicstyle="\mlttfamily"><code>Delta_x=(maxInds_x-XX)*dx;</code></pre>
+<p>where, "Delta_x" is <span
+class="math inline">\(\harp{\Delta}_x\)</span> reshaped to be a 3D
+array for visualization. As before the same process can be used to find
+the <span class="math inline">\(y\)</span> and <span
+class="math inline">\(z\)</span> direction.</p>
+<p>"</p>
+<p>Examples of these ℛ⃗ and 𝒞⃗ maps can be seen in
+Figures <a href="#fig:RSIfig10" data-reference-type="ref"
+data-reference="fig:RSIfig10">1.7</a>&amp;<a href="#fig:RSIfig11"
+data-reference-type="ref" data-reference="fig:RSIfig11">1.8</a>. These
+show the maps for two different array designs (Figures <a
+href="#fig:RSIfig6" data-reference-type="ref"
+data-reference="fig:RSIfig6">1.12</a>&amp;<a href="#fig:RSIfig7"
+data-reference-type="ref" data-reference="fig:RSIfig7">1.11</a>) which
+will be discussed in further sections.</p>
+<p>The full MATLAB function that finds
+these maps for all three dimensions in shown in Listing <a
+href="#lst:ResLoc" data-reference-type="ref"
+data-reference="lst:ResLoc">[lst:ResLoc]</a>. The simplicity of this
+method is quite impressive given that the typical approach for
+calculation of <strong>Γ</strong> and <strong>Δ</strong>
+is to simulate perturbations are various locations using loops over the
+whole medium. For this reason, this method has the advantage of speed,
+but the disadvantage of needing to store <strong>𝒮⁺𝒮</strong> in RAM.</p>
+<h4 id="condition-number">Condition Number</h4>
+<p>There are also scalar values that can be used to evaluate the imaging
+effectiveness of <strong>𝒮</strong>. One value is the κ of <strong>𝒮</strong>, which represents the
+instability of the imaging system. The κ is defined as: <span
+class="math display">\[\kappa=\|\boldsymbol{\mathcal{S}}\|\|\boldsymbol{\mathcal{S}}^+\|\]</span>
+where smaller κ is better, meaning a
+more stable system <span class="citation"
+data-cites="mathworksMATLABHelp2020"></span>. In this work we use the
+<span class="math inline">\(\ell_2\)</span>-norm for our discussion but
+the condition number can be defined with any norm that is desired. For
+comparison, in the best case of Gaussian random sampling, <span
+class="math inline">\(\kappa=\mathcal{O}\left(1\right)\)</span>.
+But in the worst case of a singular <strong>𝒮</strong>, <span
+class="math inline">\(\kappa=\infty\)</span>.</p>
+<h4 id="singular-value-decomposition-and-singular-vectors">Singular
+Value Decomposition and Singular Vectors</h4>
+<figure id="fig:RSIfig12">
+<div class="center">
+<img src="figures/RSI_fig12.png" class="img-fluid" alt="RSI_fig12" style="width:95.0%">
+</div>
+<figcaption>First <span class="math inline">\(m=27\)</span> right
+singular vectors (<span class="math inline">\(\harp{V}_1, \ldots,
+\harp{V}_m\)</span>) for the hexagonal arrangement.<br />
+Note 1: This figure can be found as Figure 12 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>We can also think of the MP it in terms of SVD.
+Equation <a href="#equ:MPwithSVD" data-reference-type="ref"
+data-reference="equ:MPwithSVD">[equ:MPwithSVD]</a> shows this SVD
+based formulation, so we may now revisit <strong>𝒮⁺𝒮</strong> and κ from a different
+perspective. Combining Equations <a href="#equ:SwithSVD"
+data-reference-type="ref"
+data-reference="equ:SwithSVD">[equ:SwithSVD]</a>&amp;<a
+href="#equ:MPwithSVD" data-reference-type="ref"
+data-reference="equ:MPwithSVD">[equ:MPwithSVD]</a> yields: <span
+class="math display">\[\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}=\mathbf{V}\mathbf{\Sigma}^{-1}\mathbf{U}^T\mathbf{U}\mathbf{\Sigma}\mathbf{V}^T\]</span>
+which can be simplified to: <span
+class="math display">\[\boldsymbol{\mathcal{S}}^{+}\!\boldsymbol{\mathcal{S}}=\left[\harp{V}_1, \ldots,
+\harp{V}_m, \harp{0}, \ldots, \harp{0}\right]\mathbf{V}^T\]</span> by
+the orthogonality of <span class="math inline">\(\mathbf{U}\)</span>
+(<em>id est</em> <span
+class="math inline">\(\mathbf{U}^{-1}=\mathbf{U}^T\)</span>) and the
+multiplication of <span
+class="math inline">\(\mathbf{\Sigma}^{-1}\)</span> and <span
+class="math inline">\(\mathbf{\Sigma}\)</span> which yields a <span
+class="math inline">\(n\times n\)</span> matrix with 1 in the first
+<span class="math inline">\(m\)</span> diagonal elements and 0
+elsewhere. In the above equation, <span
+class="math inline">\(\harp{0}\)</span> is an <span
+class="math inline">\(m\times 1\)</span> vector of zeros of which there
+are <span class="math inline">\(v-m\)</span> in the matrix within the
+brackets on the right-hand side. From this formulation, we can see that
+the imaging system matrix (<em>id est</em> <strong>𝒮⁺𝒮</strong>) is completely
+formulated using the right singular vectors.</p>
+<p>The importance of the right singular vectors of <strong>𝒮</strong> can be seen by applying
+Equation <a href="#equ:SpS" data-reference-type="ref"
+data-reference="equ:SpS">[equ:SpS]</a>: <span
+class="math display">\[\begin{split}
+        \Delta\vec{\mu}_a_{,recovered}=\\
+            \left[\harp{V}_1, \ldots, \harp{V}_m, \harp{0}, \ldots,
+\harp{0}\right]\mathbf{V}^T\Delta\vec{\mu}_a_{,actual}
+    \end{split}\]</span> where, it can be seen by the orthogonality of
+<span class="math inline">\(\mathbf{V}\)</span>, that if <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> is any of
+the first <span class="math inline">\(m\)</span> right singular vectors
+of <strong>𝒮</strong> (or any linear
+combination of them), then a perfect reconstruction will be achieved
+(<em>id est</em> <span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}=\mathbf{V}^T\Delta\vec{\mu}_a_{,actual}\)</span>).
+Conversely, if <span
+class="math inline">\(\Delta\vec{\mu}_a_{,actual}\)</span> is any of
+the last <span class="math inline">\(v-m\)</span> right singular
+vectors, then a null reconstruction will be achieved (<em>id est</em>
+<span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}=\harp{0}\)</span>).
+This means that <span
+class="math inline">\(\Delta\vec{\mu}_a_{,recovered}\)</span> is
+spanned by the vectors (<span class="math inline">\(\harp{V}_1, \ldots,
+\harp{V}_m\)</span>). In other words, any reconstructed image must be
+some linear combination of the first <span
+class="math inline">\(m\)</span> right singular vectors of <strong>𝒮</strong>. This fact can be used
+to further evaluate the imaging system by visualizing these <span
+class="math inline">\(m\)</span> vectors as maps in 3D
+space, keeping in mind that any image reconstructed by the system must
+be a linear combination of these maps. An example of a map of these
+singular vectors is shown in Figure <a href="#fig:RSIfig12"
+data-reference-type="ref" data-reference="fig:RSIfig12">1.9</a> which
+corresponds to the array shown in Figure <a href="#fig:RSIfig7"
+data-reference-type="ref" data-reference="fig:RSIfig7">1.11</a> which is
+discussed in the following sections.</p>
+<p>We may also revisit the κ in terms of SVD.
+<span class="math inline">\(\mathbf{\Sigma}\)</span> contains the <span
+class="math inline">\(m\)</span> singular values of <strong>𝒮</strong> (<span
+class="math inline">\(\sigma_1, \ldots, \sigma_m\)</span>). We consider
+the singular values ordered such that <span
+class="math inline">\(\sigma_1\)</span> is the maximum singular value
+and <span class="math inline">\(\sigma_m\)</span> is the minimum
+singular value. Therefore κ can also be expressed as
+<span class="citation-keys text-muted small">[mathworksMATLABHelp2020]</span>:
+<span
+class="math display">\[\kappa=\frac{\sigma_1}{\sigma_m}\]</span>
+showing that the κ (meaning the system
+stability) can be thought of as the ratio of biggest and smallest
+singular values. This suggests that a better conditioned system will
+have a set of singular values within a relatively small range, while an
+ill-conditioned system will have a large difference between the largest
+and smallest singular values. Therefore, yet another method for looking
+at the stability/condition of the imaging system is to examine the <span
+class="math inline">\(m\)</span> singular values and noting how much
+they differ. For example, if the first <span
+class="math inline">\(m-1\)</span> singular values have approximately
+the same order of magnitude but <span
+class="math inline">\(\sigma_m\)</span> is near zero, the condition
+number of the system may be improved by ignoring a redundant
+measurement.</p>
+<p>For better understanding of the use of singular values we may
+consider two simple examples with <span
+class="math inline">\(m=2\)</span> and <span
+class="math inline">\(v=3\)</span>. First, we consider the case where
+one measurement is very weekly sensitive to the medium: <span
+class="math display">\[\boldsymbol{\mathcal{S}}=
+    \begin{bmatrix}
+        1/3 &amp; 1/3 &amp; 1/3 \\
+        0   &amp; 0   &amp; 10^{-6} \\
+    \end{bmatrix}\]</span> Then <span
+class="math inline">\(\sigma_1=0.6\)</span>, <span
+class="math inline">\(\sigma_2=8\times{10}^{-7}\)</span>, and <span
+class="math inline">\(\kappa=7\times{10}^5\)</span>, showing
+that one measurement is problematic. Second, consider the case where the
+two measurements have close to the same sensitivity: <span
+class="math display">\[\boldsymbol{\mathcal{S}}=
+    \begin{bmatrix}
+        1/3 &amp; 1/3 &amp; 1/3 \\
+        1/3 &amp; 1/3+10^{-6} &amp; 1/3-10^{-6} \\
+    \end{bmatrix}\]</span> Then <span
+class="math inline">\(\sigma_1=0.8\)</span>, <span
+class="math inline">\(\sigma_2=10^{-6}\)</span> and <span
+class="math inline">\(\kappa=8\times{10}^5\)</span>, showing
+again there is a problematic measurement (because one measurement is
+redundant). We note that examining these values cannot be done blindly
+since their magnitudes are dependent on the specific reconstruction
+parameters being considered, and different issues may cause similar
+effects. However, examining singular values can provide guidance when
+combined with other evaluation methods or when comparing two similar
+array designs.</p>
+<h2 id="constructing-a-dual-slope-array">Constructing a Dual-Slope
+Array</h2>
+<p>Once a geometrical arrangement of source and detector locations has
+been determined, a design must be created that physically realizes it.
+Depending on the specifics of the NIRS instrument, the array may
+contain physical sources (laser diodes, light emitting diodes, <em>et
+cetera</em>) and detectors (photodiodes, avalanche photodiodes, <em>et
+cetera</em>), or it may contains optical fibers that deliver light to
+and from the investigated sample. In this work, we have used an Imagent NIRS
+instrument, which uses laser diodes and PMT detectors that are coupled
+to optical fibers. Specifically, the light sources are coupled to SMA
+terminated multi-mode optical fibers, whereas the optical detectors are
+coupled to ferrule terminated fiber bundles connected via a collet. For
+the detector fibers we use 2 m, 3 mm fiber bundles with 4.75 mm OD
+ferrules. 2 separate optical fibers, 1 for each of 2 λs
+690 nm, &amp; 830 nm, deliver light at each source location. To
+accomplish this, we use custom-built, 2 m long <span
+class="math inline">\(1 \times 2\)</span> fan-out fiber bundles with 1 m
+ends. The optical fiber used was a 600 μm multi-mode fiber with
+furcation tubing jacket. The split ends are terminated in SMA
+connectors, and the common end is terminated in a custom drilled and
+polished 2.5 mm OD ferrule. Given these
+optical fiber terminations, the optical array was designed to arrange
+the 4.75 mm OD detector fibers and the
+2.5 mm OD source fibers in the
+desired arrangement.</p>
+<h3 id="fiber-array-design">Fiber Array Design</h3>
+<figure id="fig:RSIfig5">
+<div class="center">
+<img src="figures/RSI_fig5.png" class="img-fluid" alt="RSI_fig5">
+</div>
+<figcaption>Example array design methodology. (a) Basic schematic of
+layered array geometry. (b) Example Delaunay triangulation used for mesh
+design, and Voronoi partition used for fiber void design for a single
+Dual-Slope (DS) set. (c) Basic schematic of
+parting line locations and fixture clamping methodology used to design
+the array mold.<br />
+Note 1: This chart can be found as Figure 5 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.<br />
+Acronyms: Ultra High Molecular Weight polyethylene (UHMW).</figcaption>
+</figure>
+<figure id="fig:RSIfig7">
+<div class="center">
+<img src="figures/RSI_fig7.png" class="img-fluid" alt="RSI_fig7">
+</div>
+<figcaption>Final hexagonal design of the Dual-Slope (DS) imaging arrangement. (a)-(g)
+Examples of each of types of DS sets within the
+source-detector arrangement. (g) Four redundant DS
+sets combined into one. (h) Full array showing all sources (1-16),
+detectors (A-J), and Single-Distance (SD) measurement pairs (lines).
+(i) Histogram of all SD which make up the short
+distance of a Single-Slope (SS) set. (j) Histogram of all
+SD distances which make up the
+long distance of a SS set. (k) Histogram of all
+distance differences for SS sets.<br />
+Note 1: This figure can be found as Figure 7 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>The overarching design of the array was a three-layer mesh structure
+encapsulated in PDMS (<em>id est</em>
+silicone; Figure<a href="#fig:RSIfig5" data-reference-type="ref"
+data-reference="fig:RSIfig5">1.10</a>(a)). The first and third layers of
+the array are constructed from UHMW film and the middle
+(second) layer is built from polypropylene hook and loop fabric. The
+PDMS used to encapsulate the
+array mixed with <span data-acronym-label="cII"
+data-acronym-form="singular+short">cII</span> to pigment the array
+black.</p>
+<p>The first and third UHMW mesh layers hold the
+fiber terminations in their place within the arrangement. The design
+methodology for the UHMW mesh is as follows:</p>
+<ol>
+<li><p>Determine the locations of the source and detector
+ferrules.</p></li>
+<li><p>At each ferrule location create a hole to accommodate the ferrule
+with a doughnut of UHMW surroundings it with a
+14.5 mm OD (<em>id est</em> we now
+have toroidal islands of UHMW at each ferrule
+location).</p></li>
+<li><p>Connect the centers of the doughnuts with a Dalaunay
+triangulation (Figure <a href="#fig:RSIfig5" data-reference-type="ref"
+data-reference="fig:RSIfig5">1.10</a>(b)), where each triangulation edge
+defines the center-line of a 5 mm wide UHMW connector.</p></li>
+</ol>
+<p>The resulting mesh features circles of UHMW
+surrounding each ferrule with 5 mm wide connections between them. This
+design strategy creates an interconnected mesh which will hold the
+fibers in the arrangement locations. The fiber ferrules were epoxied to
+the UHMW mesh.</p>
+<p>The middle layer of hook fabric is cut to remove as much material as
+possible, allowing the fibers to pass through the layer and PDMS
+to fully surround all the parts. Enough hook fabric remains to provide
+tension to the array when pulled, since this is the method with which
+the array will be attached to other components (such as a head cap). As
+such, the size of the hook fabric will overhang the array by 25 mm once
+it has been encapsulated with PDMS. Both the UHMW
+mesh and hook fabric are cut using a paper cutter.</p>
+<p>Finally, after designing and constructing the various array layers,
+the assembly is encapsulated with PDMS. The first mesh layer is
+placed 5 mm from the ferrule ends, the second layer of hook fabric
+(hooks facing away from ferrule ends) is placed 5 mm from the first
+mesh, and the third layer of mesh is placed 5 mm above the hook fabric.
+Finally, the top of the PDMS is poured such that it is
+flush with the top of the third layer. This procedure results in a total
+array thickness of 15 mm. The outer perimeter of the array is such that
+it fully encapsulates the mesh layers and leaves a 25 mm hook fabric
+overhang. On the bottom of the optical array, there are voids in the
+PDMS surrounding each fiber
+ferrule to allow for the ferrules to push through hair (in the case of
+non-invasive applications on the human head). These negative spaces are
+5 mm in height and their shape is defined using a Voronoi partition
+(Figure <a href="#fig:RSIfig5" data-reference-type="ref"
+data-reference="fig:RSIfig5">1.10</a>(b)) between the fiber locations.
+The edges of the partition are of a non-zero width such that each
+ferrule is 7.5 mm to the edge of its void, or the partition width is
+5 mm, whichever creates a larger partition wall width. This creates a
+design with walls of PDMS separating all fiber
+locations ensuring that light diffuses through the medium being probed
+and does not leak across the surface.</p>
+<h3 id="fiber-array-construction-methods">Fiber Array Construction
+Methods</h3>
+<p>To realize the array design, the structure of the array is built
+using a mold that holds all components in place while the PDMS
+is poured over the array. The general design of the array mold consists
+of a series of fixtures that bolt together such that the fiber ferrules
+are placed along the parting lines of the fixtures that are assembled to
+create the mold (Figure <a href="#fig:RSIfig5" data-reference-type="ref"
+data-reference="fig:RSIfig5">1.10</a>(c)). In other words, the assembly
+fixtures bolt together to sandwich the ferrules in place; once all the
+fixtures are bolted together their negative space creates the mold for
+the PDMS. Once this assembly is in
+place, a collar is bolted around the array such that the hook fabric is
+sandwiched to guarantee that when the PDMS is poured, the fabric
+will not be encapsulated and will overhang the array.</p>
+<p>The order of assembly of the array is:</p>
+<ol>
+<li><p>Pull the fibers through the 3 layers of mesh and hook
+fabric.</p></li>
+<li><p>Place the ferrules sandwiched between the fixtures to create a
+mold.</p></li>
+<li><p>Lower the layers into the mold negative space, epoxy the ferrules
+to the mesh, and affix the collar as to sandwich the middle
+layer.</p></li>
+<li><p>Pour the PDMS and allow the array to
+set.</p></li>
+</ol>
+<p>After which everything is disassembled and the flash removed.</p>
+<p>The primary material used for the mold was PLA
+fabricated using a FFF 3D
+printer. The 3D printed material was
+sprayed with methyl methacrylate lacquer to ensure there was no cure
+inhibition of the PDMS. The mold is bolted
+together using M5<span class="math inline">\(\times\)</span>0.8 mm
+socket head cap screws of various lengths and matching nuts which were
+captured within the printed PLA mold.</p>
+<h3 id="head-cap-design">Head-Cap Design</h3>
+<p>Here, we consider fNIRS applied to the human
+brain as the array’s primary use. As such, it is designed to be placed
+on a human head to image optical property changes within brain tissue.
+To achieve this, a polychloroprene wet suit cap was modified to accept
+the array and connect to the overhanging hook fabric. Each cap can be
+designed to target a specific region on the subject’s head and different
+sized caps can be made for different subjects. Additionally, caps can be
+washed between uses.</p>
+<p>To construct a cap, a hole is cut to accommodate the profile of the
+array. Then, loop polypropylene hook and loop fabric are sewn into the
+inside of the cap with loops facing toward the head. The optical array
+can be placed within the cap hole and fixed to the cap via the hook and
+loop. Each cap is custom designed for size and head location. If
+necessary, hook and loop tie straps are sewn to the outside of the cap
+to provide extra tension to the array. This may be necessary to conform
+the array to the subject’s head. Cap construction is done using a sewing
+machine and components are attached using black #69 polyester
+thread.</p>
+<h3 id="example-dual-slope-imaging-arrays">Example Dual-Slope Imaging
+Arrays</h3>
+<p>The evaluation methods and results in the for the following example
+arrays rely on the creation of sensitivity maps for each DS set
+per Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a>. For our simulations, we
+used the same medium paramters stated in Section <a
+href="ch2.html#ch:shortLong:sec:senPro" data-reference-type="ref"
+data-reference="ch:shortLong:sec:senPro">[ch:shortLong:sec:senPro]</a>.
+These optical properties are consistent with previous work concerning
+sensitivity maps <span class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019"></span> and typical
+values for the human brain <span class="citation"
+data-cites="hallacogluAbsoluteMeasurementCerebral2012"></span>.</p>
+<p>The goal of DS imaging is not to create
+3D images but instead 2D
+images representative of deep perturbations. Thus, simulation geometry
+featured 2 layers of voxels ranging from 0 mm–20 mm in depth, with each
+voxel 10 mm in height (<span class="math inline">\(z\)</span> direction)
+and the second layer of voxels we focused on. Such layered geometry has
+been described for use with DS before this design work
+<span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span> in <span
+class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>.</p>
+<p>The geometry was chosen to align with the goals of using DS
+φ to achieve preferential
+deep sensitivity. The second layer depth was chosen both because the
+brain is typically at a depth &gt;10 mm <span class="citation"
+data-cites="xiaoTranscranialBrainAtlas2018 luScalpCortexDistance2019"></span>,
+and because the typical depth of maximal sensitivity for DS
+φ is greater than 10 mm. In
+accordance with these goals, we show the maps only for the second layer
+of voxels (10 mm–20 mm) and only for DS φ.</p>
+<h4 id="the-circular-array">The Circular Array</h4>
+<figure id="fig:RSIfig6">
+<div class="center">
+<img src="figures/RSI_fig6.png" class="img-fluid" alt="RSI_fig6">
+</div>
+<figcaption>Circular design of the Dual-Slope (DS) imaging arrangement. (a)-(o)
+Examples of each of types of DS sets within the
+source-detector arrangement. (p) Full array showing all sources (1-16),
+detectors (A-I), and Single-Distance (SD) measurement pairs (lines).
+(q) Histogram of all SD which make up the short
+distance of a Single-Slope (SS) set. (r) Histogram of all
+SD distances which make up the
+long distance of a SS set. (s) Histogram of all
+distance differences for SS sets.<br />
+Note 1: This figure can be found as Figure 6 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>We designed a circular source-detector arrangement with the purpose
+of using DS φ
+to preferentially image deep regions in a liquid phantom experiment in
+<span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>, <span
+class="citation"
+data-cites="blaneyDualSlopeImagingFrequencyDomain2020"></span>, and
+<span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>. Our goal was to
+design an arrangement with many overlapping measurements in a small area
+for high SNR and resolution (Figure <a
+href="#fig:RSIfig6" data-reference-type="ref"
+data-reference="fig:RSIfig6">1.12</a>). This was to demonstrate the
+presented methods and validate DS imaging on a phantom.</p>
+<p>This arrangement was designed for a total of 16 sources and
+9 detectors. We started the design process by manually placing the
+sources and detectors in concentric circles. The arrangements with the
+largest number of overlapping sets was chosen. This resulting circular
+arrangement (Figure <a href="#fig:RSIfig6" data-reference-type="ref"
+data-reference="fig:RSIfig6">1.12</a>(p)) consists of <span
+class="math inline">\(m=116\)</span> DS sets. There are 15
+different DS set shapes either linear,
+trapezoidal, or rhombic (Figure <a href="#fig:RSIfig6"
+data-reference-type="ref" data-reference="fig:RSIfig6">1.12</a>(a)-(o))
+<span class="citation"
+data-cites="fantiniTransformationalChangeField2019"></span>. However,
+for the phantom experiments only <span
+class="math inline">\(m=16\)</span> of these DS
+sets were chosen of the asymmetric linear or trapezoidal types
+(Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>). Laterally, for the circular array
+simulation, the full volume was 50.5 × 50.5 × 20 mm with voxels of
+0.5 × 0.5 × 10 mm, resulting in <span
+class="math inline">\(v=20,402\)</span>.</p>
+<p>Examining the ℛ⃗ and 𝒞⃗ maps for the circular
+array, we notice the reconstruction is focused on a small central region
+(Figure <a href="#fig:RSIfig8" data-reference-type="ref"
+data-reference="fig:RSIfig8">1.5</a>(a)) and the crosstalk map suggests
+preferential reconstruction in a four-lobed ring around the center
+(Figure <a href="#fig:RSIfig8" data-reference-type="ref"
+data-reference="fig:RSIfig8">1.5</a>(b)). This is consistent with the
+design goals for this array which sought to confine the sensitivity to a
+small region. As a result, Figure <a href="#fig:RSIfig8"
+data-reference-type="ref" data-reference="fig:RSIfig8">1.5</a> suggests
+the circular array has a coverage region with a radius of approximately
+10 mm (approximately 300 mm<sup>2</sup>) for which 116 DS
+which were considered here sets overlap.</p>
+<p>Second, we examine the <strong>Γ</strong> and <strong>Δ</strong>
+maps. A typical (average in usable array region) lateral FWHM
+resolution of approximately 10 mm is achieved (Figure <a
+href="#fig:RSIfig10" data-reference-type="ref"
+data-reference="fig:RSIfig10">1.7</a>(a)) with a localization error of
+about 1 mm (Figure <a href="#fig:RSIfig10" data-reference-type="ref"
+data-reference="fig:RSIfig10">1.7</a>(b)). This suggests that the array
+could roughly resolve two point like perturbations in its small imaging
+area and reinforcing the goals for this design are met given that it is
+capable of fine precise imaging in a small area.</p>
+<h5 id="physical-realization-of-circular-array">Physical Realization of
+Circular Array</h5>
+<figure id="fig:OLfig1">
+<div class="center">
+<img src="figures/OL_fig1.png" class="img-fluid" alt="OL_fig1">
+</div>
+<figcaption>(a) Schematic of 8-source/9-detector imaging array that
+features 16 Dual-Slope (DS) sets [DS1, orange; DS11,
+green]. (b) Schematic of imaging configuration showing the superficial
+[at (<span class="math inline">\(5\hat{x}+11.5\hat{z}\)</span>) mm] and
+deep [at (<span
+class="math inline">\(-5\hat{x}+11.5\hat{z}\)</span>) mm] 10 × 10 × 3 mm
+perturbations. Region of sensitivity for Intensity (<em>I</em>) (c) and phase (φ)
+(d) at plane of maximal sensitivity to absorption change (𝒮).<br />
+Note 1: This figure can be found as Figure 1 in <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>.</figcaption>
+</figure>
+<figure id="fig:circArrayPic">
+<div class="center">
+<img src="figures/circArrayPic.jpg" class="img-fluid" alt="circArrayPic" style="width:50.0%">
+</div>
+<figcaption>Image of circular array used for liquid phantom imaging
+experiments in <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>.</figcaption>
+</figure>
+<p>The circular array was used for a phantom imaging experiment in <span
+class="citation" data-cites="blaneyDualslopeImagingHighly2020"></span>
+as seen in Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>. For this reason the array was not
+built into a PDMS probe but instead held by
+a 3D printed PLA
+fixture (Figure <a href="#fig:circArrayPic" data-reference-type="ref"
+data-reference="fig:circArrayPic">1.14</a>). This fixture suspended the
+sources and detectors on the surface of a liquid phantom made of 2 %
+reduced fat milk, <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span>, and W.</p>
+<p>During the experiment PDMS solid phantoms were
+placed in the liquid and their perturbation measured by the array
+(Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(b)). For these experiments only
+<span class="math inline">\(m=16\)</span> DS sets were used since the
+investigation was prior to the invention of the DS
+discovery algorithm. The two types of DSs which were manually found
+and used for this study <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span> are shown in
+Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(a). The results from this
+experiment are discussed in subsequent sections.</p>
+<h4 id="the-hexagonal-array">The Hexagonal Array</h4>
+<figure id="fig:RSIfig13">
+<div class="center">
+<img src="figures/RSI_fig13.png" class="img-fluid" alt="RSI_fig13">
+</div>
+<figcaption>Layer profiles for the physical array construction. (a)
+First and third layer mesh. (b) Middle layer hook fabric.<br />
+Note 1: This figure can be found as Figure 13 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>We designed a hexagonal arrangement with the purpose of using DS
+φ in fNIRS experiments. This with
+large lateral coverage and prioritization of localization of optical
+perturbations (Figure <a href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>). This goal differs from a goal of
+spatial resolution (as with the circular array), which would imply the
+discrimination of two close perturbations, which is not the goal of the
+hexagonal array.</p>
+<p>This arrangement was designed for a total of 16 sources and
+10 detectors. We started the design process by manually placing the
+sources and detectors in various tessellations, and using the DS
+discovery algorithm to find all the possible DS
+sets (Listings <a href="#lst:SDdis" data-reference-type="ref"
+data-reference="lst:SDdis">[lst:SDdis]</a>,<a href="#lst:SSdis"
+data-reference-type="ref"
+data-reference="lst:SSdis">[lst:SSdis]</a>,&amp;<a href="#lst:DSdis"
+data-reference-type="ref" data-reference="lst:DSdis">[lst:DSdis]</a>).
+The arrangements with the largest number of overlapping sets and best
+evaluation (focusing on the goal for each array) results was chosen. The
+final arrangement was based on a hexagonal tessellation (Figure <a
+href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>). Within this hexagonal
+arrangement, there are 7 different shapes of DS
+sets <span class="citation"
+data-cites="fantiniTransformationalChangeField2019"></span> (Figure <a
+href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>(a)(g)) all of which are either
+rhomboids or trapezoids. The 4 redundant sets of the hexagonal
+arrangement (Figure <a href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>(g)) should be averaged together
+since their regions of sensitivity are very close to each other, and
+considering them separately would increase κ of the system. After
+considering this the hexagonal array contained <span
+class="math inline">\(m=27\)</span> DS sets. The whole hexagonal
+array contains a small range of short and long distances (Figure <a
+href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>(i)-(k)), showing that the position
+refinement successfully homogenized the array. Laterally, the array
+simulation full volume was 121 × 121 × 20 mm with 1 × 1 × 10 mm voxels,
+thus <span class="math inline">\(v=29,282\)</span>.</p>
+<p>Now lets consider the ℛ⃗ and 𝒞⃗ for the hexagonal array.
+Focusing on the reconstruction map (Figure <a href="#fig:RSIfig7"
+data-reference-type="ref" data-reference="fig:RSIfig7">1.11</a>(a)), we
+notice that the array does not feature homogeneous reconstruction.
+Noticeably, the array has high reconstruction values at the center and
+below the top 4 detectors (<code>A</code>-<code>D</code>). Additionally,
+there are low reconstruction values in various regions surrounding the
+center, suggesting compromised sensitivity and poor reconstruction
+quality in these regions. Looking at the crosstalk map (Figure <a
+href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>(b)), we notice high values in the
+center and below sources <code>2</code> and <code>7</code>, indicating
+that some perturbations will be incorrectly reconstructed there. Low
+values in the crosstalk map are seen below detectors <code>I</code> and
+<code>F</code>, which align with low values in the reconstruction map;
+this suggests that the array has blind spots in these locations.
+Overall, given our goal of large lateral coverage, the array preforms
+reasonably well by covering a rough triangle of approximately
+7200 mm<sup>2</sup> with the largest weakness being two poor sensitivity
+locations below detectors <code>I</code> and <code>F</code>. Keeping
+this imaging performance in mind, in a given experiment the array should
+be placed such that the best sensitivity area (underneath detectors
+<code>A</code>-<code>D</code>) is aligned with the region of
+interest.</p>
+<p>Second, we examine the <strong>Γ</strong> and <strong>Δ</strong>
+maps. The resolution map (Figure <a href="#fig:RSIfig11"
+data-reference-type="ref" data-reference="fig:RSIfig11">1.8</a>(a))
+shows that the expected lateral FWHM of the arrangement ranges
+from 20 mm–30 mm in most regions. This value is quite large and shows
+that the arrangement will not be able to distinguish between two closely
+spaced perturbations. However, according to our goal, we prioritize
+localization over resolution. Thus, we look at the localization map
+(Figure <a href="#fig:RSIfig11" data-reference-type="ref"
+data-reference="fig:RSIfig11">1.8</a>(b)) for metrics of success. Over
+almost the entire array, the lateral localization is approximately 5 mm.
+Therefore, the arrangement achieves both a good localization and a large
+lateral coverage, along the lines of the design goals.</p>
+<p>Finally, we consider the imaging system in terms of SVD.
+The first <span class="math inline">\(m\)</span> right singular vectors
+(<span class="math inline">\(\harp{V}_1, \ldots, \harp{V}_m\)</span>)
+show the span of all possible reconstructed images for the hexagonal
+array (Figure <a href="#fig:RSIfig12" data-reference-type="ref"
+data-reference="fig:RSIfig12">1.9</a>). For this system, <span
+class="math inline">\(m=27\)</span> and thus the reconstruction must fit
+into 27 degrees of freedom that are shown in these singular vectors.
+Through careful examination of these maps, we can see where it is
+possible for the system to reconstruct images and where it is not.
+Notably, the upper right and left corners of the map cannot be
+reconstructed well, which is expected since the array cannot have
+sensitivity there. Aside from the right singular vectors, κ of the system was also
+evaluated. This can be calculated using the matrix norm or SVD,
+with SVD having the advantage of
+giving the option to examine the other singular values as well. For this
+system, the condition number is on the order of 1 × 10<sup>14</sup>,
+suggesting that the system is ill-conditioned. However, this is expected
+and known for a diffuse optical imaging system. What should be noted is
+the improvement that was achieved by averaging the redundant DS
+sets (Figure <a href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a>(g)) When the system considers
+these separately (in which case <span
+class="math inline">\(m=30\)</span>), the condition number is on the
+order of 1 × 10<sup>15</sup> and the last three singular values approach
+zero. Therefore, removing the redundant measurements via averaging
+improved the condition of the system by an order of magnitude.</p>
+<h5 id="physical-realization-of-hexagonal-array">Physical Realization of
+Hexagonal Array</h5>
+<figure id="fig:RSIfig14">
+<div class="center">
+<img src="figures/RSI_fig14.png" class="img-fluid" alt="RSI_fig14">
+</div>
+<figcaption>Mold design used to construct the final array. (a) Bottom
+view showing bolts attaching seven fixtures to create the mold. (b) Top
+view showing parting line locations sandwiching the fiber ends. (c)
+Cross section showing three layers captured within the mold. (d)
+Isometric view of the full mold assembly before encapsulating PolyDiMethylSiloxane (PDMS)
+is poured.<br />
+Note 1: This figure can be found as Figure 14 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<figure id="fig:RSIfig15">
+<div class="center">
+<img src="figures/RSI_fig15.png" class="img-fluid" alt="RSI_fig15">
+</div>
+<figcaption>Final array design and construction. (a) Rendering of the
+bottom side of our final array design. (b) Picture of the final array
+after construction. (c) Picture of the final array attached to the
+Imagent V2 instrument with the array applied onto an optical
+phantom.<br />
+Note 1: This figure can be found as Figure 15 in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span>.</figcaption>
+</figure>
+<p>The physical hexagonal array was designed around the arrangement in
+Figure <a href="#fig:RSIfig7" data-reference-type="ref"
+data-reference="fig:RSIfig7">1.11</a> since large coverage was desired.
+This is because the intended us of the array was for fNIRS experiments involving
+brain activation or CHS oscillations. The array’s
+design was described in <span class="citation"
+data-cites="blaneyDesignSourceDetector2020"></span> and <span
+class="citation"
+data-cites="blaneyDualSlopeImagingFrequencyDomain2020"></span> and its
+use in <span class="citation"
+data-cites="blaneyFunctionalDualslopeImaging2021"></span> and <span
+class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</p>
+<p>To realize the array first, the mesh and hook fabric layers were
+designed and cut (Figure <a href="#fig:RSIfig13"
+data-reference-type="ref" data-reference="fig:RSIfig13">1.15</a>). All
+other components of the array were prefabricated (source and detector
+fibers). Then, the array was assembled using a mold built from clamped
+fixtures as described with Figure <a href="#fig:RSIfig5"
+data-reference-type="ref" data-reference="fig:RSIfig5">1.10</a>. The
+mold was constructed from 7 fixtures clamped together by 13 bolts such
+that all 26 fibers were captured by being clamped at the parting lines
+(Figure <a href="#fig:RSIfig13" data-reference-type="ref"
+data-reference="fig:RSIfig13">1.15</a>(a)-(b)). The 3 layers were placed
+within the mold, with the middle layer of hook fabric clamped by a
+collar which encompassed the whole mold and was attached with 16 bolts
+(Figure <a href="#fig:RSIfig13" data-reference-type="ref"
+data-reference="fig:RSIfig13">1.15</a>(c)). The mesh layers (first and
+third layers) were fixed to the fibers with epoxy. Finally, with all
+parts held in place and the mold assembled, black PDMS
+was poured to encapsulate the array (Figure <a href="#fig:RSIfig14"
+data-reference-type="ref" data-reference="fig:RSIfig14">1.16</a>(d)).
+Once the PDMS cured, the mold was
+disassembled, and the array cleaned to finish the build. Given the
+design, the array can flex to conform to various surfaces including the
+human head, and the fibers can push through hair given the voids
+surrounding them. The final array model and assembly is shown in
+Figure <a href="#fig:RSIfig15" data-reference-type="ref"
+data-reference="fig:RSIfig15">1.17</a>.</p>
+<p>This hexagonal optical array was designed with the specific purpose
+of applications in fNIRS imaging. This is the
+first optical array specifically designed for DS
+φ imaging with FD
+NIRS on human subjects. Of
+course, this array also collects SD data, as well as optical
+<em>I</em>
+measured with CW NIRS. Therefore, the array may
+be used in experiments where the DS data (<em>I</em> or
+φ) is compared to SD
+data (<em>I</em> or φ)
+to investigate optimal conditions for imaging with selective 𝒮
+to deeper versus superficial tissue. Additionally, the large size of the
+array and the emphasis on localization would allow for identification of
+brain activation location in fNIRS protocols. The large
+array size has the further advantage of broader coverage, which is
+important for experiments in which multiple neighboring brain areas are
+activated. Finally, this DS array design features the
+SC advantages of insensitivity
+to instrumental drifts and changes in optical coupling with tissue, and
+calibration-free absolute measurements <span class="citation"
+data-cites="hueberNewOpticalProbe1999"></span>. This allows for robust
+measurements weakly impacted by motion or instrumental artifacts as
+discussed in Chapter <a href="ch3.html#ch:DSintro" data-reference-type="ref"
+data-reference="ch:DSintro">[ch:DSintro]</a>.</p>
+<p>Aside from fNIRS experiments, the array
+could also be used for non-invasive optical measurements of tissue where
+preferentially deep sensitivity is desired. Possible applications
+include breast and skeletal muscle imaging, where the tissue of interest
+is below a superficial layer of skin and adipose tissue. All the
+aforementioned applications would take advantage of the array’s DS
+imaging capability; however, the array could also be implemented in
+SC mode by combining DS
+<em>I</em>
+and φ data. In such a mode, the
+goal would not be to achieve preferentially deep sensitivity like for
+phase DS, but rather to measure
+absolute optical properties. In SC mode, the array could image
+absolute optical properties of tissue without the need for calibration
+and with insensitivity to instrumental drifts. The applications of an
+array designed for DS data collection are
+numerous.</p>
+<h2 id="dual-slope-imaging-results">Dual-Slope Imaging Results</h2>
+<h3 id="dual-slope-imaging-on-phantoms">Dual-Slope Imaging on
+Phantoms</h3>
+<figure id="fig:OLfig2">
+<div class="center">
+<img src="figures/OL_fig2.png" class="img-fluid" alt="OL_fig2">
+</div>
+<figcaption>Dual-Slope (DS) Intensity (<em>I</em>) and DS
+phase (φ) images, as labeled with
+only the superficial perturbation [(a)(c): theory; (b)(d): experiment],
+only the deep perturbation [(e)(g): theory; (f)(h): experiment], and
+with both the superficial and the deep perturbation [(i)(k): theory;
+(j)(l): experiment].<br />
+Note 1: This figure can be found as Figure 2 in <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>.<br />
+Note 2: Superficial perturbation at (<span
+class="math inline">\(5\hat{x}+1.5\hat{z}\)</span>) mm and deep
+perturbation at (<span
+class="math inline">\(-5\hat{x}+11.5\hat{z}\)</span>) mm.</figcaption>
+</figure>
+<p>In <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span> we presented
+theoretical and experimental demonstrations of a novel DOI
+method that is based on the concept of DSs in FD
+NIRS. We considered the
+circular array of sources and detectors that collects <em>I</em> and
+φ data with multiple DS
+sets. We had recently shown that DS φ
+data featured a deeper sensitivity with respect to DS
+<em>I</em>
+data in <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> when we
+pursued this work. Therefore, in <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span> for the first
+time, we described a DS imaging approach based on
+the MP of the <strong>𝒮</strong> for multiple DS
+data sets. We showed that DS <em>I</em>
+images are more sensitive to superficial (&lt;5 mm) perturbations,
+whereas DS φ
+images are more sensitive to deeper (&gt;10 mm) perturbations in highly
+scattering media.</p>
+<p>To investigate the effectiveness of the novel imaging method based on
+DSs, we performed experiments on
+highly scattering liquid phantoms containing solid optical
+heterogeneous. Liquid phantoms were made from water, 2 % reduced fat
+milk, and <span data-acronym-label="II"
+data-acronym-form="singular+short">II</span>. For optical inclusions,
+solid phantoms were constructed from PDMS using <span
+data-acronym-label="RubGls"
+data-acronym-form="singular+short">RubGls</span>, <span
+data-acronym-label="cII" data-acronym-form="singular+short">cII</span>,
+and <span data-acronym-label="TiO2"
+data-acronym-form="singular+short">TiO2</span>. The μ<sub>a</sub>
+and the μ′<sub>s</sub> of the liquid and solid
+phantoms were measured using scanned MD FD
+NIRS. We used the Imagent FD
+NIRS instrument whose
+operational parameters are stated in Section <a
+href="ch2.html#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
+data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>.
+The optical probe consisted of 400 μm multi-mode fibers to deliver
+light, and 3 mm fiber bundles to collect light.</p>
+<p>The circular array discussed above was used with <span
+class="math inline">\(m=16\)</span> DS sets (Figure <a
+href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(a)). 8 DS
+sets are asymmetric linear sets that use ρ of 20 mm, &amp; 30 mm and
+30 mm, &amp; 40 mm for the 2 paired SSs. The other 8 DS
+sets are trapezoidal sets that use ρ of 20 mm, &amp; 32 mm for
+both paired SSs. The individual sensitivity
+maps for these DS sets can be found in <span
+class="citation"
+data-cites="fantiniTransformationalChangeField2019"></span>. Figure <a
+href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(c)-(d) shows the overall region of
+𝒮 associated with all <span
+class="math inline">\(m=16\)</span> sets for <em>I</em>
+(Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(c)) and φ
+(Figure <a href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(d)) at the depth of respective
+maximum sensitivity (<span class="math inline">\(z\)</span> = 4.3 mm for
+<em>I</em>, <span
+class="math inline">\(z\)</span> = 10.8 mm for φ).
+The <strong>𝒮</strong> was summed over all the
+DS measurements to obtain the
+overall sensitivity for DS <em>I</em> and
+DS φ
+at each voxel <span class="math inline">\(j\)</span> in these
+insets.</p>
+<p>We considered two perturbations (size: 10 × 10 × 3 mm); a superficial
+one centered at (<span
+class="math inline">\(5\hat{x}+1.5\hat{z}\)</span>) mm, and a deep one
+centered at (<span
+class="math inline">\(-5\hat{x}+11.5\hat{z}\)</span>) mm (see Figure <a
+href="#fig:OLfig1" data-reference-type="ref"
+data-reference="fig:OLfig1">1.13</a>(b)). In this experiment, we used an
+optical wavelength of 690 nm, for which the optical properties of the
+liquid phantom were μ<sub>a</sub> = 0.0093 ± 0.0003  mm and
+μ′<sub>s</sub> = 0.85 ± 0.05  mm, and
+those of the solid phantom were μ<sub>a</sub> = 0.0130 ± 0.0001  mm and
+μ′<sub>s</sub> = 0.818 ± 0.004  mm. The
+optical properties of the liquid phantom resulted in DSF
+values for <em>I</em> and φ
+of 7.4 and 1.4, respectively (Appendix <a href="app3.html#app:dmuaMeas"
+data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>) <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>. Three
+cases were considered:</p>
+<ul>
+<li><p>The presence of only the superficial perturbation (Superficial or
+Sup).</p></li>
+<li><p>The presence of only the deep perturbation (Deep).</p></li>
+<li><p>The presence of both superficial and deep perturbations
+(Both).</p></li>
+</ul>
+<p>For each of these cases the solid phantom perturbation was immersed
+in the liquid phantom and held on the tip of a glass pipette which was
+filled with liquid phantom. To achieve the measurement, the perturbation
+was first placed far from the array during baseline then brought into
+the desired location by a 3D CNC
+system.</p>
+<p>Here, the goal is not to achieve a quantitative reconstruction of
+absolute changes in optical properties, but rather to identify and
+localize (in the lateral <span class="math inline">\(x-y\)</span> plane)
+deeper perturbations with minimal interference from shallower
+perturbations. This goal is consistent with the objective of brain
+measurements with non-invasive cerebral NIRS. In addition to
+collecting experimental data, we also present theoretical calculations
+assuming no scattering perturbations or refractive index mismatch at the
+perturbation boundary according to the methods in Appendix <a
+href="app6.html#app:simSigFromSen" data-reference-type="ref"
+data-reference="app:simSigFromSen">[app:simSigFromSen]</a>.
+Additionally, we have investigated the effect of modeling a scattering
+perturbation so that we may comment on its effect.</p>
+<p>For analysis, Δμ<sub>a</sub> from each DS set
+in the circular array was calculated using the methods in Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a> for the various
+perturbation configurations. From these the <strong>𝒮</strong> was created using the
+methods in Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a> and images of Δμ<sub>a</sub>
+were recovered using Equation <a href="#equ:senMatInverse"
+data-reference-type="ref"
+data-reference="equ:senMatInverse">[equ:senMatInverse]</a> with the
+MP. The image reconstruction
+utilized Tikhonov regularization with <span
+class="math inline">\(a_{tik}=0.01\)</span> <span class="citation"
+data-cites="doulgerakisHighdensityFunctionalDiffuse2019"></span>. We
+sought to reconstruct 2D images in the <span
+class="math inline">\(x-y\)</span> plane that are mostly sensitive to
+deeper perturbations, while using the same voxel size in the analysis of
+<em>I</em>
+and φ data for a fair comparison
+of DS <em>I</em> and
+DS φ
+images. With this goal in mind, we chose voxels of size 0.5 × 0.5 × 5 mm
+(superficial layer) and 0.5 × 0.5 × 10 mm (deeper layer) in (<span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span>, <span
+class="math inline">\(z\)</span>), and we only show the <span
+class="math inline">\(x-y\)</span> image corresponding to the deeper
+layer of voxels (<span class="math inline">\(z\)</span> = 5 mm–15 mm).
+This layer of voxels includes a portion of the medium that is sensed by
+both data-types and that does not include the most superficial layer
+(<span class="math inline">\(z\)</span> = 0 mm–5 mm). This is in line
+with the overall goal of DS, which is to suppress
+signal contributions from superficial layers. Therefore, we do not wish
+to create images at different depths, we focus on 2D
+images representative of deep perturbations.</p>
+<p>The results of the imaging experiments are shown in Figure <a
+href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(a)-(l) for <em>I</em>
+(column 1: theory; column 2: experiment) and φ
+(column 3: theory; column 4: experiment). In the images of Figure <a
+href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(a)-(l), the superficial
+perturbation is on the right, <em>id est</em> positive <span
+class="math inline">\(x\)</span> (row 1), the deep perturbation is on
+the left, <em>id est</em> negative <span
+class="math inline">\(x\)</span> (row 2), and both are present in row 3.
+Overall, there is a good agreement between theory and experiment. The
+images based on DS <em>I</em>
+(columns 1-2) show a stronger sensitivity to the superficial
+perturbation, whereas the images based on DS φ
+show a stronger sensitivity to the deeper perturbation.</p>
+<p>In the presence of only the superficial perturbation, the theoretical
+DS <em>I</em> map
+(Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(a)) features a greater Δμ<sub>a</sub>
+than the experimental DS <em>I</em> maps
+(Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(b)) (likely because of different
+boundary effects in the theoretical and experimental cases), whereas
+both theoretical and experimental DS φ
+maps (Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(c)(d)) show a small absorption
+decrease at the perturbation location, due to the negative superficial
+sensitivity of DS φ
+<span class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019"></span>. In the
+presence of only the deep perturbation, the theoretical and experimental
+maps are in excellent agreement and show a smaller contrast with DS
+<em>I</em>
+(Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(e)(f)) than with DS
+φ (Figure <a
+href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(g)(h)). In this case, the
+experimental localization error in the lateral plane (<span
+class="math inline">\(x-y\)</span>) is 2 mm for both DS
+<em>I</em>
+and DS φ
+(reconstructed maximum and deep true location).</p>
+<p>The most significant case is the one where both superficial and deep
+perturbations are present. This is the case that emulates the presence
+of superficial confounds (for example, scalp hemodynamics) in the
+non-invasive study of deeper optical dynamics (for example, cerebral
+hemodynamics). The absorption maps based on DS
+<em>I</em>
+(Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(i)(j)) show that they are mostly
+representative of the superficial perturbation (lateral localization
+error of the deep object: 12 mm), whereas the maps based on DS
+φ (Figure <a
+href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(k)(l)) are mostly representative of
+the deeper perturbation (lateral localization error of the deep object:
+2 mm).</p>
+<p>While there is general agreement between theory and experiment in the
+results of Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>, we have observed some discrepancy
+between the absolute values of the reconstructed absorption changes in
+theoretical and experimental results. We assign these discrepancies to
+experimental conditions that deviate from the assumptions made in
+theoretical calculations. These assumptions include:</p>
+<ul>
+<li><p>Lack of scattering contrast for the optical inclusion (in our
+experiments, the scattering contrast was in the range
+−9 %–2 %).</p></li>
+<li><p><em>n</em> matching at the
+inclusion/background interface (in our experiments, the absorbing
+inclusion had <span class="math inline">\(n\approx
+1.4\)</span>, while the liquid phantom had <span
+class="math inline">\(n\approx 1.35\)</span> <span
+class="citation"
+data-cites="foxDairyChemistryBiochemistry2015"></span>).</p></li>
+<li><p>Extrapolated boundary conditions at the flat phantom/air
+interface (in the experiment, the presence of illumination and
+collection optical fibers, surface tension effects, and the proximity of
+the perturbation to the phantom/air boundary resulted in modified
+boundary effects).</p></li>
+</ul>
+<p>To investigate the most likely source of the discrepancy between
+theory and experiment, we performed theoretical calculations that
+included scattering perturbations consistent with the experimental
+conditions. We found that the scattering mismatch alone cannot explain
+the difference between theory and experiment. Therefore, we expect that
+the discrepancy is likely due to the second and third points above,
+which refer to the unknown <em>n</em> mismatch and to the
+inevitable variability of geometric conditions that cannot be fully
+controlled within the scope of this experiment. We have also opted to
+present theoretical results without modeling a scattering perturbation
+to emphasize our focus on measurements of absorption perturbations.
+However, we stress that our goal here is not to achieve reconstruction
+of absolute optical properties but instead to:</p>
+<ul>
+<li><p>Correctly localize perturbations in the <span
+class="math inline">\(x-y\)</span> plane.</p></li>
+<li><p>Achieve a stronger relative sensitivity to deeper versus
+shallower perturbations.</p></li>
+<li><p>Correctly identify the direction of the absorption change caused
+by the perturbation (increase or decrease).</p></li>
+</ul>
+<p>The key message is that DS φ
+features a deeper sensitivity and is less impacted by superficial
+perturbations than DS <em>I</em>. This
+feature is exploited for imaging in Figure <a href="#fig:OLfig2"
+data-reference-type="ref" data-reference="fig:OLfig2">1.18</a>, which
+shows that DS φ
+images selectively reproduce deeper perturbations (see Figure <a
+href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(k)(l)), whereas DS
+<em>I</em>
+images are more strongly affected by superficial perturbations (see
+Figure <a href="#fig:OLfig2" data-reference-type="ref"
+data-reference="fig:OLfig2">1.18</a>(i)-(j)). Of course, one can take
+advantage of the complementary information of DS
+<em>I</em>
+and DS φ
+images to extract information on both superficial and deep
+perturbations.</p>
+<h3 id="in-vivo-dual-slope-imaging"><em>In Vivo</em> Dual-Slope
+Imaging</h3>
+<h4 id="dual-slope-imaging-of-muscle">Dual-Slope Imaging of Muscle</h4>
+<figure id="fig:SPIE2021arr_1">
+<div class="center">
+<img src="figures/SPIE2021arr_fig1.png" class="img-fluid" alt="SPIE2021arr_fig1">
+</div>
+<figcaption>Schematic of Dual-Slope (DS) imaging array and array
+placement during muscle experiment. (a)-(g) Examples of the 7 DS set
+types in the array. (h) Diagram of all measurement pairs in the array
+resulting in 27 effective DS sets. (i) Placement of
+DS array over the subject’s
+<em>gastrocnemius</em> muscle and <em>tibia</em>.<br />
+Note 1: This figure can be found as Figure 1 in <span class="citation"
+data-cites="blaneyFunctionalDualslopeImaging2021"></span>.</figcaption>
+</figure>
+<figure id="fig:SPIE2021arr_2">
+<div class="center">
+<img src="figures/SPIE2021arr_fig2.png" class="img-fluid" alt="SPIE2021arr_fig2" style="width:75.0%">
+</div>
+<figcaption>Maps of absolute absorption coefficient (μ<sub>a</sub>) and absolute reduced scattering coefficient (μ′<sub>s</sub>)
+on a subject’s <em>gastrocnemius</em> muscle placed as seen in Figure <a
+href="#fig:SPIE2021arr_1" data-reference-type="ref"
+data-reference="fig:SPIE2021arr_1">1.19</a>(i).<br />
+Note 1: This figure can be found as Figure 2 in <span class="citation"
+data-cites="blaneyFunctionalDualslopeImaging2021"></span>.</figcaption>
+</figure>
+<figure id="fig:SPIE2021arr_3">
+<div class="center">
+<img src="figures/SPIE2021arr_fig3.png" class="img-fluid" alt="SPIE2021arr_fig3" style="width:75.0%">
+</div>
+<figcaption>Maps of blood accumulation during a Venous Occlusion (VO) in
+Blood-Flow (BF) units and the delay until
+the accumulation maximum from the VO onset (<span
+class="math inline">\(\Delta t\)</span>). Probe placement shown in
+Figure <a href="#fig:SPIE2021arr_1" data-reference-type="ref"
+data-reference="fig:SPIE2021arr_1">1.19</a>(i). Values are the average
+of three VOs.<br />
+Note 1: This figure can be found as Figure 3 in <span class="citation"
+data-cites="blaneyFunctionalDualslopeImaging2021"></span>.</figcaption>
+</figure>
+<p>In <span class="citation"
+data-cites="blaneyFunctionalDualslopeImaging2021"></span> we utilized
+the hexagonal array (Figure <a href="#fig:RSIfig15"
+data-reference-type="ref" data-reference="fig:RSIfig15">1.17</a>) to
+measure maps of absolute optical properties in human skeletal muscle,
+and muscle hemodynamics during a VO. In each case, spatial maps
+were created. The maps of baseline absolute optical properties showed
+higher μ′<sub>s</sub> in connective tissue and
+higher μ<sub>a</sub> in muscle tissue. The
+analysis of hemodynamics found a greater blood accumulation during VO in
+muscle. Overall, muscle hemodynamics were shown to be spatially variable
+over a large area, suggesting the importance of imaging (as opposed to
+single-location) measurements. The preliminary data on human subjects
+with this new DS imaging array pave the way
+for applications in fNIRS for mapping brain
+activation.</p>
+<p>To test this array on hemodynamic measurements, a simple muscle
+experiment was carried out on one human subject. The subject gave their
+informed consent according to the Tufts University IRB
+prior to the experiment. The array was placed over the subject’s left
+<em>gastrocnemius</em> muscle and <em>tibia</em> (Figure <a
+href="#fig:SPIE2021arr_1" data-reference-type="ref"
+data-reference="fig:SPIE2021arr_1">1.19</a>(i)). Then the following
+protocol was conducted: 5 min baseline, 2 min VO,
+2 min rest, 2 min VO, 2 min rest, 2 min VO,
+and 2 min baseline. We performed a total of 3 2 min long VOs,
+each achieved with a pneumatic thigh cuff wrapped around the subject’s
+left thigh (same side as the array) and inflated to a pressure of
+60 mmHg.</p>
+<p>The array may be used in two modes:</p>
+<ul>
+<li><p>SC <span class="citation"
+data-cites="hueberNewOpticalProbe1999"></span> for measurement of
+absolute optical properties.</p></li>
+<li><p>DS for measurement of Δμ<sub>a</sub>
+with only DS <em>I</em> or
+DS φ.</p></li>
+</ul>
+<p>To create a spatial map of the absolute μ<sub>a</sub>
+and μ′<sub>s</sub> the array was analysed in
+SC mode on the baseline data
+(averaged over time) with the iterative recovery methods in Appendix <a
+href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. This
+resulted in a measurement of μ<sub>a</sub> and μ′<sub>s</sub>
+for each of the <span class="math inline">\(m=27\)</span> sets in the
+hexagonal array. To create a visual representation, the values were
+assigned to the spatial coordinate corresponding to the centroid of the
+optode sets they were derived from. Then a spatial map was created by
+interpolating the values between the points in two-dimensions. This
+resulted in an image of absolute μ<sub>a</sub> and μ′<sub>s</sub>
+beneath the array.</p>
+<p>To use the array in DS mode, the DS
+derived Δμ<sub>a</sub> was found for each
+time-point during the experiment using the methods in Appendix <a
+href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. Then, a map of Δμ<sub>a</sub>
+was reconstructed using methods previously described above via the MP
+and Equation <a href="#equ:senMatInverse" data-reference-type="ref"
+data-reference="equ:senMatInverse">[equ:senMatInverse]</a> <span
+class="citation"
+data-cites="blaneyDualslopeImagingHighly2020 doulgerakisHighdensityFunctionalDiffuse2019"></span>.
+The 𝒮 of the array was
+calculated for two layers of voxels (one from <span
+class="math inline">\(z\)</span> = 0 mm–5 mm and the other for <span
+class="math inline">\(z\)</span> &gt; 5 mm). Then <strong>𝒮</strong> was inverted on the
+Δμ⃗<sub>a</sub> DS
+data and the reconstructed image for the second layer presented. From
+this method, an image of Δμ<sub>a</sub> for 2 λs
+was calculated for each time-point during the experiment. This was then
+converted to an image stack of ΔD and ΔO
+using Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
+data-reference="app:recChrom">[app:recChrom]</a>.</p>
+<p>During the VO, the maximum rate of blood
+accumulation (from a linear fit of ΔT) was calculated for each
+voxel, as well as the time of this maximum rate (defined by the center
+of the linear fit where the rate is the slope of the fit). This was
+achieved by implementing a linear Savitzky–Golay filter with a support
+length equal to 10 s to each temporal vector in the image stack. Then
+the maximal slope (and its central time) of ΔT
+(from the Savitzky–Golay filter) for each VO was found and averaged
+across the three VOs. Finally, the maximal slope
+of ΔT was converted into the
+BF units of
+mL<sub>blood</sub> 100<sup>−1</sup> mL<sub>tissue</sub> min<sup>−1</sup>.
+This resulted in spatial maps of blood accumulation maximum (in units of
+BF) and delay time of the
+maximum (<span class="math inline">\(\Delta t\)</span> from the VO
+onset) for both DS <em>I</em> and
+DS φ.</p>
+<p>Figure <a href="#fig:SPIE2021arr_2" data-reference-type="ref"
+data-reference="fig:SPIE2021arr_2">1.20</a> shows the results from the
+DS array in SC
+mode, which retrieved maps of absolute optical properties without the
+need for calibration. Then, Figure <a href="#fig:SPIE2021arr_3"
+data-reference-type="ref" data-reference="fig:SPIE2021arr_3">1.21</a>
+presents the hemodynamic data derived from the array in DS
+mode. Dynamic data is the mean of all three VOs.</p>
+<p>Examining the spatial maps (Figure <a href="#fig:SPIE2021arr_2"
+data-reference-type="ref" data-reference="fig:SPIE2021arr_2">1.20</a>)
+of absolute optical properties and comparing them to the placement of
+the array (Figure <a href="#fig:SPIE2021arr_1" data-reference-type="ref"
+data-reference="fig:SPIE2021arr_1">1.19</a>(i)), one can see some
+correspondence between values and anatomy. Specifically, the parts of
+the array measuring the <em>tibia</em> and tendons connecting to the
+knee (<span class="math inline">\(y\)</span> &gt; 20 mm) exhibit higher
+values of scattering. Also, the portion of the array probing the largest
+part of the muscle (<span class="math inline">\(y\)</span> &lt; −20 mm ]
+and <span class="math inline">\(x\)</span> &lt; 0 mm) shows higher
+values of absorption. This is consistent with the hypothesis that
+connective tissues exhibit higher scattering while muscle exhibits
+higher absorption. These results suggest the viability of this array in
+measuring spatial maps of absolute optical properties.</p>
+<p>Next, the hemodynamic data (Figure <a href="#fig:SPIE2021arr_3"
+data-reference-type="ref" data-reference="fig:SPIE2021arr_3">1.21</a>)
+collected with the array can be evaluated. Note that the highest rate of
+blood accumulation occurred in the part of the array where the largest
+part of the muscle was probed (Figure <a href="#fig:SPIE2021arr_1"
+data-reference-type="ref"
+data-reference="fig:SPIE2021arr_1">1.19</a>(i)). Additionally, the
+accumulation showed spatial variation in delay time. Both of these
+suggest that the hemodynamics during a VO may have high spatial
+variability. Interestingly, this spatial variation was consistent
+between the 3 repeated VOs (average shown). Aside from
+the spatial variation of hemodynamics, differences between DS
+<em>I</em>
+and DS φ
+may also provide information about the depth of these changes.
+Understanding these differences is still an area of active research.
+Regardless, this experiment showed the possibility of using this novel
+DS imaging array for
+hemodynamic measurements.</p>
+<h4 id="dual-slope-imaging-of-brain">Dual-Slope Imaging of Brain</h4>
+<figure id="fig:SPIE2022_1">
+<div class="center">
+<table>
+<tbody>
+<tr>
+<td style="text-align: right;"><img src="figures/arrayIz.png" class="img-fluid" alt="arrayIz"></td>
+<td style="text-align: left;"><img src="figures/arrayLoc.png" class="img-fluid" alt="arrayLoc"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption>[Left] Schematic of Dual-Slope (DS) array, lines of different
+colors represent different DS sets. Seven examples of
+different types DS sets are shown around the
+right and bottom edge. Overall the array used short distances of
+approximately 25 mm and long distances of approximately 37 mm. [Right]
+Approximate array placement. The <em>inion</em> was placed between
+sources 11 and 16 such that the upper array was over the visual
+cortex.<br />
+Note 1: This figure can be found as Figure 1 in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</figcaption>
+</figure>
+<figure id="fig:SPIE2022_2">
+<div class="center">
+<img src="figures/visProt.png" class="img-fluid" alt="visProt">
+</div>
+<figcaption>Organization of visual stimulation protocol and examples of
+contrast reversing circular checkerboards plus fixation cross.<br />
+Note 1: This figure can be found as Figure 2 in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</figcaption>
+</figure>
+<figure id="fig:SPIE2022_4">
+<div class="center">
+<img src="figures/exampleSetTrace.png" class="img-fluid" alt="exampleSetTrace">
+</div>
+<figcaption>Temporal traces of hemodynamics during the visual
+stimulation protocol. The Intensity (<em>I</em>) data is in the left subplot
+while the phase (φ) is in the right. Dual-Slope (DS) data
+is shown in solid red or blue lines for Oxy-hemoglobin concentration change (ΔO) and Deoxy-hemoglobin concentration change (ΔD),
+respectively. Short Single-Distance (SD) traces are dotted while long
+SD are dashed with colors of
+magenta and cyan for ΔO and ΔD,
+respectively. These traces were low-pass filtered to 0.5 Hz and folding
+averaged over the 11 stimulus periods. The baseline optical properties
+for this set were measured as 0.011 &amp; 0.010 mm<span
+class="math inline">\(^{-1}\)</span> for the absorption coefficient (μ<sub>a</sub>)
+and 0.98 &amp; 0.83 mm<span class="math inline">\(^{-1}\)</span> for the
+reduced scattering coefficient (μ′<sub>s</sub>) at 690 &amp; 830 nm,
+respectively.<br />
+Note 1: This figure can be found as Figure 4 in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</figcaption>
+</figure>
+<figure id="fig:SPIE2022_actImage">
+<div class="center">
+<img src="figures/exampleActImage.png" class="img-fluid" alt="exampleActImage">
+</div>
+<figcaption>Map of hemoglobin difference increase during stimulation,
+masked by activation significance. Higher values show larger activation
+amplitude, black shows not significant activation, and white shows no
+data.<br />
+Note 1: This figure was presented in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span> as part of the
+talk.</figcaption>
+</figure>
+<p>In <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span> we demonstrated
+the ability of the DS method to measure brain
+activation during a visual stimulation protocol. The measured
+hemodynamic traces associated with visual stimulation exhibited a larger
+amplitude when they are derived from DS versus SD
+data, and from φ versus <em>I</em> data.
+In particular, the functional hemodynamics obtained from DS
+φ data feature the largest
+amplitude. These results indicate the greater sensitivity to brain
+tissue achieved by DS versus SD
+data, and by φ versus <em>I</em> data.
+The conclusion of this work is that DS <em>I</em> (in
+CW fNIRS) and DS or
+SD φ
+(in FD fNIRS) appear to be most
+effective for functional brain measurements, with the significant
+practical advantage offered by the minimal sensitivity of DS
+measurements to a variety of artifacts and preferential 𝒮
+to deep tissue.</p>
+<p>In this work the hexagonal DS array from the above
+sections was utilized. It realized <span
+class="math inline">\(m=30\)</span> DS sets in this work, each
+made up of 4 SD sets,<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> two
+short (approximately 25 mm]) and two long (approximately 37 mm), see
+Figure <a href="#fig:SPIE2022_1" data-reference-type="ref"
+data-reference="fig:SPIE2022_1">1.22</a>[Left]. The Imagent was again utilized with
+the same operating parameters stated in Section <a
+href="ch2.html#ch:shortLong:sec:MDmethExpPara" data-reference-type="ref"
+data-reference="ch:shortLong:sec:MDmethExpPara">[ch:shortLong:sec:MDmethExpPara]</a>,
+and a sampling frequency of 5 Hz. The array was placed over on the back
+of the subject’s head such that the top of the array was over the visual
+cortex (Figure <a href="#fig:SPIE2022_1" data-reference-type="ref"
+data-reference="fig:SPIE2022_1">1.22</a>[Right]).</p>
+<p>The visual stimulation was conducted in accordance with the Tufts
+University IRB. It consisted of a 1 min
+of baseline, followed by the experimental period. Then the experimental
+period contained 11 stimulus periods each consisting of 15 s of a 8 Hz
+contrast reversing circular checkerboard and 30 s of rest. The
+experiment ended with a 45 s baseline for a total time of 10 min.
+Figure <a href="#fig:SPIE2022_2" data-reference-type="ref"
+data-reference="fig:SPIE2022_2">1.23</a> shows the organization of the
+protocol as well as the visual stimuli presented to the subject. Data
+from one such experiment session and one subject is presented was
+presented in <span class="citation"
+data-cites="blaneyFunctionalBrainMapping2022"></span>.</p>
+<p>For an absolute measurement, the array was again used in SC
+mode on the averaged baseline data using the iterative recovery method
+in Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
+data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>. Absolute
+optical properties were found and the complex effective path-lengths
+calculated <span class="citation"
+data-cites="sassaroliDualslopeMethodEnhanced2019"></span>, which were
+required to calculate the DPFs and DSFs
+for the relative measurement <span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> as
+described in Appendix <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>. For image
+reconstruction <strong>𝒮</strong> was calculated using
+Appendix <a href="app5.html#app:senMaps" data-reference-type="ref"
+data-reference="app:senMaps">[app:senMaps]</a> and inverted with the
+MP and Equation <a
+href="#equ:senMatInverse" data-reference-type="ref"
+data-reference="equ:senMatInverse">[equ:senMatInverse]</a>.</p>
+<p>For a relative measurement, ΔO and ΔD
+traces were calculated for each SD and DS set
+from Δμ<sub>a</sub> per the methods in
+Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
+data-reference="app:recChrom">[app:recChrom]</a>. The signals were
+low-pass filtered to 0.5 Hz and folding averaged across the 11
+activation periods.<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a> An example DS set
+for these data was chosen and is presented to compare SD and
+DS during visual
+stimulation.</p>
+<p>Figure <a href="#fig:SPIE2022_4" data-reference-type="ref"
+data-reference="fig:SPIE2022_4">1.24</a> shows the filtered and folding
+averaged DS &amp; SD
+hemodynamic data for the visual stimulation protocol. The presented set
+was above the left <em>occipital</em> lobe (Figure <a
+href="#fig:SPIE2022_1" data-reference-type="ref"
+data-reference="fig:SPIE2022_1">1.22</a>). The figure shows both <em>I</em> and
+φ data on the left and
+right, respectively, with the plots being on the same scale. DS
+traces are presented in solid red or blue for ΔO and
+ΔD, respectively. Meanwhile,
+short SD traces are dotted while
+long SDs are dashed with colors of
+magenta and cyan for ΔO and ΔD,
+respectively.</p>
+<p>The characteristic brain activation signal is an increase in ΔO and
+a decrease in ΔD which is indicative of a
+increase in BF <span class="citation"
+data-cites="ferrariBriefReviewHistory2012"></span>. In all measurement
+types, including SD short, φ
+data exhibited this characteristic brain activation behavior while the
+same is not true for <em>I</em>. Additionally, DS
+data-types always showed a larger amplitude response compared to SD.
+Furthermore, comparing each φ trace to its corresponding
+<em>I</em>
+trace it can be seen that amplitude of the change in ΔO or
+ΔD was always larger for φ.
+This is most striking when examining the short SDs. For
+<em>I</em>
+one of the short SD ΔOs does
+not increase while corresponding trace for φ
+does increase, where it is worth pointing out that the physical optodes
+are the same in this situation and the difference is just from the
+different data-type. The same is true for ΔD, where the short SDs do
+not change significantly for <em>I</em> but do have a noticeable
+decrease for φ.</p>
+<p>Finally, Figure <a href="#fig:SPIE2022_actImage"
+data-reference-type="ref"
+data-reference="fig:SPIE2022_actImage">1.25</a> shows the first example
+of DS imaging on the human brain
+during a fNIRS protocol. For this
+activation protocol it is expected that the visual cortex will show a
+BF increase and thus
+activation in the image. Given the placement of the array the visual
+cortex was under the upper port of the array. Therefore the DS
+activation image in Figure <a href="#fig:SPIE2022_actImage"
+data-reference-type="ref"
+data-reference="fig:SPIE2022_actImage">1.25</a> is consistent with the
+expectation since it shows large activation amplitude in the upper
+center portion of the array. Furthermore, DS φ
+has a larger activation contrast compared to DS
+<em>I</em>
+which is consistent with the hypothesis that φ
+data is more brain specific. These results are bolstered by the fact
+that no significant change in heart rate was observed, thus the change
+due to visual stimulation should really have been brain specific and not
+systemic.</p>
+<p>Overall, the results herein suggest that DS or
+φ data exhibit higher
+amplitude activation than SD or <em>I</em>,
+respectively, for both ΔO and ΔD.
+Further, these preliminary traces suggest that if these DS
+array data were applied to imaging DS and φ
+data derived images would exhibit higher contrast compared to SD and
+<em>I</em>, respectively. This is
+consistent with DS’s expected preferentially
+deep sensitivity shown in Chapter <a href="ch3.html#ch:DSintro"
+data-reference-type="ref" data-reference="ch:DSintro">[ch:DSintro]</a>,
+which has been observed during systemic blood pressure oscillations
+<span class="citation"
+data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span> and while
+imaging perturbations within a phantom <span class="citation"
+data-cites="blaneyDualslopeImagingHighly2020"></span>.</p>
+<h2 class="unnumbered" id="listings">Listings</h2>
+<div class="sourceCode" id="cb8" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\Acrshort{MATLAB} code for \acrfull{SD} set discovery (Figure~\ref{fig:RSIfig1})\label{lst:SDdis}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Acronyms: MathWorks MATrix LABoratory (MATLAB).<br />
+Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+<div class="sourceCode" id="cb9" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\Acrshort{MATLAB} code for \acrfull{SS} set discovery (Figure~\ref{fig:RSIfig2})\label{lst:SSdis}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Acronyms: MathWorks MATrix LABoratory (MATLAB).<br />
+Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+<div class="sourceCode" id="cb10" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\Acrshort{MATLAB} code for \acrfull{DS} set discovery (Figure~\ref{fig:RSIfig3})\label{lst:DSdis}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Acronyms: MathWorks MATrix LABoratory (MATLAB).<br />
+Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+<div class="sourceCode" id="cb11" style="Matlab-editor"
+data-basicstyle="\small\mlttfamily"
+data-postbreak="\mbox{\textcolor{red}{$\hookrightarrow$}\space}"
+data-frame="single"
+data-caption="\Acrshort{MATLAB} code for calculating \acrfull{Res} and \acrfull{Loc}\label{lst:ResLoc}"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"></code></pre></div>
+<p><span>Acronyms: MathWorks MATrix LABoratory (MATLAB).<br />
+Available at:<br />
+<a
+href="https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code"
+class="uri">https://github.com/DOIT-Lab/DOIT-Public/tree/master/Dissertations/GilesBlaney2022/code</a></span></p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>These source-detector distance (ρ) parameters are primarily
+related to the Dual-Slope (DS) <em>constraints</em> in
+Section <a href="ch3.html#ch:DSintro:sec:DSoverview" data-reference-type="ref"
+data-reference="ch:DSintro:sec:DSoverview">[ch:DSintro:sec:DSoverview]</a>.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>These dynamical parameters are not critical in their
+exact value, but are chosen to ensure system stability.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Dual-Slope (DS) sets may share Single-Distance (SD) sets
+so the number of SD sets is less than or equal
+to the number of DS sets times four, in
+general.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>During the folding average the data were de-trended so
+that the first and last 2 s of data have averaged of zero to remove slow
+drifts expected to be present in Single-Distance (SD).<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+                <hr class="mt-5">
+                <div class="d-flex justify-content-between mt-3 mb-5">
+                    <a href="ch4.html" class="btn btn-sm btn-outline-secondary">← Point Measurements with Dual-Slope</a>
+                    <a href="index.html" class="btn btn-sm btn-outline-primary">↑ Overview</a>
+                    <a href="ch6.html" class="btn btn-sm btn-outline-secondary">Introduction to Wavelet Coherent Hemodynamics Spectroscopy →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
