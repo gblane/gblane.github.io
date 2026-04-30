@@ -52,13 +52,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-link:hover,
-.nav-link.active {
-    color: var(--accent) !important;
-}
+.nav-link.active { color: var(--accent) !important; }
 
-.navbar-toggler {
-    border-color: var(--border);
-}
+.navbar-toggler { border-color: var(--border); }
 
 /* Dark hamburger icon for white navbar */
 .navbar-toggler-icon {
@@ -72,9 +68,12 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 6px;
     padding: 1.25rem 1.5rem;
     height: 100%;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
 }
-.tool-link:hover .site-card { border-color: var(--accent); }
+.tool-link:hover .site-card {
+    border-color: var(--accent);
+    box-shadow: 0 4px 18px rgba(26,82,118,0.08);
+}
 
 /* ── Section helpers ──────────────────────────────── */
 .section-eyebrow {
@@ -95,9 +94,85 @@ h1, h2, h3, h4, h5, h6 {
     margin: 14px 0 28px;
 }
 
+.section-intro {
+    max-width: 600px;
+    color: var(--muted);
+    font-size: 0.93rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Course pages ─────────────────────────────────── */
+.course-hero {
+    padding: 88px 0 56px;
+    border-bottom: 1px solid var(--border);
+}
+
+.course-number {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+}
+
+.course-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+}
+
+.course-meta { font-size: 0.88rem; color: var(--muted); }
+.course-cta  { font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-top: 0.9rem; }
+
+.material-section { padding: 52px 0; border-bottom: 1px solid var(--border); }
+.material-section:last-child { border-bottom: none; }
+
+.material-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.25rem; }
+
+.mat-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.mat-row:last-child { border-bottom: none; }
+
+.mat-date {
+    font-size: 0.72rem;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 3.5rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.mat-label { font-size: 0.88rem; color: var(--text); flex: 1; }
+
+.mat-sublabel { font-size: 0.78rem; color: var(--muted); display: block; margin-top: 0.1rem; }
+
+.mat-links { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+.mat-link {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 2px 7px;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+}
+.mat-link:hover { background: var(--accent); color: #fff; }
+
 /* ── Tool pages ───────────────────────────────────── */
-.tool-header { padding: 2rem 0 1.5rem; }
-.tool-title  { font-size: 2rem; font-weight: 700; margin-bottom: 0.15rem; }
+.tool-header   { padding: 2rem 0 1.5rem; }
+.tool-title    { font-size: 2rem; font-weight: 700; margin-bottom: 0.15rem; }
 .tool-subtitle { font-size: 0.88rem; color: var(--muted); }
 
 .param-card {
@@ -130,3 +205,8 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.55;
     margin: 0;
 }
+
+/* ── Footer ───────────────────────────────────────── */
+footer { background: #1c1c1c; color: #777; padding: 1.75rem 0; font-size: 0.78rem; text-align: center; }
+footer a { color: #999; text-decoration: none; }
+footer a:hover { color: #fff; }

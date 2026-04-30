@@ -6,7 +6,7 @@
     <title>Forward Models · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -96,13 +96,13 @@ data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a>&amp;<a
 href="#equ:PHIcom_semiInf" data-reference-type="ref"
 data-reference="equ:PHIcom_semiInf">[equ:PHIcom_semiInf]</a>. The pencil
 beam source (red) impinges on the medium’s surface at <span
-class="math inline">\(\acrshort{r}_{pencil}\)</span> and light is
+class="math inline">\(\vec{r}_{pencil}\)</span> and light is
 detected (blue) at <span
-class="math inline">\(\acrshort{r}_{det}\)</span>. The distance between
+class="math inline">\(\vec{r}_{det}\)</span>. The distance between
 the pencil source and detector on the surface is the source-detector distance (ρ).
 Isotropic sources are placed at <span
-class="math inline">\(\acrshort{r}_{src}\)</span> and <span
-class="math inline">\(\acrshort{r}_{src&#39;}\)</span> (purple), the
+class="math inline">\(\vec{r}_{src}\)</span> and <span
+class="math inline">\(\vec{r}_{src&#39;}\)</span> (purple), the
 former being the real source and the latter being the image source.
 <span class="math inline">\(z_0\)</span> is the real source depth, <span
 class="math inline">\(z_b\)</span> is the boundary (dotted black)
@@ -120,32 +120,32 @@ data-cites="bigioQuantitativeBiomedicalOptics2016 continiPhotonMigrationTurbid19
 \widetilde{C}_2 e^{-\widetilde{\mu}_\mathrm{eff} \|\vec{r}_2\|} \right)
     \label{equ:RCom_semiInf}\]</span> <span
 class="math display">\[\widetilde{C}_1=z_0 \left(
-\frac{1+\acrshort{mueffCom} \|\acrshort{r}_1\|}{\|\acrshort{r}_1\|^3}
+\frac{1+\widetilde{\mu}_{eff} \|\vec{r}_1\|}{\|\vec{r}_1\|^3}
 \right)\]</span> <span class="math display">\[\widetilde{C}_2=-z_0&#39;
 \left( \frac{1+\widetilde{\mu}_\mathrm{eff}
 \|\vec{r}_2\|}{\|\vec{r}_2\|^3} \right)\]</span> <span
-class="math display">\[\acrshort{r}_1=\acrshort{r}_{det}-\acrshort{r}_{src}\]</span>
+class="math display">\[\vec{r}_1=\vec{r}_{det}-\vec{r}_{src}\]</span>
 <span
-class="math display">\[\acrshort{r}_2=\acrshort{r}_{det}-\acrshort{r}_{src&#39;}\]</span>
+class="math display">\[\vec{r}_2=\vec{r}_{det}-\vec{r}_{src&#39;}\]</span>
 <span
-class="math display">\[\acrshort{r}_{src}=\acrshort{r}_{pencil}+z_0
+class="math display">\[\vec{r}_{src}=\vec{r}_{pencil}+z_0
 \hat{z}\]</span> <span
-class="math display">\[\acrshort{r}_{src&#39;}=\acrshort{r}_{pencil}+z_0&#39;
+class="math display">\[\vec{r}_{src&#39;}=\vec{r}_{pencil}+z_0&#39;
 \hat{z}\]</span> <span
-class="math display">\[\acrshort{r}_{det}=\acrshort{rho}\hat{x}\]</span>
+class="math display">\[\vec{r}_{det}=\rho\hat{x}\]</span>
 <span class="math display">\[\vec{r}_{pencil}=\vec{0}\]</span>
 where <span class="math inline">\(z_0\)</span> is the depth of the real
 isotropic source (at <span
-class="math inline">\(\acrshort{r}_{src}\)</span>): <span
-class="math display">\[z_0=\frac{1}{\acrshort{musp}}\]</span> <span
+class="math inline">\(\vec{r}_{src}\)</span>): <span
+class="math display">\[z_0=\frac{1}{\mu_s'}\]</span> <span
 class="math inline">\(z_0&#39;\)</span> is the height of the imaginary
 isotropic source (at <span
-class="math inline">\(\acrshort{r}_{src&#39;}\)</span>): <span
+class="math inline">\(\vec{r}_{src&#39;}\)</span>): <span
 class="math display">\[z_0&#39;=-z_0+2 z_b\]</span> <span
 class="math inline">\(z_b\)</span> is the extrapolated boundary height:
 <span class="math display">\[z_b=-\frac{2 A}{3
 \left(\mu_s'+\mu_a\right)}\]</span> <span
-class="math inline">\(\acrshort{r}_{det}\)</span> is the detector
+class="math inline">\(\vec{r}_{det}\)</span> is the detector
 position and <span class="math inline">\(\vec{r}_{pencil}\)</span>
 is the position of the pencil beam source on the surface of the
 semi-infinite medium. Here the pencil beam is assumed to be at the
@@ -161,24 +161,24 @@ of these vectors is shown in Figure <a href="#fig:semiInfExBound"
 data-reference-type="ref"
 data-reference="fig:semiInfExBound">1.1</a>.</p>
 <p>Next we express μ̃<sub>eff</sub>: <span
-class="math display">\[\acrshort{mueffCom}=\sqrt{3\left(\acrshort{musp}+\acrshort{mua}\right)\left(\acrshort{mua}-\frac{\acrshort{omega}
-\acrshort{n}_{in} i}{\acrshort{c}}\right)}\]</span> <em>c</em>
+class="math display">\[\widetilde{\mu}_{eff}=\sqrt{3\left(\mu_s'+\mu_a\right)\left(\mu_a-\frac{\omega
+n_{in} i}{c}\right)}\]</span> <em>c</em>
 divided by <span class="math inline">\(n_{in}\)</span> is
 describing the speed of light inside the medium (Equation <a
 href="#equ:speedOfLightIN" data-reference-type="ref"
 data-reference="equ:speedOfLightIN">[equ:speedOfLightIN]</a>) and ω is expressed in terms of
 the FD <em>f</em><sub>mod</sub>: <span
-class="math display">\[\acrshort{omega}=2\pi \acrshort{fmod}
+class="math display">\[\omega=2\pi f_{mod}
     \label{equ:omegaFromFMOD}\]</span> The reflection parameter (<span
 class="math inline">\(A\)</span>) describes the mismatch between <em>n</em>
 inside (<span class="math inline">\(n_{in}\)</span>) and
 outside of the medium (<span
-class="math inline">\(\acrshort{n}_{out}\)</span>) <span
+class="math inline">\(n_{out}\)</span>) <span
 class="citation"
 data-cites="continiPhotonMigrationTurbid1997 martelliPhotonMigrationTurbid1997"></span>.
 For a typical mismatch of <span
-class="math inline">\(\acrshort{n}_{in}=\)</span>1.4 and <span
-class="math inline">\(\acrshort{n}_{out}\)</span>=1, <span
+class="math inline">\(n_{in}=\)</span>1.4 and <span
+class="math inline">\(n_{out}\)</span>=1, <span
 class="math inline">\(A=\)</span>2.949, code to generate this parameter
 value is found in Listing <a href="#lst:n2A" data-reference-type="ref"
 data-reference="lst:n2A">[lst:n2A]</a> <span class="citation"
@@ -200,9 +200,9 @@ is often concerned with the <em>I</em> and φ.
 For FD what is referred to as
 <em>I</em>
 is the amplitude of R̃ (<span
-class="math inline">\(|\acrshort{RCom}|\)</span>) and similarly φ
+class="math inline">\(|\widetilde{R}|\)</span>) and similarly φ
 is the angle of R̃ (<span
-class="math inline">\(\angle\acrshort{RCom}\)</span>).</p>
+class="math inline">\(\angle\widetilde{R}\)</span>).</p>
 <p>Equation <a href="#equ:RCom_semiInf" data-reference-type="ref"
 data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a> is derived from
 the extrapolated boundary condition (<span
@@ -210,7 +210,7 @@ class="math inline">\(z_b\neq0\)</span>). The expression may be
 simplified using the zero boundary condition which assume a completely
 absorbing surface by setting <span class="math inline">\(z_b=0\)</span>.
 The consequence of this is that <span
-class="math inline">\(\|\acrshort{r}_1\|=\|\acrshort{r}_2\|\)</span> and
+class="math inline">\(\|\vec{r}_1\|=\|\vec{r}_2\|\)</span> and
 Equation <a href="#equ:RCom_semiInf" data-reference-type="ref"
 data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a> becomes one
 exponential instead of the sum of two. Further assumptions about ρ
@@ -218,7 +218,7 @@ being larger than <span class="math inline">\(z_0\)</span> and μ<sub>a</sub>
 being smaller than μ′<sub>s</sub> lead us to the typical
 statement that ln(ρ²<em>I</em>) is linear with ρ.
 It is these assumptions that lead to the linear slopes method in
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a> while the
 iterative recovery method in said Appendix does not use these
 assumptions and works directly with Equation <a href="#equ:RCom_semiInf"
@@ -231,15 +231,15 @@ R̃ we may also describe the
 distribution of photons within the medium with the Φ̃. Using the same
 variables defined above for the expression of R̃
 we can define the Green’s function for Φ̃: <span
-class="math display">\[\acrshort{PHIcom}=
-    \frac{3\acrshort{musp}}{4\pi}
-    \left(\frac{e^{-\|\acrshort{r}_1\|\acrshort{mueffCom}}}{\|\acrshort{r}_1\|}-\frac{e^{-\|\acrshort{r}_2\|\acrshort{mueffCom}}}{\|\acrshort{r}_2\|}\right)
+class="math display">\[\widetilde{\Phi}=
+    \frac{3\mu_s'}{4\pi}
+    \left(\frac{e^{-\|\vec{r}_1\|\widetilde{\mu}_{eff}}}{\|\vec{r}_1\|}-\frac{e^{-\|\vec{r}_2\|\widetilde{\mu}_{eff}}}{\|\vec{r}_2\|}\right)
     \label{equ:PHIcom_semiInf}\]</span> Here the same vector notation is
 used as Equation <a href="#equ:RCom_semiInf" data-reference-type="ref"
 data-reference="equ:RCom_semiInf">[equ:RCom_semiInf]</a> above, but now
 <span class="math inline">\(\vec{r}_{det}\)</span> can be anywhere
 within the medium and the retrieved value for Φ̃ is the Φ̃ at <span
-class="math inline">\(\acrshort{r}_{det}\)</span>. This can be imagined
+class="math inline">\(\vec{r}_{det}\)</span>. This can be imagined
 by examining Figure <a href="#fig:semiInfExBound"
 data-reference-type="ref" data-reference="fig:semiInfExBound">1.1</a>
 where now <span class="math inline">\(\vec{r}_{det}\)</span>
@@ -270,7 +270,7 @@ the following expressions.</p>
 <p>First, the following values are defined. The speed of light within
 the medium (<span class="math inline">\(v\)</span>) in terms of <em>c</em> and
 <em>n</em>: <span
-class="math display">\[v=\frac{\acrshort{c}}{\acrshort{n}}
+class="math display">\[v=\frac{c}{n}
     \label{equ:speedOfLightIN}\]</span> where, <em>c</em> taken
 to be 2.99792458 × 10<sup>11</sup> mm s<sup>−1</sup>. ω is defined in terms of
 <em>f</em><sub>mod</sub> in Equation <a
@@ -278,17 +278,17 @@ href="#equ:omegaFromFMOD" data-reference-type="ref"
 data-reference="equ:omegaFromFMOD">[equ:omegaFromFMOD]</a>. Next, the
 diffusion coefficient (<span class="math inline">\(\mathcal{D}\)</span>)
 is: <span
-class="math display">\[\mathcal{D}\left(\acrshort{musp}_{,top/bot}\right)=\frac{1}{3
-\acrshort{musp}_{,top/bot}}\]</span> where, the subscript of μ′<sub>s</sub>
+class="math display">\[\mathcal{D}\left(\mu_s'_{,top/bot}\right)=\frac{1}{3
+\mu_s'_{,top/bot}}\]</span> where, the subscript of μ′<sub>s</sub>
 tells whether the variable belongs to the top (<span
 class="math inline">\(top\)</span>) or bottom (<span
 class="math inline">\(bot\)</span>) layer. The approximate depth of the
 isotropic source (<span class="math inline">\(z_0\)</span>) is redefined
 from the above section, now in terms of the top layer μ′<sub>s</sub>: <span
-class="math display">\[z_0\left(\acrshort{musp}_{,top}\right)=\frac{1}{\acrshort{musp}_{,top}}\]</span>
+class="math display">\[z_0\left(\mu_s'_{,top}\right)=\frac{1}{\mu_s'_{,top}}\]</span>
 The approximate extrapolated boundary height (<span
 class="math inline">\(z_b\)</span>) is also redefined in this way: <span
-class="math display">\[z_b\left(\acrshort{musp}_{,top}\right)=2 A
+class="math display">\[z_b\left(\mu_s'_{,top}\right)=2 A
 \mathcal{D}_{top}\]</span> where, <span class="math inline">\(A\)</span>
 is the index of refraction mismatch parameter from the previous section
 <span class="citation"
@@ -299,10 +299,10 @@ class="math inline">\(0^{th}\)</span> order Bessel function of the first
 kind. First, the optical attenuation parameter (<span
 class="math inline">\(\widetilde{a}_k\)</span>): <span
 class="math display">\[\begin{split}
-        \widetilde{a}_{k}\left(\acrshort{mua}_{,top/bot},
-\acrshort{musp}_{,top/bot}\right)=\\
-        \sqrt{\frac{\acrshort{mua}_{,top/bot}}{\mathcal{D}_{top/bot}}+\left(\frac{j_{0,k}}{B}
-\right)^2+\frac{\acrshort{omega}}{v \mathcal{D}_{top/bot}} i}
+        \widetilde{a}_{k}\left(\mu_a_{,top/bot},
+\mu_s'_{,top/bot}\right)=\\
+        \sqrt{\frac{\mu_a_{,top/bot}}{\mathcal{D}_{top/bot}}+\left(\frac{j_{0,k}}{B}
+\right)^2+\frac{\omega}{v \mathcal{D}_{top/bot}} i}
     \end{split}\]</span> where, the subscript of μ<sub>a</sub>
 tells whether the variable belongs to the top (<span
 class="math inline">\(top\)</span>) or bottom (<span
@@ -315,8 +315,8 @@ two-layer cylinder (for which the source is in the center; <span
 class="math inline">\(B\)</span> is typically assumed to be 150 mm).
 Then, the ρ parameter (<span
 class="math inline">\(Q_k\)</span>) is written: <span
-class="math display">\[Q_k\left(\acrshort{rho}\right)=\frac{J_{0}\left(
-\frac{\acrshort{rho} j_{0,k}}{B}\right)}{J_{1}\left(
+class="math display">\[Q_k\left(\rho\right)=\frac{J_{0}\left(
+\frac{\rho j_{0,k}}{B}\right)}{J_{1}\left(
 j_{0,k}\right)^2}\]</span></p>
 <p>Now the reflectance for the case when the isotropic source is in the
 first layer (<span class="math inline">\(\widetilde{R}_1\)</span>) can
@@ -344,36 +344,36 @@ layer. For computation, infinite sums were typically done over
 <p>To express the reflectance when the isotropic source is in the second
 layer (<span class="math inline">\(\widetilde{R}_2\)</span>)
 additional coefficients are defined to simplify the expression: <span
-class="math display">\[\widetilde{\alpha}_{1,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}\right)=e^{-\widetilde{a}_{top,k} z_b}\]</span>
+class="math display">\[\widetilde{\alpha}_{1,k}\left(\mu_a_{,top},
+\mu_s'_{,top}\right)=e^{-\widetilde{a}_{top,k} z_b}\]</span>
 <span
-class="math display">\[\widetilde{\alpha}_{2,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}, z_{top}\right)=\acrshort{n}^2
+class="math display">\[\widetilde{\alpha}_{2,k}\left(\mu_a_{,top},
+\mu_s'_{,top}, z_{top}\right)=n^2
 e^{\widetilde{a}_{top,k} z_{top}}\]</span> <span
 class="math display">\[\begin{split}
-        \widetilde{\alpha}_{3,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}, z_{top}\right)=\\
+        \widetilde{\alpha}_{3,k}\left(\mu_a_{,top},
+\mu_s'_{,top}, z_{top}\right)=\\
         \widetilde{a}_{top,k} \mathcal{D}_{top} e^{\widetilde{a}_{top,k}
 z_{top}}
     \end{split}\]</span> <span
-class="math display">\[\widetilde{\beta}_{1,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}\right)=e^{\widetilde{a}_{top,k} z_b}\]</span>
+class="math display">\[\widetilde{\beta}_{1,k}\left(\mu_a_{,top},
+\mu_s'_{,top}\right)=e^{\widetilde{a}_{top,k} z_b}\]</span>
 <span
-class="math display">\[\widetilde{\beta}_{2,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}, z_{top}\right)=\acrshort{n}^2
+class="math display">\[\widetilde{\beta}_{2,k}\left(\mu_a_{,top},
+\mu_s'_{,top}, z_{top}\right)=n^2
 e^{-\widetilde{a}_{top,k} z_{top}}\]</span> <span
 class="math display">\[\begin{split}
-        \widetilde{\beta}_{3,k}\left(\acrshort{mua}_{,top},
-\acrshort{musp}_{,top}, z_{top}\right)=\\
+        \widetilde{\beta}_{3,k}\left(\mu_a_{,top},
+\mu_s'_{,top}, z_{top}\right)=\\
         -\widetilde{a}_{top,k} \mathcal{D}_{top}
 e^{-\widetilde{a}_{top,k} z_{top}}
     \end{split}\]</span> <span
 class="math display">\[\widetilde{\gamma}_{2,k}\left(z_{top},
-\acrshort{mua}_{,bot}, \acrshort{musp}_{,bot}\right)=-\acrshort{n}^2
+\mu_a_{,bot}, \mu_s'_{,bot}\right)=-n^2
 e^{-\widetilde{a}_{bot,k} z_{top}}\]</span> <span
 class="math display">\[\begin{split}
-        \widetilde{\gamma}_{3,k}\left(z_{top}, \acrshort{mua}_{,bot},
-\acrshort{musp}_{,bot}\right)=\\
+        \widetilde{\gamma}_{3,k}\left(z_{top}, \mu_a_{,bot},
+\mu_s'_{,bot}\right)=\\
         \widetilde{a}_{bot,k} \mathcal{D}_{bot}
 e^{-\widetilde{a}_{bot,k} z_{top}}
     \end{split}\]</span> <span class="math display">\[\begin{split}
@@ -408,7 +408,7 @@ defined. <span class="math display">\[\begin{split}
 \widetilde{\zeta}_{2,k})}{\widetilde{\Xi}_k}
     \end{split}\]</span> Given all these coefficients the reflectance
 when the isotropic source is in the second layer (<span
-class="math inline">\(\acrshort{RCom}_2\)</span>) can now be expressed:
+class="math inline">\(\widetilde{R}_2\)</span>) can now be expressed:
 <span class="math display">\[\begin{split}
         \widetilde{R}_2\left(\rho, \mu_a_{,top},
 \mu_s'_{,top}, z_{top}, \mu_a_{,bot},
@@ -421,12 +421,12 @@ over  × 10<sup>3</sup> terms.</p>
 <p>Finally, the piece-wise expression for R̃
 from a two-layer medium may be expressed: <span
 class="math display">\[\begin{split}
-        \widetilde{R}\left(\acrshort{rho}, \acrshort{mua}_{,top},
-\acrshort{musp}_{,top}, z_{top}, \acrshort{mua}_{,bot},
-\acrshort{musp}_{,bot}\right)=\\
+        \widetilde{R}\left(\rho, \mu_a_{,top},
+\mu_s'_{,top}, z_{top}, \mu_a_{,bot},
+\mu_s'_{,bot}\right)=\\
         \begin{cases}
-            \acrshort{RCom}_1 &amp; z_0 &lt; z_{top} \\
-            \acrshort{RCom}_2 &amp; z_0 \geq z_{top}
+            \widetilde{R}_1 &amp; z_0 &lt; z_{top} \\
+            \widetilde{R}_2 &amp; z_0 \geq z_{top}
         \end{cases}
     \end{split}
     \label{equ:2LayR}\]</span> As with Equation <a
@@ -439,29 +439,29 @@ be obtained by setting ω to zero.</p>
 combination of ε weighted by the
 chromophore concentrations. For one λ, μ<sub>a</sub>
 can be expressed as follows: <span
-class="math display">\[\acrshort{mua}=\sum_{k=1}^{N_{chrom}} C_k
-\acrshort{ext}_{C_k}\]</span> where <span
+class="math display">\[\mu_a=\sum_{k=1}^{N_{chrom}} C_k
+\epsilon_{C_k}\]</span> where <span
 class="math inline">\(N_{chrom}\)</span> is the number of chromophores,
 <span class="math inline">\(C_k\)</span> is the concentration of
 chromophore <span class="math inline">\(k\)</span>, and <span
-class="math inline">\(\acrshort{ext}_{Ck}\)</span> is the extinction of
+class="math inline">\(\epsilon_{Ck}\)</span> is the extinction of
 chromophore <span class="math inline">\(k\)</span>. However, ε
 is λ dependent, thus μ<sub>a</sub>
 is also and the above equation is true for a continuum of λs.
 Therefore, the system can be written as follows: <span
 class="math display">\[\begin{split}
         \begin{bmatrix}
-            \acrshort{mua}(\acrshort{lam}_1)\\
+            \mu_a(\lambda_1)\\
             \vdots\\
-            \acrshort{mua}(\acrshort{lam}_{N_{lam}})\\
+            \mu_a(\lambda_{N_{lam}})\\
         \end{bmatrix}=\\
         \begin{bmatrix}
-            \acrshort{ext}_{C_1}(\acrshort{lam}_1) &amp; \dots &amp;
-\acrshort{ext}_{C_{N_{chrom}}}(\acrshort{lam}_1) \\
+            \epsilon_{C_1}(\lambda_1) &amp; \dots &amp;
+\epsilon_{C_{N_{chrom}}}(\lambda_1) \\
             \vdots                              &amp;   \ddots
 &amp;            \vdots \\
-            \acrshort{ext}_{C_1}(\acrshort{lam}_{N_{lam}}) &amp; \dots
-&amp; \acrshort{ext}_{C_{N_{chrom}}}(\acrshort{lam}_{N_{lam}}) \\
+            \epsilon_{C_1}(\lambda_{N_{lam}}) &amp; \dots
+&amp; \epsilon_{C_{N_{chrom}}}(\lambda_{N_{lam}}) \\
         \end{bmatrix}\\ \times
         \begin{bmatrix}
             C_1\\
@@ -473,7 +473,7 @@ class="math display">\[\begin{split}
     \label{equ:muaForward}\]</span> Similarly if Δμ<sub>a</sub>
 and chromophore concentration changes (<span
 class="math inline">\(\Delta C\)</span>) are considered: <span
-class="math display">\[\acrshort{dmuaVec}=\acrshort{EXT}\Delta\harp{C}
+class="math display">\[\Delta\vec{\mu}_a=\mathbf{E}\Delta\harp{C}
     \label{equ:dmuaForward}\]</span> These expressions are general for
 <span class="math inline">\(N_{lam}\)</span> λs
 and <span class="math inline">\(N_{chrom}\)</span> chromophores.</p>
@@ -526,12 +526,12 @@ instead of O and D:
         \text{W}\\
         \text{L}
     \end{bmatrix}\]</span> since: <span
-class="math display">\[\acrshort{O}=\acrshort{S}\acrshort{T}\]</span>
+class="math display">\[O=ST\]</span>
 <span
-class="math display">\[\acrshort{D}=(1-\acrshort{S})\acrshort{T}\]</span></p>
+class="math display">\[D=(1-S)T\]</span></p>
 <p>This suits to shows the the linear combination of chromophores can be
 used to model the λ dependence of μ<sub>a</sub>.
-In Appendix <a href="#app:recChrom" data-reference-type="ref"
+In Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a> these expressions are
 inverted to give a way to convert a measured μ<sub>a</sub>
 to a chromophore concentration.</p>
@@ -547,7 +547,7 @@ class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 Since diffuse optics is concerned with average behavior and primarily
 μ′<sub>s</sub> the overall λ
 dependence is modeled with <em>b</em> as follows: <span
-class="math display">\[\acrshort{musp}(\acrshort{lam})=\acrshort{musp}(\acrshort{lam}_0)\left(\frac{\acrshort{lam}}{\acrshort{lam}_0}\right)^{-b}\]</span>
+class="math display">\[\mu_s'(\lambda)=\mu_s'(\lambda_0)\left(\frac{\lambda}{\lambda_0}\right)^{-b}\]</span>
 The scattering dependence can be thought of as a mixture of Mie
 scattering, which is not strongly λ dependent and Rayleigh
 scattering, which is strongly λ dependent. <em>b</em>

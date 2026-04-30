@@ -20,6 +20,8 @@ python -m http.server 8000  # fallback if npx unavailable
 - `site.css` — shared stylesheet: CSS variables, fonts (Playfair Display + DM Sans), navbar, `.site-card`, `.section-eyebrow`, `.section-rule`, tool-page base styles
 - `tools/tinymc/index.html` — 3D random walk Monte Carlo simulator; vanilla JS + Plotly 2.35.2
 - `tools/diffuse-reflectance/index.html` — CW diffuse reflectance R(ρ) interactive plot; vanilla JS + Plotly 2.35.2
+- `teaching/bme0010/index.html` — BME-0010 course page; lecture/demo rows with PDF links
+- `teaching/honors295/index.html` — HONORS-295 course page; lecture listing and KCI materials
 - `dissertation/` — static HTML dissertation pages (do not hand-edit)
 
 ## Design System
@@ -28,7 +30,18 @@ CSS variables live in `site.css`: `--bg`, `--text`, `--muted`, `--accent` (`#1a5
 
 ## Navbar Pattern
 
-Every page uses a Bootstrap fixed-top **white** navbar (not dark) with collapse/hamburger. All pages link back to `../../index.html` (for tools) or `../index.html` (for dissertation). The active link is `#tools` for tool pages and `Dissertation` for dissertation pages. Copy the navbar block from any existing tool page when creating a new one — it uses the plain `.navbar` class (no `navbar-dark bg-dark`).
+Every page uses a Bootstrap fixed-top **white** navbar (not dark) with collapse/hamburger. Depth-relative links back to `index.html`:
+- Tools and teaching pages: `../../index.html`
+- Dissertation pages: `../index.html`
+
+Active link per page type: `#teaching` for course pages, `#tools` for tool pages, `Dissertation` for dissertation pages. Copy the navbar block from any existing page — use plain `.navbar` class (no `navbar-dark bg-dark`).
+
+## Adding New Teaching Pages
+
+1. Create `teaching/<name>/index.html` linking `../../site.css`. Use the `.course-hero` / `.material-section` / `.mat-row` pattern from an existing course page.
+2. Material rows use `.mat-date` (date or identifier), `.mat-label` (topic), `.mat-links` with `.mat-link` buttons for PDF links.
+3. Add a clickable card in the `#teaching` section of `index.html` wrapped in `<a class="tool-link">` so the `.site-card` hover style applies.
+4. Commit PDFs under `teaching/<name>/pdfs/`. GitHub hard limit is 100 MB per file; warn at 50 MB. Large lecture slides may need external hosting.
 
 ## Adding New Tools
 
@@ -42,6 +55,13 @@ Fetches from Semantic Scholar Graph API (author ID `51904482`), sorts client-sid
 ## Diffuse Reflectance Tool
 
 Ports `R_FD_forward.m` (omega=0 CW case) and `n2A.m` from `/home/giles/GitHub/DOIT-Toolbox/`. Uses the extrapolated zero-boundary condition (Bigio & Fantini eq. 12.34). Key constants hoisted to module level: `A = n2A(1.4)` (refractive index mismatch, fixed n=1.4) and `INV_4PI`. Inside `computeR()`, `x0sq` and `xImgSq` are hoisted above the per-rho `map()` loop. `mueff` is computed once in `update()` and passed in.
+
+## Branch Strategy
+
+- `testing` — full site: Bio, Research, Teaching, Tools, Dissertation
+- `main` — stripped for deployment: Bio, Research, Teaching only (no Tools, no Dissertation nav link)
+
+When syncing design changes to `main`, use `git checkout main -- site.css` to pull shared files across branches.
 
 ## Dissertation
 

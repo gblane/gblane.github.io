@@ -6,7 +6,7 @@
     <title>In-Vivo Cerebral Hemodynamics · Giles Blaney</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };</script>
+    <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], macros: { harp: ['\\overset{\\rightharpoonup}{#1}', 1] } } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         body { padding-top: 70px; }
@@ -113,13 +113,13 @@ data-cites="khaksariDepthDependenceCoherent2018 blaneyMultiDistanceFrequencyDoma
 or paced breathing <span class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>. To
 interpret these results we utilized the CHS phasor model (Figure <a
-href="#fig:CHSphasors" data-reference-type="ref"
+href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a>), by extracting
 from the NIRS data the Õ,
 D̃, and T̃,
-using the methods in Appendices <a href="#app:detCoh"
+using the methods in Appendices <a href="app8.html#app:detCoh"
 data-reference-type="ref"
-data-reference="app:detCoh">[app:detCoh]</a>&amp;<a href="#app:phasors"
+data-reference="app:detCoh">[app:detCoh]</a>&amp;<a href="app7.html#app:phasors"
 data-reference-type="ref"
 data-reference="app:phasors">[app:phasors]</a>. We also actracted the
 Ã from ABP
@@ -129,7 +129,7 @@ data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
 class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span> the
 measurements were done on human forehead at multiple ρs
-(10 mm–40 mm; Chapter <a href="#ch:shortLong" data-reference-type="ref"
+(10 mm–40 mm; Chapter <a href="ch2.html#ch:shortLong" data-reference-type="ref"
 data-reference="ch:shortLong">[ch:shortLong]</a>). In <span
 class="citation"
 data-cites="khaksariDepthDependenceCoherent2018"></span> there was one
@@ -149,11 +149,11 @@ presented a first <em>in vivo</em> application of DS
 φ, measured with FD
 NIRS to demonstrate its
 enhanced sensitivity to cerebral hemodynamics (Chapters <a
-href="#ch:DSintro" data-reference-type="ref"
-data-reference="ch:DSintro">[ch:DSintro]</a>&amp;<a href="#ch:DSpoint"
+href="ch3.html#ch:DSintro" data-reference-type="ref"
+data-reference="ch:DSintro">[ch:DSintro]</a>&amp;<a href="ch4.html#ch:DSpoint"
 data-reference-type="ref" data-reference="ch:DSpoint">[ch:DSpoint]</a>).
 These data were analyzed for all possible data-types in the DS
-probe (Figure <a href="#fig:DSset" data-reference-type="ref"
+probe (Figure <a href="ch3.html#fig:DSset" data-reference-type="ref"
 data-reference="fig:DSset">[fig:DSset]</a>) which are SD,
 SS, and DS
 either <em>I</em> or φ.</p>
@@ -176,23 +176,23 @@ data-reference="prt:deepMeas">[prt:deepMeas]</a>.</p>
 class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span> using
 the Multi-Distance (MD) probe in Figure <a
-href="#fig:MDprobe" data-reference-type="ref"
+href="ch2.html#fig:MDprobe" data-reference-type="ref"
 data-reference="fig:MDprobe">[fig:MDprobe]</a>. (a) Pneumatic cuff
 pressure (Black), Arterial Blood Pressure (ABP) (Green), Respiration signal
 (Mustard). (b) Oxy-hemoglobin concentration change (ΔO) (Red; mean at 0.5  ) and
 Deoxy-hemoglobin concentration change (ΔD) (Blue, mean at −0.5  )
 measured using Single-Distance (SD) Intensity (<em>I</em>) with Source <code>6</code>
-(35 mm; Figure <a href="#fig:MDprobe" data-reference-type="ref"
+(35 mm; Figure <a href="ch2.html#fig:MDprobe" data-reference-type="ref"
 data-reference="fig:MDprobe">[fig:MDprobe]</a>). (c) ΔO
 (Red; mean at 1  ) and ΔD (Blue, mean at −1  )
 measured using SD phase (φ)
-with Source <code>6</code> (35 mm; Figure <a href="#fig:MDprobe"
+with Source <code>6</code> (35 mm; Figure <a href="ch2.html#fig:MDprobe"
 data-reference-type="ref"
 data-reference="fig:MDprobe">[fig:MDprobe]</a>). (d) ΔO
 (Red; mean at 1.25  ) and ΔD (Blue; mean at −1.25  )
 measured using Single-Slope (SS) <em>I</em> with
 Sources <code>4</code>&amp;<code>6</code> (25 mm, &amp; 35 mm; Figure <a
-href="#fig:MDprobe" data-reference-type="ref"
+href="ch2.html#fig:MDprobe" data-reference-type="ref"
 data-reference="fig:MDprobe">[fig:MDprobe]</a>).<br />
 Note 1: This figure can be found as Figure 2 in <span class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>.<br />
@@ -200,13 +200,13 @@ Note 2: All traces are low-pass filtered to 0.2 Hz, and shifted from
 zero baseline for visualization.</figcaption>
 </figure>
 <p>The methods used in the MD work are explained in
-Section <a href="#ch:shortLong:sec:MDmeth" data-reference-type="ref"
+Section <a href="ch2.html#ch:shortLong:sec:MDmeth" data-reference-type="ref"
 data-reference="ch:shortLong:sec:MDmeth">[ch:shortLong:sec:MDmeth]</a>
 and in the parent publications <span class="citation"
 data-cites="khaksariDepthDependenceCoherent2018"></span> and <span
 class="citation"
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>. In
-general, the probe in Figure <a href="#fig:MDprobe"
+general, the probe in Figure <a href="ch2.html#fig:MDprobe"
 data-reference-type="ref" data-reference="fig:MDprobe">[fig:MDprobe]</a>
 was used with the Imagent, and 0.1 Hz ABP
 oscillations were induced either by cuff or paced breathing. Example
@@ -214,12 +214,12 @@ temporal traces from such a CHS protocol are shown in
 Figure <a href="#fig:PHTfig2" data-reference-type="ref"
 data-reference="fig:PHTfig2">1.1</a>. D̃/Õ and T̃/Ã data was extracted from
 the NIRS data using the methods in
-Appendices <a href="#app:dmuaMeas" data-reference-type="ref"
-data-reference="app:dmuaMeas">[app:dmuaMeas]</a>,<a href="#app:recChrom"
+Appendices <a href="app3.html#app:dmuaMeas" data-reference-type="ref"
+data-reference="app:dmuaMeas">[app:dmuaMeas]</a>,<a href="app4.html#app:recChrom"
 data-reference-type="ref"
-data-reference="app:recChrom">[app:recChrom]</a>,<a href="#app:detCoh"
+data-reference="app:recChrom">[app:recChrom]</a>,<a href="app8.html#app:detCoh"
 data-reference-type="ref"
-data-reference="app:detCoh">[app:detCoh]</a>,&amp;<a href="#app:phasors"
+data-reference="app:detCoh">[app:detCoh]</a>,&amp;<a href="app7.html#app:phasors"
 data-reference-type="ref"
 data-reference="app:phasors">[app:phasors]</a>.</p>
 <h3
@@ -254,11 +254,11 @@ data-cites="khaksariDepthDependenceCoherent2018"></span>.</figcaption>
 <p>An example trace of the data collected from cuff oscillations in
 <span class="citation"
 data-cites="khaksariDepthDependenceCoherent2018"></span> can be found in
-Figure <a href="#fig:JBOfig3" data-reference-type="ref"
+Figure <a href="ch2.html#fig:JBOfig3" data-reference-type="ref"
 data-reference="fig:JBOfig3">[fig:JBOfig3]</a>. These temporal traces
 were further analyzed to extract D̃/Õ and T̃/Ã (Appendices <a
-href="#app:phasors" data-reference-type="ref"
-data-reference="app:phasors">[app:phasors]</a>&amp;<a href="#app:detCoh"
+href="app7.html#app:phasors" data-reference-type="ref"
+data-reference="app:phasors">[app:phasors]</a>&amp;<a href="app8.html#app:detCoh"
 data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a>).</p>
 <p>Figure <a href="#fig:JBOfig4a" data-reference-type="ref"
@@ -312,9 +312,9 @@ data-cites="tgavalekosFrequencyresolvedAnalysisCoherent2019"></span>:
 class="math inline">\(K^{(a)}\)</span> and <span
 class="math inline">\(K^{(v)}\)</span> are effective arterial and venous
 compliance factors, respectively, <span
-class="math inline">\(f_{\text{\acrshort{CHS}}}\)</span> is the
+class="math inline">\(f_{\text{\mathrm{CHS}}}\)</span> is the
 frequency of the hemodynamics oscillations, and <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span> is a time
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span> is a time
 constant for cerebral AR. According to Equation <a
 href="#equ:TAtrans" data-reference-type="ref"
 data-reference="equ:TAtrans">[equ:TAtrans]</a>, the phase of T̃
@@ -322,11 +322,11 @@ relative to Ã results from the sum of
 two complex terms, a first one representing an arterial contribution
 with a zero phase, and a second one representing a venous contribution
 with a negative phase: <span
-class="math display">\[\angle\acrshort{TAvec}=-\arctan\left(2 \pi
-f_{\text{\acrshort{CHS}}} \tau_{\text{\acrshort{AR}}}\right)\]</span>
+class="math display">\[\angle\widetilde{T}/\widetilde{A}=-\arctan\left(2 \pi
+f_{\text{\mathrm{CHS}}} \tau_{\text{\mathrm{AR}}}\right)\]</span>
 According to this model, a more negative phase of T̃/Ã may result from a longer
 time constant <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span> (<em>id
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span> (<em>id
 est</em> a less effective AR) or a greater
 venous-to-arterial relative contribution to the measured
 hemodynamics.</p>
@@ -371,7 +371,7 @@ contributions.</p></li>
 <li><p>The effectiveness of AR, with less negative phase
 values associated with a more effective AR (<em>id est</em> a smaller
 time constant <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span>).</p></li>
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span>).</p></li>
 </ul>
 <p>When both effects are present they may reinforce or compensate each
 other. The more negative phase (<em>id est</em> greater delay) of T̃/Ã at larger ρ
@@ -447,7 +447,7 @@ amplitude and phase relationships of T̃/Ã, as well as D̃/Õ as a function of 
 (10 mm–40 mm) at one frequency (0.1 Hz) of cyclic inflation and
 deflation of pneumatic thigh cuffs. NIRS measurements at longer
 ρ feature a greater 𝒮
-to deeper tissue (Figure <a href="#fig:MDsetSDsen"
+to deeper tissue (Figure <a href="ch2.html#fig:MDsetSDsen"
 data-reference-type="ref"
 data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>), so that the
 measurements reported here provide information on the transition from a
@@ -483,7 +483,7 @@ competing mechanisms occur:</p>
 ρ (which causes a more
 negative phase angle of T̃/Ã).</p></li>
 <li><p>A smaller value of <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span> at increasing
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span> at increasing
 ρ (which causes a less
 negative phase angle of T̃/Ã).</p></li>
 </ul>
@@ -495,9 +495,9 @@ data-reference="fig:JBOfig5">1.4</a>(a)(b) are consistent with both
 arterial and venous contributions to T that decrease with ρ,
 but with the arterial contribution decreasing faster than the venous
 one, and an AR time constant <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span> that
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span> that
 decreases with ρ (a smaller <span
-class="math inline">\(\tau_{\text{\acrshort{AR}}}\)</span> corresponds
+class="math inline">\(\tau_{\text{\mathrm{AR}}}\)</span> corresponds
 to a more effective AR). Because of these two
 competing mechanisms it is possible that in some subjects (<em>exempli
 gratia</em> in Subject 1 in <span class="citation"
@@ -515,14 +515,14 @@ and Õ, especially the increase
 in their phase angle with ρ, is a direct signature of
 improved AR according to our CHS
 mathematical model1 which has been used in Figure <a
-href="#fig:CHSphasors" data-reference-type="ref"
+href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a>. We have decomposed
 the measured phasors Õ and D̃
 into their BV (<span
-class="math inline">\(\acrshort{Oph}_V\)</span>, <span
-class="math inline">\(\acrshort{Dph}_V\)</span>) and BF
+class="math inline">\(\widetilde{O}_V\)</span>, <span
+class="math inline">\(\widetilde{D}_V\)</span>) and BF
 (<span class="math inline">\(\widetilde{O}_F\)</span>, <span
-class="math inline">\(\acrshort{Dph}_F\)</span>) components, by assuming
+class="math inline">\(\widetilde{D}_F\)</span>) components, by assuming
 a value of 75 % for the hemoglobin saturation of the volume oscillating
 compartment <span class="citation"
 data-cites="pierroReducedSpeedMicrovascular2014"></span>. A larger phase
@@ -530,7 +530,7 @@ of D̃ (at larger ρ),
 impacts the amplitude of T̃ (as shown in the results)
 and impacts also the phase between the F̆ and Ã, which is an indicator
 of cerebral AR. Figure <a
-href="#fig:CHSphasors" data-reference-type="ref"
+href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a> also provides a
 visual interpretation of the result of Figure <a href="#fig:JBOfig7"
 data-reference-type="ref" data-reference="fig:JBOfig7">1.6</a>. In fact,
@@ -570,7 +570,7 @@ discussed for <span class="citation"
 data-cites="khaksariDepthDependenceCoherent2018"></span> but with the
 addition of more repeated measurements, measurement locations
 (bilateral), paced breathing, φ data, and SS
-data. As before the probe in Figure <a href="#fig:MDprobe"
+data. As before the probe in Figure <a href="ch2.html#fig:MDprobe"
 data-reference-type="ref" data-reference="fig:MDprobe">[fig:MDprobe]</a>
 was utilized to realize MD measurements. The rationale
 for this study is the sets of NIRS data, as discussed in
@@ -598,7 +598,7 @@ with either <em>I</em> or φ.</p>
 <p>Table <a href="#tab:PHTtab1" data-reference-type="ref"
 data-reference="tab:PHTtab1">[tab:PHTtab1]</a> reports the baseline
 absolute optical properties from the calibrated linear slopes method in
-Appendix <a href="#app:absOptPropMeas" data-reference-type="ref"
+Appendix <a href="app2.html#app:absOptPropMeas" data-reference-type="ref"
 data-reference="app:absOptPropMeas">[app:absOptPropMeas]</a>, at the 2
 λs of 690 nm, &amp; 830 nm,
 averaged over all days and locations for the five subjects in <span
@@ -609,7 +609,7 @@ we have obtained absolute concentrations of O, D, and
 T, as well as S
 assuming a 70 % W <span class="citation"
 data-cites="hallacogluAbsoluteMeasurementCerebral2012"></span> using the
-methods in Appendix <a href="#app:recChrom" data-reference-type="ref"
+methods in Appendix <a href="app4.html#app:recChrom" data-reference-type="ref"
 data-reference="app:recChrom">[app:recChrom]</a>. The measured values of
 optical properties and hemoglobin parameters are consistent with
 previously reported values using a similar FD, MD
@@ -629,7 +629,7 @@ methods Single-Distance (SD) Intensity (<em>I</em>) (Purple), SD
 phase (φ) (Green), and Single-Slope (SS)
 <em>I</em>
 (Cyan). Threshold of significant wavelet 𝔠 determined via Chapter <a
-href="#ch:signCoh" data-reference-type="ref"
+href="ch7.html#ch:signCoh" data-reference-type="ref"
 data-reference="ch:signCoh">[ch:signCoh]</a> is also shown (Maroon).
 Time periods of induced cuff oscillations (Dashed Black) and induced
 paced breathing (Dashed Mustard) oscillations shown. (a)(b): 𝔠(Õ,Ã) at 0.1 Hz. (c)(d): 𝔠(D̃,Ã) at 0.1 Hz. (e)(f): 𝔠(T̃,Ã) at 0.1 Hz. (a)(c)(e):
@@ -676,7 +676,7 @@ data-cites="sassaroliLowFrequencySpontaneousOscillations2012"></span>.
 Figure <a href="#fig:PHTfig3" data-reference-type="ref"
 data-reference="fig:PHTfig3">1.7</a> also shows the threshold for
 significant 𝔠 from Chapter <a
-href="#ch:signCoh" data-reference-type="ref"
+href="ch7.html#ch:signCoh" data-reference-type="ref"
 data-reference="ch:signCoh">[ch:signCoh]</a>. Figure <a
 href="#fig:PHTfig3" data-reference-type="ref"
 data-reference="fig:PHTfig3">1.7</a> shows that tissue hemodynamics at
@@ -724,19 +724,19 @@ that ρ is the average of the
 source-detector distances of the two sources.<br />
 Note 3: Error bars represent the standard deviation of all analyzed
 pixels that show significant Coherence (𝔠) in the wavelet transfer
-function scalogram (Appendix <a href="#app:phasors"
+function scalogram (Appendix <a href="app7.html#app:phasors"
 data-reference-type="ref"
 data-reference="app:phasors">[app:phasors]</a>).</figcaption>
 </figure>
 <p>Optical measurements exhibit increasing 𝒮
 to deeper tissue as the ρ (<em>id est</em>, the
 distance between the illumination and collection points) increases
-(Figure <a href="#fig:MDsetSDsen" data-reference-type="ref"
+(Figure <a href="ch2.html#fig:MDsetSDsen" data-reference-type="ref"
 data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>). This is true for
 both SD and SS
-methods (Figures <a href="#fig:MDsetSDsen" data-reference-type="ref"
+methods (Figures <a href="ch2.html#fig:MDsetSDsen" data-reference-type="ref"
 data-reference="fig:MDsetSDsen">[fig:MDsetSDsen]</a>&amp;<a
-href="#fig:MDsetSSsen" data-reference-type="ref"
+href="ch2.html#fig:MDsetSSsen" data-reference-type="ref"
 data-reference="fig:MDsetSSsen">[fig:MDsetSSsen]</a>). It is also
 important to consider that <em>I</em> and φ
 data feature different 𝒮 to deeper versus
@@ -745,7 +745,7 @@ data-reference-type="ref" data-reference="fig:PHTfig4">1.8</a> reports
 the SD <em>I</em> and
 SD φ
 measurements at ρ from 11 mm–40 mm
-(Figure <a href="#fig:MDprobe" data-reference-type="ref"
+(Figure <a href="ch2.html#fig:MDprobe" data-reference-type="ref"
 data-reference="fig:MDprobe">[fig:MDprobe]</a>), as well as SS
 <em>I</em>
 obtained from data at two ρ separated by approximately
@@ -776,14 +776,14 @@ superficial tissue hemodynamics that mostly represent arterial BV
 oscillations (for which D̃ and Õ
 would be in phase, and their amplitude ratio would reflect the oxygen
 saturation of the oscillating arterial compartment as in Figure <a
-href="#fig:CHSphasors" data-reference-type="ref"
+href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a> <span
 class="citation" data-cites="fantiniDynamicModelTissue2014"></span>).
 The results obtained at long ρ are consistent with deeper
 tissue hemodynamics that are characterized mostly by BF
 oscillations (for which D̃ and Õ
 would be in opposition of phase, and would have the same amplitude as in
-Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+Figure <a href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a> <span
 class="citation" data-cites="fantiniDynamicModelTissue2014"></span>). In
 fact, SD φ
@@ -826,9 +826,9 @@ at the largest ρ considered (40 mm). These
 results reported for a single subject in Figure <a href="#fig:PHTfig4"
 data-reference-type="ref" data-reference="fig:PHTfig4">1.8</a>, are
 confirmed by the average over all subjects, shown in Figure <a
-href="#fig:PhotonicsFig5" data-reference-type="ref"
+href="ch2.html#fig:PhotonicsFig5" data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">[fig:PhotonicsFig5]</a>(a)(c) and
-backed up by phasor simulations Figure <a href="#fig:PhotonicsFig5"
+backed up by phasor simulations Figure <a href="ch2.html#fig:PhotonicsFig5"
 data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">[fig:PhotonicsFig5]</a>(b)(d).</p>
 <h5
@@ -861,7 +861,7 @@ Note 2: Error bars are shown as arcs for the phase and line segments
 extending from the arrow point for the amplitude. These show standard
 deviation of all analyzed pixels over all days that show significant
 coherence in the wavelet transfer function scalogram (Appendix <a
-href="#app:phasors" data-reference-type="ref"
+href="app7.html#app:phasors" data-reference-type="ref"
 data-reference="app:phasors">[app:phasors]</a>).</figcaption>
 </figure>
 <p>Figure<a href="#fig:PHTfig6" data-reference-type="ref"
@@ -915,7 +915,7 @@ of Frequency-Domain Multi-Distance Oscillations</h4>
 data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span> on
 ρ, the results obtained with
 the two protocols (cyclic cuff occlusion, paced breathing) are similar
-(Figures <a href="#fig:PhotonicsFig5" data-reference-type="ref"
+(Figures <a href="ch2.html#fig:PhotonicsFig5" data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">[fig:PhotonicsFig5]</a>&amp;<a
 href="#fig:PHTfig4" data-reference-type="ref"
 data-reference="fig:PHTfig4">1.8</a>). A close inspection of the results
@@ -959,7 +959,7 @@ data-cites="blaneyMultiDistanceFrequencyDomainOptical2019"></span>, at
 least not within the experimental uncertainties of measured amplitude
 and phase of Õ and D̃.
 For this reason, we opted to resort to averages over all subjects, days,
-and locations in Figure <a href="#fig:PhotonicsFig5"
+and locations in Figure <a href="ch2.html#fig:PhotonicsFig5"
 data-reference-type="ref"
 data-reference="fig:PhotonicsFig5">[fig:PhotonicsFig5]</a>(a)(c) and
 over all days in Figure <a href="#fig:PHTfig6" data-reference-type="ref"
@@ -990,9 +990,9 @@ O
 must be associated with a decrease in D and <em>vice versa</em>)
 <span class="citation"
 data-cites="fantiniDynamicModelTissue2014"></span>. This relationship is
-explained in Figure <a href="#fig:CHSphasors" data-reference-type="ref"
+explained in Figure <a href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a> and Chapter <a
-href="#ch:CHSintro" data-reference-type="ref"
+href="ch6.html#ch:CHSintro" data-reference-type="ref"
 data-reference="ch:CHSintro">[ch:CHSintro]</a>. Nevertheless, it is well
 established that cerebral BV changes during brain
 activation, with increases of the order of 30 % as measured with fMRI
@@ -1051,11 +1051,11 @@ reported human brain measurements conducted with FD
 NIRS during a typical CHS
 protocol, in which we compare all 6 methods of data analysis available
 in a DS probe (Figure <a
-href="#fig:DSset" data-reference-type="ref"
+href="ch3.html#fig:DSset" data-reference-type="ref"
 data-reference="fig:DSset">[fig:DSset]</a>) in the point measurement
-mode (Chapter <a href="#ch:DSpoint" data-reference-type="ref"
+mode (Chapter <a href="ch4.html#ch:DSpoint" data-reference-type="ref"
 data-reference="ch:DSpoint">[ch:DSpoint]</a>). The experimental
-schematic can be found in Figure <a href="#fig:JBPfig1"
+schematic can be found in Figure <a href="ch4.html#fig:JBPfig1"
 data-reference-type="ref"
 data-reference="fig:JBPfig1">[fig:JBPfig1]</a>. Specifically, the 6
 methods considered are: SD, SS,
@@ -1063,11 +1063,11 @@ and (for the first time in <span class="citation"
 data-cites="blaneyPhaseDualslopesFrequencydomain2020"></span>) DS for
 <em>I</em>
 and φ. The DS
-probe used for these experiments is shown in Figure <a href="#fig:DSset"
+probe used for these experiments is shown in Figure <a href="ch3.html#fig:DSset"
 data-reference-type="ref" data-reference="fig:DSset">[fig:DSset]</a>
 which contained ρs of 25 mm, &amp; 35 mm.
 Example traces from this first DS CHS
-study are shown in Figure <a href="#fig:JBPfig2"
+study are shown in Figure <a href="ch4.html#fig:JBPfig2"
 data-reference-type="ref"
 data-reference="fig:JBPfig2">[fig:JBPfig2]</a>.</p>
 <h3
@@ -1167,7 +1167,7 @@ inconsistent phase difference and amplitude ratio with means of
 href="#foot:JBPerrorsSEM" data-reference-type="ref"
 data-reference="foot:JBPerrorsSEM">2</a></sup> We were able to roughly
 recreate the measured vector relationships using phasor simulations in
-Figure <a href="#fig:JBPfig3" data-reference-type="ref"
+Figure <a href="ch4.html#fig:JBPfig3" data-reference-type="ref"
 data-reference="fig:JBPfig3">[fig:JBPfig3]</a>.</p>
 <h3 id="discussion-frequency-domain-dual-slope-oscillations">Discussion
 Frequency-Domain Dual-Slope Oscillations</h3>
@@ -1179,7 +1179,7 @@ show a closer opposition of phase (<em>id est</em> a phase closer to
 180°) and a higher amplitude ratio (<em>id est</em> a ratio closer to 1)
 for D̃/Õ suggesting a stronger
 contribution from BF oscillations in the brain
-than in the scalp (Figure <a href="#fig:CHSphasors"
+than in the scalp (Figure <a href="ch6.html#fig:CHSphasors"
 data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a>). This result is
 also consistent with previous results in previous sections which
@@ -1191,7 +1191,7 @@ compared to <em>I</em>.</p>
 <p>The conclusions about the advantages of DS and φ
 in Part <a href="#prt:deepMeas" data-reference-type="ref"
 data-reference="prt:deepMeas">[prt:deepMeas]</a> are supported by
-comparing the simulations in Figure <a href="#fig:JBPfig3"
+comparing the simulations in Figure <a href="ch4.html#fig:JBPfig3"
 data-reference-type="ref"
 data-reference="fig:JBPfig3">[fig:JBPfig3]</a>(g) to our experimental
 results for Subject 2 from <span class="citation"
@@ -1208,7 +1208,7 @@ suggests that DS is the most robust
 measurement method, among those presented here, for non-invasive sensing
 of the human brain. This is likely due to the minimal 𝒮
 to the superficial layer and insensitivity to drifts (Chapter <a
-href="#ch:DSintro" data-reference-type="ref"
+href="ch3.html#ch:DSintro" data-reference-type="ref"
 data-reference="ch:DSintro">[ch:DSintro]</a>). Therefore, we conclude
 that DS coupled with φ
 (DS φ)
@@ -1224,7 +1224,7 @@ href="#fig:JBPfig6" data-reference-type="ref"
 data-reference="fig:JBPfig6">1.11</a>) show a BF
 dominated oscillation in deeper layers when examined with the eyes of
 CHS (Figure <a
-href="#fig:CHSphasors" data-reference-type="ref"
+href="ch6.html#fig:CHSphasors" data-reference-type="ref"
 data-reference="fig:CHSphasors">[fig:CHSphasors]</a>) <span
 class="citation" data-cites="fantiniDynamicModelTissue2014"></span>. The
 closer the phase difference of D̃/Õ gets to -180° and its
@@ -1252,9 +1252,9 @@ representative of scalp hemodynamics.</p>
 <p>It might be noted that the amplitude of T̃/Ã presented here is
 greater for all methods other than SD <em>I</em>. This
 result may be impacted by the coherence analysis (Chapter <a
-href="#ch:signCoh" data-reference-type="ref"
+href="ch7.html#ch:signCoh" data-reference-type="ref"
 data-reference="ch:signCoh">[ch:signCoh]</a> and Appendix <a
-href="#app:detCoh" data-reference-type="ref"
+href="app8.html#app:detCoh" data-reference-type="ref"
 data-reference="app:detCoh">[app:detCoh]</a>), which preferentially
 selects higher amplitude T̃ periods (due to their
 higher 𝔠). However, when we examine
