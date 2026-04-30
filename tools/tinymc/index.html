@@ -78,13 +78,16 @@
                 <div class="param-card">
                     <label class="param-label" for="number-input">Number of steps</label>
                     <input type="number" class="form-control mb-3" id="number-input" placeholder="e.g. 1000" min="1" value="1000">
-                    <button id="calculate-button" class="btn-run">Run simulation</button>
+                    <div class="d-grid gap-2">
+                        <button id="calculate-button" class="btn-run">Run simulation</button>
+                        <button id="clear-button" class="btn btn-outline-secondary btn-sm" style="font-size: 0.75rem;">Clear plot</button>
+                    </div>
                     <div id="output" class="output-msg"></div>
                 </div>
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">Simulates a 3D isotropic random walk by sampling step directions uniformly on the unit sphere, then plots the projected X–Y path.</p>
+                    <p class="about-text">Simulates a 3D isotropic random walk by sampling step directions uniformly on the unit sphere, then plots the path in 3D. Green and red markers indicate the start and end of the walk, respectively.</p>
                 </div>
             </div>
 
@@ -97,47 +100,105 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
     <script>
+        let isPlotting = false;
+
         function runMC(n) {
             const x = new Array(n + 1);
             const y = new Array(n + 1);
-            x[0] = 0; y[0] = 0;
+            const z = new Array(n + 1);
+            x[0] = 0; y[0] = 0; z[0] = 0;
             for (let i = 0; i < n; i++) {
+                // Isotropic sampling on a unit sphere
                 const theta = Math.acos(1 - 2 * Math.random());
                 const phi   = 2 * Math.PI * Math.random();
+                
                 x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
                 y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
+                z[i + 1] = z[i] + Math.cos(theta);
             }
-            return { x, y };
+            return { x, y, z };
         }
 
-        function plot(x, y) {
-            Plotly.react("plot", [{
-                x, y,
+        function plot(data) {
+            const trace = {
+                x: data.x,
+                y: data.y,
+                z: data.z,
                 mode: "lines",
+                type: 'scatter3d',
                 name: "Path",
-                line: { width: 1, color: "#1a5276" }
-            }], {
+                line: { width: 3, color: "#1a5276" }
+            };
+
+            const start = {
+                x: [0], y: [0], z: [0],
+                mode: "markers",
+                type: 'scatter3d',
+                name: "Start",
+                marker: { size: 4, color: "#28a745" }
+            };
+
+            const end = {
+                x: [data.x[data.x.length-1]], 
+                y: [data.y[data.y.length-1]], 
+                z: [data.z[data.z.length-1]],
+                mode: "markers",
+                type: 'scatter3d',
+                name: "End",
+                marker: { size: 4, color: "#dc3545" }
+            };
+
+            const layout = {
                 paper_bgcolor: "rgba(0,0,0,0)",
                 plot_bgcolor:  "rgba(0,0,0,0)",
                 font: { family: "DM Sans, sans-serif", size: 12, color: "#6b6b6b" },
-                xaxis: { title: "X position", gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                yaxis: { title: "Y position", scaleanchor: "x", gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                margin: { t: 20, r: 20, b: 50, l: 60 }
-            }, { responsive: true });
+                scene: {
+                    xaxis: { title: "X", gridcolor: "#e0dcd6" },
+                    yaxis: { title: "Y", gridcolor: "#e0dcd6" },
+                    zaxis: { title: "Z", gridcolor: "#e0dcd6" },
+                    aspectmode: 'data'
+                },
+                margin: { t: 0, r: 0, b: 0, l: 0 },
+                showlegend: false
+            };
+
+            Plotly.react("plot", [trace, start, end], layout, { responsive: true });
         }
 
         document.getElementById("calculate-button").addEventListener("click", () => {
             const n = parseInt(document.getElementById("number-input").value);
-            if (!n || n < 1) return;
+            if (!n || n < 1 || isPlotting) return;
 
             const output = document.getElementById("output");
             output.textContent = `Running ${n} steps…`;
+            isPlotting = true;
 
             setTimeout(() => {
-                const { x, y } = runMC(n);
-                plot(x, y);
+                const data = runMC(n);
+                plot(data);
                 output.textContent = `Done — ${n} steps plotted.`;
+                isPlotting = false;
             }, 0);
+        });
+
+        document.getElementById("clear-button").addEventListener("click", () => {
+            Plotly.purge("plot");
+            document.getElementById("output").textContent = "";
+        });
+
+        // Initialize empty plot
+        window.addEventListener('load', () => {
+            const layout = {
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor:  "rgba(0,0,0,0)",
+                scene: {
+                    xaxis: { visible: false },
+                    yaxis: { visible: false },
+                    zaxis: { visible: false }
+                },
+                margin: { t: 0, r: 0, b: 0, l: 0 }
+            };
+            Plotly.newPlot("plot", [], layout, { responsive: true });
         });
     </script>
 </body>
