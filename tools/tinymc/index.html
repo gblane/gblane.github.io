@@ -207,50 +207,6 @@
             </div>
         </div>
 
-        <!-- Naive mistake -->
-        <div class="info-section">
-            <div class="section-eyebrow">Common pitfall</div>
-            <h2>The na&iuml;ve mistake</h2>
-            <hr class="section-rule">
-            <div class="info-card">
-                <p>
-                    A natural but incorrect assumption is that \(\theta\) should be uniform on
-                    \([0, \pi]\), giving
-                </p>
-                <p>
-                    $$p_{\text{naive}}(\theta) = \frac{1}{\pi} \quad \Rightarrow \quad \theta = \pi\mathcal{U}$$
-                </p>
-                <p>
-                    This ignores the \(\sin\theta\) Jacobian that arises from the solid-angle
-                    element \(d\Omega = \sin\theta\,d\theta\,d\varphi\). Solid angle is small
-                    near the poles (\(\theta \approx 0\) or \(\theta \approx \pi\)) and largest
-                    near the equator (\(\theta \approx \pi/2\)), so a direction drawn uniformly
-                    in \(\theta\) overshoots the poles &mdash; the distribution is not isotropic.
-                </p>
-                <p>
-                    The effect is visible by plotting the tips of Monte Carlo&ndash;sampled unit
-                    vectors. With the na&iuml;ve pdf the tips cluster at the north and south poles;
-                    with the correct pdf they cover the sphere uniformly.
-                </p>
-                <div class="row g-3 mt-1">
-                    <div class="col-md-6 text-center">
-                        <img src="img/navUnitVect.png" alt="Unit vector tips sampled with naive theta PDF — clustering visible at poles"
-                             class="img-fluid rounded border" style="max-height: 340px;">
-                        <p class="mt-2" style="font-size:0.78rem; color:var(--muted);">
-                            Na&iuml;ve \(p(\theta) = 1/\pi\): tips cluster at the poles.
-                        </p>
-                    </div>
-                    <div class="col-md-6 text-center">
-                        <img src="img/testUnitVect.png" alt="Unit vector tips sampled with correct theta PDF — uniform sphere coverage"
-                             class="img-fluid rounded border" style="max-height: 340px;">
-                        <p class="mt-2" style="font-size:0.78rem; color:var(--muted);">
-                            Correct \(p(\theta) = \tfrac{1}{2}\sin\theta\): uniform sphere coverage.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Implementation -->
         <div class="info-section">
             <div class="section-eyebrow">Code</div>
