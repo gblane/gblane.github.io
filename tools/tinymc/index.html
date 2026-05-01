@@ -58,9 +58,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../index.html#research">Research</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#teaching">Teaching</a></li>
                     <li class="nav-item"><a class="nav-link active" href="../../index.html#tools">Tools</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../dissertation/index.html">Dissertation</a></li>
                 </ul>
             </div>
         </div>
@@ -69,7 +67,7 @@
     <div class="container">
         <div class="tool-header">
             <div class="section-eyebrow">Monte Carlo</div>
-            <h1 class="tool-title">tinyMC</h1>
+            <h1 class="tool-title">tinyMC (work in progress, use with caution)</h1>
             <p class="tool-subtitle">3D random walk simulator</p>
         </div>
 
@@ -111,7 +109,7 @@
                 // Isotropic sampling on a unit sphere
                 const theta = Math.acos(1 - 2 * Math.random());
                 const phi   = 2 * Math.PI * Math.random();
-                
+
                 x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
                 y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
                 z[i + 1] = z[i] + Math.cos(theta);
@@ -139,8 +137,8 @@
             };
 
             const end = {
-                x: [data.x[data.x.length-1]], 
-                y: [data.y[data.y.length-1]], 
+                x: [data.x[data.x.length-1]],
+                y: [data.y[data.y.length-1]],
                 z: [data.z[data.z.length-1]],
                 mode: "markers",
                 type: 'scatter3d',
