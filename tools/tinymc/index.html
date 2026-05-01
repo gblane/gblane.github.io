@@ -44,7 +44,71 @@
         .output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
 
         #plot { border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+
+        .info-section { margin-bottom: 3rem; }
+
+        .info-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .info-card p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p:last-child { margin-bottom: 0; }
+
+        .code-wrap { position: relative; }
+
+        pre {
+            background: var(--section-alt);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        pre code { font-family: 'Courier New', monospace; color: var(--text); }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 2px 8px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: background 0.12s, color 0.12s;
+        }
+
+        .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
     </style>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 
@@ -58,7 +122,9 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../index.html#research">Research</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#teaching">Teaching</a></li>
                     <li class="nav-item"><a class="nav-link active" href="../../index.html#tools">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../dissertation/index.html">Dissertation</a></li>
                 </ul>
             </div>
         </div>
@@ -67,7 +133,7 @@
     <div class="container">
         <div class="tool-header">
             <div class="section-eyebrow">Monte Carlo</div>
-            <h1 class="tool-title">tinyMC (work in progress, use with caution)</h1>
+            <h1 class="tool-title">tinyMC</h1>
             <p class="tool-subtitle">3D random walk simulator</p>
         </div>
 
@@ -75,7 +141,7 @@
             <div class="col-md-4">
                 <div class="param-card">
                     <label class="param-label" for="number-input">Number of steps</label>
-                    <input type="number" class="form-control mb-3" id="number-input" placeholder="e.g. 1000" min="1" value="1000">
+                    <input type="number" class="form-control mb-3" id="number-input" placeholder="e.g. 1000" min="1" max="100000" value="1000">
                     <div class="d-grid gap-2">
                         <button id="calculate-button" class="btn-run">Run simulation</button>
                         <button id="clear-button" class="btn btn-outline-secondary btn-sm" style="font-size: 0.75rem;">Clear plot</button>
@@ -85,12 +151,89 @@
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">Simulates a 3D isotropic random walk by sampling step directions uniformly on the unit sphere, then plots the path in 3D. Green and red markers indicate the start and end of the walk, respectively.</p>
+                    <p class="about-text">This tool simulates a 3D isotropic random walk with constant unit step size.
+                    Green and red markers indicate the start and end of the walk, respectively.</p>
                 </div>
             </div>
 
             <div class="col-md-8">
                 <div id="plot" style="height: 460px;"></div>
+            </div>
+        </div>
+
+        <!-- Theory -->
+        <div class="info-section">
+            <div class="section-eyebrow">Background</div>
+            <h2>Isotropic scattering</h2>
+            <hr class="section-rule">
+            <div class="info-card">
+                <p>
+                    The random walk is simulated using a Monte Carlo simulation. 
+                    Each time a walker changes direction it is called a <em>scattering event</em>.
+                    Each scattering event redirects the walker in a new direction drawn from the event's scattering phase function. 
+                    For <em>isotropic</em> scattering events, every direction on the unit sphere is equally likely.
+                    This gives the following uniform Probability Density Function (PDF):
+                </p>
+                <p>
+                    $$p(\hat{s}) = \frac{1}{4\pi}$$
+                </p>
+                <p>
+                    In spherical coordinates, where \(\theta \in [0, \pi]\) is the elevation angle
+                    and \(\varphi \in [0, 2\pi)\) is the azimuthal angle, the marginal PDFs are:
+                </p>
+                <p>
+                    $$p(\theta) = \frac{1}{2}\sin\theta \qquad p(\varphi) = \frac{1}{2\pi}$$
+                </p>
+                <p>
+                    To implement this PDF in Monte Carlo we want to sample these distributions using a uniform random variable (\(\mathcal{U} = \text{Uniform}[0,1]\)) because \(\mathcal{U}\) is easy to sample in many programming languages.
+                    Core to the Monte Carlo method is the inverse Cumulative Distribution Function (CDF) method, which allows us to achieve this.
+                    Using the inverse-CDF method, we set the cumulative distribution function equal to \(\mathcal{U}\) and solve for each angle. 
+                    Therefore, we find the CDFs:
+                </p>
+                <p>
+                    $$P(\theta) = \int_0^{\theta} \frac{1}{2}\sin\theta'\,d\theta'
+                    = \frac{1 - \cos\theta}{2}
+                    \qquad
+                    P(\varphi) = \int_0^{\varphi} \frac{1}{2\pi}\,d\varphi' = \frac{\varphi}{2\pi}$$
+                </p>
+                <p>
+                    and, set each equal to \(\mathcal{U}\) then solve for the angles:
+                </p>
+                <p>
+                    $$\theta = \arccos(1 - 2\mathcal{U}) \qquad \varphi = 2\pi\mathcal{U}$$
+                </p>
+                <p>
+                    These are the formulas implemented in the simulator above. 
+                    Each step of the random walk draws a fresh pair \((\theta, \varphi)\) and moves one step in that direction.
+                </p>
+            </div>
+        </div>
+
+        <!-- Implementation -->
+        <div class="info-section">
+            <div class="section-eyebrow">Code</div>
+            <h2>Implementation</h2>
+            <hr class="section-rule">
+            <div class="info-card">
+                <p>The simulator above runs the following JavaScript:</p>
+                <div class="code-wrap">
+                    <button class="copy-btn" id="copy-btn">Copy</button>
+                    <pre><code id="code-block">function runMC(n) {
+    const x = new Array(n + 1);
+    const y = new Array(n + 1);
+    const z = new Array(n + 1);
+    x[0] = 0; y[0] = 0; z[0] = 0;
+    for (let i = 0; i &lt; n; i++) {
+        const theta = Math.acos(1 - 2 * Math.random());
+        const phi   = 2 * Math.PI * Math.random();
+
+        x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
+        y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
+        z[i + 1] = z[i] + Math.cos(theta);
+    }
+    return { x, y, z };
+}</code></pre>
+                </div>
             </div>
         </div>
     </div>
@@ -109,7 +252,7 @@
                 // Isotropic sampling on a unit sphere
                 const theta = Math.acos(1 - 2 * Math.random());
                 const phi   = 2 * Math.PI * Math.random();
-
+                
                 x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
                 y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
                 z[i + 1] = z[i] + Math.cos(theta);
@@ -137,8 +280,8 @@
             };
 
             const end = {
-                x: [data.x[data.x.length-1]],
-                y: [data.y[data.y.length-1]],
+                x: [data.x[data.x.length-1]], 
+                y: [data.y[data.y.length-1]], 
                 z: [data.z[data.z.length-1]],
                 mode: "markers",
                 type: 'scatter3d',
@@ -197,6 +340,15 @@
                 margin: { t: 0, r: 0, b: 0, l: 0 }
             };
             Plotly.newPlot("plot", [], layout, { responsive: true });
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            const code = document.getElementById('code-block').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+            });
         });
     </script>
 </body>
