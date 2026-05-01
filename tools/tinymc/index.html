@@ -122,9 +122,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../index.html#research">Research</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#teaching">Teaching</a></li>
                     <li class="nav-item"><a class="nav-link active" href="../../index.html#tools">Tools</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../dissertation/index.html">Dissertation</a></li>
                 </ul>
             </div>
         </div>
@@ -168,9 +166,9 @@
             <hr class="section-rule">
             <div class="info-card">
                 <p>
-                    The random walk is simulated using a Monte Carlo simulation. 
+                    The random walk is simulated using a Monte Carlo.
                     Each time a walker changes direction it is called a <em>scattering event</em>.
-                    Each scattering event redirects the walker in a new direction drawn from the event's scattering phase function. 
+                    Each scattering event redirects the walker in a new direction drawn from the event's scattering phase function.
                     For <em>isotropic</em> scattering events, every direction on the unit sphere is equally likely.
                     This gives the following uniform Probability Density Function (PDF):
                 </p>
@@ -187,7 +185,7 @@
                 <p>
                     To implement this PDF in Monte Carlo we want to sample these distributions using a uniform random variable (\(\mathcal{U} = \text{Uniform}[0,1]\)) because \(\mathcal{U}\) is easy to sample in many programming languages.
                     Core to the Monte Carlo method is the inverse Cumulative Distribution Function (CDF) method, which allows us to achieve this.
-                    Using the inverse-CDF method, we set the cumulative distribution function equal to \(\mathcal{U}\) and solve for each angle. 
+                    Using the inverse-CDF method, we set the cumulative distribution function equal to \(\mathcal{U}\) and solve for each angle.
                     Therefore, we find the CDFs:
                 </p>
                 <p>
@@ -197,15 +195,59 @@
                     P(\varphi) = \int_0^{\varphi} \frac{1}{2\pi}\,d\varphi' = \frac{\varphi}{2\pi}$$
                 </p>
                 <p>
-                    and, set each equal to \(\mathcal{U}\) then solve for the angles:
+                    and, setting each equal to \(\mathcal{U}\) and solving gives the sampling formulas:
                 </p>
                 <p>
                     $$\theta = \arccos(1 - 2\mathcal{U}) \qquad \varphi = 2\pi\mathcal{U}$$
                 </p>
                 <p>
-                    These are the formulas implemented in the simulator above. 
+                    These are the formulas implemented in the simulator above.
                     Each step of the random walk draws a fresh pair \((\theta, \varphi)\) and moves one step in that direction.
                 </p>
+            </div>
+        </div>
+
+        <!-- Naive mistake -->
+        <div class="info-section">
+            <div class="section-eyebrow">Common pitfall</div>
+            <h2>The na&iuml;ve mistake</h2>
+            <hr class="section-rule">
+            <div class="info-card">
+                <p>
+                    A natural but incorrect assumption is that \(\theta\) should be uniform on
+                    \([0, \pi]\), giving
+                </p>
+                <p>
+                    $$p_{\text{naive}}(\theta) = \frac{1}{\pi} \quad \Rightarrow \quad \theta = \pi\mathcal{U}$$
+                </p>
+                <p>
+                    This ignores the \(\sin\theta\) Jacobian that arises from the solid-angle
+                    element \(d\Omega = \sin\theta\,d\theta\,d\varphi\). Solid angle is small
+                    near the poles (\(\theta \approx 0\) or \(\theta \approx \pi\)) and largest
+                    near the equator (\(\theta \approx \pi/2\)), so a direction drawn uniformly
+                    in \(\theta\) overshoots the poles &mdash; the distribution is not isotropic.
+                </p>
+                <p>
+                    The effect is visible by plotting the tips of Monte Carlo&ndash;sampled unit
+                    vectors. With the na&iuml;ve pdf the tips cluster at the north and south poles;
+                    with the correct pdf they cover the sphere uniformly.
+                </p>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-6 text-center">
+                        <img src="img/navUnitVect.png" alt="Unit vector tips sampled with naive theta PDF — clustering visible at poles"
+                             class="img-fluid rounded border" style="max-height: 340px;">
+                        <p class="mt-2" style="font-size:0.78rem; color:var(--muted);">
+                            Na&iuml;ve \(p(\theta) = 1/\pi\): tips cluster at the poles.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <img src="img/testUnitVect.png" alt="Unit vector tips sampled with correct theta PDF — uniform sphere coverage"
+                             class="img-fluid rounded border" style="max-height: 340px;">
+                        <p class="mt-2" style="font-size:0.78rem; color:var(--muted);">
+                            Correct \(p(\theta) = \tfrac{1}{2}\sin\theta\): uniform sphere coverage.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -252,7 +294,7 @@
                 // Isotropic sampling on a unit sphere
                 const theta = Math.acos(1 - 2 * Math.random());
                 const phi   = 2 * Math.PI * Math.random();
-                
+
                 x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
                 y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
                 z[i + 1] = z[i] + Math.cos(theta);
@@ -280,8 +322,8 @@
             };
 
             const end = {
-                x: [data.x[data.x.length-1]], 
-                y: [data.y[data.y.length-1]], 
+                x: [data.x[data.x.length-1]],
+                y: [data.y[data.y.length-1]],
                 z: [data.z[data.z.length-1]],
                 mode: "markers",
                 type: 'scatter3d',
