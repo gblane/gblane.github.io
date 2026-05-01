@@ -22,7 +22,7 @@ tools/
 - **Publications** — fetched live from the Semantic Scholar API, sorted by citation count and filtered to the h-index selection; results are cached in `localStorage` for 24 hours
 - **Tools** — browser-based interactive tools built on physical and numerical models:
   - *tinyMC*: 3D random walk Monte Carlo simulator
-  - *Diffuse Reflectance*: WIP
+  - *Diffuse Reflectance*: real-time R(ρ) for a semi-infinite homogeneous medium, adjustable μa and μs' (CW diffusion theory, extrapolated boundary condition)
 
 ---
 
