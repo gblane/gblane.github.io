@@ -55,6 +55,14 @@ check('continuousTotPathLen R rho=30', _tpl.R, 3.0124085072e-7, 1e-7);
 const _ll = continuousPartPathLen([0,0,_z0], [[15,0,15]], [30,0,0], 1.0, _op);
 check('continuousPartPathLen at [15,0,15]', _ll[0], 0.0086509744, 1e-6);
 
+// ── makeSvox CW_SD_I ──────────────────────────────────────────────────────
+// Grid: x −10…40 (Nx=51), z 0…30 (Nz=31). Svox[ix*Nz+iz].
+const _sd = makeSvox('CW_SD_I', { sx: 0, dx: 30 }, _op);
+check('CW_SD_I Nx', _sd.Nx, 51);
+check('CW_SD_I Nz', _sd.Nz, 31);
+check('CW_SD_I S[x=15,z=15] ix=25,iz=15', _sd.Svox[25*31+15], 3.88051e-5, 1e-4);
+check('CW_SD_I S[x=0,z=5]   ix=10,iz=5',  _sd.Svox[10*31+5],  2.48527e-4, 1e-4);
+
 document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
 </script>
 </body>
