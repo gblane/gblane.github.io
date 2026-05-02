@@ -51,6 +51,10 @@ const _tpl = continuousTotPathLen([0, 0, _z0], [30, 0, 0], _op);
 check('continuousTotPathLen L rho=30', _tpl.L, 222.9338028092, 1e-7);
 check('continuousTotPathLen R rho=30', _tpl.R, 3.0124085072e-7, 1e-7);
 
+// ── continuousPartPathLen ────────────────────────────────────────────────
+const _ll = continuousPartPathLen([0,0,_z0], [[15,0,15]], [30,0,0], 1.0, _op);
+check('continuousPartPathLen at [15,0,15]', _ll[0], 0.0086509744, 1e-6);
+
 document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
 </script>
 </body>

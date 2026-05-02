@@ -83,3 +83,18 @@ function continuousTotPathLen(rs, rd, op) {
 
     return { L, R };
 }
+
+// Port of continuous_part_path_len() — complex_part_path_len at omega=0.
+// rs=[x,y,z], r_all=[[x,y,z],...] N voxel centers, rd=[x,y,z], V voxel volume.
+// Returns Float64Array length N of partial path lengths (mm).
+function continuousPartPathLen(rs, r_all, rd, V, op) {
+    const N      = r_all.length;
+    const ll     = new Float64Array(N);
+    const R_rs_rd = continuousReflectance(rs, rd, op);
+    for (let i = 0; i < N; i++) {
+        const phi   = _continuousFluence(rs, r_all[i], op);
+        const R_r_rd = continuousReflectance(r_all[i], rd, op);
+        ll[i] = (phi * R_r_rd * V) / R_rs_rd;
+    }
+    return ll;
+}
