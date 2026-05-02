@@ -189,23 +189,108 @@
         </div>
     </div>
 
-    <!-- Background section — placeholder text, filled in Task 10 -->
-    <div class="info-section" id="background-section">
+    <div class="info-section">
         <div class="section-eyebrow">Background</div>
         <h2>Sensitivity to absorption change</h2>
         <hr class="section-rule">
         <div class="info-card">
-            <p><em>Theory content added in Task 10.</em></p>
+
+            <h5>Definition</h5>
+            <p>
+                Sensitivity \(S_Y(\mathbf{r})\) is defined as the ratio of the local Jacobian
+                to the global Jacobian:
+            </p>
+            $$S_Y(\mathbf{r}) = \frac{\partial Y / \partial \mu_{a,\text{pert}}(\mathbf{r})}
+                                      {\partial Y / \partial \mu_{a,\text{pert,homo}}}$$
+            <p>
+                It is dimensionless and quantifies how a localised absorption perturbation
+                \(\Delta\mu_{a,\text{pert}}(\mathbf{r})\) at position \(\mathbf{r}\) affects
+                the measurement \(Y\) relative to a homogeneous perturbation throughout the medium.
+                Equivalently,
+            </p>
+            $$S_Y(\mathbf{r}) = \frac{\Delta\mu_{a,Y}}{\Delta\mu_{a,\text{pert}}(\mathbf{r})}$$
+            <p>
+                where \(\Delta\mu_{a,Y}\) is the recovered effective homogeneous \(\Delta\mu_a\)
+                and \(\Delta\mu_{a,\text{pert}}(\mathbf{r})\) is the true local perturbation.
+            </p>
+
+            <h5 class="mt-4">Diffusion theory — semi-infinite medium</h5>
+            <p>
+                The medium is modelled as semi-infinite and homogeneous with the extrapolated
+                boundary condition (same geometry as the
+                <a href="../diffuse-reflectance/index.html">Diffuse Reflectance</a> tool).
+                Optodes sit on the surface at \(z=0\); the map shows the \(xz\)-plane at \(y=0\).
+            </p>
+
+            <h5 class="mt-4">CW intensity data type</h5>
+            <p>
+                For CW, the data type \(Y = \ln I\) is dimensionless since it always appears
+                in differences. The generalized total path length is
+                \(L = -\partial Y/\partial\mu_{a,\text{homo}}\) (mm) and the generalized partial
+                path length is \(\ell(\mathbf{r}) = -\partial Y/\partial\mu_{a,\text{pert}}(\mathbf{r})\) (mm).
+                For the single-distance arrangement:
+            </p>
+            $$S(\mathbf{r}) = \frac{\ell(\mathbf{r})}{L}$$
+
+            <h5 class="mt-4">Arrangements</h5>
+            <p>
+                <strong>SD (Single Distance)</strong> uses one source and one detector.
+                \(S(\mathbf{r}) = \ell(\mathbf{r})/L\).
+            </p>
+            <p>
+                <strong>SS (Single Slope)</strong> uses one source and two detectors at different
+                separations \(\rho_0 &lt; \rho_1\):
+                \(S(\mathbf{r}) = (\ell_1 - \ell_0)/(L_1 - L_0)\).
+            </p>
+            <p>
+                <strong>DS (Dual Slope)</strong> uses two sources and two detectors, combining
+                slopes measured in both directions. DS provides suppressed sensitivity to
+                superficial layers.
+            </p>
+
+            <h5 class="mt-4">Citation</h5>
+            <p class="mb-0">
+                Giles Blaney, Angelo Sassaroli, and Sergio Fantini,
+                <em>Spatial sensitivity to absorption changes for various near-infrared spectroscopy
+                methods: A compendium review</em>,
+                Journal of Innovative Optical Health Sciences, Vol.&nbsp;17, No.&nbsp;04,
+                2430001 (2024).
+                <a href="https://doi.org/10.1142/S1793545824300015" target="_blank" rel="noopener">
+                    https://doi.org/10.1142/S1793545824300015
+                </a>
+            </p>
         </div>
     </div>
 
-    <!-- Code section — placeholder, filled in Task 10 -->
-    <div class="info-section" id="code-section">
+    <div class="info-section">
         <div class="section-eyebrow">Code</div>
         <h2>Implementation</h2>
         <hr class="section-rule">
         <div class="info-card">
-            <p><em>Code block added in Task 10.</em></p>
+            <p>The key physics functions from <code>sensmaps.js</code>:</p>
+            <div class="code-wrap">
+                <button class="copy-btn" id="copy-btn">Copy</button>
+                <pre><code id="code-block">// CW reflectance R (mm⁻²) at source rs=[x,y,z], detector rd=[x,y,z]
+function continuousReflectance(rs, rd, op) {
+    const A     = n2A(op.nIn / op.nOut);
+    const D     = 1.0 / (3.0 * op.musp);
+    const zb    = -2.0 * A * D;
+    const mueff = Math.sqrt(op.mua / D);
+    const z0    = rs[2];
+    const rspZ  = -z0 + 2.0 * zb;
+    const dx = rd[0]-rs[0], dy = rd[1]-rs[1];
+    const r1 = Math.sqrt(dx*dx + dy*dy + (rd[2]-rs[2])**2);
+    const r2 = Math.sqrt(dx*dx + dy*dy + (rd[2]-rspZ)**2);
+    return (
+          z0          * (1/r1 + mueff) * Math.exp(-mueff*r1) / (r1*r1)
+        + (z0-2.0*zb) * (1/r2 + mueff) * Math.exp(-mueff*r2) / (r2*r2)
+    ) / (4.0 * Math.PI);
+}
+
+// SD sensitivity S(r) = ℓ(r) / L  (dimensionless)
+// where L = continuousTotPathLen().L  and
+//       ℓ = continuousPartPathLen() per voxel</code></pre>
+            </div>
         </div>
     </div>
 </div>
@@ -355,6 +440,14 @@ function runCompute() {
 
 document.getElementById('arrangement').addEventListener('change', updateArrangement);
 document.getElementById('compute-btn').addEventListener('click', runCompute);
+document.getElementById('copy-btn').addEventListener('click', () => {
+    const raw = document.getElementById('code-block').textContent;
+    navigator.clipboard.writeText(raw).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+    });
+});
 updateArrangement();   // initialise derived values on load
 </script>
 </body>
