@@ -245,7 +245,11 @@
             <p>
                 <strong>DS (Dual Slope)</strong> uses two sources and two detectors, combining
                 slopes measured in both directions. DS provides suppressed sensitivity to
-                superficial layers.
+                superficial layers:
+            </p>
+            $$S(\mathbf{r}) = \frac{(\langle\ell_1(\mathbf{r})\rangle - \langle\ell_0(\mathbf{r})\rangle) + (\langle\ell_3(\mathbf{r})\rangle - \langle\ell_2(\mathbf{r})\rangle)}{(\langle L_1\rangle - \langle L_0\rangle) + (\langle L_3\rangle - \langle L_2\rangle)}$$
+            <p>
+                where measurements 0–3 follow the ordering S1→D1, S1→D2, S2→D2, S2→D1.
             </p>
 
             <h5 class="mt-4">Citation</h5>
