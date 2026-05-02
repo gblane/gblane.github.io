@@ -59,3 +59,27 @@ function _continuousFluence(rs, r, op) {
     return (Math.exp(-mueff * r1) / r1 - Math.exp(-mueff * r2) / r2)
          / (4.0 * Math.PI * D);
 }
+
+// Port of continuous_tot_path_len() — complex_tot_path_len at omega=0.
+// Returns {L (mm), R (mm⁻²)}.
+function continuousTotPathLen(rs, rd, op) {
+    const A     = n2A(op.nIn / op.nOut);
+    const D     = 1.0 / (3.0 * op.musp);
+    const zb    = -2.0 * A * D;
+    const mueff = Math.sqrt(op.mua / D);
+    const z0    = rs[2];
+    const rspZ  = -z0 + 2.0 * zb;
+
+    const dx = rd[0] - rs[0];
+    const dy = rd[1] - rs[1];
+    const r1 = Math.sqrt(dx*dx + dy*dy + (rd[2] - rs[2])**2);
+    const r2 = Math.sqrt(dx*dx + dy*dy + (rd[2] - rspZ)**2);
+
+    const R = continuousReflectance(rs, rd, op);
+    const L = (
+          (z0 / r1)         * Math.exp(-mueff * r1)
+        + ((z0 - 2.0*zb) / r2) * Math.exp(-mueff * r2)
+    ) / (8.0 * Math.PI * D * R);
+
+    return { L, R };
+}
