@@ -89,14 +89,14 @@ function continuousTotPathLen(rs, rd, op) {
 // Returns Float64Array length N of partial path lengths (mm).
 function continuousPartPathLen(rs, r_all, rd, V, op) {
     const N      = r_all.length;
-    const ℓ     = new Float64Array(N);
+    const ll     = new Float64Array(N);
     const R_rs_rd = continuousReflectance(rs, rd, op);
     for (let i = 0; i < N; i++) {
         const phi   = _continuousFluence(rs, r_all[i], op);
         const R_r_rd = continuousReflectance(r_all[i], rd, op);
-        ℓ[i] = (phi * R_r_rd * V) / R_rs_rd;
+        ll[i] = (phi * R_r_rd * V) / R_rs_rd;
     }
-    return ℓ;
+    return ll;
 }
 
 // Top-level dispatcher. Port of makeS.m / compute.py make_s_full (CW only).
@@ -159,32 +159,32 @@ function makeSvox(typeStr, optodes, op) {
         for (let iz = 0; iz < Nz; iz++)
             r_all.push([xArr[ix], 0, zArr[iz]]);
 
-    // Per-measurement L and ℓ vectors
+    // Per-measurement L and ll vectors
     const nMeas = sources.length;
     const Ls  = new Float64Array(nMeas);
-    const ℓs = [];
+    const lls = [];
     for (let m = 0; m < nMeas; m++) {
         Ls[m] = continuousTotPathLen(sources[m], detectors[m], op).L;
-        ℓs.push(continuousPartPathLen(sources[m], r_all, detectors[m], V, op));
+        lls.push(continuousPartPathLen(sources[m], r_all, detectors[m], V, op));
     }
 
     // Arrangement combinator (Y=1 for all I-type measurements)
     const Svox = new Float64Array(Nx * Nz);
 
     if (arr === 'SD') {
-        const L = Ls[0], ℓ = ℓs[0];
-        for (let i = 0; i < Nx * Nz; i++) Svox[i] = ℓ[i] / L;
+        const L = Ls[0], ll = lls[0];
+        for (let i = 0; i < Nx * Nz; i++) Svox[i] = ll[i] / L;
 
     } else if (arr === 'SS') {
         const dL = Ls[1] - Ls[0];
         for (let i = 0; i < Nx * Nz; i++)
-            Svox[i] = (ℓs[1][i] - ℓs[0][i]) / dL;
+            Svox[i] = (lls[1][i] - lls[0][i]) / dL;
 
     } else if (arr === 'DS') {
-        // den = (L[1]-L[0]) + (L[3]-L[2]), num = (ℓ[1]-ℓ[0]) + (ℓ[3]-ℓ[2])
+        // den = (L[1]-L[0]) + (L[3]-L[2]), num = (ll[1]-ll[0]) + (ll[3]-ll[2])
         const den = (Ls[1] - Ls[0]) + (Ls[3] - Ls[2]);
         for (let i = 0; i < Nx * Nz; i++) {
-            const num = (ℓs[1][i] - ℓs[0][i]) + (ℓs[3][i] - ℓs[2][i]);
+            const num = (lls[1][i] - lls[0][i]) + (lls[3][i] - lls[2][i]);
             Svox[i] = num / den;
         }
     }

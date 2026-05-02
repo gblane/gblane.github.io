@@ -226,21 +226,21 @@
             <p>
                 For CW, the data type \(Y = \ln I\) is dimensionless since it always appears
                 in differences. The generalized total path length is
-                \(L = -\partial Y/\partial\mu_{a,\text{homo}}\) (mm) and the generalized partial
-                path length is \(\ell(\mathbf{r}) = -\partial Y/\partial\mu_{a,\text{pert}}(\mathbf{r})\) (mm).
+                \(\langle L \rangle = -\partial Y/\partial\mu_{a,\text{homo}}\) (mm) and the generalized partial
+                path length is \(\langle\ell(\mathbf{r})\rangle = -\partial Y/\partial\mu_{a,\text{pert}}(\mathbf{r})\) (mm).
                 For the single-distance arrangement:
             </p>
-            $$S(\mathbf{r}) = \frac{\ell(\mathbf{r})}{L}$$
+            $$S(\mathbf{r}) = \frac{\langle\ell(\mathbf{r})\rangle}{\langle L \rangle}$$
 
             <h5 class="mt-4">Arrangements</h5>
             <p>
                 <strong>SD (Single Distance)</strong> uses one source and one detector.
-                \(S(\mathbf{r}) = \ell(\mathbf{r})/L\).
+                \(S(\mathbf{r}) = \langle\ell(\mathbf{r})\rangle/\langle L\rangle\).
             </p>
             <p>
                 <strong>SS (Single Slope)</strong> uses one source and two detectors at different
                 separations \(\rho_0 &lt; \rho_1\):
-                \(S(\mathbf{r}) = (\ell_1 - \ell_0)/(L_1 - L_0)\).
+                \(S(\mathbf{r}) = (\langle\ell_1\rangle - \langle\ell_0\rangle)/(\langle L_1\rangle - \langle L_0\rangle)\).
             </p>
             <p>
                 <strong>DS (Dual Slope)</strong> uses two sources and two detectors, combining
@@ -287,9 +287,9 @@ function continuousReflectance(rs, rd, op) {
     ) / (4.0 * Math.PI);
 }
 
-// SD sensitivity S(r) = ℓ(r) / L  (dimensionless)
-// where L = continuousTotPathLen().L  and
-//       ℓ = continuousPartPathLen() per voxel</code></pre>
+// SD sensitivity S(r) = ⟨ℓ(r)⟩ / ⟨L⟩  (dimensionless)
+// where ⟨L⟩ = continuousTotPathLen().L  and
+//       ⟨ℓ⟩ = continuousPartPathLen() per voxel</code></pre>
             </div>
         </div>
     </div>
