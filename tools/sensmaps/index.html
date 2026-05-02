@@ -374,6 +374,7 @@ function renderPlot(result, typeStr, optodes) {
     Plotly.react('plot', [heatmap, srcTrace, detTrace], {
         xaxis: { title: 'x (mm)', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
         yaxis: { title: 'Depth (mm)', autorange: 'reversed',
+                 scaleanchor: 'x', scaleratio: 1,
                  gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor:  'rgba(0,0,0,0)',
