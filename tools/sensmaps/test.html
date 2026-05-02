@@ -63,6 +63,20 @@ check('CW_SD_I Nz', _sd.Nz, 31);
 check('CW_SD_I S[x=15,z=15] ix=25,iz=15', _sd.Svox[25*31+15], 3.88051e-5, 1e-4);
 check('CW_SD_I S[x=0,z=5]   ix=10,iz=5',  _sd.Svox[10*31+5],  2.48527e-4, 1e-4);
 
+// ── makeSvox CW_SS_I ──────────────────────────────────────────────────────
+// Grid: x −10…45 (Nx=56), z 0…35 (Nz=36). x=15 → ix=25, z=15 → iz=15.
+const _ss = makeSvox('CW_SS_I', { sx: 0, d1x: 25, d2x: 35 }, _op);
+check('CW_SS_I Nx', _ss.Nx, 56);
+check('CW_SS_I Nz', _ss.Nz, 36);
+check('CW_SS_I S[x=15,z=15]', _ss.Svox[25*36+15], 6.30944e-5, 1e-4);
+
+// ── makeSvox CW_DS_I ──────────────────────────────────────────────────────
+// Grid: x −40…40 (Nx=81), z 0…35 (Nz=36). x=0 → ix=40, z=15 → iz=15.
+const _ds = makeSvox('CW_DS_I', { s1x: -30, s2x: 30, d1x: -5, d2x: 5 }, _op);
+check('CW_DS_I Nx', _ds.Nx, 81);
+check('CW_DS_I Nz', _ds.Nz, 36);
+check('CW_DS_I S[x=0,z=15]', _ds.Svox[40*36+15], 6.62126e-5, 1e-4);
+
 document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
 </script>
 </body>
