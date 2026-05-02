@@ -44,21 +44,6 @@
         }
         .btn-run:hover { background: #144060; }
         #plot { border: 1px solid var(--border); border-radius: 6px; background: #fff; }
-        .code-wrap { position: relative; }
-        pre {
-            background: var(--section-alt); border: 1px solid var(--border);
-            border-radius: 6px; padding: 1rem 1.2rem;
-            font-size: 0.78rem; line-height: 1.6; overflow-x: auto; margin: 0;
-        }
-        pre code { font-family: 'Courier New', monospace; color: var(--text); }
-        .copy-btn {
-            position: absolute; top: 0.5rem; right: 0.5rem;
-            font-size: 0.7rem; font-weight: 500; background: var(--bg);
-            border: 1px solid var(--border); border-radius: 3px;
-            padding: 2px 8px; cursor: pointer; color: var(--muted);
-            transition: background 0.12s, color 0.12s;
-        }
-        .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
     </style>
     <script>MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] } };</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
@@ -266,37 +251,6 @@
         </div>
     </div>
 
-    <div class="info-section">
-        <div class="section-eyebrow">Code</div>
-        <h2>Implementation</h2>
-        <hr class="section-rule">
-        <div class="info-card">
-            <p>The key physics functions from <code>sensmaps.js</code>:</p>
-            <div class="code-wrap">
-                <button class="copy-btn" id="copy-btn">Copy</button>
-                <pre><code id="code-block">// CW reflectance R (mm⁻²) at source rs=[x,y,z], detector rd=[x,y,z]
-function continuousReflectance(rs, rd, op) {
-    const A     = n2A(op.nIn / op.nOut);
-    const D     = 1.0 / (3.0 * op.musp);
-    const zb    = -2.0 * A * D;
-    const mueff = Math.sqrt(op.mua / D);
-    const z0    = rs[2];
-    const rspZ  = -z0 + 2.0 * zb;
-    const dx = rd[0]-rs[0], dy = rd[1]-rs[1];
-    const r1 = Math.sqrt(dx*dx + dy*dy + (rd[2]-rs[2])**2);
-    const r2 = Math.sqrt(dx*dx + dy*dy + (rd[2]-rspZ)**2);
-    return (
-          z0          * (1/r1 + mueff) * Math.exp(-mueff*r1) / (r1*r1)
-        + (z0-2.0*zb) * (1/r2 + mueff) * Math.exp(-mueff*r2) / (r2*r2)
-    ) / (4.0 * Math.PI);
-}
-
-// SD sensitivity S(r) = ⟨ℓ(r)⟩ / ⟨L⟩  (dimensionless)
-// where ⟨L⟩ = continuousTotPathLen().L  and
-//       ⟨ℓ⟩ = continuousPartPathLen() per voxel</code></pre>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -444,14 +398,6 @@ function runCompute() {
 
 document.getElementById('arrangement').addEventListener('change', updateArrangement);
 document.getElementById('compute-btn').addEventListener('click', runCompute);
-document.getElementById('copy-btn').addEventListener('click', () => {
-    const raw = document.getElementById('code-block').textContent;
-    navigator.clipboard.writeText(raw).then(() => {
-        const btn = document.getElementById('copy-btn');
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
-    });
-});
 updateArrangement();   // initialise derived values on load
 </script>
 </body>
