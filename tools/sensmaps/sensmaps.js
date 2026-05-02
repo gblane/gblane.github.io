@@ -42,3 +42,20 @@ function continuousReflectance(rs, rd, op) {
         + (z0 - 2.0*zb) * (1.0/r2 + mueff) * Math.exp(-mueff * r2) / (r2*r2)
     ) / (4.0 * Math.PI);
 }
+
+// Internal: CW fluence at voxel r from source rs. Port of complex_fluence at omega=0.
+// rs=[x,y,z], r=[x,y,z] (single voxel). Returns phi (mm⁻²).
+function _continuousFluence(rs, r, op) {
+    const A     = n2A(op.nIn / op.nOut);
+    const D     = 1.0 / (3.0 * op.musp);
+    const zb    = -2.0 * A * D;
+    const mueff = Math.sqrt(op.mua / D);
+    const z0    = rs[2];
+    const rspZ  = -z0 + 2.0 * zb;
+
+    const r1 = Math.sqrt((r[0]-rs[0])**2 + (r[1]-rs[1])**2 + (r[2]-rs[2])**2);
+    const r2 = Math.sqrt((r[0]-rs[0])**2 + (r[1]-rs[1])**2 + (r[2]-rspZ)**2);
+
+    return (Math.exp(-mueff * r1) / r1 - Math.exp(-mueff * r2) / r2)
+         / (4.0 * Math.PI * D);
+}

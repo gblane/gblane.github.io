@@ -41,6 +41,11 @@ check('continuousReflectance rho=30',
     continuousReflectance([0, 0, _z0], [30, 0, 0], _op),
     3.0124085072e-7, 1e-7);
 
+// ── _continuousFluence ───────────────────────────────────────────────────────
+check('_continuousFluence at [15,0,15]',
+    _continuousFluence([0, 0, _z0], [15, 0, 15], _op),
+    1.4476584787e-4, 1e-7);
+
 document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
 </script>
 </body>
