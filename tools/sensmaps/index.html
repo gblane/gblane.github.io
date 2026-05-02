@@ -429,7 +429,7 @@ function runCompute() {
     const mua  = +document.getElementById('mua').value  || 0.011;
     const musp = +document.getElementById('musp').value || 1.1;
     const nIn  = +document.getElementById('nIn').value  || 1.333;
-    const op   = { nIn, nOut: 1.0, musp, mua };
+    const op   = { nIn, nOut: 1.0, musp, mua };  // nOut fixed at 1.0 (air)
     const arr  = document.getElementById('arrangement').value;
     const optodes = getOptodes();
 
