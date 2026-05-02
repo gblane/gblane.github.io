@@ -20,3 +20,25 @@ function n2A(n) {
     }
     return 1.0;
 }
+
+// Port of continuous_reflectance() — complex_reflectance at omega=0.
+// rs=[x,y,z] source (after z-offset applied), rd=[x,y,z] detector.
+// op={nIn,nOut,musp,mua}. Returns R (mm⁻²).
+function continuousReflectance(rs, rd, op) {
+    const A     = n2A(op.nIn / op.nOut);
+    const D     = 1.0 / (3.0 * op.musp);
+    const zb    = -2.0 * A * D;
+    const mueff = Math.sqrt(op.mua / D);
+    const z0    = rs[2];
+    const rspZ  = -z0 + 2.0 * zb;        // image source z-coordinate
+
+    const dx = rd[0] - rs[0];
+    const dy = rd[1] - rs[1];
+    const r1 = Math.sqrt(dx*dx + dy*dy + (rd[2] - rs[2])**2);
+    const r2 = Math.sqrt(dx*dx + dy*dy + (rd[2] - rspZ)**2);
+
+    return (
+          z0         * (1.0/r1 + mueff) * Math.exp(-mueff * r1) / (r1*r1)
+        + (z0 - 2.0*zb) * (1.0/r2 + mueff) * Math.exp(-mueff * r2) / (r2*r2)
+    ) / (4.0 * Math.PI);
+}

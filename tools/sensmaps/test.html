@@ -34,6 +34,13 @@ check('n2A(1.333) branch n>1', n2A(1.333), 2.5331875050, 1e-8);
 check('n2A(1.0)   = 1',        n2A(1.0),   1.0,          1e-12);
 check('n2A(0.75)  branch n<1', n2A(0.75),  1.1138793828, 1e-8);
 
+// ── continuousReflectance ────────────────────────────────────────────────
+const _op  = { nIn: 1.333, nOut: 1.0, musp: 1.1, mua: 0.011 };
+const _z0  = 1.0 / _op.musp;   // 0.90909...
+check('continuousReflectance rho=30',
+    continuousReflectance([0, 0, _z0], [30, 0, 0], _op),
+    3.0124085072e-7, 1e-7);
+
 document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
 </script>
 </body>
