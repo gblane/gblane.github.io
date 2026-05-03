@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sensmaps.js tests</title>
+    <style>
+        body { font-family: monospace; padding: 1rem; background: #fafafa; }
+        .pass { color: #1a7a1a; margin: 2px 0; }
+        .fail { color: #c0392b; font-weight: bold; margin: 2px 0; }
+        #summary { margin-top: 1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h2>sensmaps.js — unit tests</h2>
+<div id="results"></div>
+<div id="summary"></div>
+<script src="sensmaps.js"></script>
+<script>
+const _out = document.getElementById('results');
+let _p = 0, _f = 0;
+function check(name, actual, expected, rtol = 1e-6) {
+    const err = Math.abs(actual - expected) / (Math.abs(expected) + 1e-300);
+    const ok  = err <= rtol;
+    const el  = document.createElement('p');
+    el.className = ok ? 'pass' : 'fail';
+    el.textContent = (ok ? '✓ ' : '✗ ') + name +
+        (ok ? '' : `  got=${actual.toExponential(6)} exp=${expected.toExponential(6)} rtol=${err.toExponential(1)}`);
+    _out.appendChild(el);
+    ok ? _p++ : _f++;
+}
+
+// ── n2A ──────────────────────────────────────────────────────────────────
+check('n2A(1.333) branch n>1', n2A(1.333), 2.5331875050, 1e-8);
+check('n2A(1.0)   = 1',        n2A(1.0),   1.0,          1e-12);
+check('n2A(0.75)  branch n<1', n2A(0.75),  1.1138793828, 1e-8);
+
+// ── continuousReflectance ────────────────────────────────────────────────
+const _op  = { nIn: 1.333, nOut: 1.0, musp: 1.1, mua: 0.011 };
+const _z0  = 1.0 / _op.musp;   // 0.90909...
+check('continuousReflectance rho=30',
+    continuousReflectance([0, 0, _z0], [30, 0, 0], _op),
+    3.0124085072e-7, 1e-7);
+
+// ── _continuousFluence ───────────────────────────────────────────────────────
+check('_continuousFluence at [15,0,15]',
+    _continuousFluence([0, 0, _z0], [15, 0, 15], _op),
+    1.4476584787e-4, 1e-7);
+
+// ── continuousTotPathLen ─────────────────────────────────────────────────
+const _tpl = continuousTotPathLen([0, 0, _z0], [30, 0, 0], _op);
+check('continuousTotPathLen L rho=30', _tpl.L, 222.9338028092, 1e-7);
+check('continuousTotPathLen R rho=30', _tpl.R, 3.0124085072e-7, 1e-7);
+
+// ── continuousPartPathLen ────────────────────────────────────────────────
+const _ll = continuousPartPathLen([0,0,_z0], [[15,0,15]], [30,0,0], 1.0, _op);
+check('continuousPartPathLen at [15,0,15]', _ll[0], 0.0086509744, 1e-6);
+
+// ── makeSvox CW_SD_I ──────────────────────────────────────────────────────
+// Grid: x −10…40 (Nx=51), z 0…30 (Nz=31). Svox[ix*Nz+iz].
+const _sd = makeSvox('CW_SD_I', { sx: 0, dx: 30 }, _op);
+check('CW_SD_I Nx', _sd.Nx, 51);
+check('CW_SD_I Nz', _sd.Nz, 31);
+check('CW_SD_I S[x=15,z=15] ix=25,iz=15', _sd.Svox[25*31+15], 3.88051e-5, 1e-4);
+check('CW_SD_I S[x=0,z=5]   ix=10,iz=5',  _sd.Svox[10*31+5],  2.48527e-4, 1e-4);
+
+// ── makeSvox CW_SS_I ──────────────────────────────────────────────────────
+// Grid: x −10…45 (Nx=56), z 0…35 (Nz=36). x=15 → ix=25, z=15 → iz=15.
+const _ss = makeSvox('CW_SS_I', { sx: 0, d1x: 25, d2x: 35 }, _op);
+check('CW_SS_I Nx', _ss.Nx, 56);
+check('CW_SS_I Nz', _ss.Nz, 36);
+check('CW_SS_I S[x=15,z=15]', _ss.Svox[25*36+15], 6.30944e-5, 1e-4);
+
+// ── makeSvox CW_DS_I ──────────────────────────────────────────────────────
+// Grid: x −40…40 (Nx=81), z 0…35 (Nz=36). x=0 → ix=40, z=15 → iz=15.
+const _ds = makeSvox('CW_DS_I', { s1x: -30, s2x: 30, d1x: -5, d2x: 5 }, _op);
+check('CW_DS_I Nx', _ds.Nx, 81);
+check('CW_DS_I Nz', _ds.Nz, 36);
+check('CW_DS_I S[x=0,z=15]', _ds.Svox[40*36+15], 6.62126e-5, 1e-4);
+
+document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
+</script>
+</body>
+</html>
