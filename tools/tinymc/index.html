@@ -126,7 +126,7 @@
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">This tool simulates a 3D isotropic random walk with constant unit step size.
+                    <p class="about-text">This tool simulates a 3D isotropic random walk with exponentially distributed step sizes, corresponding to a unit scattering coefficient.
                     Green and red markers indicate the start and end of the walk, respectively.</p>
                 </div>
             </div>
@@ -143,8 +143,8 @@
             <hr class="section-rule">
             <div class="info-card">
                 <p>
-                    The random walk is simulated using a Monte Carlo.
-                    Each time a walker changes direction it is called a <em>scattering event</em>.
+                    The random walk is simulated using a Monte Carlo simulation.
+                    Each time a walker changes direction, it is called a <em>scattering event</em>.
                     Each scattering event redirects the walker in a new direction drawn from the event's scattering phase function.
                     For <em>isotropic</em> scattering events, every direction on the unit sphere is equally likely.
                     This gives the following uniform Probability Density Function (PDF):
@@ -160,10 +160,10 @@
                     $$p(\theta) = \frac{1}{2}\sin\theta \qquad p(\varphi) = \frac{1}{2\pi}$$
                 </p>
                 <p>
-                    To implement this PDF in Monte Carlo we want to sample these distributions using a uniform random variable (\(\mathcal{U} = \text{Uniform}[0,1]\)) because \(\mathcal{U}\) is easy to sample in many programming languages.
+                    To implement this PDF in Monte Carlo, we want to sample these distributions using a uniform random variable (\(\mathcal{U} = \text{Uniform}[0,1]\)) because \(\mathcal{U}\) is easy to sample in many programming languages.
                     Core to the Monte Carlo method is the inverse Cumulative Distribution Function (CDF) method, which allows us to achieve this.
                     Using the inverse-CDF method, we set the cumulative distribution function equal to \(\mathcal{U}\) and solve for each angle.
-                    Therefore, we find the CDFs:
+                    The CDFs are:
                 </p>
                 <p>
                     $$P(\theta) = \int_0^{\theta} \frac{1}{2}\sin\theta'\,d\theta'
@@ -172,14 +172,19 @@
                     P(\varphi) = \int_0^{\varphi} \frac{1}{2\pi}\,d\varphi' = \frac{\varphi}{2\pi}$$
                 </p>
                 <p>
-                    and, setting each equal to \(\mathcal{U}\) and solving gives the sampling formulas:
+                    Setting each equal to \(\mathcal{U}\) and solving gives the sampling formulas:
                 </p>
                 <p>
                     $$\theta = \arccos(1 - 2\mathcal{U}) \qquad \varphi = 2\pi\mathcal{U}$$
                 </p>
                 <p>
                     These are the formulas implemented in the simulator above.
-                    Each step of the random walk draws a fresh pair \((\theta, \varphi)\) and moves one step in that direction.
+                    Each step of the random walk draws a fresh pair \((\theta, \varphi)\) and moves in that direction by a distance
+                    sampled from an exponential distribution, which models the free path length between scattering events for a unit scattering coefficient (\(\mu_s = 1\)).
+                    The free path PDF is \(p(\ell) = \mu_s e^{-\mu_s \ell}\), and applying the inverse-CDF method gives:
+                </p>
+                <p>
+                    $$\ell = -\ln(\mathcal{U})$$
                 </p>
             </div>
         </div>
@@ -201,10 +206,11 @@
     for (let i = 0; i &lt; n; i++) {
         const theta = Math.acos(1 - 2 * Math.random());
         const phi   = 2 * Math.PI * Math.random();
+        const step  = -Math.log(Math.random());
 
-        x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
-        y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
-        z[i + 1] = z[i] + Math.cos(theta);
+        x[i + 1] = x[i] + step * Math.sin(theta) * Math.cos(phi);
+        y[i + 1] = y[i] + step * Math.sin(theta) * Math.sin(phi);
+        z[i + 1] = z[i] + step * Math.cos(theta);
     }
     return { x, y, z };
 }</code></pre>
@@ -224,13 +230,13 @@
             const z = new Array(n + 1);
             x[0] = 0; y[0] = 0; z[0] = 0;
             for (let i = 0; i < n; i++) {
-                // Isotropic sampling on a unit sphere
                 const theta = Math.acos(1 - 2 * Math.random());
                 const phi   = 2 * Math.PI * Math.random();
+                const step  = -Math.log(Math.random());
 
-                x[i + 1] = x[i] + Math.sin(theta) * Math.cos(phi);
-                y[i + 1] = y[i] + Math.sin(theta) * Math.sin(phi);
-                z[i + 1] = z[i] + Math.cos(theta);
+                x[i + 1] = x[i] + step * Math.sin(theta) * Math.cos(phi);
+                y[i + 1] = y[i] + step * Math.sin(theta) * Math.sin(phi);
+                z[i + 1] = z[i] + step * Math.cos(theta);
             }
             return { x, y, z };
         }
