@@ -77,7 +77,7 @@
                            min="0" max="100" step="1" value="65">
 
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
-                        <span class="param-label">StO₂</span>
+                        <span class="param-label">O₂ saturation</span>
                         <span id="s-val" class="param-value"></span>
                     </div>
                     <input type="range" class="form-range mb-3" id="s-slider"
@@ -114,7 +114,7 @@
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">All concentrations are volumetric averages over the full probed tissue volume. The absorption of each chromophore is its concentration multiplied by its extinction coefficient; the total absorption is the sum of these contributions.</p>
+                    <p class="about-text">All concentrations are volumetric averages over the full probed tissue volume. The absorption of each chromophore is its concentration multiplied by its extinction coefficient; the total absorption is the sum of these components.</p>
                 </div>
             </div>
 
@@ -134,10 +134,10 @@
                     each following Beer's law:
                 </p>
                 <p>
-                    $$\mu_{a,\text{HbO}_2}(\lambda) = \varepsilon_{\text{HbO}_2}(\lambda)\,[\text{HbT}]\,\text{StO}_2$$
+                    $$\mu_{a,\text{HbO}_2}(\lambda) = \varepsilon_{\text{HbO}_2}(\lambda)\,[\text{HbT}]\,S_O$$
                 </p>
                 <p>
-                    $$\mu_{a,\text{Hb}}(\lambda) = \varepsilon_{\text{Hb}}(\lambda)\,[\text{HbT}]\,(1 - \text{StO}_2)$$
+                    $$\mu_{a,\text{HHb}}(\lambda) = \varepsilon_{\text{HHb}}(\lambda)\,[\text{HbT}]\,(1 - S_O)$$
                 </p>
                 <p>
                     $$\mu_{a,\text{water}}(\lambda) = \varepsilon_{\text{water}}(\lambda)\,W$$
@@ -146,19 +146,19 @@
                     $$\mu_{a,\text{lipid}}(\lambda) = \varepsilon_{\text{lipid}}(\lambda)\,L$$
                 </p>
                 <p>
-                    where \([\text{HbT}]\) is total hemoglobin concentration (μM), \(\text{StO}_2\) is tissue oxygen saturation,
+                    where \([\text{HbT}]\) is total hemoglobin concentration (μM), \(S_O\) is oxygen saturation,
                     \(W\) is water volume fraction, and \(L\) is lipid volume fraction.
-                    \(\varepsilon_{\text{HbO}_2}\) and \(\varepsilon_{\text{Hb}}\) have units mm⁻¹ μM⁻¹;
-                    \(\varepsilon_{\text{water}}\) and \(\varepsilon_{\text{lipid}}\) have units mm⁻¹ (fraction-based).
+                    \(\varepsilon_{\text{HbO}_2}\) and \(\varepsilon_{\text{HHb}}\) have units mm⁻¹ μM⁻¹;
+                    \(\varepsilon_{\text{water}}\) and \(\varepsilon_{\text{lipid}}\) have units mm⁻¹ (i.e., these are the absorptions of pure water or pure lipid, respectively).
                 </p>
                 <p>Melanin absorption follows the power-law fit from Jacques (2013), Eq. 8:</p>
                 <p>
                     $$\mu_{a,\text{mel}}(\lambda) = M_f \times 51.9 \left(\frac{\lambda}{500\,\text{nm}}\right)^{-3.5} \quad \text{(mm}^{-1}\text{)}$$
                 </p>
-                <p>where \(M_f\) is the melanin volume fraction averaged over the full probed tissue volume.</p>
+                <p>where \(M_f\) is the melanosome volume fraction averaged over the full probed tissue volume (n.b., within the epidermis specifically \(M_f\) can reach a value of 0.43).</p>
                 <p>The total bulk absorption coefficient is:</p>
                 <p>
-                    $$\mu_a(\lambda) = \mu_{a,\text{HbO}_2} + \mu_{a,\text{Hb}} + \mu_{a,\text{water}} + \mu_{a,\text{lipid}} + \mu_{a,\text{mel}}$$
+                    $$\mu_a(\lambda) = \mu_{a,\text{HbO}_2}(\lambda) + \mu_{a,\text{HHb}}(\lambda) + \mu_{a,\text{water}}(\lambda) + \mu_{a,\text{lipid}}(\lambda) + \mu_{a,\text{mel}}(\lambda)$$
                 </p>
             </div>
         </div>
@@ -254,7 +254,7 @@
                   mode: 'lines', line: { color: '#000000', width: 2.5, dash: 'solid' } },
                 { x: r.lam, y: r.mua_HbO2,   name: 'HbO₂',
                   mode: 'lines', line: { color: '#e00000', width: 1.5, dash: 'dash' } },
-                { x: r.lam, y: r.mua_HHb,    name: 'Hb',
+                { x: r.lam, y: r.mua_HHb,    name: 'HHb',
                   mode: 'lines', line: { color: '#8b0000', width: 1.5, dash: 'dash' } },
                 { x: r.lam, y: r.mua_water,  name: 'Water',
                   mode: 'lines', line: { color: '#0055cc', width: 1.5, dash: 'dash' } },
