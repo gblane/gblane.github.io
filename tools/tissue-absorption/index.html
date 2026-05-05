@@ -55,7 +55,7 @@
         <div class="tool-header">
             <div class="section-eyebrow">Tissue Optics</div>
             <h1 class="tool-title">Tissue Absorption</h1>
-            <p class="tool-subtitle">Bulk \(\mu_a(\lambda)\) from chromophore concentrations — volumetric averages</p>
+            <p class="tool-subtitle">Bulk \(\mu_a(\lambda)\) from chromophore concentrations</p>
         </div>
 
         <div class="row g-3 mb-5">
@@ -67,7 +67,7 @@
                         <span id="mfrac-val" class="param-value"></span>
                     </div>
                     <input type="range" class="form-range mb-3" id="mfrac-slider"
-                           min="0" max="0.02" step="0.0001" value="0.001">
+                           min="0" max="0.05" step="0.0001" value="0.001">
 
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">Total hemoglobin <span class="param-unit">(μM)</span></span>
@@ -97,16 +97,11 @@
                     <input type="range" class="form-range mb-3" id="lfrac-slider"
                            min="0" max="0.5" step="0.01" value="0.15">
 
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="log-scale" checked>
-                        <label class="form-check-label param-label" for="log-scale">Log scale</label>
-                    </div>
-
                     <div class="d-flex gap-3">
                         <div class="flex-fill">
                             <label class="param-label mb-1" for="lam-min">λ min (nm)</label>
                             <input type="number" class="form-control form-control-sm" id="lam-min"
-                                   min="430" max="999" value="700">
+                                   min="400" max="999" value="700">
                         </div>
                         <div class="flex-fill">
                             <label class="param-label mb-1" for="lam-max">λ max (nm)</label>
@@ -117,14 +112,14 @@
 
                 </div>
 
+                <div class="about-card">
+                    <div class="about-title">About</div>
+                    <p class="about-text">All concentrations are volumetric averages over the full probed tissue volume. The absorption of each chromophore is its concentration multiplied by its extinction coefficient; the total absorption is the sum of these contributions.</p>
+                </div>
             </div>
 
             <div class="col-md-8">
                 <div id="plot" style="height: 500px;"></div>
-                <div class="about-card mt-3">
-                    <div class="about-title">About</div>
-                    <p class="about-text">All concentrations are volumetric averages over the full probed tissue volume, not surface or epidermal values. This is why the melanin fraction here is far smaller than the epidermal melanin fraction — the epidermis is a thin layer within the total interrogated volume.</p>
-                </div>
             </div>
         </div>
 
@@ -175,12 +170,6 @@
             <hr class="section-rule">
             <div class="info-card">
                 <ol style="font-size: 0.85rem; line-height: 1.7; color: var(--text);">
-                    <li>
-                        Blaney, G., Frias, J., Tavakoli, F., Sassaroli, A., and Fantini, S.
-                        "Dual-ratio approach to pulse oximetry and the effect of skin tone."
-                        <em>J. Biomed. Opt.</em> 29(S3), S33311 (2024).
-                        doi:<a href="https://doi.org/10.1117/1.JBO.29.S3.S33311" target="_blank" rel="noopener noreferrer">10.1117/1.JBO.29.S3.S33311</a>
-                    </li>
                     <li>
                         Prahl, S. "Tabulated Molar Extinction Coefficient for Hemoglobin in Water." omlc.org/spectra/hemoglobin/summary.html.
                         Data from W.B. Gratzer (MRC Labs, London) and N. Kollias (Wellman Labs, Harvard).
@@ -236,7 +225,7 @@
         function getParams() {
             let lamMin = +document.getElementById('lam-min').value;
             let lamMax = +document.getElementById('lam-max').value;
-            lamMin = Math.max(430, Math.min(999, lamMin));
+            lamMin = Math.max(400, Math.min(999, lamMin));
             lamMax = Math.max(401, Math.min(1000, lamMax));
             if (lamMin >= lamMax) lamMax = Math.min(lamMin + 1, 1000);
             return {
@@ -278,7 +267,7 @@
                 plot_bgcolor:  'rgba(0,0,0,0)',
                 font: { family: 'DM Sans, sans-serif', size: 12, color: '#6b6b6b' },
                 xaxis: { title: 'Wavelength (nm)', range: [p.lamMin, p.lamMax], gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
-                yaxis: { title: 'μₐ (mm⁻¹)', type: document.getElementById('log-scale').checked ? 'log' : 'linear', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
+                yaxis: { title: 'μₐ (mm⁻¹)', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
                 legend: { x: 1, xanchor: 'right', y: 1 },
                 margin: { t: 20, r: 20, b: 50, l: 80 }
             }, { responsive: true });
@@ -288,7 +277,6 @@
          'lam-min','lam-max'].forEach(id =>
             document.getElementById(id).addEventListener('input', update)
         );
-        document.getElementById('log-scale').addEventListener('change', update);
         update();
     </script>
 
