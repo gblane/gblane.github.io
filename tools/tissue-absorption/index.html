@@ -44,6 +44,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../index.html#research">Research</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#teaching">Teaching</a></li>
                     <li class="nav-item"><a class="nav-link active" href="../../index.html#tools">Tools</a></li>
                 </ul>
             </div>
@@ -265,7 +266,7 @@
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor:  'rgba(0,0,0,0)',
                 font: { family: 'DM Sans, sans-serif', size: 12, color: '#6b6b6b' },
-                xaxis: { title: 'Wavelength (nm)', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
+                xaxis: { title: 'Wavelength (nm)', range: [p.lamMin, p.lamMax], gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
                 yaxis: { title: 'μₐ (mm⁻¹)', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
                 legend: { x: 1, xanchor: 'right', y: 1 },
                 margin: { t: 20, r: 20, b: 50, l: 80 }
