@@ -237,7 +237,7 @@
         function getParams() {
             let lamMin = +document.getElementById('lam-min').value;
             let lamMax = +document.getElementById('lam-max').value;
-            lamMin = Math.max(400, Math.min(999, lamMin));
+            lamMin = Math.max(430, Math.min(999, lamMin));
             lamMax = Math.max(401, Math.min(1000, lamMax));
             if (lamMin >= lamMax) lamMax = Math.min(lamMin + 1, 1000);
             return {
