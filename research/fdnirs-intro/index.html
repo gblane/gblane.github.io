@@ -1,70 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>FD-NIRS Introduction · Giles Blaney</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FD-NIRS Introduction · Giles Blaney</title>
+    <meta name="author" content="Giles Blaney, PhD">
+    <meta name="description" content="A brief introduction to frequency-domain near-infrared spectroscopy (FD-NIRS), diffuse optics, and optical properties μₐ and μ′ₛ.">
+
+    <!-- Open Graph / Twitter Card -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="A Brief Introduction to FD-NIRS">
+    <meta property="og:description" content="A primer on optically diffuse media, optical properties μₐ and μ′ₛ, and how FD-NIRS measures them in tissue.">
+    <meta property="og:url" content="https://gbphd.com/research/fdnirs-intro/">
+    <meta property="og:image" content="https://gbphd.com/img/research/flu.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A Brief Introduction to FD-NIRS">
+    <meta name="twitter:description" content="A primer on optically diffuse media, optical properties μₐ and μ′ₛ, and how FD-NIRS measures them in tissue.">
+    <meta name="twitter:image" content="https://gbphd.com/img/research/flu.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../site.css" rel="stylesheet">
+    <link href="/site.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <style>
-        .research-figure {
-            margin: 1.75rem 0;
-            max-width: 640px;
-        }
-        .research-figure img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-        }
-        .research-figure figcaption {
-            font-size: 0.78rem;
-            color: var(--muted);
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
-
-        .fn-list {
-            margin-top: 1.5rem;
-            padding-left: 1.25rem;
-        }
-        .fn-list li {
-            font-size: 0.78rem;
-            color: var(--muted);
-            margin-bottom: 0.3rem;
-        }
-        .fn-sup a {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.7em;
-            vertical-align: super;
-            line-height: 0;
-        }
-        .fn-sup a:hover { text-decoration: underline; }
-    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="../../index.html">Giles Blaney, PhD</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#bio">Bio</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="../../index.html#research">Research</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#tools">Tools</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div data-include="navbar"></div>
 
     <div class="container">
         <div class="tool-header">
@@ -78,7 +41,7 @@
             <p>To understand what FD-NIRS is, we must first understand the optically diffuse medium. In an optically diffuse medium light moves about by randomly changing the direction it's traveling. Particles representing packets of light are called photons. The act of these photons randomly changing direction is called scattering. Therefore, an optically diffuse medium is one in which the behavior of photons is mostly described by their scattering. An example of a possible random photon path from scattering can be seen in Figure 1.</p>
 
             <figure class="research-figure">
-                <img src="../../img/research/flu.png" alt="Simulated photon fluence rate distribution in a diffuse medium, with a white line tracing one possible random photon path.">
+                <img src="/img/research/flu.png" alt="Simulated photon fluence rate distribution in a diffuse medium, with a white line tracing one possible random photon path.">
                 <figcaption><strong>Figure 1.</strong> Example distribution of photon fluence rate (Φ), which may be thought of as photon density produced from the diffusion of many photons. An example possible path of a single photon is shown as a white line.</figcaption>
             </figure>
 
@@ -91,7 +54,7 @@
             <p>FD-NIRS seeks to measure these two properties — μ<sub>a</sub> and μ′<sub>s</sub> — to characterize a diffuse medium. In general, μ<sub>a</sub> provides chemical information about the medium, like the strength of the coffee in the example above, and μ′<sub>s</sub> provides structural information, like the amount of fat droplets from cream in the coffee. A popular application of NIRS is in the measurement of biological tissues, where μ<sub>a</sub> gives information about blood concentrations. The μ<sub>a</sub> of blood depends on wavelength (λ), which can be thought of as the color of the light. A typical dependence of μ<sub>a</sub> on λ is shown in Figure 2. NIRS — Near-Infrared Spectroscopy — focuses on wavelengths from red to near-infrared<sup class="fn-sup"><a href="#fn-2">2</a></sup> because biological tissue has relatively low absorption in this range, allowing photons to probe further into tissue. Figure 2 also shows the average path-length before absorption versus λ, illustrating this so-called optical window of tissue.</p>
 
             <figure class="research-figure">
-                <img src="../../img/research/spect.png" alt="Two-panel figure: top panel shows mean free path before absorption versus wavelength in tissue with the optical window highlighted in green; bottom panel shows absorption coefficient versus wavelength for common biological chromophores.">
+                <img src="/img/research/spect.png" alt="Two-panel figure: top panel shows mean free path before absorption versus wavelength in tissue with the optical window highlighted in green; bottom panel shows absorption coefficient versus wavelength for common biological chromophores.">
                 <figcaption><strong>Figure 2.</strong> [Top] The average path-length before a photon is absorbed (1/μ<sub>a</sub>) versus wavelength in biological tissue. Long path-lengths allow for deeper light penetration; these regions are the so-called optical windows, shown in green. [Bottom] The typical μ<sub>a</sub> versus wavelength for common biological chromophores (absorbers).</figcaption>
             </figure>
 
@@ -101,10 +64,10 @@
 
             <p>Regardless of application, a laboratory can purchase a commercially available FD-NIRS instrument. These instruments provide FD measurements at multiple discrete wavelengths, retrieving the amplitude (I) and phase shift (φ) of the detected light. They can therefore be used for absolute measurement of μ<sub>a</sub> and μ′<sub>s</sub>, or for dynamic tracking of μ<sub>a</sub> changes interpreted as hemodynamics.</p>
 
-            <p>As a specific example, consider FD-NIRS applied to the human brain. When a person experiences a visual stimulus, the visual portion of their brain begins utilizing more oxygen. The body responds by increasing blood flow to the visual cortex — indicated by a rise in oxyhemoglobin (HbO) concentration and a fall in deoxyhemoglobin (HbR) concentration. Since these concentrations are connected to μ<sub>a</sub> through their wavelength-dependent absorption spectra, this change can be measured with FD-NIRS. An experiment may be devised to make these functional NIRS (fNIRS) measurements as shown in Figure 3 — sinusoidal light is injected into the subject's head, diffuses through the brain, and is detected. The phase shift and amplitude of the detected light are converted to optical properties and blood concentrations, and changes in HbO and HbR indicate blood flow and brain activity. This example illustrates just one application in which FD-NIRS may be used to make measurements on tissue.</p>
+            <p>As a specific example, consider FD-NIRS applied to the human brain. When a person experiences a visual stimulus, the visual portion of their brain begins utilizing more oxygen. The body responds by increasing blood flow to the visual cortex — indicated by a rise in oxyhemoglobin (HbO<sub>2</sub>) concentration and a fall in deoxyhemoglobin (Hb) concentration. Since these concentrations are connected to μ<sub>a</sub> through their wavelength-dependent absorption spectra, this change can be measured with FD-NIRS. An experiment may be devised to make these functional NIRS (fNIRS) measurements as shown in Figure 3 — sinusoidal light is injected into the subject's head, diffuses through the brain, and is detected. The phase shift and amplitude of the detected light are converted to optical properties and blood concentrations, and changes in HbO<sub>2</sub> and Hb indicate blood flow and brain activity. This example illustrates just one application in which FD-NIRS may be used to make measurements on tissue.</p>
 
             <figure class="research-figure">
-                <img src="../../img/research/FDbrain.png" alt="Diagram of FD-NIRS applied to the human brain, showing sinusoidal source and detected light waveforms with phase shift and amplitude attenuation.">
+                <img src="/img/research/FDbrain.png" alt="Diagram of FD-NIRS applied to the human brain, showing sinusoidal source and detected light waveforms with phase shift and amplitude attenuation.">
                 <figcaption><strong>Figure 3.</strong> Example of FD-NIRS applied to the human brain. Temporal profile of source light in red and detected light in blue. Symbols: phase shift (φ), modulation frequency (ω), source intensity (I), detected amplitude (R).</figcaption>
             </figure>
 
@@ -123,12 +86,9 @@
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Giles Blaney, PhD &nbsp;·&nbsp; <a href="mailto:Giles.Blaney@tufts.edu">Giles.Blaney@tufts.edu</a></p>
-        </div>
-    </footer>
+    <div data-include="footer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/_partials/include.js" defer></script>
 </body>
 </html>
