@@ -365,7 +365,8 @@ function runCompute() {
 
 document.getElementById('arrangement').addEventListener('change', updateArrangement);
 document.getElementById('compute-btn').addEventListener('click', runCompute);
-updateArrangement();   // initialise derived values on load
+updateArrangement();   // initialise derived values + optode-panel visibility
+runCompute();          // draw the initial map so the user sees something on load
 </script>
 
 </body>
