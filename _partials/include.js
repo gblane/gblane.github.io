@@ -18,9 +18,27 @@
     });
 
     Promise.all(tasks).then(names => {
-        if (names.includes('navbar')) markActiveNav();
+        if (names.includes('navbar')) {
+            markActiveNav();
+            wireThemeToggle();
+        }
         if (names.includes('footer')) fillLastUpdated();
     });
+
+    function wireThemeToggle() {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            const root = document.documentElement;
+            const explicit = root.dataset.theme;
+            // What's currently being shown? (explicit overrides OS preference)
+            const isDark = explicit === 'dark'
+                || (!explicit && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const next = isDark ? 'light' : 'dark';
+            root.dataset.theme = next;
+            try { localStorage.setItem('theme', next); } catch (_) {}
+        });
+    }
 
     function markActiveNav() {
         const path = window.location.pathname;

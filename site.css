@@ -9,6 +9,12 @@
     --border:      #e0dcd6;
     --card-bg:     #ffffff;
     --section-alt: #f2f0ec;
+
+    /* Component-level vars that flip in dark mode */
+    --navbar-bg:        #fff;
+    --bio-text-color:   #333;
+    --form-focus-bg:    #fff;
+    --accent-hover:     #144060;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -33,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 [data-include="navbar"] {
     display: block;
     height: 60px;
-    background: #fff;
+    background: var(--navbar-bg);
     border-bottom: 1px solid var(--border);
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -41,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar {
-    background: #fff !important;
+    background: var(--navbar-bg) !important;
     border-bottom: 1px solid var(--border);
     padding: 0.6rem 0;
 }
@@ -68,10 +74,32 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-toggler { border-color: var(--border); }
 
-/* Dark hamburger icon for white navbar */
+/* Hamburger icon — stroke color flips in dark mode via --hamburger-stroke */
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2826%2C26%2C26%2C0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26,26,26,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
+
+/* Theme toggle button (in navbar) */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+    padding: 0.3rem 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.theme-toggle svg   { width: 14px; height: 14px; display: block; }
+
+/* Default (light): show MOON (click to go dark) */
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
 
 /* ── Section helpers ──────────────────────────────── */
 .section-eyebrow {
@@ -118,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 45%;
+    object-position: center;
     display: block;
 }
 @media (max-width: 767px) {
@@ -164,7 +192,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .bio-text {
     font-size: 0.96rem;
-    color: #333;
+    color: var(--bio-text-color);
     max-width: 560px;
     margin-bottom: 1.5rem;
 }
@@ -185,7 +213,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .bio-link:hover { border-color: var(--accent); color: var(--accent); }
 .bio-link.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.bio-link.primary:hover { background: #144060; border-color: #144060; color: #fff; }
+.bio-link.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
 
 /* ── Cards (research / teaching / tools grids) ────── */
 .tool-link { text-decoration: none; color: inherit; display: block; height: 100%; }
@@ -260,7 +288,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-select:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 2px rgba(23,86,118,0.12);
-    background: #fff;
+    background: var(--form-focus-bg);
 }
 
 .form-range::-webkit-slider-thumb { background: var(--accent); }
@@ -280,7 +308,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: background 0.15s;
     cursor: pointer;
 }
-.btn-run:hover { background: #144060; }
+.btn-run:hover { background: var(--accent-hover); }
 
 .output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
 
@@ -442,9 +470,19 @@ footer a { color: #c4d9bd; text-decoration: none; }
 footer a:hover { color: #fff; }
 .last-updated { font-size: 0.72rem; opacity: 0.75; margin-top: 0.4rem; }
 
-/* ── Dark mode (respects OS / browser preference) ─── */
+/* ── Dark mode ─────────────────────────────────────
+   Resolution order:
+     1. [data-theme="light"] → force light (override OS)
+     2. [data-theme="dark"]  → force dark  (override OS)
+     3. (no attribute)       → follow OS via prefers-color-scheme
+
+   Component-level vars (--navbar-bg, --bio-text-color, --form-focus-bg,
+   --accent-hover) flip with the palette so most rules don't need overrides;
+   only the hamburger-icon SVG needs an explicit override since data URIs
+   can't be parameterised.
+*/
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         --bg:          #1a1a1a;
         --text:        #e8e6e0;
         --muted:       #989796;
@@ -453,27 +491,36 @@ footer a:hover { color: #fff; }
         --border:      #2e2c29;
         --card-bg:     #232220;
         --section-alt: #1f1e1c;
+        --navbar-bg:        var(--card-bg);
+        --bio-text-color:   var(--text);
+        --form-focus-bg:    var(--bg);
+        --accent-hover:     #5995b5;
     }
-
-    /* Navbar background flips from white to the card surface */
-    .navbar,
-    [data-include="navbar"] { background: var(--card-bg) !important; }
-
-    /* Hamburger lines: switch from dark to light so they remain visible */
-    .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28232%2C230%2C224%2C0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    :root:not([data-theme="light"]) .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
-
-    /* Bio paragraph text was hardcoded #333; use the theme text colour */
-    .bio-text { color: var(--text); }
-
-    /* Form-control :focus background was hard-white; use page bg */
-    .form-control:focus,
-    .form-select:focus { background: var(--bg); }
-
-    /* Hover states (light-mode used hardcoded darker blue #144060). Use a dark-mode equivalent. */
-    .btn-run:hover,
-    .bio-link.primary:hover { background: #5995b5; border-color: #5995b5; }
-
-    /* Plot areas intentionally stay white for chart-data legibility — leave #plot alone */
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun  { display: block; }
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 }
+
+:root[data-theme="dark"] {
+    --bg:          #1a1a1a;
+    --text:        #e8e6e0;
+    --muted:       #989796;
+    --accent:      #6fa8c8;
+    --accent2:     #8aab66;
+    --border:      #2e2c29;
+    --card-bg:     #232220;
+    --section-alt: #1f1e1c;
+    --navbar-bg:        var(--card-bg);
+    --bio-text-color:   var(--text);
+    --form-focus-bg:    var(--bg);
+    --accent-hover:     #5995b5;
+}
+[data-theme="dark"] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* #plot stays white (hardcoded above) in both themes — better data legibility */
