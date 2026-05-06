@@ -29,6 +29,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Navbar ───────────────────────────────────────── */
+/* Placeholder styling so the navbar area looks right before JS includes load */
+[data-include="navbar"] {
+    display: block;
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1030;
+}
+
 .navbar {
     background: #fff !important;
     border-bottom: 1px solid var(--border);
@@ -62,20 +73,6 @@ h1, h2, h3, h4, h5, h6 {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2826%2C26%2C26%2C0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* ── Shared card ──────────────────────────────────── */
-.site-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.25rem 1.5rem;
-    height: 100%;
-    transition: border-color 0.15s, box-shadow 0.15s;
-}
-.tool-link:hover .site-card {
-    border-color: var(--accent);
-    box-shadow: 0 4px 18px rgba(23,86,118,0.08);
-}
-
 /* ── Section helpers ──────────────────────────────── */
 .section-eyebrow {
     font-family: 'DM Sans', sans-serif;
@@ -102,74 +99,115 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
-/* ── Course pages ─────────────────────────────────── */
-.course-hero {
-    padding: 88px 0 56px;
-    border-bottom: 1px solid var(--border);
+/* ── Homepage section padding (alternating bg) ────── */
+.home section { padding: 88px 0; }
+.home section:nth-of-type(even) { background: var(--section-alt); }
+.home #bio { padding-top: 72px; }
+
+@media (max-width: 767px) {
+    .home section { padding: 60px 0; }
+    .home #bio { padding-top: 56px; }
 }
 
-.course-number {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 6px;
+/* ── Lab banner (homepage) ────────────────────────── */
+.lab-banner {
+    height: clamp(200px, 34vh, 340px);
+    overflow: hidden;
+}
+.lab-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+    display: block;
+}
+@media (max-width: 767px) {
+    .lab-banner { height: clamp(140px, 28vw, 220px); }
 }
 
-.course-title {
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
+/* ── Bio block (homepage) ─────────────────────────── */
+.bio-text ul { font-size: 0.9rem; color: var(--muted); }
+
+.bio-photo {
+    width: clamp(72px, 12vw, 150px);
+    height: clamp(72px, 12vw, 150px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+}
+
+.bio-name {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 700;
     letter-spacing: -0.02em;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
 }
 
-.course-meta { font-size: 0.88rem; color: var(--muted); }
-.course-cta  { font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-top: 0.9rem; }
-
-.material-section { padding: 52px 0; border-bottom: 1px solid var(--border); }
-.material-section:last-child { border-bottom: none; }
-
-.material-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.25rem; }
-
-.mat-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    padding: 0.55rem 0;
-    border-bottom: 1px solid var(--border);
-}
-.mat-row:last-child { border-bottom: none; }
-
-.mat-date {
-    font-size: 0.72rem;
+.bio-subtitle {
+    font-size: 0.92rem;
     color: var(--muted);
-    white-space: nowrap;
-    min-width: 3.5rem;
-    font-variant-numeric: tabular-nums;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
 }
 
-.mat-label { font-size: 0.88rem; color: var(--text); flex: 1; }
-
-.mat-sublabel { font-size: 0.78rem; color: var(--muted); display: block; margin-top: 0.1rem; }
-
-.mat-links { display: flex; gap: 0.4rem; flex-shrink: 0; }
-
-.mat-link {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--accent);
+.bio-link-inline {
+    color: inherit;
     text-decoration: none;
-    border: 1px solid var(--accent);
-    border-radius: 2px;
-    padding: 2px 7px;
-    transition: background 0.12s, color 0.12s;
-    white-space: nowrap;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s, color 0.15s;
 }
-.mat-link:hover { background: var(--accent); color: #fff; }
+.bio-link-inline:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.bio-text {
+    font-size: 0.96rem;
+    color: #333;
+    max-width: 560px;
+    margin-bottom: 1.5rem;
+}
+
+.bio-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.bio-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 5px 13px;
+    transition: border-color 0.15s, color 0.15s;
+}
+.bio-link:hover { border-color: var(--accent); color: var(--accent); }
+.bio-link.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.bio-link.primary:hover { background: #144060; border-color: #144060; color: #fff; }
+
+/* ── Cards (research / teaching / tools grids) ────── */
+.tool-link { text-decoration: none; color: inherit; display: block; height: 100%; }
+
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.35rem 1.5rem;
+    height: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.tool-card:hover { border-color: var(--accent); box-shadow: 0 4px 18px rgba(23,86,118,0.08); }
+
+.tool-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+.tool-tags { font-size: 0.7rem; color: var(--accent); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.tool-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+.tool-cta  { font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-top: 0.9rem; }
+
+.course-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.9rem; }
+.course-links a { font-size: 0.75rem; font-weight: 500; color: var(--accent); text-decoration: none; }
+.course-links a:hover { text-decoration: underline; }
 
 /* ── Tool pages ───────────────────────────────────── */
 .tool-header   { padding: 2rem 0 1.5rem; }
@@ -183,6 +221,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1.25rem 1.4rem;
 }
 
+.param-label  { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; display: block; }
+.param-value  { font-size: 0.8rem;  color: var(--muted); font-variant-numeric: tabular-nums; }
+.param-unit   { font-weight: 400;   color: var(--muted); }
+
 .about-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -190,7 +232,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1rem 1.4rem;
     margin-top: 0.75rem;
 }
-
 .about-title {
     font-size: 0.68rem;
     font-weight: 500;
@@ -199,13 +240,106 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent2);
     margin-bottom: 0.4rem;
 }
-
 .about-text {
     font-size: 0.8rem;
     color: var(--muted);
     line-height: 1.55;
     margin: 0;
 }
+
+/* ── Form controls (tool pages) ───────────────────── */
+.form-control,
+.form-select {
+    border-color: var(--border);
+    border-radius: 4px;
+    font-size: 0.88rem;
+    background: var(--bg);
+    color: var(--text);
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(23,86,118,0.12);
+    background: #fff;
+}
+
+.form-range::-webkit-slider-thumb { background: var(--accent); }
+.form-range::-moz-range-thumb     { background: var(--accent); border: none; }
+.form-range:focus::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(23,86,118,0.18); }
+
+.btn-run {
+    background: var(--accent);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.83rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    transition: background 0.15s;
+    cursor: pointer;
+}
+.btn-run:hover { background: #144060; }
+
+.output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
+
+/* ── Plot container (Plotly target) ───────────────── */
+#plot { border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+
+/* While Plotly is loading, reserve the box and show a hint */
+#plot:empty::before {
+    content: 'Loading plot…';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* ── Derived-values box (tool pages) ──────────────── */
+.derived-box {
+    background: var(--section-alt);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+}
+.derived-item { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.15rem; }
+.derived-item:last-child { margin-bottom: 0; }
+.derived-val  { color: var(--text); font-weight: 500; }
+
+/* ── Code blocks (tool implementation sections) ───── */
+.code-wrap { position: relative; }
+
+pre {
+    background: var(--section-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 0;
+}
+pre code { font-family: 'Courier New', monospace; color: var(--text); }
+
+.copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 8px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: background 0.12s, color 0.12s;
+}
+.copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 /* ── Info sections (tool & research pages) ───────── */
 .info-section { margin-bottom: 3rem; }
@@ -225,7 +359,121 @@ h1, h2, h3, h4, h5, h6 {
 }
 .info-card p:last-child { margin-bottom: 0; }
 
+/* ── Research pages: figures + footnotes ──────────── */
+.research-figure { margin: 1.75rem 0; max-width: 640px; }
+.research-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+.research-figure figcaption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+.fn-list { margin-top: 1.5rem; padding-left: 1.25rem; }
+.fn-list li { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+.fn-sup a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.7em;
+    vertical-align: super;
+    line-height: 0;
+}
+.fn-sup a:hover { text-decoration: underline; }
+
+/* ── Publications page ────────────────────────────── */
+.pub-col-heading {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+}
+.pub-row { padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.pub-row:last-child { border-bottom: none; }
+.pub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+}
+.pub-authors { font-size: 0.7rem; color: var(--muted); margin-top: 0.15rem; }
+.pub-meta    { font-size: 0.7rem; color: var(--muted); margin-top: 0.15rem; }
+.pub-link    { color: var(--accent); text-decoration: none; }
+.pub-link:hover { text-decoration: underline; }
+
+.pub-col-divider { border-left: 1px solid var(--border); }
+
+@media (max-width: 767px) {
+    .pub-col-divider {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-top: 2rem;
+        margin-top: 1rem;
+    }
+}
+
+.pub-refresh {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    cursor: pointer;
+    margin-left: 0.6rem;
+    transition: border-color 0.15s, color 0.15s;
+}
+.pub-refresh:hover { border-color: var(--accent); color: var(--accent); }
+
 /* ── Footer ───────────────────────────────────────── */
 footer { background: #28502E; color: #a8c4a0; padding: 1.75rem 0; font-size: 0.78rem; text-align: center; }
 footer a { color: #c4d9bd; text-decoration: none; }
 footer a:hover { color: #fff; }
+.last-updated { font-size: 0.72rem; opacity: 0.75; margin-top: 0.4rem; }
+
+/* ── Dark mode (respects OS / browser preference) ─── */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg:          #1a1a1a;
+        --text:        #e8e6e0;
+        --muted:       #989796;
+        --accent:      #6fa8c8;
+        --accent2:     #8aab66;
+        --border:      #2e2c29;
+        --card-bg:     #232220;
+        --section-alt: #1f1e1c;
+    }
+
+    /* Navbar background flips from white to the card surface */
+    .navbar,
+    [data-include="navbar"] { background: var(--card-bg) !important; }
+
+    /* Hamburger lines: switch from dark to light so they remain visible */
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28232%2C230%2C224%2C0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* Bio paragraph text was hardcoded #333; use the theme text colour */
+    .bio-text { color: var(--text); }
+
+    /* Form-control :focus background was hard-white; use page bg */
+    .form-control:focus,
+    .form-select:focus { background: var(--bg); }
+
+    /* Hover states (light-mode used hardcoded darker blue #144060). Use a dark-mode equivalent. */
+    .btn-run:hover,
+    .bio-link.primary:hover { background: #5995b5; border-color: #5995b5; }
+
+    /* Plot areas intentionally stay white for chart-data legibility — leave #plot alone */
+}
