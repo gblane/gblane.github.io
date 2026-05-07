@@ -48,47 +48,25 @@
         </div>
 
         <div class="row g-3 mb-5">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="param-card">
-                    <div class="param-label mb-2">Domain</div>
-                    <div class="btn-group w-100 mb-3" role="group" aria-label="Domain">
-                        <input type="radio" class="btn-check" name="mode" id="mode-cw" value="CW" checked>
-                        <label class="btn btn-outline-secondary btn-sm" for="mode-cw">CW</label>
-
-                        <input type="radio" class="btn-check" name="mode" id="mode-fd" value="FD">
-                        <label class="btn btn-outline-secondary btn-sm" for="mode-fd">FD</label>
-
-                        <input type="radio" class="btn-check" name="mode" id="mode-td" value="TD">
-                        <label class="btn btn-outline-secondary btn-sm" for="mode-td">TD</label>
-                    </div>
-
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ<sub>a</sub></span>
                         <span id="mua-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range mb-3" id="mua-slider" min="0" max="0.1" step="0.001" value="0.01">
+                    <input type="range" class="form-range mb-3" id="mua-slider" min="0" max="0.1" step="0.0005" value="0.0011">
 
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ′<sub>s</sub></span>
                         <span id="musp-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range" id="musp-slider" min="0.5" max="10" step="0.1" value="1.0">
+                    <input type="range" class="form-range mb-3" id="musp-slider" min="0.5" max="10" step="0.1" value="1.1">
 
-                    <div id="fd-controls" style="display:none;">
-                        <div class="d-flex justify-content-between align-items-baseline mb-1 mt-3">
-                            <span class="param-label">f<sub>mod</sub></span>
-                            <span id="fmod-val" class="param-value"></span>
-                        </div>
-                        <input type="range" class="form-range" id="fmod-slider" min="10" max="1000" step="5" value="100">
+                    <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="param-label">f<sub>mod</sub></span>
+                        <span id="fmod-val" class="param-value"></span>
                     </div>
-
-                    <div id="td-controls" style="display:none;">
-                        <div class="d-flex justify-content-between align-items-baseline mb-1 mt-3">
-                            <span class="param-label">t<sub>max</sub></span>
-                            <span id="tmax-val" class="param-value"></span>
-                        </div>
-                        <input type="range" class="form-range" id="tmax-slider" min="1" max="20" step="0.5" value="10">
-                    </div>
+                    <input type="range" class="form-range" id="fmod-slider" min="10" max="1000" step="5" value="100">
 
                     <div class="derived-box">
                         <div class="derived-item">μ<sub>eff</sub> = <span id="mueff-val" class="derived-val"></span> mm⁻¹</div>
@@ -98,13 +76,12 @@
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">Analytical solutions for diffuse reflectance from a semi-infinite medium using the extrapolated boundary condition. Switch between Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD).</p>
+                    <p class="about-text">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm, t ∈ [0.1, 10] ns.</p>
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <div id="plot" style="height: 500px;"></div>
-                <div id="plot2" style="height: 300px; display:none; margin-top: 1rem;"></div>
+            <div class="col-md-9">
+                <div id="plot" style="height: 540px;"></div>
             </div>
         </div>
 
@@ -358,134 +335,119 @@ function R_TD(rho, t, mua, musp) {           // t in ps
         }
 
         // ── UI ─────────────────────────────────────────────────────────
-        const N      = 300;
-        const rhoArr = Array.from({length: N}, (_, i) => 0.5 + i * 49.5 / (N - 1));
+        // Match MATLAB script ranges:  rhos = 10:0.1:50 mm,  tps = 100:1:10000 ps
+        const rhoArr = Array.from({length: 401}, (_, i) => 10 + i * 0.1);            // mm
+        const rhoTD  = Array.from({length: 9},   (_, i) => Math.round(10 + i * 5));  // mm
+        const tps    = Array.from({length: 200}, (_, i) => 100 + i * (10000 - 100) / 199); // ps
+        const tns    = tps.map(t => t / 1000);
 
-        function getMode() {
-            return document.querySelector('input[name="mode"]:checked').value;
+        // jet-like colormap (blue → red)
+        function jet(i, n) {
+            const x = i / (n - 1);
+            const r = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 3), 0), 1));
+            const g = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 2), 0), 1));
+            const b = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 1), 0), 1));
+            return `rgb(${r},${g},${b})`;
         }
 
-        function plotlyLayout(opts) {
-            return Object.assign({
-                paper_bgcolor: "rgba(0,0,0,0)",
-                plot_bgcolor:  "rgba(0,0,0,0)",
-                font: { family: "DM Sans, sans-serif", size: 12, color: "#6b6b6b" },
-                xaxis: { gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                yaxis: { gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                margin: { t: 20, r: 20, b: 50, l: 80 }
-            }, opts);
-        }
+        const grid = "#e0dcd6", zero = "#c8c2bc";
 
         function update() {
-            const mode  = getMode();
-            const mua   = +document.getElementById('mua-slider').value;
-            const musp  = +document.getElementById('musp-slider').value;
-            const fmod  = +document.getElementById('fmod-slider').value;   // MHz
-            const tmax  = +document.getElementById('tmax-slider').value;   // ns
+            const mua  = +document.getElementById('mua-slider').value;
+            const musp = +document.getElementById('musp-slider').value;
+            const fmod = +document.getElementById('fmod-slider').value;   // MHz
 
             const { D, z0 } = geom(mua, musp);
-            const mueff = Math.sqrt(mua / D);
+            const mueff   = Math.sqrt(mua / D);
             const accent  = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()  || '#175676';
             const accent2 = getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim() || '#47682C';
 
-            // Labels
-            document.getElementById('mua-val').textContent   = `${mua.toFixed(3)} mm⁻¹`;
+            document.getElementById('mua-val').textContent   = `${mua.toFixed(4)} mm⁻¹`;
             document.getElementById('musp-val').textContent  = `${musp.toFixed(1)} mm⁻¹`;
             document.getElementById('fmod-val').textContent  = `${fmod.toFixed(0)} MHz`;
-            document.getElementById('tmax-val').textContent  = `${tmax.toFixed(1)} ns`;
             document.getElementById('mueff-val').textContent = mueff.toFixed(4);
             document.getElementById('ltr-val').textContent   = z0.toFixed(2);
 
-            // Conditional control visibility
-            document.getElementById('fd-controls').style.display = mode === 'FD' ? '' : 'none';
-            document.getElementById('td-controls').style.display = mode === 'TD' ? '' : 'none';
+            // ── Compute traces ───────────────────────────────────────
+            const omega = 2 * Math.PI * fmod * 1e6;
+            const cw    = rhoArr.map(r => R_CW(r, mua, musp));
+            const fd    = rhoArr.map(r => R_FD(r, mua, musp, omega));
+            const fdMag = fd.map(v => Math.hypot(v.re, v.im));
+            const fdPh  = fd.map(v => Math.atan2(v.im, v.re));
+            const tdTraces = rhoTD.map((rho, i) => ({
+                x: tns,
+                y: tps.map(t => R_TD(rho, t, mua, musp)),
+                mode: 'lines',
+                name: `ρ=${rho} mm`,
+                line: { width: 1.4, color: jet(i, rhoTD.length) },
+                xaxis: 'x4', yaxis: 'y4'
+            }));
 
-            const plot2 = document.getElementById('plot2');
+            const traces = [
+                { x: rhoArr, y: cw,    mode: 'lines', name: 'CW',
+                  line: { width: 2, color: '#1a1a1a' }, showlegend: false,
+                  xaxis: 'x',  yaxis: 'y'  },
+                { x: rhoArr, y: fdMag, mode: 'lines', name: '|R_FD|',
+                  line: { width: 2, color: accent }, showlegend: false,
+                  xaxis: 'x2', yaxis: 'y2' },
+                { x: rhoArr, y: fdPh,  mode: 'lines', name: '∠R_FD',
+                  line: { width: 2, color: accent2 }, showlegend: false,
+                  xaxis: 'x3', yaxis: 'y3' },
+                ...tdTraces
+            ];
 
-            if (mode === 'CW') {
-                plot2.style.display = 'none';
-                Plotly.purge('plot2');
-                Plotly.react('plot', [{
-                    x: rhoArr,
-                    y: rhoArr.map(r => R_CW(r, mua, musp)),
-                    mode: 'lines',
-                    line: { width: 2, color: accent }
-                }], plotlyLayout({
-                    xaxis: { title: 'ρ (mm)', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                    yaxis: { title: 'R<sub>CW</sub>(ρ) (mm⁻²)', type: 'log',
-                             gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" }
-                }), { responsive: true });
-            }
-            else if (mode === 'FD') {
-                plot2.style.display = '';
-                const omega = 2 * Math.PI * fmod * 1e6;   // rad/s
-                const vals  = rhoArr.map(r => R_FD(r, mua, musp, omega));
-                const mag   = vals.map(v => Math.hypot(v.re, v.im));
-                const phase = vals.map(v => Math.atan2(v.im, v.re));
+            // ── Subplot layout (2 rows × 3 cols) ─────────────────────
+            const ax = (title, opts) => Object.assign({
+                gridcolor: grid, zerolinecolor: zero, title: { text: title, standoff: 6 }
+            }, opts);
 
-                Plotly.react('plot', [{
-                    x: rhoArr, y: mag, mode: 'lines',
-                    line: { width: 2, color: accent }
-                }], plotlyLayout({
-                    xaxis: { title: 'ρ (mm)', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                    yaxis: { title: '|R<sub>FD</sub>(ρ)| (mm⁻²)', type: 'log',
-                             gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" }
-                }), { responsive: true });
+            const layout = {
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor:  "rgba(0,0,0,0)",
+                font: { family: "DM Sans, sans-serif", size: 11, color: "#6b6b6b" },
+                margin: { t: 36, r: 10, b: 50, l: 70 },
+                showlegend: true,
+                legend: { x: 1.0, y: 1.0, xanchor: 'right', yanchor: 'top',
+                          bgcolor: 'rgba(255,255,255,0.6)', font: { size: 9 } },
 
-                Plotly.react('plot2', [{
-                    x: rhoArr, y: phase, mode: 'lines',
-                    line: { width: 2, color: accent2 }
-                }], plotlyLayout({
-                    xaxis: { title: 'ρ (mm)', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                    yaxis: { title: '∠R<sub>FD</sub>(ρ) (rad)',
-                             gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" }
-                }), { responsive: true });
-            }
-            else { // TD
-                plot2.style.display = 'none';
-                Plotly.purge('plot2');
+                // CW (left, full height)
+                xaxis:  ax('ρ (mm)',  { domain: [0.00, 0.30], range: [10, 50] }),
+                yaxis:  ax('R<sub>CW</sub> (mm⁻²)',
+                          { domain: [0.00, 0.92], type: 'log', anchor: 'x' }),
 
-                const nRho = 9;
-                const rhoTD = Array.from({length: nRho}, (_, i) =>
-                    Math.round(10 + i * (50 - 10) / (nRho - 1)));
+                // |R_FD| (top middle)
+                xaxis2: ax('',        { domain: [0.36, 0.66], range: [10, 50],
+                                        anchor: 'y2', showticklabels: false }),
+                yaxis2: ax('|R<sub>FD</sub>| (mm⁻²)',
+                          { domain: [0.50, 0.92], type: 'log', anchor: 'x2' }),
 
-                const Nt = 400;
-                const tMaxPs = tmax * 1000;
-                const tps = Array.from({length: Nt}, (_, i) =>
-                    100 + i * (tMaxPs - 100) / (Nt - 1));   // ps
-                const tns = tps.map(t => t / 1000);
+                // ∠R_FD (bottom middle)
+                xaxis3: ax('ρ (mm)',  { domain: [0.36, 0.66], range: [10, 50],
+                                        anchor: 'y3' }),
+                yaxis3: ax('∠R<sub>FD</sub> (rad)',
+                          { domain: [0.00, 0.42], anchor: 'x3' }),
 
-                // Color ramp (jet-like, from blue → red)
-                function jet(i, n) {
-                    const x = i / (n - 1);
-                    const r = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 3), 0), 1));
-                    const g = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 2), 0), 1));
-                    const b = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 1), 0), 1));
-                    return `rgb(${r},${g},${b})`;
-                }
+                // TD (right, full height)
+                xaxis4: ax('t (ns)',  { domain: [0.72, 1.00], range: [0, 10],
+                                        anchor: 'y4' }),
+                yaxis4: ax('R<sub>TD</sub> ((ps·mm²)⁻¹)',
+                          { domain: [0.00, 0.92], type: 'log', anchor: 'x4' }),
 
-                const traces = rhoTD.map((rho, i) => ({
-                    x: tns,
-                    y: tps.map(t => R_TD(rho, t, mua, musp)),
-                    mode: 'lines',
-                    name: `ρ = ${rho} mm`,
-                    line: { width: 1.5, color: jet(i, nRho) }
-                }));
+                annotations: [
+                    { text: '<b>CW</b>',  x: 0.15, y: 1.0, xref: 'paper', yref: 'paper',
+                      xanchor: 'center', showarrow: false, font: { size: 12 } },
+                    { text: '<b>FD</b>',  x: 0.51, y: 1.0, xref: 'paper', yref: 'paper',
+                      xanchor: 'center', showarrow: false, font: { size: 12 } },
+                    { text: '<b>TD</b>',  x: 0.86, y: 1.0, xref: 'paper', yref: 'paper',
+                      xanchor: 'center', showarrow: false, font: { size: 12 } }
+                ]
+            };
 
-                Plotly.react('plot', traces, plotlyLayout({
-                    xaxis: { title: 't (ns)', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                    yaxis: { title: 'R<sub>TD</sub>(ρ,t) ((ps·mm²)⁻¹)', type: 'log',
-                             gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                    legend: { font: { size: 10 } },
-                    margin: { t: 20, r: 20, b: 50, l: 90 }
-                }), { responsive: true });
-            }
+            Plotly.react('plot', traces, layout, { responsive: true });
         }
 
-        ['mua-slider','musp-slider','fmod-slider','tmax-slider']
+        ['mua-slider','musp-slider','fmod-slider']
             .forEach(id => document.getElementById(id).addEventListener('input', update));
-        document.querySelectorAll('input[name="mode"]')
-            .forEach(el => el.addEventListener('change', update));
         update();
 
         document.getElementById('copy-btn').addEventListener('click', () => {
