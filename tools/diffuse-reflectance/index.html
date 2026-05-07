@@ -352,8 +352,8 @@ function R_TD(rho, t, mua, musp) {           // t in ps
             const musp = +document.getElementById('musp-slider').value;
             const fmod = +document.getElementById('fmod-slider').value;   // MHz
 
-            const accent  = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()  || '#175676';
-            const accent2 = getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim() || '#47682C';
+            const fdMagColor = '#1f77b4';   // blue
+            const fdPhColor  = '#d62728';   // red
 
             document.getElementById('mua-val').textContent  = `${mua.toFixed(4)} mm⁻¹`;
             document.getElementById('musp-val').textContent = `${musp.toFixed(1)} mm⁻¹`;
@@ -385,10 +385,10 @@ function R_TD(rho, t, mua, musp) {           // t in ps
                   line: { width: 2, color: '#1a1a1a' }, showlegend: false,
                   xaxis: 'x',  yaxis: 'y'  },
                 { x: rhoArr, y: fdMag, mode: 'lines', name: '|R_FD|',
-                  line: { width: 2, color: accent }, showlegend: false,
+                  line: { width: 2, color: fdMagColor }, showlegend: false,
                   xaxis: 'x2', yaxis: 'y2' },
                 { x: rhoArr, y: fdPh,  mode: 'lines', name: '∠R_FD',
-                  line: { width: 2, color: accent2 }, showlegend: false,
+                  line: { width: 2, color: fdPhColor }, showlegend: false,
                   xaxis: 'x3', yaxis: 'y3' },
                 ...tdTraces
             ];
