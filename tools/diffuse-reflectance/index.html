@@ -152,101 +152,19 @@
                     Units: CW and FD reflectance are mm⁻²; TD reflectance is (ps mm²)⁻¹.
                     All expressions are valid in the diffusion regime, i.e., \(\rho \gg \ell_{tr} = 1/\mu_{tr}\) and \(\mu_a \ll \mu_s'\).
                 </p>
-            </div>
-        </div>
 
-        <!-- Implementation -->
-        <div class="info-section">
-            <div class="section-eyebrow">Code</div>
-            <h2>Implementation</h2>
-            <hr class="section-rule">
-            <div class="info-card">
-                <p>The simulator above runs the following JavaScript:</p>
-                <div class="code-wrap">
-                    <button class="copy-btn" id="copy-btn">Copy</button>
-                    <pre><code id="code-block">// Refractive-index mismatch parameter A(n)
-function n2A(n) {
-    if (n &gt; 1) {
-        return 504.332889 - 2641.00214*n + 5923.699064*n**2
-             - 7376.355814*n**3 + 5507.53041*n**4
-             - 2463.357945*n**5 + 610.956547*n**6
-             - 64.8047*n**7;
-    } else if (n &lt; 1) {
-        return 3.084635 - 6.531194*n + 8.357854*n**2
-             - 5.082751*n**3 + 1.171382*n**4;
-    }
-    return 1;
-}
-
-const N_IN  = 1.4;
-const A     = n2A(N_IN);
-const V_PS  = 0.299792458 / N_IN;     // mm/ps    (for TD: t in ps)
-const V_SEC = 2.99792458e11 / N_IN;   // mm/sec   (for FD: ω in rad/sec)
-
-// ── Geometry helpers ─────────────────────────────────
-function geom(mua, musp) {
-    const mutr = mua + musp;
-    const D    = 1 / (3 * mutr);
-    const z0   = 1 / mutr;
-    const zb   = -2 * A * D;
-    const zp   = -z0 + 2 * zb;  // image-source height
-    return { D, z0, zb, zp };
-}
-
-// ── CW: real-valued reflectance ──────────────────────
-function R_CW(rho, mua, musp) {
-    const { D, z0, zp } = geom(mua, musp);
-    const mueff = Math.sqrt(mua / D);
-    const r1 = Math.hypot(rho, z0);
-    const r2 = Math.hypot(rho, zp);
-    const t1 =  z0 * (mueff + 1/r1) * Math.exp(-mueff*r1) / (r1*r1);
-    const t2 = -zp * (mueff + 1/r2) * Math.exp(-mueff*r2) / (r2*r2);
-    return (t1 + t2) / (4 * Math.PI);
-}
-
-// ── FD: complex reflectance (returns {re, im}) ───────
-function csqrt(re, im) {
-    const r = Math.hypot(re, im);
-    const a = Math.sqrt((r + re) / 2);
-    const b = Math.sign(im || 1) * Math.sqrt((r - re) / 2);
-    return { re: a, im: b };
-}
-function R_FD(rho, mua, musp, omega) {
-    const { D, z0, zp } = geom(mua, musp);
-    // mueff = sqrt(mua/D - i*omega/(v*D)) with v in mm/sec, omega in rad/sec
-    const mu = csqrt(mua / D, -omega / (V_SEC * D));
-    const r1 = Math.hypot(rho, z0);
-    const r2 = Math.hypot(rho, zp);
-
-    // term(r, zsign): zsign * (1/r + mu) * exp(-mu*r) / r^2
-    function term(r, zsign) {
-        const mr = -mu.re * r, mi = -mu.im * r;       // -mu*r
-        const e  = Math.exp(mr);
-        const ex = { re: e * Math.cos(mi), im: e * Math.sin(mi) };
-        const fac = { re: 1/r + mu.re, im: mu.im };
-        const num = { re: fac.re*ex.re - fac.im*ex.im,
-                      im: fac.re*ex.im + fac.im*ex.re };
-        return { re: zsign * num.re / (r*r), im: zsign * num.im / (r*r) };
-    }
-    const a = term(r1,  z0);
-    const b = term(r2, -zp);
-    return { re: (a.re + b.re) / (4*Math.PI),
-             im: (a.im + b.im) / (4*Math.PI) };
-}
-
-// ── TD: impulse reflectance ──────────────────────────
-function R_TD(rho, t, mua, musp) {           // t in ps
-    const { D, z0, zb, zp } = geom(mua, musp);
-    const v   = V_PS;
-    const pre = Math.exp(-mua * v * t)
-              / (Math.pow(4*Math.PI*D*v, 1.5) * Math.pow(t, 2.5));
-    const r1sq = rho*rho + z0*z0;
-    const r2sq = rho*rho + zp*zp;
-    const s = z0 * Math.exp(-r1sq / (4*D*v*t))
-            + (z0 - 2*zb) * Math.exp(-r2sq / (4*D*v*t));
-    return 0.5 * pre * s;
-}</code></pre>
-                </div>
+                <h5 class="mt-4">Citation</h5>
+                <p class="mb-0">
+                    Translated from MATLAB code originally published with:
+                    Giles Blaney, Angelo Sassaroli, and Sergio Fantini,
+                    <em>Spatial sensitivity to absorption changes for various near-infrared spectroscopy
+                    methods: A compendium review</em>,
+                    Journal of Innovative Optical Health Sciences, Vol.&nbsp;17, No.&nbsp;04,
+                    2430001 (2024).
+                    <a href="https://doi.org/10.1142/S1793545824300015" target="_blank" rel="noopener noreferrer">
+                        https://doi.org/10.1142/S1793545824300015
+                    </a>
+                </p>
             </div>
         </div>
     </div>
@@ -456,15 +374,6 @@ function R_TD(rho, t, mua, musp) {           // t in ps
         ['mua-slider','musp-slider','fmod-slider']
             .forEach(id => document.getElementById(id).addEventListener('input', update));
         update();
-
-        document.getElementById('copy-btn').addEventListener('click', () => {
-            const raw = document.getElementById('code-block').textContent;
-            navigator.clipboard.writeText(raw).then(() => {
-                const btn = document.getElementById('copy-btn');
-                btn.textContent = 'Copied!';
-                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
-            });
-        });
     </script>
 </body>
 </html>
