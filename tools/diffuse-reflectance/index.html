@@ -374,6 +374,12 @@ function R_TD(rho, t, mua, musp) {           // t in ps
                 xaxis: 'x4', yaxis: 'y4'
             }));
 
+            // TD y-range: lower bound from largest rho at largest t (long-time, far tail);
+            // upper bound from peak of smallest-rho trace.
+            const tdLo = R_TD(rhoTD[rhoTD.length - 1], tps[tps.length - 1], mua, musp);
+            const tdHi = Math.max(...tdTraces[0].y);
+            const tdYRange = [Math.floor(Math.log10(tdLo)), Math.ceil(Math.log10(tdHi))];
+
             const traces = [
                 { x: rhoArr, y: cw,    mode: 'lines', name: 'CW',
                   line: { width: 2, color: '#1a1a1a' }, showlegend: false,
@@ -422,7 +428,8 @@ function R_TD(rho, t, mua, musp) {           // t in ps
                 xaxis4: ax('t (ns)',  { domain: [0.72, 1.00], range: [0, 10],
                                         anchor: 'y4' }),
                 yaxis4: ax('R<sub>TD</sub> ((ps·mm²)⁻¹)',
-                          { domain: [0.00, 0.92], type: 'log', anchor: 'x4' }),
+                          { domain: [0.00, 0.92], type: 'log', anchor: 'x4',
+                            range: tdYRange, autorange: false }),
 
                 annotations: [
                     { text: '<b>CW</b>',  x: 0.15, y: 1.0, xref: 'paper', yref: 'paper',
