@@ -432,12 +432,15 @@ function R_TD(rho, t, mua, musp) {           // t in ps
                             range: tdYRange, autorange: false }),
 
                 annotations: [
-                    { text: '<b>CW</b>',  x: 0.15, y: 1.0, xref: 'paper', yref: 'paper',
-                      xanchor: 'center', showarrow: false, font: { size: 12 } },
-                    { text: '<b>FD</b>',  x: 0.51, y: 1.0, xref: 'paper', yref: 'paper',
-                      xanchor: 'center', showarrow: false, font: { size: 12 } },
-                    { text: '<b>TD</b>',  x: 0.86, y: 1.0, xref: 'paper', yref: 'paper',
-                      xanchor: 'center', showarrow: false, font: { size: 12 } }
+                    { text: '<b>Continuous-Wave (CW)</b>',  x: 0.15, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } },
+                    { text: '<b>Frequency-Domain (FD)</b>', x: 0.51, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } },
+                    { text: '<b>Time-Domain (TD)</b>',      x: 0.86, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } }
                 ]
             };
 
