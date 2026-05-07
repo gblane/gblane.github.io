@@ -257,7 +257,7 @@
         // Match MATLAB script ranges:  rhos = 10:0.1:50 mm,  tps = 100:1:10000 ps
         const rhoArr = Array.from({length: 401}, (_, i) => 10 + i * 0.1);            // mm
         const rhoTD  = Array.from({length: 9},   (_, i) => Math.round(10 + i * 5));  // mm
-        const tps    = Array.from({length: 200}, (_, i) => 100 + i * (10000 - 100) / 199); // ps
+        const tps    = Array.from({length: 400}, (_, i) => 1 + i * (10000 - 1) / 399); // ps
         const tns    = tps.map(t => t / 1000);
 
         // jet-like colormap (blue → red)
