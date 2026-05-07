@@ -70,12 +70,6 @@
                     </div>
                     <input type="range" class="form-range" id="fmod-slider" min="10" max="1000" step="5" value="100">
                 </div>
-                <div class="col-md-3">
-                    <div class="derived-box" style="margin-top: 0;">
-                        <div class="derived-item">μ<sub>eff</sub> = <span id="mueff-val" class="derived-val"></span> mm⁻¹</div>
-                        <div class="derived-item">z<sub>0</sub> = <span id="ltr-val" class="derived-val"></span> mm</div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -358,16 +352,12 @@ function R_TD(rho, t, mua, musp) {           // t in ps
             const musp = +document.getElementById('musp-slider').value;
             const fmod = +document.getElementById('fmod-slider').value;   // MHz
 
-            const { D, z0 } = geom(mua, musp);
-            const mueff   = Math.sqrt(mua / D);
             const accent  = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()  || '#175676';
             const accent2 = getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim() || '#47682C';
 
-            document.getElementById('mua-val').textContent   = `${mua.toFixed(4)} mm⁻¹`;
-            document.getElementById('musp-val').textContent  = `${musp.toFixed(1)} mm⁻¹`;
-            document.getElementById('fmod-val').textContent  = `${fmod.toFixed(0)} MHz`;
-            document.getElementById('mueff-val').textContent = mueff.toFixed(4);
-            document.getElementById('ltr-val').textContent   = z0.toFixed(2);
+            document.getElementById('mua-val').textContent  = `${mua.toFixed(4)} mm⁻¹`;
+            document.getElementById('musp-val').textContent = `${musp.toFixed(1)} mm⁻¹`;
+            document.getElementById('fmod-val').textContent = `${fmod.toFixed(0)} MHz`;
 
             // ── Compute traces ───────────────────────────────────────
             const omega = 2 * Math.PI * fmod * 1e6;
