@@ -47,42 +47,43 @@
             <p class="tool-subtitle">Semi-infinite homogeneous medium — CW, FD, and TD</p>
         </div>
 
-        <div class="row g-3 mb-5">
-            <div class="col-md-3">
-                <div class="param-card">
+        <div class="param-card mb-3">
+            <div class="row g-4">
+                <div class="col-md-3">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ<sub>a</sub></span>
                         <span id="mua-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range mb-3" id="mua-slider" min="0" max="0.1" step="0.0005" value="0.0011">
-
+                    <input type="range" class="form-range" id="mua-slider" min="0" max="0.1" step="0.0005" value="0.0011">
+                </div>
+                <div class="col-md-3">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ′<sub>s</sub></span>
                         <span id="musp-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range mb-3" id="musp-slider" min="0.5" max="10" step="0.1" value="1.1">
-
+                    <input type="range" class="form-range" id="musp-slider" min="0.5" max="10" step="0.1" value="1.1">
+                </div>
+                <div class="col-md-3">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">f<sub>mod</sub></span>
                         <span id="fmod-val" class="param-value"></span>
                     </div>
                     <input type="range" class="form-range" id="fmod-slider" min="10" max="1000" step="5" value="100">
-
-                    <div class="derived-box">
+                </div>
+                <div class="col-md-3">
+                    <div class="derived-box" style="margin-top: 0;">
                         <div class="derived-item">μ<sub>eff</sub> = <span id="mueff-val" class="derived-val"></span> mm⁻¹</div>
                         <div class="derived-item">z<sub>0</sub> = <span id="ltr-val" class="derived-val"></span> mm</div>
                     </div>
                 </div>
-
-                <div class="about-card">
-                    <div class="about-title">About</div>
-                    <p class="about-text">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm, t ∈ [0.1, 10] ns.</p>
-                </div>
             </div>
+        </div>
 
-            <div class="col-md-9">
-                <div id="plot" style="height: 540px;"></div>
-            </div>
+        <div id="plot" style="height: 540px;" class="mb-3"></div>
+
+        <div class="about-card mb-5">
+            <div class="about-title">About</div>
+            <p class="about-text">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm, t ∈ [0.1, 10] ns.</p>
         </div>
 
         <!-- Theory -->
