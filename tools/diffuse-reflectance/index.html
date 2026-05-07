@@ -289,19 +289,24 @@
             const fd    = rhoArr.map(r => R_FD(r, mua, musp, omega));
             const fdMag = fd.map(v => Math.hypot(v.re, v.im));
             const fdPh  = fd.map(v => Math.atan2(v.im, v.re));
-            const tdTraces = rhoTD.map((rho, i) => ({
-                x: tns,
-                y: tps.map(t => R_TD(rho, t, mua, musp)),
-                mode: 'lines',
-                name: `ρ=${rho} mm`,
-                line: { width: 1.4, color: jet(i, rhoTD.length) },
-                xaxis: 'x4', yaxis: 'y4'
-            }));
+            // Causality: a photon cannot reach the detector before t_min = rho/v.
+            const tdTraces = rhoTD.map((rho, i) => {
+                const tMin = rho / V_PS;   // ps
+                return {
+                    x: tns,
+                    y: tps.map(t => t < tMin ? NaN : R_TD(rho, t, mua, musp)),
+                    mode: 'lines',
+                    name: `ρ=${rho} mm`,
+                    line: { width: 1.4, color: jet(i, rhoTD.length) },
+                    connectgaps: false,
+                    xaxis: 'x4', yaxis: 'y4'
+                };
+            });
 
             // TD y-range: lower bound from largest rho at largest t (long-time, far tail);
             // upper bound from peak of smallest-rho trace.
             const tdLo = R_TD(rhoTD[rhoTD.length - 1], tps[tps.length - 1], mua, musp);
-            const tdHi = Math.max(...tdTraces[0].y);
+            const tdHi = Math.max(...tdTraces[0].y.filter(v => Number.isFinite(v)));
             const tdYRange = [Math.floor(Math.log10(tdLo)), Math.ceil(Math.log10(tdHi))];
 
             const traces = [
