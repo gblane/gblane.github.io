@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-md-9">
                     <div class="about-title">About</div>
-                    <p class="about-text mb-0">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm and f<sub>mod</sub> ∈ [50, 500] MHz. Each TD curve starts at the ballistic time t<sub>min</sub> = ρ/v and ends at 10 ns.</p>
+                    <p class="about-text mb-0">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite homogeneous medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm and f<sub>mod</sub> ∈ [50, 500] MHz. Each TD curve starts at the ballistic time t<sub>min</sub> = ρ/v and ends at 10 ns.</p>
                 </div>
             </div>
         </div>
@@ -103,19 +103,21 @@
                 </figure>
                 <p>
                     Consider a pencil beam incident on the surface of a semi-infinite, homogeneous, turbid medium.
-                    Within the diffusion approximation the pencil beam is replaced by an isotropic point source
-                    placed one transport mean free path below the surface at depth
-                    \(z_0 = 1/\mu_{tr}\), where \(\mu_{tr} = \mu_a + \mu_s'\).
-                    The diffusion coefficient is \(D = 1/(3\mu_{tr})\).
-                    To satisfy the extrapolated boundary condition an image (virtual) source mirrors the real source across the extrapolated boundary at \(z_b = -2AD\), giving image height \(z_0' = -z_0 + 2z_b\).
+                    Within the diffusion approximation, the pencil beam is replaced by an isotropic point source
+                    placed one reduced scattering mean free path below the surface at depth
+                    \(z_0 = 1/\mu_s'\).
+                    Generally, the diffusion approximation is valid when \(\rho \gg 1/\mu_s'\) and \(\mu_a \ll \mu_s'\).
+                    Within this approximation, the diffusion coefficient is \(D = 1/(3\mu_s')\).
+                    To satisfy the extrapolated boundary condition, an image (virtual) source mirrors the real source across the extrapolated boundary at \(z_b = -2AD\), giving image height \(z_0' = -z_0 + 2z_b\).
                     The parameter \(A\) accounts for the refractive-index mismatch between the medium (\(n_{in} = 1.4\)) and air (\(n_{out} = 1\)), giving \(A \approx 2.95\).
                     With the detector on the surface at source–detector separation \(\rho\), the distances to the real and image sources are
-                    \(r_1 = \sqrt{\rho^2 + z_0^2}\) and \(r_2 = \sqrt{\rho^2 + z_0'^{\,2}}\).
+                    \(r_1 = \sqrt{\rho^2 + z_0^2}\) and \(r_2 = \sqrt{\rho^2 + z_0'^{\,2}}\). 
+                    Given this setup, the following are the Green's functions for the diffuse reflectance.
                 </p>
 
                 <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Continuous-Wave (CW)</h3>
                 <p>
-                    The effective attenuation is \(\mu_{eff} = \sqrt{\mu_a/D}\) and the CW diffuse reflectance is:
+                    The effective attenuation is \(\mu_{eff} = \sqrt{\mu_a/D} = \sqrt{3\mu_a\mu_s'}\) and the CW diffuse reflectance is:
                 </p>
                 <p>
                     $$R_{CW}(\rho) = \frac{1}{4\pi}
@@ -124,6 +126,9 @@
                         -
                         z_0' \frac{\mu_{eff} + 1/r_2}{r_2^2}\,e^{-\mu_{eff} r_2}
                     \right]$$
+                </p>
+                <p>
+                which has units mm⁻² (n.b., \(R_{CW}\) is normalized by source power).
                 </p>
 
                 <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Frequency-Domain (FD)</h3>
@@ -134,23 +139,23 @@
                     $$\tilde\mu_{eff} = \sqrt{\frac{\mu_a}{D} - \frac{i\,\omega}{v\,D}}, \qquad v = c/n_{in}$$
                 </p>
                 <p>
-                    and the complex reflectance \(\tilde R_{FD}(\rho)\) takes the same form as \(R_{CW}\) with \(\mu_{eff}\) replaced by \(\tilde\mu_{eff}\). Magnitude \(|\tilde R_{FD}|\) and phase \(\angle \tilde R_{FD}\) are the typical observables.
+                    and the complex reflectance \(\tilde R_{FD}(\rho)\) takes the same form as \(R_{CW}\) with \(\mu_{eff}\) replaced by \(\tilde\mu_{eff}\). Amplitude \(|\tilde R_{FD}|\) and phase \(\angle \tilde R_{FD}\) are the typical measured data types.
+                    Similar to CW, \(\tilde R_{FD}\) has units mm⁻² (n.b., \(\tilde R_{FD}\) is normalized by source power).
                 </p>
 
                 <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Time-Domain (TD)</h3>
                 <p>
-                    For an impulse source the diffuse reflectance versus time \(t > 0\) is:
+                    For an impulse source, the diffuse reflectance versus time \(t > 0\) is:
                 </p>
                 <p>
                     $$R_{TD}(\rho,t) = \frac{1}{2}\,
                     \frac{e^{-\mu_a v t}}{(4\pi D v)^{3/2}\, t^{5/2}}
                     \left[
-                        z_0\,e^{-r_1^2/(4Dvt)} + (z_0 - 2 z_b)\,e^{-r_2^2/(4Dvt)}
+                        z_0\,e^{-r_1^2/(4Dvt)} - z_0'\,e^{-r_2^2/(4Dvt)}
                     \right]$$
                 </p>
                 <p style="font-size: 0.9rem; color: var(--muted);">
-                    Units: CW and FD reflectance are mm⁻²; TD reflectance is (ps mm²)⁻¹.
-                    All expressions are valid in the diffusion regime, i.e., \(\rho \gg \ell_{tr} = 1/\mu_{tr}\) and \(\mu_a \ll \mu_s'\).
+                    which has units (ps·mm²)⁻¹ (n.b., \(R_{TD}\) is normalized by the energy of the source impulse). 
                 </p>
 
                 <h5 class="mt-4">Citation</h5>
