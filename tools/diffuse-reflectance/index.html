@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
     <meta name="author" content="Giles Blaney, PhD">
-    <meta name="description" content="Interactive diffuse reflectance R(ρ) for a semi-infinite homogeneous medium under CW diffusion theory.">
+    <meta name="description" content="Interactive diffuse reflectance R(ρ) for a semi-infinite homogeneous medium under CW, FD, and TD diffusion theory.">
 
     <!-- Open Graph / Twitter Card -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Diffuse Reflectance · Giles Blaney">
-    <meta property="og:description" content="Interactive R(ρ) for a semi-infinite homogeneous medium under CW diffusion theory.">
+    <meta property="og:description" content="Interactive R(ρ) for a semi-infinite homogeneous medium under CW, FD, and TD diffusion theory.">
     <meta property="og:url" content="https://gbphd.com/tools/diffuse-reflectance/">
     <meta property="og:image" content="https://gbphd.com/img/research/flu.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Diffuse Reflectance · Giles Blaney">
-    <meta name="twitter:description" content="Interactive R(ρ) for a semi-infinite homogeneous medium under CW diffusion theory.">
+    <meta name="twitter:description" content="Interactive R(ρ) for a semi-infinite homogeneous medium under CW, FD, and TD diffusion theory.">
     <meta name="twitter:image" content="https://gbphd.com/img/research/flu.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,38 +44,45 @@
         <div class="tool-header">
             <div class="section-eyebrow">Diffusion Theory</div>
             <h1 class="tool-title">Diffuse Reflectance</h1>
-            <p class="tool-subtitle">Semi-infinite homogeneous medium — adjust μ<sub>a</sub> and μ′<sub>s</sub></p>
+            <p class="tool-subtitle">Semi-infinite homogeneous medium — CW, FD, and TD</p>
         </div>
 
-        <div class="row g-3 mb-5">
-            <div class="col-md-4">
-                <div class="param-card">
+        <div class="param-card mb-3">
+            <div class="row g-4">
+                <div class="col-md-6">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ<sub>a</sub></span>
                         <span id="mua-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range mb-3" id="mua-slider" min="0" max="0.1" step="0.001" value="0.01">
-
+                    <input type="range" class="form-range" id="mua-slider" min="0" max="0.05" step="0.0005" value="0.0011">
+                </div>
+                <div class="col-md-6">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <span class="param-label">μ′<sub>s</sub></span>
                         <span id="musp-val" class="param-value"></span>
                     </div>
-                    <input type="range" class="form-range" id="musp-slider" min="0.5" max="10" step="0.1" value="1.0">
-
-                    <div class="derived-box">
-                        <div class="derived-item">μ<sub>eff</sub> = <span id="mueff-val" class="derived-val"></span> mm⁻¹</div>
-                        <div class="derived-item">z<sub>0</sub> = <span id="ltr-val" class="derived-val"></span> mm</div>
-                    </div>
-                </div>
-
-                <div class="about-card">
-                    <div class="about-title">About</div>
-                    <p class="about-text">Analytical Continuous Wave (CW) solution for the diffuse reflectance from a semi-infinite medium using the extrapolated boundary condition.</p>
+                    <input type="range" class="form-range" id="musp-slider" min="0.5" max="5" step="0.1" value="1.1">
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-8">
-                <div id="plot" style="height: 500px;"></div>
+        <div id="plot" style="height: 540px;" class="mb-3"></div>
+
+        <div class="about-card mb-5">
+            <div class="row g-3 align-items-start">
+                <div class="col-md-3">
+                    <label for="fmod-slider" class="param-label d-block mb-1">f<sub>mod</sub> (FD only)</label>
+                    <div class="input-group input-group-sm">
+                        <input type="number" class="form-control" id="fmod-slider"
+                               min="50" max="500" step="5" value="100">
+                        <span class="input-group-text">MHz</span>
+                    </div>
+                    <span id="fmod-val" class="d-none"></span>
+                </div>
+                <div class="col-md-9">
+                    <div class="about-title">About</div>
+                    <p class="about-text mb-0">Analytical Continuous-Wave (CW), Frequency-Domain (FD), and Time-Domain (TD) diffuse reflectance from a semi-infinite homogeneous medium under the extrapolated boundary condition. Ranges: ρ ∈ [10, 50] mm and f<sub>mod</sub> ∈ [50, 500] MHz. Each TD curve starts at the ballistic time t<sub>min</sub> = ρ/v and ends at 10 ns.</p>
+                </div>
             </div>
         </div>
 
@@ -96,33 +103,24 @@
                 </figure>
                 <p>
                     Consider a pencil beam incident on the surface of a semi-infinite, homogeneous, turbid medium.
-                    Within the diffusion approximation the pencil beam is replaced by an isotropic point source
-                    placed one transport mean free path below the surface at depth
-                    \(z_0 = 1/\mu_{tr}\), where \(\mu_{tr} = \mu_a + \mu_s'\).
-                    The diffusion coefficient is \(D = 1/(3\mu_{tr})\) and the effective attenuation coefficient is:
+                    Within the diffusion approximation, the pencil beam is replaced by an isotropic point source
+                    placed one reduced scattering mean free path below the surface at depth
+                    \(z_0 = 1/\mu_s'\).
+                    Generally, the diffusion approximation is valid when \(\rho \gg 1/\mu_s'\) and \(\mu_a \ll \mu_s'\).
+                    Within this approximation, the diffusion coefficient is \(D = 1/(3\mu_s')\).
+                    To satisfy the extrapolated boundary condition, an image (virtual) source mirrors the real source across the extrapolated boundary at \(z_b = -2AD\), giving image height \(z_0' = -z_0 + 2z_b\).
+                    The parameter \(A\) accounts for the refractive-index mismatch between the medium (\(n_{in} = 1.4\)) and air (\(n_{out} = 1\)), giving \(A \approx 2.95\).
+                    With the detector on the surface at source–detector separation \(\rho\), the distances to the real and image sources are
+                    \(r_1 = \sqrt{\rho^2 + z_0^2}\) and \(r_2 = \sqrt{\rho^2 + z_0'^{\,2}}\). 
+                    Given this setup, the following are the Green's functions for the diffuse reflectance.
+                </p>
+
+                <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Continuous-Wave (CW)</h3>
+                <p>
+                    The effective attenuation is \(\mu_{eff} = \sqrt{\mu_a/D} = \sqrt{3\mu_a\mu_s'}\) and the CW diffuse reflectance is:
                 </p>
                 <p>
-                    $$\mu_{eff} = \sqrt{\frac{\mu_a}{D}} = \sqrt{3\,\mu_a\,\mu_{tr}}$$
-                </p>
-                <p>
-                    To satisfy the extrapolated boundary condition an image (virtual) source mirrors the real source across the extrapolated boundary.
-                    The extrapolated boundary position is \(z_b = -2AD\), thus the image source height is:
-                </p>
-                <p>
-                    $$z_0' = -z_0 + 2z_b$$
-                </p>
-                <p>
-                    The parameter \(A\) accounts for the refractive-index mismatch between the medium (\(n_{in} = 1.4\)) and air (\(n_{out} = 1\)), giving \(A \approx 2.95\) (see the code block below for the full expression of \(A\)).
-                    Therefore, with the detector on the surface at source–detector separation \(\rho\), the distances to the real and image sources are:
-                </p>
-                <p>
-                    $$r_1 = \sqrt{\rho^2 + z_0^2} \qquad r_2 = \sqrt{\rho^2 + z_0'^{\,2}}$$
-                </p>
-                <p>
-                    and finally the CW diffuse reflectance is:
-                </p>
-                <p>
-                    $$R(\rho) = \frac{1}{4\pi}
+                    $$R_{CW}(\rho) = \frac{1}{4\pi}
                     \left[
                         z_0 \frac{\mu_{eff} + 1/r_1}{r_1^2}\,e^{-\mu_{eff} r_1}
                         -
@@ -130,55 +128,48 @@
                     \right]$$
                 </p>
                 <p>
-                    This expression describes the net optical flux exiting the medium surface per unit source power
-                    (units: mm⁻²).
-                    It is valid in the diffusion regime, i.e., when \(\rho \gg \ell_{tr} = 1/\mu_{tr}\) and
-                    \(\mu_a \ll \mu_s'\).
+                which has units mm⁻² (n.b., \(R_{CW}\) is normalized by source power).
                 </p>
-            </div>
-        </div>
 
-        <!-- Implementation -->
-        <div class="info-section">
-            <div class="section-eyebrow">Code</div>
-            <h2>Implementation</h2>
-            <hr class="section-rule">
-            <div class="info-card">
-                <p>The simulator above runs the following JavaScript:</p>
-                <div class="code-wrap">
-                    <button class="copy-btn" id="copy-btn">Copy</button>
-                    <pre><code id="code-block">function n2A(n) {
-    if (n &gt; 1) {
-        return 504.332889 - 2641.00214*n + 5923.699064*n**2
-             - 7376.355814*n**3 + 5507.53041*n**4
-             - 2463.357945*n**5 + 610.956547*n**6
-             - 64.8047*n**7;
-    } else if (n &lt; 1) {
-        return 3.084635 - 6.531194*n + 8.357854*n**2
-             - 5.082751*n**3 + 1.171382*n**4;
-    }
-    return 1;
-}
+                <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Frequency-Domain (FD)</h3>
+                <p>
+                    For an intensity-modulated source at angular frequency \(\omega = 2\pi f_{mod}\), the effective attenuation becomes complex,
+                </p>
+                <p>
+                    $$\tilde\mu_{eff} = \sqrt{\frac{\mu_a}{D} - \frac{i\,\omega}{v\,D}}, \qquad v = c/n_{in}$$
+                </p>
+                <p>
+                    and the complex reflectance \(\tilde R_{FD}(\rho)\) takes the same form as \(R_{CW}\) with \(\mu_{eff}\) replaced by \(\tilde\mu_{eff}\). Amplitude \(|\tilde R_{FD}|\) and phase \(\angle \tilde R_{FD}\) are the typical measured data types.
+                    Similar to CW, \(\tilde R_{FD}\) has units mm⁻² (n.b., \(\tilde R_{FD}\) is normalized by source power).
+                </p>
 
-const A = n2A(1.4);  // ≈ 2.95 for n = 1.4
+                <h3 style="font-size: 1.15rem; margin-top: 1.5rem;">Time-Domain (TD)</h3>
+                <p>
+                    For an impulse source, the diffuse reflectance versus time \(t > 0\) is:
+                </p>
+                <p>
+                    $$R_{TD}(\rho,t) = \frac{1}{2}\,
+                    \frac{e^{-\mu_a v t}}{(4\pi D v)^{3/2}\, t^{5/2}}
+                    \left[
+                        z_0\,e^{-r_1^2/(4Dvt)} - z_0'\,e^{-r_2^2/(4Dvt)}
+                    \right]$$
+                </p>
+                <p style="font-size: 0.9rem; color: var(--muted);">
+                    which has units (ps·mm²)⁻¹ (n.b., \(R_{TD}\) is normalized by the energy of the source impulse). 
+                </p>
 
-function computeR(rhoArr, mua, musp) {
-    const mutr  = mua + musp;
-    const D     = 1 / (3 * mutr);
-    const mueff = Math.sqrt(mua / D);
-    const z0    = 1 / mutr;
-    const zb    = - 2 * A * D;
-    const zp    = - z0 + 2 * zb;
-
-    return rhoArr.map(rho =&gt; {
-        const r1 = Math.sqrt(rho*rho + z0*z0);
-        const r2 = Math.sqrt(rho*rho + zp*zp);
-        const t1 = z0 * (mueff + 1/r1) * Math.exp(-mueff * r1) / (r1*r1);
-        const t2 = - zp * (mueff + 1/r2) * Math.exp(-mueff * r2) / (r2*r2);
-        return (t1 + t2) / (4 * Math.PI);
-    });
-}</code></pre>
-                </div>
+                <h5 class="mt-4">Citation</h5>
+                <p class="mb-0">
+                    Translated from MATLAB code originally published with:
+                    Giles Blaney, Angelo Sassaroli, and Sergio Fantini,
+                    <em>Spatial sensitivity to absorption changes for various near-infrared spectroscopy
+                    methods: A compendium review</em>,
+                    Journal of Innovative Optical Health Sciences, Vol.&nbsp;17, No.&nbsp;04,
+                    2430001 (2024).
+                    <a href="https://doi.org/10.1142/S1793545824300015" target="_blank" rel="noopener noreferrer">
+                        https://doi.org/10.1142/S1793545824300015
+                    </a>
+                </p>
             </div>
         </div>
     </div>
@@ -189,6 +180,7 @@ function computeR(rhoArr, mua, musp) {
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
     <script src="/_partials/include.js" defer></script>
     <script>
+        // ── Math (mirrors the code block above) ────────────────────────
         function n2A(n) {
             if (n > 1) {
                 return 504.332889 - 2641.00214*n + 5923.699064*n**2
@@ -202,71 +194,196 @@ function computeR(rhoArr, mua, musp) {
             return 1;
         }
 
-        const n       = 1.4;
-        const A       = n2A(n);
+        const N_IN  = 1.4;
+        const A     = n2A(N_IN);
+        const V_PS  = 0.299792458 / N_IN;     // mm/ps    (TD)
+        const V_SEC = 2.99792458e11 / N_IN;   // mm/sec   (FD)
 
-        function computeR(rhoArr, mua, musp) {
-            const mutr  = mua + musp;
-            const D     = 1 / (3 * mutr);
-            const mueff = Math.sqrt(mua / D);
-            const z0    = 1 / mutr;
-            const zb    = - 2 * A * D;
-            const zp    = - z0 + 2 * zb;
-
-            return rhoArr.map(rho => {
-                const r1 = Math.sqrt(rho*rho + z0*z0);
-                const r2 = Math.sqrt(rho*rho + zp*zp);
-                const t1 = z0 * (mueff + 1/r1) * Math.exp(-mueff * r1) / (r1*r1);
-                const t2 = - zp * (mueff + 1/r2) * Math.exp(-mueff * r2) / (r2*r2);
-                return (t1 + t2) / (4 * Math.PI);
-            });
+        function geom(mua, musp) {
+            const mutr = mua + musp;
+            const D    = 1 / (3 * mutr);
+            const z0   = 1 / mutr;
+            const zb   = -2 * A * D;
+            const zp   = -z0 + 2 * zb;
+            return { D, z0, zb, zp };
         }
 
-        const N      = 300;
-        const rhoArr = Array.from({length: N}, (_, i) => 0.5 + i * 49.5 / (N - 1));
+        function R_CW(rho, mua, musp) {
+            const { D, z0, zp } = geom(mua, musp);
+            const mueff = Math.sqrt(mua / D);
+            const r1 = Math.hypot(rho, z0);
+            const r2 = Math.hypot(rho, zp);
+            const t1 =  z0 * (mueff + 1/r1) * Math.exp(-mueff*r1) / (r1*r1);
+            const t2 = -zp * (mueff + 1/r2) * Math.exp(-mueff*r2) / (r2*r2);
+            return (t1 + t2) / (4 * Math.PI);
+        }
+
+        function csqrt(re, im) {
+            const r = Math.hypot(re, im);
+            const a = Math.sqrt((r + re) / 2);
+            const b = Math.sign(im || 1) * Math.sqrt((r - re) / 2);
+            return { re: a, im: b };
+        }
+
+        function R_FD(rho, mua, musp, omega) {
+            const { D, z0, zp } = geom(mua, musp);
+            const mu = csqrt(mua / D, -omega / (V_SEC * D));
+            const r1 = Math.hypot(rho, z0);
+            const r2 = Math.hypot(rho, zp);
+
+            function term(r, zsign) {
+                const mr = -mu.re * r, mi = -mu.im * r;
+                const e  = Math.exp(mr);
+                const ex = { re: e * Math.cos(mi), im: e * Math.sin(mi) };
+                const fac = { re: 1/r + mu.re, im: mu.im };
+                const num = { re: fac.re*ex.re - fac.im*ex.im,
+                              im: fac.re*ex.im + fac.im*ex.re };
+                return { re: zsign * num.re / (r*r), im: zsign * num.im / (r*r) };
+            }
+            const a = term(r1,  z0);
+            const b = term(r2, -zp);
+            return { re: (a.re + b.re) / (4*Math.PI),
+                     im: (a.im + b.im) / (4*Math.PI) };
+        }
+
+        function R_TD(rho, t, mua, musp) {
+            const { D, z0, zb, zp } = geom(mua, musp);
+            const v = V_PS;
+            const pre = Math.exp(-mua * v * t)
+                      / (Math.pow(4*Math.PI*D*v, 1.5) * Math.pow(t, 2.5));
+            const r1sq = rho*rho + z0*z0;
+            const r2sq = rho*rho + zp*zp;
+            const s = z0 * Math.exp(-r1sq / (4*D*v*t))
+                    + (z0 - 2*zb) * Math.exp(-r2sq / (4*D*v*t));
+            return 0.5 * pre * s;
+        }
+
+        // ── UI ─────────────────────────────────────────────────────────
+        // Match MATLAB script ranges:  rhos = 10:0.1:50 mm,  tps = 100:1:10000 ps
+        const rhoArr = Array.from({length: 401}, (_, i) => 10 + i * 0.1);            // mm
+        const rhoTD  = Array.from({length: 9},   (_, i) => Math.round(10 + i * 5));  // mm
+        const tps    = Array.from({length: 400}, (_, i) => 1 + i * (10000 - 1) / 399); // ps
+        const tns    = tps.map(t => t / 1000);
+
+        // jet-like colormap (blue → red)
+        function jet(i, n) {
+            const x = i / (n - 1);
+            const r = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 3), 0), 1));
+            const g = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 2), 0), 1));
+            const b = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 1), 0), 1));
+            return `rgb(${r},${g},${b})`;
+        }
+
+        const grid = "#e0dcd6", zero = "#c8c2bc";
 
         function update() {
-            const mua   = +document.getElementById('mua-slider').value;
-            const musp  = +document.getElementById('musp-slider').value;
+            const mua  = +document.getElementById('mua-slider').value;
+            const musp = +document.getElementById('musp-slider').value;
+            const fmod = +document.getElementById('fmod-slider').value;   // MHz
 
-            const mutr  = mua + musp;
-            const D     = 1 / (3 * mutr);
-            const mueff = Math.sqrt(mua / D);
+            const fdMagColor = '#1f77b4';   // blue
+            const fdPhColor  = '#d62728';   // red
 
-            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#175676';
+            document.getElementById('mua-val').textContent  = `${mua.toFixed(4)} mm⁻¹`;
+            document.getElementById('musp-val').textContent = `${musp.toFixed(1)} mm⁻¹`;
+            document.getElementById('fmod-val').textContent = `${fmod.toFixed(0)} MHz`;
 
-            document.getElementById('mua-val').textContent   = `${mua.toFixed(3)} mm⁻¹`;
-            document.getElementById('musp-val').textContent  = `${musp.toFixed(1)} mm⁻¹`;
-            document.getElementById('mueff-val').textContent = mueff.toFixed(4);
-            document.getElementById('ltr-val').textContent   = (1 / mutr).toFixed(2);
+            // ── Compute traces ───────────────────────────────────────
+            const omega = 2 * Math.PI * fmod * 1e6;
+            const cw    = rhoArr.map(r => R_CW(r, mua, musp));
+            const fd    = rhoArr.map(r => R_FD(r, mua, musp, omega));
+            const fdMag = fd.map(v => Math.hypot(v.re, v.im));
+            const fdPh  = fd.map(v => Math.atan2(v.im, v.re));
+            // Ballistic time: a photon cannot reach the detector before t_min = rho/v.
+            const tdTraces = rhoTD.map((rho, i) => {
+                const tMin = rho / V_PS;   // ps
+                return {
+                    x: tns,
+                    y: tps.map(t => t < tMin ? NaN : R_TD(rho, t, mua, musp)),
+                    mode: 'lines',
+                    name: `ρ=${rho} mm`,
+                    line: { width: 1.4, color: jet(i, rhoTD.length) },
+                    connectgaps: false,
+                    xaxis: 'x4', yaxis: 'y4'
+                };
+            });
 
-            Plotly.react('plot', [{
-                x: rhoArr,
-                y: computeR(rhoArr, mua, musp),
-                mode: 'lines',
-                line: { width: 2, color: accentColor }
-            }], {
+            // TD y-range: lower bound from largest rho at largest t (long-time, far tail);
+            // upper bound from peak of smallest-rho trace.
+            const tdLo = R_TD(rhoTD[rhoTD.length - 1], tps[tps.length - 1], mua, musp);
+            const tdHi = Math.max(...tdTraces[0].y.filter(v => Number.isFinite(v)));
+            const tdYRange = [Math.floor(Math.log10(tdLo)), Math.ceil(Math.log10(tdHi))];
+
+            const traces = [
+                { x: rhoArr, y: cw,    mode: 'lines', name: 'CW',
+                  line: { width: 2, color: '#1a1a1a' }, showlegend: false,
+                  xaxis: 'x',  yaxis: 'y'  },
+                { x: rhoArr, y: fdMag, mode: 'lines', name: '|R_FD|',
+                  line: { width: 2, color: fdMagColor }, showlegend: false,
+                  xaxis: 'x2', yaxis: 'y2' },
+                { x: rhoArr, y: fdPh,  mode: 'lines', name: '∠R_FD',
+                  line: { width: 2, color: fdPhColor }, showlegend: false,
+                  xaxis: 'x3', yaxis: 'y3' },
+                ...tdTraces
+            ];
+
+            // ── Subplot layout (2 rows × 3 cols) ─────────────────────
+            const ax = (title, opts) => Object.assign({
+                gridcolor: grid, zerolinecolor: zero, title: { text: title, standoff: 6 }
+            }, opts);
+
+            const layout = {
                 paper_bgcolor: "rgba(0,0,0,0)",
                 plot_bgcolor:  "rgba(0,0,0,0)",
-                font: { family: "DM Sans, sans-serif", size: 12, color: "#6b6b6b" },
-                xaxis: { title: 'ρ (mm)', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                yaxis: { title: 'R(ρ) (mm⁻²)', type: 'log', gridcolor: "#e0dcd6", zerolinecolor: "#c8c2bc" },
-                margin: { t: 20, r: 20, b: 50, l: 80 }
-            }, { responsive: true });
+                font: { family: "DM Sans, sans-serif", size: 11, color: "#6b6b6b" },
+                margin: { t: 36, r: 10, b: 50, l: 70 },
+                showlegend: true,
+                legend: { x: 1.0, y: 1.0, xanchor: 'right', yanchor: 'top',
+                          bgcolor: 'rgba(255,255,255,0.6)', font: { size: 9 } },
+
+                // CW (left, full height)
+                xaxis:  ax('ρ (mm)',  { domain: [0.00, 0.30], range: [10, 50] }),
+                yaxis:  ax('R<sub>CW</sub> (mm⁻²)',
+                          { domain: [0.00, 0.92], type: 'log', anchor: 'x' }),
+
+                // |R_FD| (top middle)
+                xaxis2: ax('',        { domain: [0.36, 0.66], range: [10, 50],
+                                        anchor: 'y2', showticklabels: false }),
+                yaxis2: ax('|R<sub>FD</sub>| (mm⁻²)',
+                          { domain: [0.50, 0.92], type: 'log', anchor: 'x2' }),
+
+                // ∠R_FD (bottom middle)
+                xaxis3: ax('ρ (mm)',  { domain: [0.36, 0.66], range: [10, 50],
+                                        anchor: 'y3' }),
+                yaxis3: ax('∠R<sub>FD</sub> (rad)',
+                          { domain: [0.00, 0.42], anchor: 'x3' }),
+
+                // TD (right, full height)
+                xaxis4: ax('t (ns)',  { domain: [0.72, 1.00], range: [0, 10],
+                                        anchor: 'y4' }),
+                yaxis4: ax('R<sub>TD</sub> ((ps·mm²)⁻¹)',
+                          { domain: [0.00, 0.92], type: 'log', anchor: 'x4',
+                            range: tdYRange, autorange: false }),
+
+                annotations: [
+                    { text: '<b>Continuous-Wave (CW)</b>',  x: 0.15, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } },
+                    { text: '<b>Frequency-Domain (FD)</b>', x: 0.51, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } },
+                    { text: '<b>Time-Domain (TD)</b>',      x: 0.86, y: 1.0,
+                      xref: 'paper', yref: 'paper', xanchor: 'center',
+                      showarrow: false, font: { size: 12 } }
+                ]
+            };
+
+            Plotly.react('plot', traces, layout, { responsive: true });
         }
 
-        document.getElementById('mua-slider').addEventListener('input', update);
-        document.getElementById('musp-slider').addEventListener('input', update);
+        ['mua-slider','musp-slider','fmod-slider']
+            .forEach(id => document.getElementById(id).addEventListener('input', update));
         update();
-
-        document.getElementById('copy-btn').addEventListener('click', () => {
-            const raw = document.getElementById('code-block').textContent;
-            navigator.clipboard.writeText(raw).then(() => {
-                const btn = document.getElementById('copy-btn');
-                btn.textContent = 'Copied!';
-                setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
-            });
-        });
     </script>
 </body>
 </html>
