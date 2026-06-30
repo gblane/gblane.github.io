@@ -289,9 +289,11 @@
             }, { responsive: true });
         }
 
-        ['mfrac-slider','tum-slider','s-slider','wfrac-slider','lfrac-slider',
-         'lam-min','lam-max'].forEach(id =>
+        ['mfrac-slider','tum-slider','s-slider','wfrac-slider','lfrac-slider'].forEach(id =>
             document.getElementById(id).addEventListener('input', update)
+        );
+        ['lam-min','lam-max'].forEach(id =>
+            document.getElementById(id).addEventListener('change', update)
         );
         document.getElementById('log-scale').addEventListener('change', update);
         update();

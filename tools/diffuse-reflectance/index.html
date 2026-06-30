@@ -393,8 +393,9 @@
             Plotly.react('plot', traces, layout, { responsive: true });
         }
 
-        ['mua-slider','musp-slider','fmod-slider']
+        ['mua-slider','musp-slider']
             .forEach(id => document.getElementById(id).addEventListener('input', update));
+        document.getElementById('fmod-slider').addEventListener('change', update);
         update();
     </script>
 </body>
