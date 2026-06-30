@@ -3,15 +3,23 @@
 // Also stamps an "active" class on the nav-link matching the current path,
 // and fills #last-updated from the GitHub API (cached 1h in localStorage).
 (function () {
+    const ALLOWED_INCLUDES = new Set(['navbar', 'footer']);
     const placeholders = document.querySelectorAll('[data-include]');
     const tasks = Array.from(placeholders).map(el => {
-        const name = el.dataset.include;
-        return fetch(`/_partials/${name}.html`)
-            .then(r => r.text())
+        const name = String(el.dataset.include || '').trim();
+        if (!ALLOWED_INCLUDES.has(name)) {
+            console.error(`Refusing unknown include: ${name}`);
+            return Promise.resolve(null);
+        }
+        return fetch(`/_partials/${name}.html`, { credentials: 'same-origin' })
+            .then(r => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.text();
+            })
             .then(html => {
-                const tmp = document.createElement('div');
-                tmp.innerHTML = html.trim();
-                el.replaceWith(...tmp.childNodes);
+                const template = document.createElement('template');
+                template.innerHTML = html.trim();
+                el.replaceWith(template.content.cloneNode(true));
                 return name;
             })
             .catch(err => console.error(`Failed to include ${name}:`, err));
