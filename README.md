@@ -12,6 +12,8 @@ A static site built with HTML, CSS (Bootstrap 5), and vanilla JavaScript. No bui
 index.html              # Main page (bio, research, teaching, tools)
 site.css                # Global styles and theme variables
 404.html                # Not-found page
+CNAME                   # Custom domain (gbphd.com)
+.nojekyll               # Required so GitHub Pages serves _partials/ directly
 _partials/              # Shared HTML/JS includes (single source of truth)
   navbar.html           #   Navbar markup
   footer.html           #   Footer markup
@@ -73,4 +75,4 @@ Opening `index.html` directly via `file://` will not work because of absolute pa
 
 ---
 
-Built by Giles Blaney, PhD with assistance from Claude Code and Gemini CLI
+Built by Giles Blaney, PhD with assistance from Codex, Claude Code, and Gemini CLI
