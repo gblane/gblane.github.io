@@ -2,6 +2,9 @@
 // Port of sensmaps Python package (physics.py, compute.py), CW functions only.
 // Variable names mirror the Python/MATLAB source.
 
+const MAX_SENS_GRID_POINTS = 60000;
+const MIN_SENS_DENOMINATOR = 1e-12;
+
 function n2A(n) {
     if (n > 1) {
         return 504.332889  - 2641.00214  * n
@@ -107,6 +110,21 @@ function continuousPartPathLen(rs, r_all, rd, V, op) {
 function makeSvox(typeStr, optodes, op) {
     const arr   = typeStr.split('_')[1];   // 'SD' | 'SS' | 'DS'
     const V     = 1.0;                     // 1 mm³ voxel, hardcoded
+
+    if (!['SD', 'SS', 'DS'].includes(arr)) {
+        throw new RangeError(`Unsupported sensitivity-map arrangement: ${typeStr}`);
+    }
+    if (!Number.isFinite(op.nIn) || op.nIn <= 0 ||
+        !Number.isFinite(op.nOut) || op.nOut <= 0) {
+        throw new RangeError('Refractive indices must be finite positive numbers.');
+    }
+    if (!Number.isFinite(op.musp) || op.musp <= 0) {
+        throw new RangeError("Reduced scattering must be a finite positive number.");
+    }
+    if (!Number.isFinite(op.mua) || op.mua < 0) {
+        throw new RangeError('Absorption must be a finite non-negative number.');
+    }
+
     const z_off = 1.0 / op.musp;          // source z-offset = 1/musp
 
     // Build per-measurement source/detector pairs and list of all optode x coords.
@@ -136,6 +154,10 @@ function makeSvox(typeStr, optodes, op) {
         allX = [optodes.s1x, optodes.s2x, optodes.d1x, optodes.d2x];
     }
 
+    if (!allX.every(Number.isFinite)) {
+        throw new RangeError('All optode x positions must be finite numbers.');
+    }
+
     // Grid extents
     const xMin = Math.min(...allX) - 10;
     const xMax = Math.max(...allX) + 10;
@@ -147,11 +169,22 @@ function makeSvox(typeStr, optodes, op) {
     }
     const zMax = Math.round(maxRho);
 
+    const nxEstimate = Math.floor(xMax + 0.5 - xMin) + 1;
+    const nzEstimate = Math.floor(zMax + 0.5) + 1;
+    if (!Number.isFinite(nxEstimate) || !Number.isFinite(nzEstimate) ||
+        nxEstimate < 1 || nzEstimate < 1 ||
+        nxEstimate * nzEstimate > MAX_SENS_GRID_POINTS) {
+        throw new RangeError(`Sensitivity grid is too large (${nxEstimate * nzEstimate} voxels). Move optodes closer together.`);
+    }
+
     // Axis arrays (step 1 mm)
     const xArr = [], zArr = [];
     for (let x = xMin; x <= xMax + 0.5; x++) xArr.push(x);
     for (let z = 0;    z <= zMax  + 0.5; z++) zArr.push(z);
     const Nx = xArr.length, Nz = zArr.length;
+    if (Nx * Nz > MAX_SENS_GRID_POINTS) {
+        throw new RangeError(`Sensitivity grid is too large (${Nx * Nz} voxels). Move optodes closer together.`);
+    }
 
     // Voxel center list, row-major ix-outer iz-inner
     const r_all = [];
@@ -173,16 +206,25 @@ function makeSvox(typeStr, optodes, op) {
 
     if (arr === 'SD') {
         const L = Ls[0], ll = lls[0];
+        if (!Number.isFinite(L) || Math.abs(L) < MIN_SENS_DENOMINATOR) {
+            throw new RangeError('Single-distance arrangement produced an invalid path length.');
+        }
         for (let i = 0; i < Nx * Nz; i++) Svox[i] = ll[i] / L;
 
     } else if (arr === 'SS') {
         const dL = Ls[1] - Ls[0];
+        if (!Number.isFinite(dL) || Math.abs(dL) < MIN_SENS_DENOMINATOR) {
+            throw new RangeError('Single-slope detectors must have different source-detector separations.');
+        }
         for (let i = 0; i < Nx * Nz; i++)
             Svox[i] = (lls[1][i] - lls[0][i]) / dL;
 
     } else if (arr === 'DS') {
         // den = (L[1]-L[0]) + (L[3]-L[2]), num = (ll[1]-ll[0]) + (ll[3]-ll[2])
         const den = (Ls[1] - Ls[0]) + (Ls[3] - Ls[2]);
+        if (!Number.isFinite(den) || Math.abs(den) < MIN_SENS_DENOMINATOR) {
+            throw new RangeError('Dual-slope arrangement produced a zero or invalid denominator.');
+        }
         for (let i = 0; i < Nx * Nz; i++) {
             const num = (lls[1][i] - lls[0][i]) + (lls[3][i] - lls[2][i]);
             Svox[i] = num / den;
