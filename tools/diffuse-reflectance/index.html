@@ -200,9 +200,8 @@
         const V_SEC = 2.99792458e11 / N_IN;   // mm/sec   (FD)
 
         function geom(mua, musp) {
-            const mutr = mua + musp;
-            const D    = 1 / (3 * mutr);
-            const z0   = 1 / mutr;
+            const D    = 1 / (3 * musp);
+            const z0   = 1 / musp;
             const zb   = -2 * A * D;
             const zp   = -z0 + 2 * zb;
             return { D, z0, zb, zp };
