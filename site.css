@@ -15,6 +15,7 @@
     --bio-text-color:   #333;
     --form-focus-bg:    #fff;
     --accent-hover:     #144060;
+    --accent-contrast:  #fff;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -27,6 +28,10 @@ body {
     line-height: 1.7;
     padding-top: 60px;
 }
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+.text-muted { color: var(--muted) !important; }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
@@ -139,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Lab banner (homepage) ────────────────────────── */
 .lab-banner {
-    height: clamp(200px, 34vh, 340px);
+    height: clamp(160px, 24vh, 260px);
     overflow: hidden;
 }
 .lab-banner img {
@@ -212,8 +217,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: border-color 0.15s, color 0.15s;
 }
 .bio-link:hover { border-color: var(--accent); color: var(--accent); }
-.bio-link.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.bio-link.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+.bio-link.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.bio-link.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--accent-contrast); }
 
 /* ── Cards (research / teaching / tools grids) ────── */
 .tool-link { text-decoration: none; color: inherit; display: block; height: 100%; }
@@ -299,7 +304,7 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--accent);
     border: none;
     border-radius: 4px;
-    color: #fff;
+    color: var(--accent-contrast);
     font-size: 0.83rem;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -309,6 +314,17 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
 }
 .btn-run:hover { background: var(--accent-hover); }
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--muted);
+    --bs-btn-border-color: var(--border);
+    --bs-btn-hover-color: var(--accent-contrast);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-color: var(--accent-contrast);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+}
 
 .output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
 
@@ -495,6 +511,7 @@ footer a:hover { color: #fff; }
         --bio-text-color:   var(--text);
         --form-focus-bg:    var(--bg);
         --accent-hover:     #5995b5;
+        --accent-contrast:  #1a1a1a;
     }
     :root:not([data-theme="light"]) .navbar-toggler-icon {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -516,6 +533,7 @@ footer a:hover { color: #fff; }
     --bio-text-color:   var(--text);
     --form-focus-bg:    var(--bg);
     --accent-hover:     #5995b5;
+    --accent-contrast:  #1a1a1a;
 }
 [data-theme="dark"] .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
