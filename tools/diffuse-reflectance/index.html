@@ -264,16 +264,23 @@
         const tps    = Array.from({length: 400}, (_, i) => 1 + i * (10000 - 1) / 399); // ps
         const tns    = tps.map(t => t / 1000);
 
-        // jet-like colormap (blue → red) — sequential colormap for the continuous
-        // rho sweep in the TD panel; intentionally NOT part of the qualitative
-        // GB_PLOT series palette below (see gbSeries()), which only has 6 hues
-        // and would misrepresent a continuous physical quantity.
-        function jet(i, n) {
-            const x = i / (n - 1);
-            const r = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 3), 0), 1));
-            const g = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 2), 0), 1));
-            const b = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 1), 0), 1));
-            return `rgb(${r},${g},${b})`;
+        // Ordinal single-hue ramp for the TD panel's rho sweep (design-system
+        // blue, OKLCH lightness steps; deeper rho = more ink in both themes).
+        // Light ramp passes the ordinal checks fully (monotone L, dL >= 0.06,
+        // light end >= 2:1 on the surface). The dark ramp's adjacent dL sits
+        // at 0.056-0.059 — the 9 steps cannot all clear 0.06 within sRGB blue
+        // against the dark surface; the legend and the strictly nested curve
+        // geometry carry the identity, matching the design system's
+        // floor-with-secondary-encoding convention.
+        const GB_RAMP = {
+            light: ['#7cbaef', '#68a7da', '#5593c6', '#4280b2', '#2f6d9e', '#1a5b8a', '#074975', '#04385b', '#022843'],
+            dark:  ['#145786', '#286798', '#3b79aa', '#4c8abc', '#5e9ccf', '#70aee3', '#82c1f6', '#a1d3fe', '#c5e4ff'],
+        };
+        function gbRamp(i) {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+                || (!document.documentElement.getAttribute('data-theme')
+                    && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            return GB_RAMP[dark ? 'dark' : 'light'][i];
         }
 
         // ── Design-system Plotly palette (series colors, theme-reactive) ──
@@ -342,7 +349,7 @@
                     y: tps.map(t => t < tMin ? NaN : R_TD(rho, t, mua, musp)),
                     mode: 'lines',
                     name: `ρ=${rho} mm`,
-                    line: { width: 1.4, color: jet(i, rhoTD.length) },
+                    line: { width: 1.4, color: gbRamp(i) },
                     connectgaps: false,
                     xaxis: 'x4', yaxis: 'y4'
                 };
