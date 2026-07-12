@@ -1,126 +1,232 @@
-/* gblane.github.io — shared styles */
+/* gblane.github.io — shared styles
+   Design-system v1 rebuild. Structure: (1) design tokens, pasted verbatim
+   from designSystem/tokens/*.css — colors, typography, spacing; (2) base
+   resets; (3) component styles for this site's existing markup, values
+   drawn from the redesign specimens in designSystem/ui_kits/website/
+   (index.html + tool.html); (4) Bootstrap-compat blocks (navbar, form
+   controls, etc.) ported from the previous site.css with all hardcoded
+   colors/fonts replaced by tokens. Font loading itself now happens via
+   <link> tags in each page <head> (faster than @import) — see the design
+   system's tokens/fonts.css for the font list.
+*/
 
+/* ============================================================
+   1. TOKENS — verbatim from designSystem/tokens/{colors,typography,spacing}.css
+   ============================================================ */
+
+/* ── Color tokens ──────────────────────────────────────
+   Base neutrals: warm paper/ink (print-document feel, echoes LaTeX
+   output). Two accents at matched lightness/chroma, hue only varies:
+     --accent      technical blue  — primary actions, links, data highlight
+     --accent-2    spectral green  — secondary, tags, section rules
+   A third rarely-used warm accent (amber) is reserved for callouts/warnings.
+   All defined in oklch for perceptual consistency; dark mode flips via
+   prefers-color-scheme and [data-theme].
+*/
 :root {
-    --bg:          #f9f8f5;
-    --text:        #1a1a1a;
-    --muted:       #6b6b6b;
-    --accent:      #175676;
-    --accent2:     #47682C;
-    --border:      #e0dcd6;
-    --card-bg:     #ffffff;
-    --section-alt: #f2f0ec;
+    /* neutrals */
+    --paper:        oklch(98.2% 0.004 90);
+    --paper-alt:     oklch(96% 0.006 90);
+    --surface:       oklch(99.4% 0.002 90);
+    --ink:           oklch(21% 0.008 90);
+    --ink-muted:     oklch(52% 0.012 90);
+    --border:        oklch(89% 0.008 90);
+    --border-strong: oklch(78% 0.01 90);
 
-    /* Component-level vars that flip in dark mode */
-    --navbar-bg:        #fff;
-    --bio-text-color:   #333;
-    --form-focus-bg:    #fff;
-    --accent-hover:     #144060;
-    --accent-contrast:  #fff;
+    /* accents — L 50%, C 0.09, hue varies */
+    --accent:        oklch(50% 0.09 235);
+    --accent-hover:   oklch(42% 0.09 235);
+    --accent-soft:    oklch(94% 0.03 235);
+    --accent-2:      oklch(52% 0.09 140);
+    --accent-2-soft:  oklch(94% 0.03 140);
+    --accent-warn:   oklch(62% 0.13 55);
+    --accent-warn-soft: oklch(94% 0.04 55);
+
+    --accent-contrast: oklch(99% 0 0);
+
+    /* semantic */
+    --bg:            var(--paper);
+    --bg-alt:        var(--paper-alt);
+    --card-bg:       var(--surface);
+    --text:          var(--ink);
+    --muted:         var(--ink-muted);
+
+    --shadow-color:  220 12% 20%;
+
+    /* plot series — Okabe-Ito retuned in OKLCH (spec §2.3); fixed order, never cycled */
+    --plot-1: #226ba0;
+    --plot-2: #c8831e;
+    --plot-3: #be6f96;
+    --plot-4: #c65d26;
+    --plot-5: #439ccc;
+    --plot-6: #0a9068;
+    --plot-surface: var(--surface);
+    --plot-grid: var(--border);
 }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper:        oklch(19% 0.006 90);
+        --paper-alt:     oklch(23% 0.007 90);
+        --surface:       oklch(24% 0.007 90);
+        --ink:           oklch(93% 0.004 90);
+        --ink-muted:     oklch(68% 0.012 90);
+        --border:        oklch(33% 0.008 90);
+        --border-strong: oklch(42% 0.01 90);
+
+        --accent:        oklch(72% 0.1 235);
+        --accent-hover:   oklch(80% 0.1 235);
+        --accent-soft:    oklch(30% 0.05 235);
+        --accent-2:      oklch(72% 0.1 140);
+        --accent-2-soft:  oklch(30% 0.05 140);
+        --accent-warn:   oklch(75% 0.13 55);
+        --accent-warn-soft: oklch(32% 0.06 55);
+
+        --accent-contrast: oklch(15% 0 0);
+
+        --plot-1: #4086bd;
+        --plot-2: #c48225;
+        --plot-3: #b7698f;
+        --plot-4: #cd6a39;
+        --plot-5: #3c96c5;
+        --plot-6: #319873;
+    }
+}
+
+:root[data-theme="dark"] {
+    --paper:        oklch(19% 0.006 90);
+    --paper-alt:     oklch(23% 0.007 90);
+    --surface:       oklch(24% 0.007 90);
+    --ink:           oklch(93% 0.004 90);
+    --ink-muted:     oklch(68% 0.012 90);
+    --border:        oklch(33% 0.008 90);
+    --border-strong: oklch(42% 0.01 90);
+
+    --accent:        oklch(72% 0.1 235);
+    --accent-hover:   oklch(80% 0.1 235);
+    --accent-soft:    oklch(30% 0.05 235);
+    --accent-2:      oklch(72% 0.1 140);
+    --accent-2-soft:  oklch(30% 0.05 140);
+    --accent-warn:   oklch(75% 0.13 55);
+    --accent-warn-soft: oklch(32% 0.06 55);
+
+    --accent-contrast: oklch(15% 0 0);
+
+    --plot-1: #4086bd;
+    --plot-2: #c48225;
+    --plot-3: #b7698f;
+    --plot-4: #cd6a39;
+    --plot-5: #3c96c5;
+    --plot-6: #319873;
+}
+
+/* ── Type tokens ───────────────────────────────────────
+   Three families, one job each:
+     --font-serif   headings / editorial — echoes the serif set in
+                    LaTeX-typeset papers this lab already produces
+     --font-sans    UI, body copy, nav — clean and neutral
+     --font-mono    data, parameters, code, units — tabular figures
+*/
+:root {
+    --font-serif: 'STIX Two Text', Georgia, serif;
+    --font-sans:  'Source Sans 3', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono:  'Source Code Pro', 'Courier New', monospace;
+
+    --text-display: clamp(2rem, 1.5rem + 2vw, 3rem);
+    --text-h1: 1.9rem;
+    --text-h2: 1.4rem;
+    --text-h3: 1.125rem;
+    --text-body: 1rem;
+    --text-body-sm: 0.9rem;
+    --text-caption: 0.8rem;
+    --text-eyebrow: 0.72rem;
+
+    --leading-tight: 1.25;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.75;
+
+    --tracking-eyebrow: 0.12em;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+}
+
+/* ── Spacing, radius, shadow, border tokens ───────────── */
+:root {
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --radius-pill: 999px;
+
+    --border-width: 1px;
+
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 4px 18px hsl(var(--shadow-color) / 0.08);
+    --shadow-lg: 0 12px 32px hsl(var(--shadow-color) / 0.12);
+
+    --ease-standard: cubic-bezier(0.2, 0.6, 0.2, 1);
+    --duration-fast: 120ms;
+    --duration-normal: 180ms;
+}
+
+/* ============================================================
+   2. BASE — resets from designSystem/tokens/base.css, plus this
+   site's page shell (fixed navbar clearance).
+   ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    line-height: 1.7;
-    padding-top: 60px;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+    margin: 0;
+    padding-top: 60px; /* clearance for the fixed .navbar, see §4 */
 }
 
-a { color: var(--accent); }
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    margin: 0;
+}
+
+a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-hover); }
 .text-muted { color: var(--muted) !important; }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    line-height: 1.25;
-}
-
-/* ── Navbar ───────────────────────────────────────── */
-/* Placeholder styling so the navbar area looks right before JS includes load */
-[data-include="navbar"] {
-    display: block;
-    height: 60px;
-    background: var(--navbar-bg);
-    border-bottom: 1px solid var(--border);
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1030;
-}
-
-.navbar {
-    background: var(--navbar-bg) !important;
-    border-bottom: 1px solid var(--border);
-    padding: 0.6rem 0;
-}
-
-.navbar-brand {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--text) !important;
-}
-
-.nav-link {
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted) !important;
-    padding: 0.4rem 0.8rem !important;
-    transition: color 0.15s;
-}
-
-.nav-link:hover,
-.nav-link.active { color: var(--accent) !important; }
-
-.navbar-toggler { border-color: var(--border); }
-
-/* Hamburger icon — stroke color flips in dark mode via --hamburger-stroke */
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26,26,26,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
-/* Theme toggle button (in navbar) */
-.theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    color: var(--muted);
-    padding: 0.3rem 0.5rem;
-    margin-left: 0.5rem;
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 0;
-}
-.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
-.theme-toggle svg   { width: 14px; height: 14px; display: block; }
-
-/* Default (light): show MOON (click to go dark) */
-.theme-toggle .icon-sun  { display: none; }
-.theme-toggle .icon-moon { display: block; }
+/* ============================================================
+   3. COMPONENTS — values from designSystem/ui_kits/website/{index,tool}.html,
+   applied to this site's existing class names (markup unchanged in this task).
+   ============================================================ */
 
 /* ── Section helpers ──────────────────────────────── */
 .section-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-eyebrow);
     text-transform: uppercase;
-    color: var(--accent2);
+    color: var(--accent-2);
     margin-bottom: 6px;
 }
 
 .section-rule {
     width: 36px;
     height: 2px;
-    background: var(--accent2);
+    background: var(--accent-2);
     border: none;
     margin: 14px 0 28px;
 }
@@ -134,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Homepage section padding (alternating bg) ────── */
 .home section { padding: 88px 0; }
-.home section:nth-of-type(even) { background: var(--section-alt); }
+.home section:nth-of-type(even) { background: var(--bg-alt); }
 .home #bio { padding-top: 72px; }
 
 @media (max-width: 767px) {
@@ -188,7 +294,7 @@ h1, h2, h3, h4, h5, h6 {
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.15s, color 0.15s;
+    transition: border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 .bio-link-inline:hover {
     color: var(--accent);
@@ -197,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .bio-text {
     font-size: 0.96rem;
-    color: var(--bio-text-color);
+    color: var(--text);
     max-width: 560px;
     margin-bottom: 1.5rem;
 }
@@ -205,16 +311,17 @@ h1, h2, h3, h4, h5, h6 {
 .bio-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 .bio-link {
+    font-family: var(--font-sans);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--text);
     text-decoration: none;
     border: 1px solid var(--border);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     padding: 5px 13px;
-    transition: border-color 0.15s, color 0.15s;
+    transition: border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 .bio-link:hover { border-color: var(--accent); color: var(--accent); }
 .bio-link.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
@@ -226,51 +333,52 @@ h1, h2, h3, h4, h5, h6 {
 .tool-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 1.35rem 1.5rem;
     height: 100%;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color var(--duration-normal) var(--ease-standard), box-shadow var(--duration-normal) var(--ease-standard);
 }
-.tool-card:hover { border-color: var(--accent); box-shadow: 0 4px 18px rgba(23,86,118,0.08); }
+.tool-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
 
-.tool-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
-.tool-tags { font-size: 0.7rem; color: var(--accent); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.tool-name { font-family: var(--font-serif); font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+.tool-tags { font-family: var(--font-sans); font-size: 0.7rem; color: var(--accent); font-weight: var(--weight-medium); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
 .tool-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
-.tool-cta  { font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-top: 0.9rem; }
+.tool-cta  { font-family: var(--font-sans); font-size: 0.75rem; font-weight: var(--weight-medium); color: var(--accent); margin-top: 0.9rem; }
 
 .course-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.9rem; }
-.course-links a { font-size: 0.75rem; font-weight: 500; color: var(--accent); text-decoration: none; }
+.course-links a { font-size: 0.75rem; font-weight: var(--weight-medium); color: var(--accent); text-decoration: none; }
 .course-links a:hover { text-decoration: underline; }
 
 /* ── Tool pages ───────────────────────────────────── */
 .tool-header   { padding: 2rem 0 1.5rem; }
-.tool-title    { font-size: 2rem; font-weight: 700; margin-bottom: 0.15rem; }
+.tool-title    { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; margin-bottom: 0.15rem; }
 .tool-subtitle { font-size: 0.88rem; color: var(--muted); }
 
 .param-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 1.25rem 1.4rem;
 }
 
-.param-label  { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; display: block; }
-.param-value  { font-size: 0.8rem;  color: var(--muted); font-variant-numeric: tabular-nums; }
-.param-unit   { font-weight: 400;   color: var(--muted); }
+.param-label  { font-family: var(--font-sans); font-size: 0.85rem; font-weight: var(--weight-medium); color: var(--text); margin-bottom: 0.4rem; display: block; }
+.param-value  { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.param-unit   { font-weight: var(--weight-regular); color: var(--muted); }
 
 .about-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 1rem 1.4rem;
     margin-top: 0.75rem;
 }
 .about-title {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-eyebrow);
     text-transform: uppercase;
-    color: var(--accent2);
+    color: var(--accent-2);
     margin-bottom: 0.4rem;
 }
 .about-text {
@@ -280,56 +388,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-/* ── Form controls (tool pages) ───────────────────── */
-.form-control,
-.form-select {
-    border-color: var(--border);
-    border-radius: 4px;
-    font-size: 0.88rem;
-    background: var(--bg);
-    color: var(--text);
-}
-.form-control:focus,
-.form-select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(23,86,118,0.12);
-    background: var(--form-focus-bg);
-}
-
-.form-range::-webkit-slider-thumb { background: var(--accent); }
-.form-range::-moz-range-thumb     { background: var(--accent); border: none; }
-.form-range:focus::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(23,86,118,0.18); }
-
-.btn-run {
-    background: var(--accent);
-    border: none;
-    border-radius: 4px;
-    color: var(--accent-contrast);
-    font-size: 0.83rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    padding: 0.5rem 1rem;
-    width: 100%;
-    transition: background 0.15s;
-    cursor: pointer;
-}
-.btn-run:hover { background: var(--accent-hover); }
-
-.btn-outline-secondary {
-    --bs-btn-color: var(--muted);
-    --bs-btn-border-color: var(--border);
-    --bs-btn-hover-color: var(--accent-contrast);
-    --bs-btn-hover-bg: var(--accent);
-    --bs-btn-hover-border-color: var(--accent);
-    --bs-btn-active-color: var(--accent-contrast);
-    --bs-btn-active-bg: var(--accent);
-    --bs-btn-active-border-color: var(--accent);
-}
-
-.output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
-
 /* ── Plot container (Plotly target) ───────────────── */
-#plot { border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+#plot { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--plot-surface); }
 
 /* While Plotly is loading, reserve the box and show a hint */
 #plot:empty::before {
@@ -344,46 +404,47 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Derived-values box (tool pages) ──────────────── */
 .derived-box {
-    background: var(--section-alt);
+    background: var(--bg-alt);
     border: 1px solid var(--border);
     border-radius: 5px;
     padding: 0.75rem 1rem;
     margin-top: 1rem;
 }
-.derived-item { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.15rem; }
+.derived-item { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 0.15rem; }
 .derived-item:last-child { margin-bottom: 0; }
-.derived-val  { color: var(--text); font-weight: 500; }
+.derived-val  { color: var(--text); font-weight: var(--weight-medium); }
 
 /* ── Code blocks (tool implementation sections) ───── */
 .code-wrap { position: relative; }
 
 pre {
-    background: var(--section-alt);
+    background: var(--bg-alt);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 1rem 1.2rem;
     font-size: 0.78rem;
     line-height: 1.6;
     overflow-x: auto;
     margin: 0;
 }
-pre code { font-family: 'Courier New', monospace; color: var(--text); }
+pre code { font-family: var(--font-mono); color: var(--text); }
 
 .copy-btn {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     padding: 2px 8px;
     cursor: pointer;
     color: var(--muted);
-    transition: background 0.12s, color 0.12s;
+    transition: background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
-.copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.copy-btn:hover { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
 
 /* ── Info sections (tool & research pages) ───────── */
 .info-section { margin-bottom: 3rem; }
@@ -392,7 +453,7 @@ pre code { font-family: 'Courier New', monospace; color: var(--text); }
 .info-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 1.25rem 1.5rem;
 }
 .info-card p {
@@ -410,7 +471,7 @@ pre code { font-family: 'Courier New', monospace; color: var(--text); }
     height: auto;
     display: block;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 .research-figure figcaption {
     font-size: 0.78rem;
@@ -432,9 +493,10 @@ pre code { font-family: 'Courier New', monospace; color: var(--text); }
 
 /* ── Publications page ────────────────────────────── */
 .pub-col-heading {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-eyebrow);
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 0.6rem;
@@ -442,7 +504,7 @@ pre code { font-family: 'Courier New', monospace; color: var(--text); }
 .pub-row { padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
 .pub-row:last-child { border-bottom: none; }
 .pub-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.35;
@@ -467,24 +529,149 @@ pre code { font-family: 'Courier New', monospace; color: var(--text); }
 .pub-refresh {
     background: none;
     border: 1px solid var(--border);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     color: var(--muted);
+    font-family: var(--font-sans);
     font-size: 0.7rem;
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 3px 10px;
     cursor: pointer;
     margin-left: 0.6rem;
-    transition: border-color 0.15s, color 0.15s;
+    transition: border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 .pub-refresh:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ── Footer ───────────────────────────────────────── */
-footer { background: #28502E; color: #a8c4a0; padding: 1.75rem 0; font-size: 0.78rem; text-align: center; }
-footer a { color: #c4d9bd; text-decoration: none; }
-footer a:hover { color: #fff; }
+footer { background: var(--ink); color: var(--paper); padding: 1.75rem 0; font-size: 0.78rem; text-align: center; font-family: var(--font-sans); }
+footer a { color: var(--accent-2); text-decoration: none; }
+footer a:hover { color: var(--paper); }
 .last-updated { font-size: 0.72rem; opacity: 0.75; margin-top: 0.4rem; }
+
+/* ============================================================
+   4. BOOTSTRAP-COMPAT — navbar, toggler icon, theme toggle, form
+   focus states, ported from the previous site.css with hardcoded
+   colors/fonts replaced by tokens (see mapping table in task brief).
+   ============================================================ */
+
+/* ── Navbar ───────────────────────────────────────── */
+/* Placeholder styling so the navbar area looks right before JS includes load */
+[data-include="navbar"] {
+    display: block;
+    height: 60px;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1030;
+}
+
+.navbar {
+    background: var(--card-bg) !important;
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text) !important;
+}
+
+.nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted) !important;
+    padding: 0.4rem 0.8rem !important;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.nav-link:hover,
+.nav-link.active { color: var(--accent) !important; }
+
+.navbar-toggler { border-color: var(--border); }
+
+/* Hamburger icon — a data-URI SVG can't reference CSS custom properties,
+   so the stroke color is a literal that approximates --ink in each theme
+   and gets an explicit override in dark mode (mirrors the old approach). */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26,26,26,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Theme toggle button (in navbar) */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    padding: 0.3rem 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.theme-toggle svg   { width: 14px; height: 14px; display: block; }
+
+/* Default (light): show MOON (click to go dark) */
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+/* ── Form controls (tool pages) ───────────────────── */
+.form-control,
+.form-select {
+    border-color: var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    background: var(--bg);
+    color: var(--text);
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.form-range::-webkit-slider-thumb { background: var(--accent); }
+.form-range::-moz-range-thumb     { background: var(--accent); border: none; }
+.form-range:focus::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.btn-run {
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--accent-contrast);
+    font-family: var(--font-sans);
+    font-size: 0.83rem;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.04em;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    transition: background var(--duration-fast) var(--ease-standard);
+    cursor: pointer;
+}
+.btn-run:hover { background: var(--accent-hover); }
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--muted);
+    --bs-btn-border-color: var(--border);
+    --bs-btn-hover-color: var(--accent-contrast);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-color: var(--accent-contrast);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+}
+
+.output-msg { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; min-height: 1.2em; }
 
 /* ── Dark mode ─────────────────────────────────────
    Resolution order:
@@ -492,27 +679,13 @@ footer a:hover { color: #fff; }
      2. [data-theme="dark"]  → force dark  (override OS)
      3. (no attribute)       → follow OS via prefers-color-scheme
 
-   Component-level vars (--navbar-bg, --bio-text-color, --form-focus-bg,
-   --accent-hover) flip with the palette so most rules don't need overrides;
-   only the hamburger-icon SVG needs an explicit override since data URIs
-   can't be parameterised.
+   All palette values already flip via the token :root blocks in §1 (both
+   the prefers-color-scheme media query and the [data-theme="dark"]
+   override), so component rules that reference tokens need no dark-mode
+   copy here. Only the hamburger-icon SVG needs an explicit override,
+   since a data-URI can't be parameterised with a custom property.
 */
 @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg:          #1a1a1a;
-        --text:        #e8e6e0;
-        --muted:       #989796;
-        --accent:      #6fa8c8;
-        --accent2:     #8aab66;
-        --border:      #2e2c29;
-        --card-bg:     #232220;
-        --section-alt: #1f1e1c;
-        --navbar-bg:        var(--card-bg);
-        --bio-text-color:   var(--text);
-        --form-focus-bg:    var(--bg);
-        --accent-hover:     #5995b5;
-        --accent-contrast:  #1a1a1a;
-    }
     :root:not([data-theme="light"]) .navbar-toggler-icon {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
@@ -520,25 +693,8 @@ footer a:hover { color: #fff; }
     :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 }
 
-:root[data-theme="dark"] {
-    --bg:          #1a1a1a;
-    --text:        #e8e6e0;
-    --muted:       #989796;
-    --accent:      #6fa8c8;
-    --accent2:     #8aab66;
-    --border:      #2e2c29;
-    --card-bg:     #232220;
-    --section-alt: #1f1e1c;
-    --navbar-bg:        var(--card-bg);
-    --bio-text-color:   var(--text);
-    --form-focus-bg:    var(--bg);
-    --accent-hover:     #5995b5;
-    --accent-contrast:  #1a1a1a;
-}
-[data-theme="dark"] .navbar-toggler-icon {
+:root[data-theme="dark"] .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,230,224,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
-[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-
-/* #plot stays white (hardcoded above) in both themes — better data legibility */
+:root[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
