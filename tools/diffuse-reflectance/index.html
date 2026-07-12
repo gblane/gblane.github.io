@@ -289,7 +289,13 @@
         }
         function cssVar(name, fallback) {
             const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-            return v || fallback;
+            if (!v) return fallback;
+            // Plotly's color parser doesn't understand modern CSS color
+            // functions (oklch, etc.) used by the design tokens — resolve via
+            // a scratch canvas so it always gets an rgb()/rgba() string.
+            const ctx = document.createElement('canvas').getContext('2d');
+            ctx.fillStyle = v;
+            return ctx.fillStyle;
         }
 
         function clampNumber(value, min, max, fallback) {
@@ -313,9 +319,8 @@
             const series = gbSeries();
             const fdMagColor = series[0];   // slot 0 — blue
             const fdPhColor  = series[1];   // slot 1 — orange
-            const grid = cssVar('--border', '#e0dcd6');
-            const zero = cssVar('--border-strong', '#c8c2bc');
-            const fontColor = cssVar('--muted', '#6b6b6b');
+            const grid = cssVar('--plot-grid', '#e0dcd6');
+            const fontColor = cssVar('--text', '#1a1814');
             const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
             const cwColor = cssVar('--text', '#1a1a1a');
 
@@ -364,7 +369,8 @@
 
             // ── Subplot layout (2 rows × 3 cols) ─────────────────────
             const ax = (title, opts) => Object.assign({
-                gridcolor: grid, zerolinecolor: zero, title: { text: title, standoff: 6 }
+                gridcolor: grid, zerolinecolor: grid, linecolor: grid,
+                title: { text: title, standoff: 6 }
             }, opts);
 
             const layout = {
@@ -374,7 +380,8 @@
                 margin: { t: 36, r: 10, b: 50, l: 70 },
                 showlegend: true,
                 legend: { x: 1.0, y: 1.0, xanchor: 'right', yanchor: 'top',
-                          bgcolor: cssVar('--card-bg', '#ffffff'), font: { size: 9 } },
+                          bgcolor: cssVar('--card-bg', '#ffffff'),
+                          font: { size: 9, color: fontColor } },
 
                 // CW (left, full height)
                 xaxis:  ax('ρ (mm)',  { domain: [0.00, 0.30], range: [10, 50] }),

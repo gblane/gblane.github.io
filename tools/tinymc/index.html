@@ -178,7 +178,13 @@
         }
         function cssVar(name, fallback) {
             const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-            return v || fallback;
+            if (!v) return fallback;
+            // Plotly's color parser doesn't understand modern CSS color
+            // functions (oklch, etc.) used by the design tokens — resolve via
+            // a scratch canvas so it always gets an rgb()/rgba() string.
+            const ctx = document.createElement('canvas').getContext('2d');
+            ctx.fillStyle = v;
+            return ctx.fillStyle;
         }
 
         function randomOpenUnit() {
@@ -204,8 +210,8 @@
 
         function plot(data) {
             const series = gbSeries();
-            const grid = cssVar('--border', '#e0dcd6');
-            const fontColor = cssVar('--muted', '#6b6b6b');
+            const grid = cssVar('--plot-grid', '#e0dcd6');
+            const fontColor = cssVar('--text', '#1a1814');
             const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
 
             const trace = {
@@ -243,9 +249,9 @@
                 plot_bgcolor:  "rgba(0,0,0,0)",
                 font: { family: fontFamily, size: 12, color: fontColor },
                 scene: {
-                    xaxis: { title: "X", gridcolor: grid },
-                    yaxis: { title: "Y", gridcolor: grid },
-                    zaxis: { title: "Z", gridcolor: grid },
+                    xaxis: { title: "X", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    yaxis: { title: "Y", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    zaxis: { title: "Z", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
                     aspectmode: 'data'
                 },
                 margin: { t: 0, r: 0, b: 0, l: 0 },

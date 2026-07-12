@@ -218,7 +218,13 @@
         }
         function cssVar(name, fallback) {
             const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-            return v || fallback;
+            if (!v) return fallback;
+            // Plotly's color parser doesn't understand modern CSS color
+            // functions (oklch, etc.) used by the design tokens — resolve via
+            // a scratch canvas so it always gets an rgb()/rgba() string.
+            const ctx = document.createElement('canvas').getContext('2d');
+            ctx.fillStyle = v;
+            return ctx.fillStyle;
         }
 
         function buildLam(lamMin, lamMax) {
@@ -282,9 +288,8 @@
             document.getElementById('lfrac-val').textContent = p.Lfrac.toFixed(2);
 
             const series = gbSeries();
-            const grid = cssVar('--border', '#e0dcd6');
-            const zero = cssVar('--border-strong', '#c8c2bc');
-            const fontColor = cssVar('--muted', '#6b6b6b');
+            const grid = cssVar('--plot-grid', '#e0dcd6');
+            const fontColor = cssVar('--text', '#1a1814');
             const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
             const totalColor = cssVar('--text', '#000000');
 
@@ -311,9 +316,9 @@
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor:  'rgba(0,0,0,0)',
                 font: { family: fontFamily, size: 12, color: fontColor },
-                xaxis: { title: 'Wavelength (nm)', range: [p.lamMin, p.lamMax], gridcolor: grid, zerolinecolor: zero },
-                yaxis: { title: 'μₐ (mm⁻¹)', type: document.getElementById('log-scale').checked ? 'log' : 'linear', gridcolor: grid, zerolinecolor: zero },
-                legend: { x: 1, xanchor: 'right', y: 1 },
+                xaxis: { title: 'Wavelength (nm)', range: [p.lamMin, p.lamMax], gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                yaxis: { title: 'μₐ (mm⁻¹)', type: document.getElementById('log-scale').checked ? 'log' : 'linear', gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                legend: { x: 1, xanchor: 'right', y: 1, font: { color: fontColor } },
                 margin: { t: 20, r: 20, b: 50, l: 80 }
             }, { responsive: true });
         }
