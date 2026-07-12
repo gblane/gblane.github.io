@@ -264,7 +264,10 @@
         const tps    = Array.from({length: 400}, (_, i) => 1 + i * (10000 - 1) / 399); // ps
         const tns    = tps.map(t => t / 1000);
 
-        // jet-like colormap (blue → red)
+        // jet-like colormap (blue → red) — sequential colormap for the continuous
+        // rho sweep in the TD panel; intentionally NOT part of the qualitative
+        // GB_PLOT series palette below (see gbSeries()), which only has 6 hues
+        // and would misrepresent a continuous physical quantity.
         function jet(i, n) {
             const x = i / (n - 1);
             const r = Math.round(255 * Math.min(Math.max(1.5 - Math.abs(4*x - 3), 0), 1));
@@ -273,7 +276,21 @@
             return `rgb(${r},${g},${b})`;
         }
 
-        const grid = "#e0dcd6", zero = "#c8c2bc";
+        // ── Design-system Plotly palette (series colors, theme-reactive) ──
+        const GB_PLOT = {
+            light: ['#226ba0', '#c8831e', '#be6f96', '#c65d26', '#439ccc', '#0a9068'],
+            dark:  ['#4086bd', '#c48225', '#b7698f', '#cd6a39', '#3c96c5', '#319873'],
+        };
+        function gbSeries() {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+                || (!document.documentElement.getAttribute('data-theme')
+                    && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            return GB_PLOT[dark ? 'dark' : 'light'];
+        }
+        function cssVar(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return v || fallback;
+        }
 
         function clampNumber(value, min, max, fallback) {
             const n = Number(value);
@@ -293,8 +310,14 @@
             const musp = boundedInputValue('musp-slider', 0.5, 5, 1.1);
             const fmod = boundedInputValue('fmod-slider', 50, 500, 100);   // MHz
 
-            const fdMagColor = '#1f77b4';   // blue
-            const fdPhColor  = '#d62728';   // red
+            const series = gbSeries();
+            const fdMagColor = series[0];   // slot 0 — blue
+            const fdPhColor  = series[1];   // slot 1 — orange
+            const grid = cssVar('--border', '#e0dcd6');
+            const zero = cssVar('--border-strong', '#c8c2bc');
+            const fontColor = cssVar('--muted', '#6b6b6b');
+            const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
+            const cwColor = cssVar('--text', '#1a1a1a');
 
             document.getElementById('mua-val').textContent  = `${mua.toFixed(4)} mm⁻¹`;
             document.getElementById('musp-val').textContent = `${musp.toFixed(1)} mm⁻¹`;
@@ -328,7 +351,7 @@
 
             const traces = [
                 { x: rhoArr, y: cw,    mode: 'lines', name: 'CW',
-                  line: { width: 2, color: '#1a1a1a' }, showlegend: false,
+                  line: { width: 2, color: cwColor }, showlegend: false,
                   xaxis: 'x',  yaxis: 'y'  },
                 { x: rhoArr, y: fdMag, mode: 'lines', name: '|R_FD|',
                   line: { width: 2, color: fdMagColor }, showlegend: false,
@@ -347,11 +370,11 @@
             const layout = {
                 paper_bgcolor: "rgba(0,0,0,0)",
                 plot_bgcolor:  "rgba(0,0,0,0)",
-                font: { family: "DM Sans, sans-serif", size: 11, color: "#6b6b6b" },
+                font: { family: fontFamily, size: 11, color: fontColor },
                 margin: { t: 36, r: 10, b: 50, l: 70 },
                 showlegend: true,
                 legend: { x: 1.0, y: 1.0, xanchor: 'right', yanchor: 'top',
-                          bgcolor: 'rgba(255,255,255,0.6)', font: { size: 9 } },
+                          bgcolor: cssVar('--card-bg', '#ffffff'), font: { size: 9 } },
 
                 // CW (left, full height)
                 xaxis:  ax('ρ (mm)',  { domain: [0.00, 0.30], range: [10, 50] }),
@@ -397,6 +420,17 @@
             .forEach(id => document.getElementById(id).addEventListener('input', update));
         document.getElementById('fmod-slider').addEventListener('change', update);
         update();
+
+        // ── Theme reactivity ─────────────────────────────────────────
+        // Re-render whenever the navbar theme toggle flips data-theme on <html>.
+        new MutationObserver(update)
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        // Also react to OS-level scheme changes when no explicit theme is set.
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (!document.documentElement.getAttribute('data-theme')) update();
+            });
+        }
     </script>
 </body>
 </html>

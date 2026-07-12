@@ -234,6 +234,22 @@ const OPTICAL_LIMITS = {
 };
 const OPTOD_LIMITS = { min: -100, max: 100, fallback: 0 };
 
+// ── Design-system Plotly palette (series colors, theme-reactive) ──
+const GB_PLOT = {
+    light: ['#226ba0', '#c8831e', '#be6f96', '#c65d26', '#439ccc', '#0a9068'],
+    dark:  ['#4086bd', '#c48225', '#b7698f', '#cd6a39', '#3c96c5', '#319873'],
+};
+function gbSeries() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+        || (!document.documentElement.getAttribute('data-theme')
+            && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return GB_PLOT[dark ? 'dark' : 'light'];
+}
+function cssVar(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+}
+
 function clampNumber(value, min, max, fallback) {
     const n = Number(value);
     if (!Number.isFinite(n)) return fallback;
@@ -332,6 +348,15 @@ function renderPlot(result, typeStr, optodes) {
     const absVals = Array.from(Svox).map(Math.abs).sort((a, b) => b - a);
     const maxAbsS = absVals[Math.min(2, absVals.length - 1)];
 
+    const series = gbSeries();
+    const grid = cssVar('--border', '#e0dcd6');
+    const zero = cssVar('--border-strong', '#c8c2bc');
+    const fontColor = cssVar('--muted', '#6b6b6b');
+    const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
+
+    // Diverging blue–white–red colorscale for the signed sensitivity field —
+    // kept independent of the qualitative GB_PLOT series palette (which has
+    // only 6 discrete hues, not a continuous/diverging scale for heatmap data).
     const heatmap = {
         type: 'heatmap',
         x: Array.from(x),
@@ -355,29 +380,34 @@ function renderPlot(result, typeStr, optodes) {
         srcXs = [optodes.s1x, optodes.s2x]; detXs = [optodes.d1x, optodes.d2x];
     }
 
+    // Source/detector markers: no established domain color convention (unlike
+    // e.g. oxy/deoxy hemoglobin), so first/primary series wears slot 0, second
+    // wears slot 1. Marker outline stays white — it isolates the dot from the
+    // heatmap underneath, not from the page background, so it doesn't need to
+    // theme-react.
     const srcTrace = {
         type: 'scatter', mode: 'markers',
         x: srcXs, y: srcXs.map(() => 0),
-        marker: { color: '#e74c3c', size: 10, symbol: 'circle',
+        marker: { color: series[0], size: 10, symbol: 'circle',
                   line: { color: '#fff', width: 1.5 } },
         name: 'Source(s)',
     };
     const detTrace = {
         type: 'scatter', mode: 'markers',
         x: detXs, y: detXs.map(() => 0),
-        marker: { color: '#2980b9', size: 10, symbol: 'circle',
+        marker: { color: series[1], size: 10, symbol: 'circle',
                   line: { color: '#fff', width: 1.5 } },
         name: 'Detector(s)',
     };
 
     Plotly.react('plot', [heatmap, srcTrace, detTrace], {
-        xaxis: { title: 'x (mm)', gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
+        xaxis: { title: 'x (mm)', gridcolor: grid, zerolinecolor: zero },
         yaxis: { title: 'Depth (mm)', autorange: 'reversed',
                  scaleanchor: 'x', scaleratio: 1,
-                 gridcolor: '#e0dcd6', zerolinecolor: '#c8c2bc' },
+                 gridcolor: grid, zerolinecolor: zero },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor:  'rgba(0,0,0,0)',
-        font: { family: 'DM Sans, sans-serif', size: 12, color: '#6b6b6b' },
+        font: { family: fontFamily, size: 12, color: fontColor },
         margin: { t: 20, r: 20, b: 50, l: 60 },
         legend: { x: 1.08, y: 1, xanchor: 'left' },
     }, { responsive: true });
@@ -406,6 +436,17 @@ document.getElementById('arrangement').addEventListener('change', updateArrangem
 document.getElementById('compute-btn').addEventListener('click', runCompute);
 updateArrangement();   // initialise derived values + optode-panel visibility
 runCompute();          // draw the initial map so the user sees something on load
+
+// ── Theme reactivity ─────────────────────────────────────────
+// Re-render whenever the navbar theme toggle flips data-theme on <html>.
+new MutationObserver(runCompute)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+// Also react to OS-level scheme changes when no explicit theme is set.
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (!document.documentElement.getAttribute('data-theme')) runCompute();
+    });
+}
 </script>
 
 </body>
