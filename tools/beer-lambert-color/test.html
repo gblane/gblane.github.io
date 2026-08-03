@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>beer-lambert-color — unit tests</title>
+    <style>
+        body { font-family: monospace; padding: 1rem; background: #fafafa; }
+        .pass { color: #1a7a1a; margin: 2px 0; }
+        .fail { color: #c0392b; font-weight: bold; margin: 2px 0; }
+        #summary { margin-top: 1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h2>beer-lambert-color — unit tests</h2>
+<div id="results"></div>
+<div id="summary"></div>
+<script src="../_data/chromophores.js"></script>
+<script src="colorimetry.js"></script>
+<script src="spectra.js"></script>
+<script src="tests.js"></script>
+<script>
+const _out = document.getElementById('results');
+let _p = 0, _f = 0;
+function _line(ok, text) {
+    const el = document.createElement('p');
+    el.className = ok ? 'pass' : 'fail';
+    el.textContent = (ok ? '✓ ' : '✗ ') + text;
+    _out.appendChild(el);
+    ok ? _p++ : _f++;
+}
+function check(name, actual, expected, tol = 1e-6, absolute = false) {
+    const err = absolute ? Math.abs(actual - expected)
+                         : Math.abs(actual - expected) / (Math.abs(expected) + 1e-300);
+    _line(err <= tol, name + (err <= tol ? '' :
+        `  got=${actual} exp=${expected} err=${err.toExponential(2)}`));
+}
+function checkTrue(name, ok, detail) { _line(!!ok, name + (ok ? '' : `  got=${detail}`)); }
+registerTests(check, checkTrue);
+document.getElementById('summary').textContent = `${_p} passed, ${_f} failed`;
+</script>
+</body>
+</html>
