@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Beer–Lambert Colour · Giles Blaney</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
+    <meta name="author" content="Giles Blaney, PhD">
+    <meta name="description" content="Perceived colour of a slab computed from an illuminant spectrum, an absorber mixture, and Beer-Lambert transmittance, via CIE colorimetry.">
+
+    <!-- Open Graph / Twitter Card -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Beer–Lambert Colour · Giles Blaney">
+    <meta property="og:description" content="From a source spectrum and an absorbing slab to the colour you see.">
+    <meta property="og:url" content="https://gbphd.com/tools/beer-lambert-color/">
+    <meta property="og:image" content="https://gbphd.com/img/research/flu.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Beer–Lambert Colour · Giles Blaney">
+    <meta name="twitter:description" content="From a source spectrum and an absorbing slab to the colour you see.">
+    <meta name="twitter:image" content="https://gbphd.com/img/research/flu.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/site.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js" integrity="sha384-AHAnt9ZhGeHIrydA1Kp1L7FN+2UosbF7RQg6C+9Is/a7kDpQ1684C2iH2VWil6r4" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div data-include="navbar"></div>
+
+    <div class="container">
+        <div class="tool-header">
+            <div class="section-eyebrow">Spectroscopy &amp; Colour</div>
+            <h1 class="tool-title">Beer–Lambert Colour</h1>
+            <p class="tool-subtitle">From a source spectrum and an absorbing slab to the colour you see</p>
+        </div>
+
+        <!-- Row 1: controls -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-5">
+                <div class="param-card">
+                    <div class="param-label mb-2">Source</div>
+                    <select class="form-select form-select-sm mb-3" id="illum-select"></select>
+                    <div id="illum-params"></div>
+                    <details class="mt-2">
+                        <summary class="param-label">Custom source spectrum</summary>
+                        <p class="param-unit mb-1">Two columns: λ (nm), relative power.
+                           Scale is irrelevant — any units work.</p>
+                        <textarea class="form-control form-control-sm" id="src-paste" rows="4"></textarea>
+                        <button class="btn btn-run btn-sm mt-2" id="src-apply">Apply</button>
+                        <div class="param-unit mt-1" id="src-msg"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="param-card">
+                    <div class="param-label mb-2">Absorbers</div>
+                    <div id="mixture-rows"></div>
+                    <button class="btn btn-run btn-sm mt-2" id="add-absorber">+ Add absorber</button>
+                    <hr>
+                    <div class="param-label mb-1">Path length <span class="param-unit">(mm)</span></div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="range" class="form-range flex-grow-1" id="len-slider"
+                               min="-3" max="2" step="0.01" value="0">
+                        <input type="number" class="form-control form-control-sm" id="len-input"
+                               style="width: 7.5rem;" min="0.001" max="100" step="0.001" value="1">
+                    </div>
+                    <details class="mt-2">
+                        <summary class="param-label">Custom μₐ spectrum</summary>
+                        <p class="param-unit mb-1">Two columns: λ (nm), μₐ (mm⁻¹).</p>
+                        <textarea class="form-control form-control-sm" id="mua-paste" rows="4"></textarea>
+                        <button class="btn btn-run btn-sm mt-2" id="mua-apply">Apply</button>
+                        <div class="param-unit mt-1" id="mua-msg"></div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: spectra (Task 9) -->
+        <div class="row g-0 align-items-center mb-4" id="spectra-row"></div>
+
+        <!-- Row 3: colour (Task 10) -->
+        <div class="row g-3 mb-5" id="colour-row"></div>
+
+        <div class="about-card mb-5">
+            <div class="about-title">About</div>
+            <p class="about-text" id="about-text"></p>
+        </div>
+    </div>
+
+    <div data-include="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" integrity="sha384-cCVCZkAjYNxaYKbM8lsArLznDF/SvMFr1jcZrvOpSTCa0W40ZAdLzHCEulnUa5i7" crossorigin="anonymous"></script>
+    <script src="/_partials/include.js"></script>
+    <script src="/tools/_data/chromophores.js"></script>
+    <script src="colorimetry.js"></script>
+    <script src="spectra.js"></script>
+    <script>
+    // ── Controls ────────────────────────────────────────────────────────────
+    let MIXTURE = [{ key: 'hb', params: { HbT: 65, S: 0.65 } }];
+    let ILLUM = { key: 'D65', params: {} };
+
+    function el(tag, cls, text) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;   // textContent, never innerHTML
+        return e;
+    }
+
+    function paramRow(spec, params, onInput) {
+        const wrap = el('div', 'mb-2');
+        const head = el('div', 'd-flex justify-content-between align-items-baseline mb-1');
+        head.appendChild(el('span', 'param-label',
+            spec.label + (spec.unit ? ` (${spec.unit})` : '')));
+        const val = el('span', 'param-value', String(params[spec.key]));
+        head.appendChild(val);
+        wrap.appendChild(head);
+        const input = el('input', 'form-range');
+        input.type = 'range';
+        input.min = spec.min; input.max = spec.max; input.step = spec.step;
+        input.value = params[spec.key];
+        input.addEventListener('input', () => {
+            params[spec.key] = Number(input.value);
+            val.textContent = input.value;
+            onInput();
+        });
+        wrap.appendChild(input);
+        return wrap;
+    }
+
+    function renderIllumParams() {
+        const host = document.getElementById('illum-params');
+        host.textContent = '';
+        const spec = ILLUMINANTS.find(i => i.key === ILLUM.key);
+        for (const p of spec.params) {
+            if (ILLUM.params[p.key] == null) ILLUM.params[p.key] = p.def;
+            host.appendChild(paramRow(p, ILLUM.params, update));
+        }
+    }
+
+    function renderMixture() {
+        const host = document.getElementById('mixture-rows');
+        host.textContent = '';
+        MIXTURE.forEach((entry, idx) => {
+            const card = el('div', 'mb-3 pb-2 border-bottom');
+            const top = el('div', 'd-flex gap-2 align-items-center mb-2');
+            const sel = el('select', 'form-select form-select-sm');
+            let group = null;
+            for (const a of ABSORBERS) {
+                if (a.group !== group) {
+                    group = a.group;
+                    const og = document.createElement('optgroup');
+                    og.label = group;
+                    sel.appendChild(og);
+                }
+                const o = document.createElement('option');
+                o.value = a.key;
+                o.textContent = a.label + (a.note ? ` — ${a.note}` : '');
+                sel.lastChild.appendChild(o);
+            }
+            sel.value = entry.key;
+            sel.addEventListener('change', () => {
+                entry.key = sel.value;
+                entry.params = {};
+                for (const p of ABSORBER_BY_KEY[entry.key].params) entry.params[p.key] = p.def;
+                renderMixture(); update();
+            });
+            top.appendChild(sel);
+            const rm = el('button', 'btn btn-sm btn-outline-secondary', '×');
+            rm.addEventListener('click', () => {
+                MIXTURE.splice(idx, 1); renderMixture(); update();
+            });
+            top.appendChild(rm);
+            card.appendChild(top);
+            for (const p of ABSORBER_BY_KEY[entry.key].params) {
+                if (entry.params[p.key] == null) entry.params[p.key] = p.def;
+                card.appendChild(paramRow(p, entry.params, update));
+            }
+            host.appendChild(card);
+        });
+    }
+
+    // Reused verbatim from tools/tissue-absorption/index.html:247-258 — the site's
+    // existing bounded-numeric-input pattern. Duplicated rather than hoisted into a
+    // shared util, matching how the other tool pages already carry it; hoisting would
+    // be an unrequested site-wide refactor.
+    function clampNumber(value, min, max, fallback) {
+        const n = Number(value);
+        if (!Number.isFinite(n)) return fallback;
+        return Math.min(max, Math.max(min, n));
+    }
+    function boundedInputValue(id, min, max, fallback) {
+        const input = document.getElementById(id);
+        const value = clampNumber(input.value, min, max, fallback);
+        if (String(input.value) !== String(value)) input.value = value;
+        return value;
+    }
+
+    // The slider is log10(L); the box is L itself and is the authoritative value.
+    // LEN_MIN is 0.001 mm rather than 0 because the slider is logarithmic, so L = 0
+    // is unreachable by design. T = 1 at L = 0 is therefore never exercised in the
+    // UI; the identity is covered in tests instead.
+    const LEN_MIN = 0.001, LEN_MAX = 100;
+    function pathLength() { return boundedInputValue('len-input', LEN_MIN, LEN_MAX, 1); }
+
+    function getState() {
+        return { illum: ILLUM, mixture: MIXTURE, Lmm: pathLength() };
+    }
+
+    function compute() {
+        const st = getState();
+        const S = ILLUMINANTS.find(i => i.key === st.illum.key).spd(st.illum.params);
+        const mua = muaMixture(st.mixture);
+        const T = transmittance(mua, st.Lmm);
+        return { S, mua, T, Lmm: st.Lmm,
+                 adapted: slabColour(S, T, true), aslit: slabColour(S, T, false) };
+    }
+
+    function update() {
+        const r = compute();
+        drawSpectra(r);     // Task 9
+        drawColour(r);      // Task 10
+    }
+
+    function drawSpectra() {}   // replaced in Task 9
+    function drawColour() {}    // replaced in Task 10
+
+    function init() {
+        const sel = document.getElementById('illum-select');
+        for (const i of ILLUMINANTS) {
+            const o = document.createElement('option');
+            o.value = i.key; o.textContent = i.label;
+            sel.appendChild(o);
+        }
+        sel.value = ILLUM.key;
+        sel.addEventListener('change', () => {
+            ILLUM = { key: sel.value, params: {} };
+            renderIllumParams(); update();
+        });
+        document.getElementById('add-absorber').addEventListener('click', () => {
+            MIXTURE.push({ key: 'melanin', params: { f: 0.02 } });
+            renderMixture(); update();
+        });
+        // Keep the log slider and the linear box in sync; either may drive an update.
+        const lenSlider = document.getElementById('len-slider');
+        const lenBox = document.getElementById('len-input');
+        lenSlider.addEventListener('input', () => {
+            lenBox.value = Number(Math.pow(10, Number(lenSlider.value)).toPrecision(3));
+            update();
+        });
+        lenBox.addEventListener('change', () => {
+            lenSlider.value = Math.log10(pathLength());
+            update();
+        });
+        renderIllumParams();
+        renderMixture();
+        update();
+    }
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
