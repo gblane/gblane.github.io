@@ -102,7 +102,36 @@
         </div>
 
         <!-- Row 3: colour (Task 10) -->
-        <div class="row g-3 mb-5" id="colour-row"></div>
+        <div class="row g-3 mb-5" id="colour-row">
+            <div class="col-md-4">
+                <div class="param-card h-100">
+                    <div class="section-eyebrow">Adapted</div>
+                    <div class="swatch" id="swatch-adapted"></div>
+                    <div class="param-value mt-2" id="lab-adapted"></div>
+                    <div class="param-unit" id="hex-adapted"></div>
+                    <div class="param-unit text-warning" id="gamut-adapted"></div>
+                    <p class="about-text mt-2 mb-0">As an observer adapted to this
+                       light would see it.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="param-card h-100">
+                    <div class="section-eyebrow">As-lit</div>
+                    <div class="swatch" id="swatch-aslit"></div>
+                    <div class="param-value mt-2" id="lab-aslit"></div>
+                    <div class="param-unit" id="hex-aslit"></div>
+                    <div class="param-unit text-warning" id="gamut-aslit"></div>
+                    <p class="about-text mt-2 mb-0">The light leaving the slab, with
+                       no adaptation applied.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="param-card h-100">
+                    <div class="section-eyebrow">CIE 1931</div>
+                    <div id="plot-chroma" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
 
         <div class="about-card mb-5">
             <div class="about-title">About</div>
@@ -314,7 +343,78 @@
                name: 'Φ(λ)', line: { color: r.adapted.hex, width: 2 } }],
             baseLayout('Detected  Φ(λ) = S·T', 'relative power'), PLOT_CFG);
     }
-    function drawColour() {}    // replaced in Task 10
+    // sRGB fill for the gamut triangle, rendered once per theme to a data URI.
+    let _gamutImg = null, _gamutTheme = null;
+    function gamutFill() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'auto';
+        if (_gamutImg && _gamutTheme === theme) return _gamutImg;
+        const N = 256, cv = document.createElement('canvas');
+        cv.width = cv.height = N;
+        const ctx = cv.getContext('2d'), img = ctx.createImageData(N, N);
+        for (let py = 0; py < N; py++) {
+            const y = 1 - (py + 0.5) / N;
+            for (let px = 0; px < N; px++) {
+                const x = (px + 0.5) / N, o = 4 * (py * N + px);
+                if (y <= 0 || x + y > 1) continue;
+                // Chromaticity -> XYZ at Y = 100, then straight through the sRGB path.
+                const Y = 100, X = Y * x / y, Z = Y * (1 - x - y) / y;
+                const c = xyzToSrgb({ X, Y, Z });
+                if (c.clipped) continue;         // outside sRGB: leave transparent
+                img.data[o] = c.r; img.data[o + 1] = c.g;
+                img.data[o + 2] = c.b; img.data[o + 3] = 255;
+            }
+        }
+        ctx.putImageData(img, 0, 0);
+        _gamutImg = cv.toDataURL(); _gamutTheme = theme;
+        return _gamutImg;
+    }
+
+    function drawColour(r) {
+        for (const [id, c] of [['adapted', r.adapted], ['aslit', r.aslit]]) {
+            document.getElementById('swatch-' + id).style.backgroundColor = c.hex;
+            document.getElementById('lab-' + id).textContent =
+                `L* ${c.L.toFixed(1)}   a* ${c.a.toFixed(1)}   b* ${c.b.toFixed(1)}`;
+            document.getElementById('hex-' + id).textContent = c.hex;
+            document.getElementById('gamut-' + id).textContent =
+                c.clipped ? 'outside sRGB gamut — clipped' : '';
+        }
+
+        const loc = spectralLocus();
+        const closedX = loc.x.concat([loc.x[0]]), closedY = loc.y.concat([loc.y[0]]);
+        const P = SRGB_PRIMARIES;
+        const wA = xyzToXy(r.adapted), wL = xyzToXy(r.aslit);
+        const srcW = xyzToXy(whiteXYZ(r.S));
+        const series = gbSeries();
+
+        Plotly.react('plot-chroma', [
+            { x: closedX, y: closedY, mode: 'lines', name: 'spectral locus',
+              line: { color: cssVar('--text', '#1a1814'), width: 1.5 }, hoverinfo: 'skip' },
+            { x: [P.r[0], P.g[0], P.b[0], P.r[0]], y: [P.r[1], P.g[1], P.b[1], P.r[1]],
+              mode: 'lines', name: 'sRGB gamut',
+              line: { color: cssVar('--muted', '#8a8078'), width: 1, dash: 'dot' },
+              hoverinfo: 'skip' },
+            { x: [srcW[0]], y: [srcW[1]], mode: 'markers', name: 'source white',
+              marker: { symbol: 'x', size: 9, color: cssVar('--muted', '#8a8078') } },
+            { x: [wL[0]], y: [wL[1]], mode: 'markers', name: 'as-lit',
+              marker: { symbol: 'triangle-up', size: 12, color: r.aslit.hex,
+                        line: { width: 1, color: cssVar('--text', '#1a1814') } } },
+            { x: [wA[0]], y: [wA[1]], mode: 'markers', name: 'adapted',
+              marker: { symbol: 'diamond', size: 12, color: r.adapted.hex,
+                        line: { width: 1, color: cssVar('--text', '#1a1814') } } },
+        ], {
+            margin: { l: 42, r: 10, t: 10, b: 38 },
+            xaxis: { title: 'x', range: [0, 0.8], gridcolor: cssVar('--plot-grid', '#e0dcd6') },
+            yaxis: { title: 'y', range: [0, 0.9], gridcolor: cssVar('--plot-grid', '#e0dcd6'),
+                     scaleanchor: 'x', scaleratio: 1 },
+            images: [{ source: gamutFill(), xref: 'x', yref: 'y',
+                       x: 0, y: 1, sizex: 1, sizey: 1,
+                       sizing: 'stretch', layer: 'below', opacity: 0.85 }],
+            paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: cssVar('--text', '#1a1814'),
+                    family: cssVar('--font-sans', "'Source Sans 3', sans-serif"), size: 10 },
+            legend: { orientation: 'h', y: -0.18, font: { size: 9 } },
+        }, PLOT_CFG);
+    }
 
     function init() {
         const sel = document.getElementById('illum-select');
