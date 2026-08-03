@@ -130,4 +130,72 @@ function registerTests(check, checkTrue) {
         check('source scale invariance a*', c2.a, c1.a, 1e-9);
         check('source scale invariance b*', c2.b, c1.b, 1e-9);
     }
+
+    // --- Beer-Lambert algebra (moved here from Task 4) -------------------------
+    // Task 4 asserted this with Math.exp on both sides, which tested Math.exp
+    // rather than any project code. transmittance() exists now, so point at it.
+    {
+        const mua = muaMixture([{ key: 'methyleneBlue', params: { c: 40 } }]);
+        const t1 = transmittance(mua, 1), t2 = transmittance(mua, 2);
+        for (const i of [40, 200, 320])
+            check(`doubling L squares T at ${i + CIE_LAM_MIN} nm`, t2[i], t1[i] * t1[i], 1e-12);
+        const zero = transmittance(mua, 0);
+        checkTrue('L = 0 gives T = 1 everywhere', zero.every(v => v === 1), 'not all 1');
+    }
+
+    // --- Absorber library -----------------------------------------------------
+    {
+        // Mixture linearity: doubling concentration doubles mua.
+        const one = muaMixture([{ key: 'methyleneBlue', params: { c: 10 } }]);
+        const two = muaMixture([{ key: 'methyleneBlue', params: { c: 20 } }]);
+        check('doubling concentration doubles mua', two[300], 2 * one[300], 1e-12);
+
+        // Additivity: a two-component mixture equals the sum of its parts.
+        const a = muaMixture([{ key: 'chlA', params: { c: 5 } }]);
+        const b = muaMixture([{ key: 'bCar', params: { c: 5 } }]);
+        const ab = muaMixture([{ key: 'chlA', params: { c: 5 } },
+                               { key: 'bCar', params: { c: 5 } }]);
+        check('mixture is additive', ab[120], a[120] + b[120], 1e-12);
+
+        // Hemoglobin: StO2 must actually move the spectrum in the red.
+        const oxy = muaMixture([{ key: 'hb', params: { HbT: 2300, S: 1 } }]);
+        const deo = muaMixture([{ key: 'hb', params: { HbT: 2300, S: 0 } }]);
+        const i660 = 660 - CIE_LAM_MIN;
+        checkTrue('deoxy absorbs more than oxy at 660 nm',
+                  deo[i660] > oxy[i660], `${deo[i660]} vs ${oxy[i660]}`);
+
+        // Known-appearance sanity: hue angle must match the substance.
+        const hue = key => {
+            const mua = muaMixture([{ key, params: { c: 20 } }]);
+            const c = slabColour(CIE.D65, transmittance(mua, 1), true);
+            let h = Math.atan2(c.b, c.a) * 180 / Math.PI;
+            return h < 0 ? h + 360 : h;
+        };
+        const hCar = hue('bCar'), hChl = hue('chlA'), hMb = hue('methyleneBlue');
+        checkTrue('β-carotene reads orange/yellow', hCar > 40 && hCar < 110, hCar);
+        checkTrue('chlorophyll a reads green', hChl > 100 && hChl < 190, hChl);
+        checkTrue('methylene blue reads blue/cyan', hMb > 190 && hMb < 290, hMb);
+
+        // Thin oxygenated blood must read red.
+        const blood = muaMixture([{ key: 'hb', params: { HbT: 2300, S: 0.98 } }]);
+        const cb = slabColour(CIE.D65, transmittance(blood, 0.05), true);
+        let hb = Math.atan2(cb.b, cb.a) * 180 / Math.PI; if (hb < 0) hb += 360;
+        checkTrue('thin oxygenated blood reads red', hb < 60 || hb > 330, hb);
+    }
+
+    // --- Shared chromophore module still matches what shipped before ----------
+    // Spot values lifted from the arrays that were inline in tissue-absorption
+    // before Task 1. The extraction script checked all 601 overlapping points,
+    // but that script is deleted — these literals are the surviving regression net.
+    {
+        const at = nm => nm - GB_CHROM.lamMin;
+        check('E_HbO2 at 400 nm',  GB_CHROM.E_HbO2[at(400)],  0.0613022, 1e-5);
+        check('E_Hb at 400 nm',    GB_CHROM.E_Hb[at(400)],    0.0514158, 1e-5);
+        check('E_water at 400 nm', GB_CHROM.E_water[at(400)], 3.6e-05,   1e-5);
+        check('E_lipid at 429 nm', GB_CHROM.E_lipid[at(429)], 0.00828092, 1e-4);
+        check('E_lipid at 400 nm is zero', GB_CHROM.E_lipid[at(400)], 0, 1e-12, true);
+        checkTrue('chromophore grid spans 380-1000 nm',
+                  GB_CHROM.lamMin === 380 && GB_CHROM.E_HbO2.length === 621,
+                  `${GB_CHROM.lamMin}, ${GB_CHROM.E_HbO2.length}`);
+    }
 }
