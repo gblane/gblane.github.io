@@ -710,7 +710,10 @@ footer a:hover { color: var(--paper); }
 .swatch {
     height: 96px;
     border-radius: 6px;
-    border: 1px solid var(--rule);
+    /* --border, not --rule: --rule is not a token in site.css, and an undefined
+       custom property inside the `border` shorthand makes the whole declaration
+       invalid at computed-value time, so the ring silently would not render. */
+    border: 1px solid var(--border);
     background-image:
         linear-gradient(45deg, rgba(128,128,128,.25) 25%, transparent 25%, transparent 75%, rgba(128,128,128,.25) 75%),
         linear-gradient(45deg, rgba(128,128,128,.25) 25%, transparent 25%, transparent 75%, rgba(128,128,128,.25) 75%);

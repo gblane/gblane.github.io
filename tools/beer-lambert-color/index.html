@@ -384,7 +384,8 @@
         const P = SRGB_PRIMARIES;
         const wA = xyzToXy(r.adapted), wL = xyzToXy(r.aslit);
         const srcW = xyzToXy(whiteXYZ(r.S));
-        const series = gbSeries();
+        // No gbSeries() here: this panel colours its markers from the computed
+        // swatch hexes and its chrome from cssVar, never from the series palette.
 
         Plotly.react('plot-chroma', [
             { x: closedX, y: closedY, mode: 'lines', name: 'spectral locus',
