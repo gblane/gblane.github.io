@@ -698,3 +698,10 @@ footer a:hover { color: var(--paper); }
 }
 :root[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* Beer–Lambert colour tool: light-flow arrows between the spectra panels */
+.flow-arrow { color: var(--muted); }
+@media (max-width: 767.98px) {
+    #spectra-row > .col-auto { width: 100%; text-align: center; }
+    .flow-arrow { transform: rotate(90deg); }
+}

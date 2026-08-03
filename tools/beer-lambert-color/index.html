@@ -89,7 +89,17 @@
         </div>
 
         <!-- Row 2: spectra (Task 9) -->
-        <div class="row g-0 align-items-center mb-4" id="spectra-row"></div>
+        <div class="row g-0 align-items-center mb-4" id="spectra-row">
+            <div class="col"><div id="plot-source" style="height: 260px;"></div></div>
+            <div class="col-auto px-1"><svg width="26" height="26" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" class="flow-arrow"
+                 aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="col"><div id="plot-mua" style="height: 260px;"></div></div>
+            <div class="col-auto px-1"><svg width="26" height="26" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" class="flow-arrow"
+                 aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="col"><div id="plot-detected" style="height: 260px;"></div></div>
+        </div>
 
         <!-- Row 3: colour (Task 10) -->
         <div class="row g-3 mb-5" id="colour-row"></div>
@@ -235,7 +245,75 @@
         drawColour(r);      // Task 10
     }
 
-    function drawSpectra() {}   // replaced in Task 9
+    // ── Design-system Plotly palette (series colors, theme-reactive) ──
+    // Copied verbatim from tools/tissue-absorption/index.html:209-228.
+    const GB_PLOT = {
+        light: ['#226ba0', '#c8831e', '#be6f96', '#c65d26', '#439ccc', '#0a9068'],
+        dark:  ['#4086bd', '#c48225', '#b7698f', '#cd6a39', '#3c96c5', '#319873'],
+    };
+    function gbSeries() {
+        const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+            || (!document.documentElement.getAttribute('data-theme')
+                && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        return GB_PLOT[dark ? 'dark' : 'light'];
+    }
+    function cssVar(name, fallback) {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        if (!v) return fallback;
+        // Plotly's color parser doesn't understand modern CSS color
+        // functions (oklch, etc.) used by the design tokens — resolve via
+        // a scratch canvas so it always gets an rgb()/rgba() string.
+        const ctx = document.createElement('canvas').getContext('2d');
+        ctx.fillStyle = v;
+        return ctx.fillStyle;
+    }
+
+    const LAM = Array.from({ length: CIE_N }, (_, i) => i + CIE_LAM_MIN);
+
+    function baseLayout(title, yTitle) {
+        return {
+            title: { text: title, font: { size: 13 } },
+            margin: { l: 48, r: 12, t: 32, b: 40 },
+            xaxis: { title: 'λ (nm)', gridcolor: cssVar('--plot-grid', '#e0dcd6'), range: [380, 780] },
+            yaxis: { title: yTitle, gridcolor: cssVar('--plot-grid', '#e0dcd6') },
+            paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: cssVar('--text', '#1a1814'),
+                    family: cssVar('--font-sans', "'Source Sans 3', sans-serif") },
+            showlegend: false,
+        };
+    }
+    const PLOT_CFG = { displayModeBar: false, responsive: true };
+
+    function drawSpectra(r) {
+        const series = gbSeries();
+        const norm = a => { const m = Math.max(...a); return m > 0 ? a.map(v => v / m) : a; };
+
+        Plotly.react('plot-source',
+            [{ x: LAM, y: norm(r.S), type: 'scatter', mode: 'lines', fill: 'tozeroy',
+               line: { color: series[0], width: 2 }, name: 'S(λ)' }],
+            baseLayout('Source  S(λ)', 'relative power'), PLOT_CFG);
+
+        Plotly.react('plot-mua',
+            [{ x: LAM, y: r.mua, type: 'scatter', mode: 'lines',
+               line: { color: series[1], width: 2 }, name: 'μₐ(λ)' },
+             { x: LAM, y: r.T, type: 'scatter', mode: 'lines', yaxis: 'y2', visible: 'legendonly',
+               line: { color: series[4], width: 1, dash: 'dot' }, name: 'T(λ)' }],
+            Object.assign(baseLayout('Absorption  μₐ(λ)', 'μₐ (mm⁻¹)'), {
+                showlegend: true,
+                legend: { orientation: 'h', y: -0.28, font: { size: 10 } },
+                yaxis2: { overlaying: 'y', side: 'right', range: [0, 1], showgrid: false },
+            }), PLOT_CFG);
+
+        // Incident as a faint ghost behind the transmitted spectrum: the gap is
+        // the absorbed light, which is the panel T(λ) would otherwise have shown.
+        const S = norm(r.S), phi = S.map((v, i) => v * r.T[i]);
+        Plotly.react('plot-detected',
+            [{ x: LAM, y: S, type: 'scatter', mode: 'lines', name: 'incident',
+               line: { color: cssVar('--muted', '#8a8078'), width: 1, dash: 'dash' } },
+             { x: LAM, y: phi, type: 'scatter', mode: 'lines', fill: 'tozeroy',
+               name: 'Φ(λ)', line: { color: r.adapted.hex, width: 2 } }],
+            baseLayout('Detected  Φ(λ) = S·T', 'relative power'), PLOT_CFG);
+    }
     function drawColour() {}    // replaced in Task 10
 
     function init() {
