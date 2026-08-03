@@ -33,11 +33,17 @@ function illuminantA() {
  * such in the UI. A measured spectrum can replace it without touching the pipeline.
  */
 function whiteLedSPD() {
-    const g = (lam, mu, sigma) => Math.exp(-0.5 * Math.pow((lam - mu) / sigma, 2));
+    // The phosphor band is ASYMMETRIC — wider on the red side. Real YAG:Ce
+    // phosphors have a long red tail, and a symmetric Gaussian centred near the
+    // luminous-efficiency peak cannot represent it: it lands at duv +0.021,
+    // 3.5x outside ANSI C78.377's +/-0.006 white tolerance, and reads visibly
+    // green. These values give duv +0.000 at CCT ~5150 K.
+    const g = (lam, mu, sLo, sHi) =>
+        Math.exp(-0.5 * Math.pow((lam - mu) / (lam < mu ? sLo : sHi), 2));
     const s = new Array(CIE_N);
     for (let i = 0; i < CIE_N; i++) {
         const lam = i + CIE_LAM_MIN;
-        s[i] = 1.00 * g(lam, 452, 14) + 1.15 * g(lam, 555, 55);
+        s[i] = 1.00 * g(lam, 452, 14, 14) + 0.80 * g(lam, 555, 35, 70);
     }
     return s;
 }

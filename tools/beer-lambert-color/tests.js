@@ -106,6 +106,22 @@ function registerTests(check, checkTrue) {
         check('illuminant A chromaticity x', xyA[0], 0.44758, 3e-3);
         check('illuminant A chromaticity y', xyA[1], 0.40745, 3e-3);
 
+        // The white LED must actually be white: within ANSI C78.377's +/-0.006
+        // duv of the Planckian locus. The original symmetric-phosphor fit sat at
+        // +0.021 and read visibly green, so this is a real regression guard.
+        {
+            const uv = xyz => { const [x, y] = xyzToXy(xyz); const d = -2 * x + 12 * y + 3;
+                                return [4 * x / d, 6 * y / d]; };
+            const led = uv(whiteXYZ(ILLUMINANTS.find(i => i.key === 'LED').spd({})));
+            let duv = Infinity;
+            for (let T = 2000; T <= 10000; T += 10) {
+                const p = uv(whiteXYZ(blackbodySPD(T)));
+                duv = Math.min(duv, Math.hypot(p[0] - led[0], p[1] - led[1]));
+            }
+            checkTrue('white LED is within ANSI C78.377 duv of the Planckian locus',
+                      duv < 0.006, `duv = ${duv.toFixed(4)}`);
+        }
+
         // Scale invariance: the k normalisation must make absolute scale irrelevant.
         const E1 = new Array(CIE_N).fill(1), E1000 = new Array(CIE_N).fill(1000);
         const T = CIE.xbar.map((_, i) => Math.exp(-0.003 * i));
