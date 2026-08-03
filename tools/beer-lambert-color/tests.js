@@ -90,10 +90,28 @@ function registerTests(check, checkTrue) {
         check('D65 white chromaticity x', xyzToXy(D65_WHITE)[0], 0.31272, 1e-3);
         check('D65 white chromaticity y', xyzToXy(D65_WHITE)[1], 0.32903, 1e-3);
     }
-}
 
-// TEMPORARY shim — replaced by the real illuminant registry in Task 6.
-// Task 6 deletes these three lines.
-function illuminantCases() {
-    return [['D65', CIE.D65], ['D50', CIE.D50]];
+    // --- Illuminants ----------------------------------------------------------
+    {
+        // Wien displacement: a 5000 K blackbody peaks near 2.898e6/5000 = 580 nm.
+        const s = blackbodySPD(5000);
+        let iMax = 0;
+        for (let i = 1; i < CIE_N; i++) if (s[i] > s[iMax]) iMax = i;
+        const peak = iMax + CIE_LAM_MIN;
+        checkTrue('5000 K blackbody peaks near 580 nm', Math.abs(peak - 580) < 12, peak);
+
+        // CIE A is a 2856 K Planckian; its chromaticity is published.
+        const A = ILLUMINANTS.find(i => i.key === 'A').spd({});
+        const xyA = xyzToXy(whiteXYZ(A));
+        check('illuminant A chromaticity x', xyA[0], 0.44758, 3e-3);
+        check('illuminant A chromaticity y', xyA[1], 0.40745, 3e-3);
+
+        // Scale invariance: the k normalisation must make absolute scale irrelevant.
+        const E1 = new Array(CIE_N).fill(1), E1000 = new Array(CIE_N).fill(1000);
+        const T = CIE.xbar.map((_, i) => Math.exp(-0.003 * i));
+        const c1 = slabColour(E1, T, false), c2 = slabColour(E1000, T, false);
+        check('source scale invariance L*', c2.L, c1.L, 1e-9);
+        check('source scale invariance a*', c2.a, c1.a, 1e-9);
+        check('source scale invariance b*', c2.b, c1.b, 1e-9);
+    }
 }
