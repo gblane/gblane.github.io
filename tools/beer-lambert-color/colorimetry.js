@@ -130,3 +130,24 @@ function slabColour(S, T, adapt) {
     return { X: xyz.X, Y: xyz.Y, Z: xyz.Z, L: lab.L, a: lab.a, b: lab.b,
              hex: rgb.hex, clipped: rgb.clipped };
 }
+
+// ── Chromaticity geometry ────────────────────────────────────────────────────
+
+function xyzToXy(xyz) {
+    const s = xyz.X + xyz.Y + xyz.Z;
+    return s === 0 ? [0, 0] : [xyz.X / s, xyz.Y / s];
+}
+
+/** The spectral locus, straight from the colour-matching functions. Open curve. */
+function spectralLocus() {
+    const x = new Array(CIE_N), y = new Array(CIE_N);
+    for (let i = 0; i < CIE_N; i++) {
+        const s = CIE.xbar[i] + CIE.ybar[i] + CIE.zbar[i];
+        x[i] = s === 0 ? 0 : CIE.xbar[i] / s;
+        y[i] = s === 0 ? 0 : CIE.ybar[i] / s;
+    }
+    return { x, y };
+}
+
+// IEC 61966-2-1 sRGB primaries.
+const SRGB_PRIMARIES = { r: [0.64, 0.33], g: [0.30, 0.60], b: [0.15, 0.06] };

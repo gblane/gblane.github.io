@@ -60,6 +60,25 @@ function registerTests(check, checkTrue) {
         check('D50 white adapts onto D65 white / Y', got.Y, D65_WHITE.Y, 1e-9);
         check('D50 white adapts onto D65 white / Z', got.Z, D65_WHITE.Z, 1e-9);
     }
+
+    // --- 10. Chromaticity geometry -------------------------------------------
+    {
+        const loc = spectralLocus();
+        checkTrue('locus has one point per nm', loc.x.length === CIE_N, loc.x.length);
+        checkTrue('every locus point satisfies x + y <= 1',
+                  loc.x.every((v, i) => v + loc.y[i] <= 1 + 1e-9), 'a point escaped the triangle');
+        checkTrue('every locus point is non-negative',
+                  loc.x.every((v, i) => v >= -1e-12 && loc.y[i] >= -1e-12), 'negative chromaticity');
+        // 520 nm sits near the top-left of the horseshoe.
+        const i520 = 520 - CIE_LAM_MIN;
+        checkTrue('locus at 520 nm is in the green corner',
+                  loc.x[i520] < 0.15 && loc.y[i520] > 0.75, `${loc.x[i520]},${loc.y[i520]}`);
+        // sRGB primaries must land on their published vertices.
+        check('sRGB red primary x', SRGB_PRIMARIES.r[0], 0.64, 1e-12);
+        check('sRGB green primary y', SRGB_PRIMARIES.g[1], 0.60, 1e-12);
+        check('D65 white chromaticity x', xyzToXy(D65_WHITE)[0], 0.31272, 1e-3);
+        check('D65 white chromaticity y', xyzToXy(D65_WHITE)[1], 0.32903, 1e-3);
+    }
 }
 
 // TEMPORARY shim — replaced by the real illuminant registry in Task 6.
