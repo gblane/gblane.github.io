@@ -96,10 +96,17 @@ function _gamma(c) {
     return c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
 }
 
+// The gamut guard must exceed the ~4e-5 gap between D65_WHITE — integrated from
+// the tabulated SPD — and the sRGB spec white (0.95047, 1, 1.08883) that
+// _XYZ2RGB assumes. A tighter epsilon reports the clear-slab reference swatch,
+// the one the whole two-swatch design is anchored on, as out of gamut under
+// every illuminant. 1e-4 in linear light is still far below one 8-bit code.
+const GAMUT_EPS = 1e-4;
+
 function xyzToSrgb(xyz) {
     // XYZ arrives on a Y=100 scale; sRGB expects Y=1.
     const lin = _mul3(_XYZ2RGB, [xyz.X / 100, xyz.Y / 100, xyz.Z / 100]);
-    const clipped = lin.some(v => v < -1e-9 || v > 1 + 1e-9);
+    const clipped = lin.some(v => v < -GAMUT_EPS || v > 1 + GAMUT_EPS);
     const ch = lin.map(v => {
         const g = _gamma(Math.min(1, Math.max(0, v)));
         return Math.max(0, Math.min(255, Math.round(g * 255)));

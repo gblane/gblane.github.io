@@ -35,14 +35,30 @@ function registerTests(check, checkTrue) {
               xyzToSrgb(D65_WHITE).hex);
 
     // --- 5. Unit conversion: the 2.303 trap -----------------------------------
-    check('eps 1 M^-1cm^-1 at 1 M -> mua mm^-1', epsToMua(1, 1), Math.LN10 / 10, 1e-12);
+    // Non-unit arguments against a hard literal: unit args cannot distinguish
+    // multiplying by concentration from dividing by it, and comparing against
+    // Math.LN10/10 would just restate the implementation's own constant.
+    check('eps 2 M^-1cm^-1 at 3 M -> mua mm^-1', epsToMua(2, 3), 1.3815510557964276, 1e-12);
 
-    // --- 6. Beer-Lambert algebra ----------------------------------------------
+    // --- 6. Gamut flag ---------------------------------------------------------
+    // The clear slab is the reference swatch; it must NOT report out of gamut.
+    checkTrue('clear slab is in gamut', !slabColour(CIE.D65, null, true).clipped, 'clipped');
     {
-        const mua = [0.1, 0.5, 2.0];
-        const t1 = mua.map(m => Math.exp(-m * 1)), t2 = mua.map(m => Math.exp(-m * 2));
-        for (let i = 0; i < mua.length; i++)
-            check(`doubling L squares T (mua=${mua[i]})`, t2[i], t1[i] * t1[i], 1e-12);
+        // A monochromatic 520 nm slab is genuinely outside sRGB and must say so.
+        const T = new Array(CIE_N).fill(0); T[520 - CIE_LAM_MIN] = 1;
+        checkTrue('a spectral colour reports out of gamut',
+                  slabColour(CIE.D65, T, true).clipped, 'not clipped');
+    }
+
+    // --- 7. Bradford with a non-degenerate adaptation --------------------------
+    // Every other test collapses to src === dst, exercising only the identity
+    // path. This one drives a real D50 -> D65 transform.
+    {
+        const d50 = whiteXYZ(CIE.D50);
+        const got = bradford(d50, d50, D65_WHITE);
+        check('D50 white adapts onto D65 white / X', got.X, D65_WHITE.X, 1e-9);
+        check('D50 white adapts onto D65 white / Y', got.Y, D65_WHITE.Y, 1e-9);
+        check('D50 white adapts onto D65 white / Z', got.Z, D65_WHITE.Z, 1e-9);
     }
 }
 
