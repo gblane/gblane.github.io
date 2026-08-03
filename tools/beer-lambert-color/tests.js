@@ -73,9 +73,20 @@ function registerTests(check, checkTrue) {
         const i520 = 520 - CIE_LAM_MIN;
         checkTrue('locus at 520 nm is in the green corner',
                   loc.x[i520] < 0.15 && loc.y[i520] > 0.75, `${loc.x[i520]},${loc.y[i520]}`);
-        // sRGB primaries must land on their published vertices.
-        check('sRGB red primary x', SRGB_PRIMARIES.r[0], 0.64, 1e-12);
-        check('sRGB green primary y', SRGB_PRIMARIES.g[1], 0.60, 1e-12);
+        // Cross-check the primaries against the sRGB matrix the pipeline
+        // actually uses. Asserting SRGB_PRIMARIES.r[0] === 0.64 would be
+        // self-referential — that constant IS the literal 0.64. Inverting
+        // _XYZ2RGB and reading each primary's chromaticity back out tests
+        // that the two independently-written things agree; a typo in either
+        // fails it. Verified to agree to 7.2e-9, so 1e-7 is tight but safe.
+        const _RGB2XYZ = _inv3(_XYZ2RGB);
+        for (const [nm, rgb, want] of [['red', [1, 0, 0], SRGB_PRIMARIES.r],
+                                       ['green', [0, 1, 0], SRGB_PRIMARIES.g],
+                                       ['blue', [0, 0, 1], SRGB_PRIMARIES.b]]) {
+            const v = _mul3(_RGB2XYZ, rgb), xy = xyzToXy({ X: v[0], Y: v[1], Z: v[2] });
+            check(`sRGB ${nm} primary x from the matrix`, xy[0], want[0], 1e-7);
+            check(`sRGB ${nm} primary y from the matrix`, xy[1], want[1], 1e-7);
+        }
         check('D65 white chromaticity x', xyzToXy(D65_WHITE)[0], 0.31272, 1e-3);
         check('D65 white chromaticity y', xyzToXy(D65_WHITE)[1], 0.32903, 1e-3);
     }
