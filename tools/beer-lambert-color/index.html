@@ -137,6 +137,77 @@
             <div class="about-title">About</div>
             <p class="about-text" id="about-text"></p>
         </div>
+
+        <div class="info-section">
+            <div class="section-eyebrow">Background</div>
+            <h2>From spectrum to colour</h2>
+            <hr class="section-rule">
+            <div class="info-card">
+                <p>A slab of thickness \(L\) containing absorbers at concentrations \(c_i\)
+                   transmits, at each wavelength,</p>
+                <p>$$T(\lambda) = e^{-\mu_a(\lambda) L}, \qquad
+                     \mu_a(\lambda) = \sum_i \varepsilon_i(\lambda)\, c_i$$</p>
+                <p>The light reaching the eye is \(\Phi(\lambda) = S(\lambda) T(\lambda)\).
+                   Its tristimulus values follow from the CIE 1931 2° observer,</p>
+                <p>$$X = k\!\int \Phi(\lambda)\,\bar{x}(\lambda)\,d\lambda, \qquad
+                     k = \frac{100}{\int S(\lambda)\,\bar{y}(\lambda)\,d\lambda}$$</p>
+                <p>with \(Y\) and \(Z\) defined likewise. The normalisation \(k\) makes a
+                   clear slab give \(Y = 100\), which is why the absolute scale of a pasted
+                   source spectrum does not matter.</p>
+                <p>The two swatches differ by exactly one step. The <em>adapted</em> view
+                   applies a Bradford chromatic adaptation from the source white to D65,
+                   modelling an observer acclimatised to the light; the <em>as-lit</em> view
+                   applies none. Both are then converted to CIELAB and sRGB relative to D65.
+                   Under a D65 source the two coincide.</p>
+                <p><strong>Not modelled:</strong> scattering, Fresnel reflection at the slab
+                   faces, fluorescence, and interference. Tabulated absorbers carry their
+                   solvent in the label, because a spectrum measured in solution is not the
+                   spectrum of the same molecule bound in tissue — chlorophyll <em>a</em>
+                   peaks near 660 nm in diethyl ether but near 680 nm in a living leaf, where
+                   it sits in a protein complex rather than free in solvent.</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="section-eyebrow">Sources</div>
+            <h2>References</h2>
+            <hr class="section-rule">
+            <div class="info-card" style="font-size: 0.85rem; line-height: 1.7; color: var(--text);">
+                <p style="font-weight: 500; margin-bottom: 0.25rem;">Motivating work:</p>
+                <p style="margin-bottom: 1rem;">
+                    Blaney, G. and Fantini, S. "Broad-linewidth sources result in a skin-tone
+                    bias in noninvasive optical measurement of oxygen saturation."
+                    <em>J. Biomed. Opt.</em> 31(7), 070501 (2026).
+                    doi:<a href="https://doi.org/10.1117/1.JBO.31.7.070501" target="_blank" rel="noopener noreferrer">10.1117/1.JBO.31.7.070501</a>
+                </p>
+                <p style="font-weight: 500; margin-bottom: 0.25rem;">Colour:</p>
+                <ol>
+                    <li>Berns, R.S. <em>Billmeyer and Saltzman's Principles of Color
+                        Technology</em>, 4th ed. Wiley (2019).</li>
+                    <li>CIE 15:2004, <em>Colorimetry</em>, 3rd ed. — 1931 2° observer,
+                        D-series illuminants, CIELAB.</li>
+                    <li>IEC 61966-2-1:1999 — sRGB primaries and transfer function.</li>
+                </ol>
+                <p style="font-weight: 500; margin-bottom: 0.25rem;">Spectra:</p>
+                <ol>
+                    <li>Taniguchi, M. and Lindsey, J.S. "Database of Absorption and
+                        Fluorescence Spectra of &gt;300 Common Compounds for use in
+                        PhotochemCAD." <em>Photochem. Photobiol.</em> 94, 290–327 (2018);
+                        ASCII mirror by S. Prahl,
+                        <a href="https://omlc.org/spectra/PhotochemCAD/" target="_blank" rel="noopener noreferrer">omlc.org/spectra/PhotochemCAD</a>.</li>
+                    <li>Prahl, S. "Tabulated Molar Extinction Coefficient for Methylene Blue
+                        in Water" (1998).</li>
+                    <li>Prahl, S. "Tabulated Molar Extinction Coefficient for Hemoglobin in
+                        Water," from W.B. Gratzer and N. Kollias.</li>
+                    <li>Pope, R.M., Texas A&amp;M (1993); Kou, L., Labrie, D. and Chylek, P.
+                        <em>Appl. Opt.</em> 32, 3531–3540 (1993). — water</li>
+                    <li>van Veen, R.L.P. et al., OSA Annual BIOMED Topical Meeting (2004).
+                        — lipid</li>
+                    <li>Jacques, S.L. "Optical properties of biological tissues: a review."
+                        <em>Phys. Med. Biol.</em> 58, R37–R61 (2013). — melanin</li>
+                </ol>
+            </div>
+        </div>
     </div>
 
     <div data-include="footer"></div>
@@ -429,6 +500,12 @@
     }
 
     function init() {
+        document.getElementById('about-text').textContent =
+            'This tool computes transmission through an absorbing slab. It models ' +
+            'absorption only — no scattering, no reflection at the slab faces, and no ' +
+            'fluorescence. Fluorescent substances re-emit part of the absorbed light at ' +
+            'longer wavelengths, which is not modelled here, so a swatch shows what the ' +
+            'slab transmits, which can differ from how the substance looks in a room.';
         const sel = document.getElementById('illum-select');
         for (const i of ILLUMINANTS) {
             const o = document.createElement('option');

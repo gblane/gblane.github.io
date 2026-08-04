@@ -30,6 +30,10 @@ tools/
   diffuse-reflectance/  # Interactive diffuse reflectance R(ρ) (CW diffusion theory)
   sensmaps/             # Interactive 2D sensitivity maps for CW NIRS (SD, SS, DS)
   tissue-absorption/    # Bulk μₐ(λ) from chromophore concentrations
+  beer-lambert-color/   # Transmission colour of an absorbing slab (CIELAB + sRGB + CIE 1931)
+tools/_data/
+  chromophores.js       # Shared tissue extinction spectra, 380–1000 nm (also used by
+                        #   tissue-absorption/)
 ```
 
 ## Features
@@ -47,6 +51,7 @@ tools/
   - *Diffuse Reflectance*: real-time R(ρ) for a semi-infinite homogeneous medium, adjustable μₐ and μ′ₛ (CW diffusion theory, extrapolated boundary condition)
   - *Sensitivity Maps*: 2D sensitivity maps S<sub>Y</sub>(**r**) for CW NIRS — single-distance, single-slope, and dual-slope arrangements
   - *Tissue Absorption*: bulk μₐ(λ) computed from hemoglobin (HbO₂, Hb), water, lipid, and melanin concentrations
+  - *Beer–Lambert Colour*: pick an illuminant and build an absorbing slab from tissue chromophores, pigments or dyes; see the transmitted spectrum as CIELAB values, adapted and as-lit sRGB swatches, and a point on the CIE 1931 chromaticity diagram
 - **Single-source nav/footer** — every page references `_partials/{navbar,footer}.html` via a tiny loader; updates propagate automatically
 - **Last-updated stamp** — fetched from the GitHub API and cached in `localStorage`
 - **OG / Twitter Cards + JSON-LD** — link previews and structured data for SERP
@@ -62,6 +67,8 @@ A typical tool page consists of:
 6. `<div data-include="footer"></div>` and the include script.
 
 All shared classes (`.param-card`, `.btn-run`, `.derived-box`, `.info-card`, `.copy-btn`, etc.) live in `site.css`.
+
+`tools/_data/` holds spectra shared across tools (e.g. `chromophores.js`, used by both `tissue-absorption/` and `beer-lambert-color/`). For tools with their own colour-pipeline or numerical assertions, `tools/beer-lambert-color/test.html` runs them in a browser and `run-tests.cjs` runs the same assertions under Node.
 
 ## Local development
 
