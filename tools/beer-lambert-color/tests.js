@@ -207,7 +207,13 @@ function registerTests(check, checkTrue) {
         checkTrue('parses whitespace-separated', ok('400 1\n500 2\n600 3').ok, 'rejected');
         checkTrue('skips a header row', ok('lambda,mua\n400,1\n500,2').ok, 'rejected');
         checkTrue('tolerates CRLF and blanks', ok('400,1\r\n\r\n500,2\r\n').ok, 'rejected');
-        checkTrue('sorts non-monotonic input', ok('600,3\n400,1\n500,2').ok, 'rejected');
+        {
+            const r = ok('600,3\n400,1\n500,2');
+            checkTrue('sorts non-monotonic input', r.ok, 'rejected');
+            // Guards the sort itself, not just that parsing succeeded: without
+            // pts.sort() this reads 3 (the first row) instead of 1 (400 nm).
+            check('non-monotonic input is actually reordered', r.data[400 - CIE_LAM_MIN], 1, 1e-12);
+        }
         checkTrue('rejects a single row', !ok('400,1').ok, 'accepted');
         checkTrue('rejects pure prose', !ok('hello there').ok, 'accepted');
         checkTrue('rejects zero overlap with 380-780',
@@ -224,5 +230,11 @@ function registerTests(check, checkTrue) {
                   'accepted');
         checkTrue('rejects a negative source', !parseSpectrum('400,1\n700,-1', 'source').ok,
                   'accepted');
+
+        // Non-zero in the raw rows but zero everywhere on the 380-780 grid. A
+        // check against the raw rows would pass this and still divide by zero in k.
+        checkTrue('rejects a source that is zero across 380-780',
+                  !parseSpectrum('780,0\n795,3', 'source').ok, 'accepted');
+        checkTrue('rejects negative mua', !parseSpectrum('500,-1\n600,2', 'mua').ok, 'accepted');
     }
 }

@@ -228,7 +228,8 @@ function transmittance(mua, Lmm) {
 /**
  * Parse pasted two-column text into a length-CIE_N array on the 1 nm grid.
  * mode 'mua'    -> held at the nearest endpoint outside the supplied range
- * mode 'source' -> zero-extended, and rejects negative or all-zero power
+ * mode 'source' -> zero-extended, and rejects an all-zero result
+ * Negative values are rejected in both modes.
  * Returns {ok:true, data} or {ok:false, error}.
  */
 function parseSpectrum(text, mode) {
@@ -246,8 +247,14 @@ function parseSpectrum(text, mode) {
     pts.sort((a, b) => a[0] - b[0]);
     if (pts[pts.length - 1][0] < CIE_LAM_MIN || pts[0][0] > CIE_LAM_MAX)
         return { ok: false, error: `No overlap with ${CIE_LAM_MIN}–${CIE_LAM_MAX} nm.` };
-    if (mode === 'source' && pts.some(p => p[1] < 0))
-        return { ok: false, error: 'Source power cannot be negative.' };
+    // Negative values are rejected in BOTH modes. Negative power is meaningless;
+    // a negative absorption coefficient is optical gain, which this model cannot
+    // represent — it yields transmittance > 1 and an L* above 100, displayed as
+    // though it were a real measurement.
+    if (pts.some(p => p[1] < 0))
+        return { ok: false, error: mode === 'source'
+            ? 'Source power cannot be negative.'
+            : 'Absorption coefficient cannot be negative — that would be optical gain.' };
 
     const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
     const outside = mode === 'source' ? 0 : null;   // null -> hold at endpoint
