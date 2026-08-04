@@ -223,3 +223,44 @@ function transmittance(mua, Lmm) {
     for (let i = 0; i < CIE_N; i++) t[i] = Math.exp(-mua[i] * Lmm);
     return t;
 }
+
+// ── Custom spectrum parsing ──────────────────────────────────────────────────
+/**
+ * Parse pasted two-column text into a length-CIE_N array on the 1 nm grid.
+ * mode 'mua'    -> held at the nearest endpoint outside the supplied range
+ * mode 'source' -> zero-extended, and rejects negative or all-zero power
+ * Returns {ok:true, data} or {ok:false, error}.
+ */
+function parseSpectrum(text, mode) {
+    const pts = [];
+    for (const raw of String(text).split(/\r?\n/)) {
+        const line = raw.trim();
+        if (!line || line.startsWith('#') || line.startsWith('//')) continue;
+        const parts = line.split(/[\s,;\t]+/).filter(Boolean);
+        if (parts.length < 2) continue;
+        const l = Number(parts[0]), v = Number(parts[1]);
+        if (!Number.isFinite(l) || !Number.isFinite(v)) continue;   // header row
+        pts.push([l, v]);
+    }
+    if (pts.length < 2) return { ok: false, error: 'Need at least two numeric rows.' };
+    pts.sort((a, b) => a[0] - b[0]);
+    if (pts[pts.length - 1][0] < CIE_LAM_MIN || pts[0][0] > CIE_LAM_MAX)
+        return { ok: false, error: `No overlap with ${CIE_LAM_MIN}–${CIE_LAM_MAX} nm.` };
+    if (mode === 'source' && pts.some(p => p[1] < 0))
+        return { ok: false, error: 'Source power cannot be negative.' };
+
+    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+    const outside = mode === 'source' ? 0 : null;   // null -> hold at endpoint
+    const data = new Array(CIE_N);
+    for (let i = 0; i < CIE_N; i++) {
+        const l = i + CIE_LAM_MIN;
+        if (l <= xs[0])                 { data[i] = outside === 0 && l < xs[0] ? 0 : ys[0]; continue; }
+        if (l >= xs[xs.length - 1])     { data[i] = outside === 0 && l > xs[xs.length - 1] ? 0 : ys[ys.length - 1]; continue; }
+        let j = 1; while (xs[j] < l) j++;
+        const f = (l - xs[j - 1]) / (xs[j] - xs[j - 1]);
+        data[i] = ys[j - 1] + f * (ys[j] - ys[j - 1]);
+    }
+    if (mode === 'source' && !data.some(v => v > 0))
+        return { ok: false, error: 'Source spectrum is zero everywhere.' };
+    return { ok: true, data };
+}

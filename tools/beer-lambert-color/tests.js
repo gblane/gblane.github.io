@@ -198,4 +198,31 @@ function registerTests(check, checkTrue) {
                   GB_CHROM.lamMin === 380 && GB_CHROM.E_HbO2.length === 621,
                   `${GB_CHROM.lamMin}, ${GB_CHROM.E_HbO2.length}`);
     }
+
+    // --- Parser ---------------------------------------------------------------
+    {
+        const ok = t => parseSpectrum(t, 'mua');
+        checkTrue('parses comma-separated', ok('400,1\n500,2\n600,3').ok, 'rejected');
+        checkTrue('parses tab-separated', ok('400\t1\n500\t2\n600\t3').ok, 'rejected');
+        checkTrue('parses whitespace-separated', ok('400 1\n500 2\n600 3').ok, 'rejected');
+        checkTrue('skips a header row', ok('lambda,mua\n400,1\n500,2').ok, 'rejected');
+        checkTrue('tolerates CRLF and blanks', ok('400,1\r\n\r\n500,2\r\n').ok, 'rejected');
+        checkTrue('sorts non-monotonic input', ok('600,3\n400,1\n500,2').ok, 'rejected');
+        checkTrue('rejects a single row', !ok('400,1').ok, 'accepted');
+        checkTrue('rejects pure prose', !ok('hello there').ok, 'accepted');
+        checkTrue('rejects zero overlap with 380-780',
+                  !ok('1000,1\n1200,2').ok, 'accepted');
+
+        // mua holds at the nearest endpoint; a source zero-extends.
+        const m = parseSpectrum('500,2\n600,2', 'mua').data;
+        check('mua held at endpoint below range', m[0], 2, 1e-12);
+        const s = parseSpectrum('500,2\n600,2', 'source').data;
+        check('source zero-extended below range', s[0], 0, 1e-12, true);
+
+        // A source must not divide by zero in k.
+        checkTrue('rejects an all-zero source', !parseSpectrum('400,0\n700,0', 'source').ok,
+                  'accepted');
+        checkTrue('rejects a negative source', !parseSpectrum('400,1\n700,-1', 'source').ok,
+                  'accepted');
+    }
 }

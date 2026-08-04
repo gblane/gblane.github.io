@@ -417,6 +417,17 @@
         }, PLOT_CFG);
     }
 
+    function wirePaste(btnId, textId, msgId, mode, install) {
+        document.getElementById(btnId).addEventListener('click', () => {
+            const res = parseSpectrum(document.getElementById(textId).value, mode);
+            const msg = document.getElementById(msgId);
+            if (!res.ok) { msg.textContent = res.error; return; }   // textContent, not innerHTML
+            install(res.data);
+            msg.textContent = 'Applied.';
+            update();
+        });
+    }
+
     function init() {
         const sel = document.getElementById('illum-select');
         for (const i of ILLUMINANTS) {
@@ -443,6 +454,19 @@
         lenBox.addEventListener('change', () => {
             lenSlider.value = Math.log10(pathLength());
             update();
+        });
+        wirePaste('mua-apply', 'mua-paste', 'mua-msg', 'mua', arr => {
+            setCustomMua(arr);
+            if (!MIXTURE.some(e => e.key === 'customMua')) {
+                MIXTURE.push({ key: 'customMua', params: { scale: 1 } });
+                renderMixture();
+            }
+        });
+        wirePaste('src-apply', 'src-paste', 'src-msg', 'source', arr => {
+            setCustomSPD(arr);
+            ILLUM = { key: 'CUSTOM', params: {} };
+            document.getElementById('illum-select').value = 'CUSTOM';
+            renderIllumParams();
         });
         renderIllumParams();
         renderMixture();
