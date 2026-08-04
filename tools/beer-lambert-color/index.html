@@ -214,7 +214,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" integrity="sha384-cCVCZkAjYNxaYKbM8lsArLznDF/SvMFr1jcZrvOpSTCa0W40ZAdLzHCEulnUa5i7" crossorigin="anonymous"></script>
-    <script src="/_partials/include.js"></script>
+    <script src="/_partials/include.js" defer></script>
     <script src="/tools/_data/chromophores.js"></script>
     <script src="colorimetry.js"></script>
     <script src="spectra.js"></script>
@@ -341,8 +341,12 @@
 
     function update() {
         const r = compute();
-        drawSpectra(r);     // Task 9
-        drawColour(r);      // Task 10
+        // Colour first, and each guarded. The swatches and readouts are plain DOM
+        // and must survive a Plotly CDN failure (spec requirement); drawColour
+        // paints them before it touches Plotly, so ordering gets most of the way,
+        // and the try/catch stops either group from blocking the other.
+        try { drawColour(r); } catch (e) { console.error('colour render failed', e); }
+        try { drawSpectra(r); } catch (e) { console.error('spectra render failed', e); }
     }
 
     // ── Design-system Plotly palette (series colors, theme-reactive) ──
@@ -528,7 +532,7 @@
             lenBox.value = Number(Math.pow(10, Number(lenSlider.value)).toPrecision(3));
             update();
         });
-        lenBox.addEventListener('change', () => {
+        lenBox.addEventListener('input', () => {
             lenSlider.value = Math.log10(pathLength());
             update();
         });

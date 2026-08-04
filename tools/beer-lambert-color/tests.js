@@ -73,6 +73,10 @@ function registerTests(check, checkTrue) {
         const i520 = 520 - CIE_LAM_MIN;
         checkTrue('locus at 520 nm is in the green corner',
                   loc.x[i520] < 0.15 && loc.y[i520] > 0.75, `${loc.x[i520]},${loc.y[i520]}`);
+        // Literal coordinates: a transposed CMF column still satisfies x+y<=1
+        // and still lands "in the green corner", so only fixed values catch it.
+        check('locus x at 520 nm', loc.x[520 - CIE_LAM_MIN], 0.074302, 1e-4);
+        check('locus y at 520 nm', loc.y[520 - CIE_LAM_MIN], 0.833803, 1e-4);
         // Cross-check the primaries against the sRGB matrix the pipeline
         // actually uses. Asserting SRGB_PRIMARIES.r[0] === 0.64 would be
         // self-referential — that constant IS the literal 0.64. Inverting
@@ -141,6 +145,11 @@ function registerTests(check, checkTrue) {
             check(`doubling L squares T at ${i + CIE_LAM_MIN} nm`, t2[i], t1[i] * t1[i], 1e-12);
         const zero = transmittance(mua, 0);
         checkTrue('L = 0 gives T = 1 everywhere', zero.every(v => v === 1), 'not all 1');
+
+        // Pins the MAGNITUDE, not just the ratio. exp(-mua*L*2) passes every
+        // ratio test above while being wrong; this literal catches it.
+        check('transmittance magnitude is exp(-mua*L)',
+              transmittance(new Array(CIE_N).fill(0.5), 2)[0], Math.exp(-1), 1e-12);
     }
 
     // --- Absorber library -----------------------------------------------------
@@ -181,6 +190,24 @@ function registerTests(check, checkTrue) {
         const cb = slabColour(CIE.D65, transmittance(blood, 0.05), true);
         let hb = Math.atan2(cb.b, cb.a) * 180 / Math.PI; if (hb < 0) hb += 360;
         checkTrue('thin oxygenated blood reads red', hb < 60 || hb > 330, hb);
+
+        // Water, lipid and melanin had no assertion at all. An index shift from
+        // the 400->380 nm migration would be silent without these.
+        check('water f=1 at 700 nm', muaMixture([{ key: 'water', params: { f: 1 } }])[700 - CIE_LAM_MIN],
+              6.6780e-4, 1e-3);
+        check('lipid f=1 at 400 nm is zero (documented data gap)',
+              muaMixture([{ key: 'lipid', params: { f: 1 } }])[400 - CIE_LAM_MIN], 0, 1e-12, true);
+        // Melanin is analytic: mua = f * 51.9 * (lam/500)^-3.5, so at 500 nm it is exactly f*51.9.
+        check('melanin f=0.1 at 500 nm', muaMixture([{ key: 'melanin', params: { f: 0.1 } }])[500 - CIE_LAM_MIN],
+              5.19, 1e-12);
+
+        // Guards the 2.303 conversion on the SHIPPED data, not just on the helper
+        // function. Back-computes the published molar absorptivity: a missing or
+        // doubled ln(10)/10 moves this by 2.303x and fails immediately.
+        checkTrue('methylene blue implied eps matches published (7-9e4 cm^-1/M)',
+                  (() => { const e = ABSORBER_DATA.methyleneBlue[664 - CIE_LAM_MIN] * 10 / (Math.LN10 * 1e-6);
+                           return e > 6e4 && e < 1e5; })(),
+                  ABSORBER_DATA.methyleneBlue[664 - CIE_LAM_MIN] * 10 / (Math.LN10 * 1e-6));
     }
 
     // --- Shared chromophore module still matches what shipped before ----------
