@@ -550,6 +550,23 @@
         update();
     }
     document.addEventListener('DOMContentLoaded', init);
+
+    // Four Plotly instances; Plotly's own responsive flag does not re-run our
+    // layout, and the chromaticity panel must hold its 1:1 aspect through resize.
+    let _resizeTimer = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(_resizeTimer);
+        _resizeTimer = setTimeout(() => {
+            for (const id of ['plot-source', 'plot-mua', 'plot-detected', 'plot-chroma']) {
+                const d = document.getElementById(id);
+                if (d && d.data) Plotly.Plots.resize(d);
+            }
+        }, 120);
+    });
+
+    // Theme changes invalidate the cached gamut fill and every token-derived colour.
+    new MutationObserver(() => { _gamutImg = null; update(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     </script>
 </body>
 </html>
