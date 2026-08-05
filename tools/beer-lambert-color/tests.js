@@ -263,5 +263,34 @@ function registerTests(check, checkTrue) {
         checkTrue('rejects a source that is zero across 380-780',
                   !parseSpectrum('780,0\n795,3', 'source').ok, 'accepted');
         checkTrue('rejects negative mua', !parseSpectrum('500,-1\n600,2', 'mua').ok, 'accepted');
+
+        // Input bounds. Sizes here are LITERAL, deliberately not derived from the
+        // constants they exercise: deriving them would make each assertion
+        // self-referential, so raising a cap would also grow the test input and
+        // the test could never fail. (Verified by mutation — the derived version
+        // of these tests passed with every cap disabled.)
+        {
+            // 5001 rows spanning 400-450 nm, i.e. entirely INSIDE 380-780, so this
+            // can only be rejected on count, never incidentally on zero overlap.
+            const r = ok(Array.from({ length: 5001 }, (_, i) => `${400 + i / 100},1`).join('\n'));
+            checkTrue('rejects overlarge pasted spectra', !r.ok, 'accepted');
+            checkTrue('rejects row count for the right reason',
+                      /too many rows/i.test(r.error || ''), r.error);
+        }
+        checkTrue('rejects overlarge spectral values', !ok('400,1e13\n500,1').ok, 'accepted');
+        {
+            // Over the character cap, but the bulk is one comment line — so with
+            // the length check removed this parses cleanly to two valid points and
+            // the assertion flips, which is what makes it falsifiable.
+            const r = ok('400,1\n#' + 'x'.repeat(200001) + '\n500,2');
+            checkTrue('rejects an overlong paste', !r.ok, 'accepted');
+            checkTrue('rejects paste length for the right reason',
+                      /too large/i.test(r.error || ''), r.error);
+        }
+        // The caps must not reject anything real: 0.25 nm sampling across the
+        // whole visible band is 1601 rows, well under the limit.
+        checkTrue('accepts a realistic 0.25 nm spectrum',
+                  ok(Array.from({ length: 1601 }, (_, i) => `${380 + i * 0.25},1`).join('\n')).ok,
+                  'rejected a legitimate spectrum');
     }
 }

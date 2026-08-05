@@ -225,6 +225,18 @@ function transmittance(mua, Lmm) {
 }
 
 // ── Custom spectrum parsing ──────────────────────────────────────────────────
+
+// Input bounds on pasted text. The concern is memory amplification, not CPU:
+// parsing measured ~760 ms for a million rows, but 10.5 MB of pasted text
+// inflates to ~159 MB of heap (~15x) because every row becomes a small array.
+// A few million rows would therefore cost hundreds of MB and can kill a tab on
+// a phone long before the parse feels slow. These caps sit far above any real
+// spectrum: 0.25 nm sampling across 380-780 nm is 1601 rows, and the largest
+// molar absorptivity in the shipped library is ~1.6e5 M^-1 cm^-1.
+const MAX_PASTED_SPECTRUM_CHARS = 200000;
+const MAX_PASTED_SPECTRUM_POINTS = 5000;
+const MAX_PASTED_SPECTRUM_VALUE = 1e12;
+
 /**
  * Parse pasted two-column text into a length-CIE_N array on the 1 nm grid.
  * mode 'mua'    -> held at the nearest endpoint outside the supplied range
@@ -234,14 +246,21 @@ function transmittance(mua, Lmm) {
  */
 function parseSpectrum(text, mode) {
     const pts = [];
-    for (const raw of String(text).split(/\r?\n/)) {
+    const input = String(text);
+    if (input.length > MAX_PASTED_SPECTRUM_CHARS)
+        return { ok: false, error: 'Spectrum paste is too large.' };
+    for (const raw of input.split(/\r?\n/)) {
         const line = raw.trim();
         if (!line || line.startsWith('#') || line.startsWith('//')) continue;
         const parts = line.split(/[\s,;\t]+/).filter(Boolean);
         if (parts.length < 2) continue;
         const l = Number(parts[0]), v = Number(parts[1]);
         if (!Number.isFinite(l) || !Number.isFinite(v)) continue;   // header row
+        if (Math.abs(v) > MAX_PASTED_SPECTRUM_VALUE)
+            return { ok: false, error: 'Spectrum values are too large.' };
         pts.push([l, v]);
+        if (pts.length > MAX_PASTED_SPECTRUM_POINTS)
+            return { ok: false, error: 'Spectrum has too many rows.' };
     }
     if (pts.length < 2) return { ok: false, error: 'Need at least two numeric rows.' };
     pts.sort((a, b) => a[0] - b[0]);
