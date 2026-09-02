@@ -30,9 +30,9 @@ isotropic."*
       occurrence in the theory section was left in place **by Giles's decision**: the free-path PDF
       \(p(\ell)=\mu_s e^{-\mu_s\ell}\) and \(\ell=-\ln(\mathcal{U})\) appear immediately below it, so the phrase is
       defined where it stands. Do not re-open it.
-- [ ] **W-3 — Put units on the axes.** `index.html:252-254` labels them "X", "Y", "Z" with nothing else. With
-      μ<sub>s</sub> = 1 the coordinates are in mean free paths, so either label them
-      "x (mean free paths, 1/μ<sub>s</sub>)" or declare the whole plot dimensionless in the About card.
+- [x] **W-3 — Put units on the axes.** **Done 2026-09-02.** The three scene axes are now labeled "x (mfp)", "y (mfp)"
+      and "z (mfp)", and the About card defines the abbreviation where it introduces the convention — "scattering mean
+      free paths (mfp, 1/μ<sub>s</sub> = 1)". The empty-plot state hides its axes, so it needed no matching change.
 - [ ] **W-4 — Say the medium is infinite, and center the axes on the start.** No boundary exists anywhere in the code,
       which makes it an infinite homogeneous medium — state that. Then replace the data-driven autoscale
       (`aspectmode: 'data'`, `index.html:255`) with axis ranges symmetric about the origin — for example

@@ -61,7 +61,7 @@
 
                 <div class="about-card">
                     <div class="about-title">About</div>
-                    <p class="about-text">This tool simulates a 3D isotropic random walk with exponentially distributed step sizes, with lengths measured in scattering mean free paths (1/μ<sub>s</sub> = 1).
+                    <p class="about-text">This tool simulates a 3D isotropic random walk with exponentially distributed step sizes, with lengths measured in scattering mean free paths (mfp, 1/μ<sub>s</sub> = 1).
                     Green and red markers indicate the start and end of the walk, respectively.
                     The medium is non-absorbing (μ<sub>a</sub> = 0) and scattering is isotropic (i.e., the anisotropy g = 0), so μ<sub>s</sub> is equal to the reduced scattering coefficient μ′<sub>s</sub>.</p>
                 </div>
@@ -250,9 +250,9 @@
                 plot_bgcolor:  "rgba(0,0,0,0)",
                 font: { family: fontFamily, size: 12, color: fontColor },
                 scene: {
-                    xaxis: { title: "X", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
-                    yaxis: { title: "Y", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
-                    zaxis: { title: "Z", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    xaxis: { title: "x (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    yaxis: { title: "y (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    zaxis: { title: "z (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
                     aspectmode: 'data'
                 },
                 margin: { t: 0, r: 0, b: 0, l: 0 },
