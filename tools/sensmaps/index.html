@@ -256,6 +256,13 @@ function cssVar(name, fallback) {
     return ctx.fillStyle;
 }
 
+// Fonts are not colors — read the token verbatim, without the canvas
+// color coercion cssVar() applies for Plotly's parser.
+function cssVarRaw(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+}
+
 function clampNumber(value, min, max, fallback) {
     const n = Number(value);
     if (!Number.isFinite(n)) return fallback;
@@ -357,7 +364,7 @@ function renderPlot(result, typeStr, optodes) {
     const series = gbSeries();
     const grid = cssVar('--plot-grid', '#e0dcd6');
     const fontColor = cssVar('--text', '#1a1814');
-    const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
+    const fontFamily = cssVarRaw('--font-sans', "'Source Sans 3', sans-serif");
 
     // Diverging blue–white–red colorscale for the signed sensitivity field —
     // kept independent of the qualitative GB_PLOT series palette (which has
