@@ -77,6 +77,13 @@ and phase)."*
       is now unwrapped before plotting: the curve is monotone in ρ with no step above 0.015 rad at any slider setting
       checked (50, 100, 200 and 500 MHz, plus both μ/f corners).
 
+## Site content
+
+- [ ] **Update the headshot** *(not from the review)*. The bio photo at `index.html:81` is served from a Google
+      Drive-hosted URL (`lh3.googleusercontent.com/d/1K9FCwAmBIO4cnpK-nn9NBMmOYHMrtJJC`) and is due for a newer
+      picture. Note the `onerror` handler hides the image silently if the Drive link ever stops resolving, so a broken
+      link would not be obvious — check it renders after swapping.
+
 ## Cross-repo
 
 - [ ] **W-8 — Re-sync the bio if the research statement's framing changes.** Jana Kainerstorfer's review of the same
