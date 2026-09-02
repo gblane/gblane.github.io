@@ -25,9 +25,11 @@ isotropic."*
       termination test — it takes exactly the requested number of steps — and directions come from
       `acos(1-2U)`/`2πU`, i.e. isotropic. The matching sentence for the theory section was drafted and **declined by
       Giles as unnecessary**; do not re-open it.
-- [ ] **W-2 — Fix or drop "unit scattering coefficient".** The phrase appears at `index.html:64` and again as
-      \(\mu_s = 1\) at `index.html:118`. It means step lengths are drawn from \(p(\ell)=\mu_s e^{-\mu_s\ell}\) with
-      \(\mu_s=1\), i.e. lengths are measured in scattering mean free paths. Say that instead of naming the convention.
+- [x] **W-2 — Fix or drop "unit scattering coefficient".** **Done 2026-09-02.** The About card no longer names the
+      convention; it says the step lengths are measured in scattering mean free paths (1/μ<sub>s</sub> = 1). The second
+      occurrence in the theory section was left in place **by Giles's decision**: the free-path PDF
+      \(p(\ell)=\mu_s e^{-\mu_s\ell}\) and \(\ell=-\ln(\mathcal{U})\) appear immediately below it, so the phrase is
+      defined where it stands. Do not re-open it.
 - [ ] **W-3 — Put units on the axes.** `index.html:252-254` labels them "X", "Y", "Z" with nothing else. With
       μ<sub>s</sub> = 1 the coordinates are in mean free paths, so either label them
       "x (mean free paths, 1/μ<sub>s</sub>)" or declare the whole plot dimensionless in the About card.
