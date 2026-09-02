@@ -33,6 +33,10 @@ isotropic."*
 - [x] **W-3 — Put units on the axes.** **Done 2026-09-02.** The three scene axes are now labeled "x (mfp)", "y (mfp)"
       and "z (mfp)", and the About card defines the abbreviation where it introduces the convention — "scattering mean
       free paths (mfp, 1/μ<sub>s</sub> = 1)". The empty-plot state hides its axes, so it needed no matching change.
+      **The labels were invisible at first** — `cssVar()` pushed the `--font-sans` token through a canvas colour parser,
+      which returned `#000000`, and Plotly's 3D renderer draws no axis titles with that as a font family. Fixed with a
+      `cssVarRaw()` helper plus a 20 px margin (the titles sit outside the scene box). Slight corner clipping on
+      elongated walks is accepted — Giles's call 2026-09-02.
 - [ ] **W-4 — Say the medium is infinite, and center the axes on the start.** No boundary exists anywhere in the code,
       which makes it an infinite homogeneous medium — state that. Then replace the data-driven autoscale
       (`aspectmode: 'data'`, `index.html:255`) with axis ranges symmetric about the origin — for example

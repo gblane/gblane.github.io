@@ -188,6 +188,13 @@
             return ctx.fillStyle;
         }
 
+        // Fonts are not colors — read the token verbatim, without the canvas
+        // color coercion cssVar() applies for Plotly's parser.
+        function cssVarRaw(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return v || fallback;
+        }
+
         function randomOpenUnit() {
             return Math.max(Math.random(), Number.MIN_VALUE);
         }
@@ -213,7 +220,7 @@
             const series = gbSeries();
             const grid = cssVar('--plot-grid', '#e0dcd6');
             const fontColor = cssVar('--text', '#1a1814');
-            const fontFamily = cssVar('--font-sans', "'Source Sans 3', sans-serif");
+            const fontFamily = cssVarRaw('--font-sans', "'Source Sans 3', sans-serif");
 
             const trace = {
                 x: data.x,
@@ -250,12 +257,15 @@
                 plot_bgcolor:  "rgba(0,0,0,0)",
                 font: { family: fontFamily, size: 12, color: fontColor },
                 scene: {
-                    xaxis: { title: "x (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
-                    yaxis: { title: "y (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
-                    zaxis: { title: "z (mfp)", gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    xaxis: { title: { text: "x (mfp)" }, gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    yaxis: { title: { text: "y (mfp)" }, gridcolor: grid, zerolinecolor: grid, linecolor: grid },
+                    zaxis: { title: { text: "z (mfp)" }, gridcolor: grid, zerolinecolor: grid, linecolor: grid },
                     aspectmode: 'data'
                 },
-                margin: { t: 0, r: 0, b: 0, l: 0 },
+                // The 3D axis titles sit outside the scene box and move with the
+                // data, so every side needs room; at zero margin they render
+                // off-frame and vanish.
+                margin: { t: 20, r: 20, b: 20, l: 20 },
                 showlegend: false
             };
 
