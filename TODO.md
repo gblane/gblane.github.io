@@ -79,10 +79,12 @@ and phase)."*
 
 ## Site content
 
-- [ ] **Update the headshot** *(not from the review)*. The bio photo at `index.html:81` is served from a Google
-      Drive-hosted URL (`lh3.googleusercontent.com/d/1K9FCwAmBIO4cnpK-nn9NBMmOYHMrtJJC`) and is due for a newer
-      picture. Note the `onerror` handler hides the image silently if the Drive link ever stops resolving, so a broken
-      link would not be obvious — check it renders after swapping.
+- [x] **Update the headshot** *(not from the review)*. **Done 2026-09-02.** The bio photo at `index.html:81` now points
+      at `lh3.googleusercontent.com/d/1E-qSPoZCMPfPAQdQV8KisLRsXP97uk8T` (1000x1000 JPEG, anyone-with-link readable),
+      replacing `...1K9FCwAmBIO4cnpK-nn9NBMmOYHMrtJJC`. Verified by rendering the page, not just by swapping the URL —
+      the `onerror` handler hides the image silently if a Drive link stops resolving, so a broken link would look like
+      a design choice. The link-preview image (`og:image`, JSON-LD) is deliberately the fluence figure, not the
+      headshot, and was left alone.
 
 ## Cross-repo
 
