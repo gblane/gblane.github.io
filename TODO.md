@@ -51,22 +51,22 @@ and phase)."*
       state that R is the reflectance per unit area per unit incident power (or per unit source energy for TD), and how
       it relates to the quantity a reader would measure. Worth settling directly with Sergio — the code is translated
       from the MATLAB published with Blaney, Sassaroli & Fantini (2024), and his convention should win.
-- [ ] **W-6 — Fix the y-axis ranges.** Confirmed: only the x-axes are pinned (`index.html:394`, `:399`, `:405`, `:411`).
-      The CW and |R̃<sub>FD</sub>| y-axes (`:396`, `:402`) are log axes with no `range`, so Plotly rescales them on every
-      slider move, and the TD range is recomputed from the data each update (`:360-362`, `:415`). The curves therefore
-      look nearly static while the axis labels change — exactly what Sergio describes. Compute a fixed range spanning
-      the whole slider domain (μ<sub>a</sub> ∈ [0, 0.05], μ′<sub>s</sub> ∈ [0.5, 5] mm⁻¹, f ∈ [50, 500] MHz), set it
-      once, and let the curves move inside it.
-- [ ] **W-7 — Make the FD amplitude's frequency dependence visible.** The amplitude panel is already there
-      (`index.html:368-370`, `|R_FD|`) and it is *not* the CW reflectance — it is computed from the complex
-      \(\tilde\mu_{eff}\) (`:227-246`) and does vary with frequency. Checked numerically on 2026-08-31 at ρ = 30 mm,
-      μ<sub>a</sub> = 0.0011 mm⁻¹, μ′<sub>s</sub> = 1.1 mm⁻¹: |R̃<sub>FD</sub>| falls by ×0.14 from 50 to 500 MHz
-      (×0.02 at ρ = 50 mm). The autoranged log axis (W-6) is what hides it, so fixing W-6 should answer this comment
-      too — verify at 50 vs 500 MHz afterward. While there, adopt his nomenclature in the panel titles: DC (= CW), AC
-      (= |R̃<sub>FD</sub>|), and phase.
-- [ ] **Unwrap the FD phase** *(not from the review)*. `fdPh` uses `Math.atan2` (`index.html:343`), so the phase wraps
-      into (−π, π]. At 500 MHz with the default optical properties it wraps twice across ρ = 10–50 mm (computed
-      2026-08-31: 62° → 222° → 391°), drawing two false discontinuities. Unwrap the array before plotting.
+- [x] **W-6 — Fix the y-axis ranges.** **Declined 2026-09-02 (Giles): the autoscaling stays.** The proposal was to
+      pin the y-axes over the whole slider domain, but that domain is far too wide for one frame: μ<sub>a</sub> ∈
+      [0, 0.05], μ′<sub>s</sub> ∈ [0.5, 5] mm⁻¹ and f ∈ [50, 500] MHz span **20 decades** of R<sub>CW</sub> and
+      |R̃<sub>FD</sub>| and **77 decades** of R<sub>TD</sub> (computed 2026-09-02), so any fixed range flattens every
+      ordinary curve. This leaves the middle of Sergio's SF-3 comment — "it is the axes that change" — knowingly
+      unanswered for the CW and TD panels. W-7 answers the part he actually asked about (the frequency dependence of
+      the amplitude) without touching the axes.
+- [x] **W-7 — Make the FD amplitude's frequency dependence visible.** **Done 2026-09-02.** Since W-6 was declined, the
+      panel now plots the dimensionless ratio **AC/DC = |R̃<sub>FD</sub>|/R<sub>CW</sub>** instead of |R̃<sub>FD</sub>|
+      alone, which isolates the frequency dependence and is immune to what the autoscaled axis does. At the default
+      optical properties the ratio sweeps 0.750–0.981 at 50 MHz and 0.018–0.647 at 500 MHz. The panel titles adopt
+      Sergio's nomenclature: DC (= R<sub>CW</sub>), AC/DC, and phase.
+- [x] **Unwrap the FD phase** *(not from the review)*. **Done 2026-09-02.** `fdPh` used `Math.atan2`, so the phase
+      wrapped into (−π, π] and drew two false discontinuities at 500 MHz with the default optical properties. The array
+      is now unwrapped before plotting: the curve is monotone in ρ with no step above 0.015 rad at any slider setting
+      checked (50, 100, 200 and 500 MHz, plus both μ/f corners).
 
 ## Cross-repo
 

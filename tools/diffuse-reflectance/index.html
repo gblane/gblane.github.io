@@ -111,7 +111,7 @@
                     To satisfy the extrapolated boundary condition, an image (virtual) source mirrors the real source across the extrapolated boundary at \(z_b = -2AD\), giving image height \(z_0' = -z_0 + 2z_b\).
                     The parameter \(A\) accounts for the refractive-index mismatch between the medium (\(n_{in} = 1.4\)) and air (\(n_{out} = 1\)), giving \(A \approx 2.95\).
                     With the detector on the surface at source–detector separation \(\rho\), the distances to the real and image sources are
-                    \(r_1 = \sqrt{\rho^2 + z_0^2}\) and \(r_2 = \sqrt{\rho^2 + z_0'^{\,2}}\). 
+                    \(r_1 = \sqrt{\rho^2 + z_0^2}\) and \(r_2 = \sqrt{\rho^2 + z_0'^{\,2}}\).
                     Given this setup, the following are the Green's functions for the diffuse reflectance.
                 </p>
 
@@ -139,7 +139,9 @@
                     $$\tilde\mu_{eff} = \sqrt{\frac{\mu_a}{D} - \frac{i\,\omega}{v\,D}}, \qquad v = c/n_{in}$$
                 </p>
                 <p>
-                    and the complex reflectance \(\tilde R_{FD}(\rho)\) takes the same form as \(R_{CW}\) with \(\mu_{eff}\) replaced by \(\tilde\mu_{eff}\). Amplitude \(|\tilde R_{FD}|\) and phase \(\angle \tilde R_{FD}\) are the typical measured data types.
+                    and the complex reflectance \(\tilde R_{FD}(\rho)\) takes the same form as \(R_{CW}\) with \(\mu_{eff}\) replaced by \(\tilde\mu_{eff}\).
+                    Amplitude \(|\tilde R_{FD}|\) (i.e., AC) and phase \(\angle \tilde R_{FD}\) are the typical measured data types, alongside the CW reflectance (DC).
+                    The panel above plots the dimensionless ratio AC/DC \(= |\tilde R_{FD}|/R_{CW}\) (i.e., modulation depth), which reveals the frequency dependence of the amplitude.
                     Similar to CW, \(\tilde R_{FD}\) has units mm⁻² (n.b., \(\tilde R_{FD}\) is normalized by source power).
                 </p>
 
@@ -155,7 +157,7 @@
                     \right]$$
                 </p>
                 <p style="font-size: 0.9rem; color: var(--muted);">
-                    which has units (ps·mm²)⁻¹ (n.b., \(R_{TD}\) is normalized by the energy of the source impulse). 
+                    which has units ps⁻¹·mm⁻² (n.b., \(R_{TD}\) is normalized by the energy of the source impulse).
                 </p>
 
                 <h5 class="mt-4">Citation</h5>
@@ -324,7 +326,7 @@
             const fmod = boundedInputValue('fmod-slider', 50, 500, 100);   // MHz
 
             const series = gbSeries();
-            const fdMagColor = series[0];   // slot 0 — blue
+            const fdRatioColor = series[0];   // slot 0 — blue
             const fdPhColor  = series[1];   // slot 1 — orange
             const grid = cssVar('--plot-grid', '#e0dcd6');
             const fontColor = cssVar('--text', '#1a1814');
@@ -339,8 +341,25 @@
             const omega = 2 * Math.PI * fmod * 1e6;
             const cw    = rhoArr.map(r => R_CW(r, mua, musp));
             const fd    = rhoArr.map(r => R_FD(r, mua, musp, omega));
-            const fdMag = fd.map(v => Math.hypot(v.re, v.im));
-            const fdPh  = fd.map(v => Math.atan2(v.im, v.re));
+            // AC/DC: the FD amplitude normalized by the CW (DC) reflectance.
+            // Plotting the ratio rather than |R_FD| itself makes the frequency
+            // dependence of the amplitude visible on an autoscaled axis, where
+            // the two nearly coincident magnitudes otherwise look identical.
+            const fdRatio = fd.map((v, i) => Math.hypot(v.re, v.im) / cw[i]);
+            // Unwrap the phase: atan2 returns (-pi, pi], which at high f_mod
+            // draws false vertical steps partway across the rho sweep.
+            const fdPh  = (() => {
+                let off = 0, prev = null;
+                return fd.map(v => {
+                    const p = Math.atan2(v.im, v.re);
+                    if (prev !== null) {
+                        let d = p + off - prev;
+                        while (d >  Math.PI) { off -= 2*Math.PI; d -= 2*Math.PI; }
+                        while (d < -Math.PI) { off += 2*Math.PI; d += 2*Math.PI; }
+                    }
+                    return (prev = p + off);
+                });
+            })();
             // Ballistic time: a photon cannot reach the detector before t_min = rho/v.
             const tdTraces = rhoTD.map((rho, i) => {
                 const tMin = rho / V_PS;   // ps
@@ -365,8 +384,8 @@
                 { x: rhoArr, y: cw,    mode: 'lines', name: 'CW',
                   line: { width: 2, color: cwColor }, showlegend: false,
                   xaxis: 'x',  yaxis: 'y'  },
-                { x: rhoArr, y: fdMag, mode: 'lines', name: '|R_FD|',
-                  line: { width: 2, color: fdMagColor }, showlegend: false,
+                { x: rhoArr, y: fdRatio, mode: 'lines', name: 'AC/DC',
+                  line: { width: 2, color: fdRatioColor }, showlegend: false,
                   xaxis: 'x2', yaxis: 'y2' },
                 { x: rhoArr, y: fdPh,  mode: 'lines', name: '∠R_FD',
                   line: { width: 2, color: fdPhColor }, showlegend: false,
@@ -392,25 +411,25 @@
 
                 // CW (left, full height)
                 xaxis:  ax('ρ (mm)',  { domain: [0.00, 0.30], range: [10, 50] }),
-                yaxis:  ax('R<sub>CW</sub> (mm⁻²)',
+                yaxis:  ax('DC = R<sub>CW</sub> (mm⁻²)',
                           { domain: [0.00, 0.92], type: 'log', anchor: 'x' }),
 
-                // |R_FD| (top middle)
+                // AC/DC (top middle)
                 xaxis2: ax('',        { domain: [0.36, 0.66], range: [10, 50],
                                         anchor: 'y2', showticklabels: false }),
-                yaxis2: ax('|R<sub>FD</sub>| (mm⁻²)',
+                yaxis2: ax('AC/DC = |R̃<sub>FD</sub>|/R<sub>CW</sub>',
                           { domain: [0.50, 0.92], type: 'log', anchor: 'x2' }),
 
                 // ∠R_FD (bottom middle)
                 xaxis3: ax('ρ (mm)',  { domain: [0.36, 0.66], range: [10, 50],
                                         anchor: 'y3' }),
-                yaxis3: ax('∠R<sub>FD</sub> (rad)',
+                yaxis3: ax('Phase = ∠R̃<sub>FD</sub> (rad)',
                           { domain: [0.00, 0.42], anchor: 'x3' }),
 
                 // TD (right, full height)
                 xaxis4: ax('t (ns)',  { domain: [0.72, 1.00], range: [0, 10],
                                         anchor: 'y4' }),
-                yaxis4: ax('R<sub>TD</sub> ((ps·mm²)⁻¹)',
+                yaxis4: ax('R<sub>TD</sub> (ps⁻¹·mm⁻²)',
                           { domain: [0.00, 0.92], type: 'log', anchor: 'x4',
                             range: tdYRange, autorange: false }),
 
