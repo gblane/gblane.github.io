@@ -86,8 +86,13 @@ and phase)."*
 
 ## Cross-repo
 
-- [ ] **W-8 — Re-sync the bio if the research statement's framing changes.** Jana Kainerstorfer's review of the same
-      package says the opening "sells tools rather than what they can achieve" and questions the identity line the site
-      bio now carries (added in the 2026-07-23 external-consistency pass, commit `77b5ea2`). If that line or the program
-      framing changes in the masters, the bio on `index.html` moves with it. Blocked until Giles decides item 1 in
-      `FacultyApps/2026/notes/feedback_2026-08-31.md`.
+- [x] **W-8 — Re-sync the bio if the research statement's framing changes.** **Done 2026-09-02.** Compared the bio
+      against the revised statement Overview side by side. **The order deliberately stays different** — Giles's call:
+      the site leads with the identity line, the statement leads with the three problems, which suits their different
+      readers. What did change is the second sentence, which claimed his work "centers on the calibration-free
+      dual-ratio technique" — that was the JK-2 framing Jana warned against, so the three areas now carry the weight and
+      the sentence ends "all built on calibration-free methods that recover absolute optical properties rather than
+      uncalibrated indices", wording lifted from the statement. The third area was also reconciled: "bioprocess
+      monitoring" → "optical metrology of turbid media". The three `<meta>` descriptions (`index.html:9`, `:14`, `:20`)
+      carried the same dual-ratio framing and were updated to match; no dual-ratio or bioprocess wording remains on the
+      page. **Still open:** the LinkedIn text, which has the same framing and is not in this repo.
