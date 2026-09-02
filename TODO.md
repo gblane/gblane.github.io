@@ -19,11 +19,12 @@ would be clearer to set the position of the start (the green dot) within a fixed
 position at the center, so that it will be evident how the direction of multiple random walks eventually becomes
 isotropic."*
 
-- [ ] **W-1 — State the optical properties, absorption included.** The simulation has no absorption at all: `runMC()`
-      (`index.html:194`) propagates one walker with no weight and no termination, so the medium is implicitly
-      non-absorbing. Say so — μ<sub>a</sub> = 0 — in the About card (`index.html:64`) and in the theory section
-      (`index.html:117`). Also state that the walk is isotropic scattering (g = 0), so μ<sub>s</sub> is already the
-      reduced coefficient here.
+- [x] **W-1 — State the optical properties, absorption included.** **Done 2026-09-02.** The About card now states that
+      the medium is non-absorbing (μ<sub>a</sub> = 0) and that scattering is isotropic (g = 0), so μ<sub>s</sub> equals
+      μ′<sub>s</sub>. Confirmed in the code first: `runMC()` carries no photon weight, no absorption term and no
+      termination test — it takes exactly the requested number of steps — and directions come from
+      `acos(1-2U)`/`2πU`, i.e. isotropic. The matching sentence for the theory section was drafted and **declined by
+      Giles as unnecessary**; do not re-open it.
 - [ ] **W-2 — Fix or drop "unit scattering coefficient".** The phrase appears at `index.html:64` and again as
       \(\mu_s = 1\) at `index.html:118`. It means step lengths are drawn from \(p(\ell)=\mu_s e^{-\mu_s\ell}\) with
       \(\mu_s=1\), i.e. lengths are measured in scattering mean free paths. Say that instead of naming the convention.
