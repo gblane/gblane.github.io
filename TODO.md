@@ -45,12 +45,14 @@ the set system of coordinates. It is also unclear why the change in frequency on
 amplitude (is it just the CW reflectance? You should definitely report the amplitude and phase, at least, or all DC, AC,
 and phase)."*
 
-- [ ] **W-5 — Define the reflectance, do not just name its units.** The page asserts mm⁻² at `index.html:131` (CW),
-      `:143` (FD) and (ps·mm²)⁻¹ at `:158` (TD), each with a parenthetical about source normalization. The units are
-      dimensionally consistent with the Green's functions as written, so the gap is the definition, not the algebra:
-      state that R is the reflectance per unit area per unit incident power (or per unit source energy for TD), and how
-      it relates to the quantity a reader would measure. Worth settling directly with Sergio — the code is translated
-      from the MATLAB published with Blaney, Sassaroli & Fantini (2024), and his convention should win.
+- [x] **W-5 — Define the reflectance, do not just name its units.** **Done 2026-09-02.** The theory section now defines
+      R once, up front: the fraction of the source power (source energy for TD) that escapes the surface per unit area
+      at the detector, with the relation to a measurement stated explicitly
+      (\(P_{det} = P_{src}|R_{CW,FD}|A_{det}\), \(P_{det}(t) = E_{src}R_{TD}A_{det}\)). No need to settle it with
+      Sergio after all: the convention is fixed by the original MATLAB in `github/DOIT-Public/SensitivityCompendium`,
+      whose Monte Carlo branch computes `R = TPSF/(E*A*tstep)` — detected weight over source energy, detector area and
+      time bin. The three per-section unit parentheticals were deliberately left in place so each section stays
+      self-contained.
 - [x] **W-6 — Fix the y-axis ranges.** **Declined 2026-09-02 (Giles): the autoscaling stays.** The proposal was to
       pin the y-axes over the whole slider domain, but that domain is far too wide for one frame: μ<sub>a</sub> ∈
       [0, 0.05], μ′<sub>s</sub> ∈ [0.5, 5] mm⁻¹ and f ∈ [50, 500] MHz span **20 decades** of R<sub>CW</sub> and
