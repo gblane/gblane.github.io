@@ -37,11 +37,11 @@ isotropic."*
       which returned `#000000`, and Plotly's 3D renderer draws no axis titles with that as a font family. Fixed with a
       `cssVarRaw()` helper plus a 20 px margin (the titles sit outside the scene box). Slight corner clipping on
       elongated walks is accepted — Giles's call 2026-09-02.
-- [ ] **W-4 — Say the medium is infinite, and center the axes on the start.** No boundary exists anywhere in the code,
-      which makes it an infinite homogeneous medium — state that. Then replace the data-driven autoscale
-      (`aspectmode: 'data'`, `index.html:255`) with axis ranges symmetric about the origin — for example
-      ±max|r| over the walk, applied to all three axes — so the green start marker sits at the center of a fixed frame
-      and successive runs visibly spread isotropically around it.
+- [x] **W-4 — Say the medium is infinite, and center the axes on the start.** **Done 2026-09-02, in part.** The About
+      card now says the medium is infinite and homogeneous, which is the half Sergio asked about directly. The
+      centred-axes half was **declined by Giles**: the axes keep their data-driven autoscale. `aspectmode: 'data'` was
+      checked and already draws the three axes at a true 1:1:1 scale — one mean free path is the same on-screen length
+      on x, y and z — so there is no skew to correct. Do not re-open either half.
 
 ## Diffuse reflectance — `tools/diffuse-reflectance/index.html`
 
